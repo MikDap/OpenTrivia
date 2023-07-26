@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="266dp"
+        android:layout_height="45dp"
+        android:text="ARGOMENTO SINGOLO"
+        android:textSize="25sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/intrattenimento_button"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="180dp"
+        android:background="#FF00FF"
+        android:text="Cultura Pop"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/sport"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="140dp"
+        android:layout_marginRight="100dp"
+        android:background="#FFEB3B"
+        android:text="SPORT"
+        app:layout_constraintEnd_toEndOf="@id/intrattenimento_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/intrattenimento_button" />
+
+    <Button
+        android:id="@+id/geografia"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        android:text="GEOGRAFIA"
+        android:background="#0000FF"
+        app:layout_constraintEnd_toEndOf="@id/sport"
+        app:layout_constraintStart_toStartOf="@id/sport"
+        app:layout_constraintTop_toTopOf="@id/sport" />
+
+    <Button
+        android:id="@+id/storia"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="140dp"
+        android:layout_marginRight="10dp"
+        android:text="STORIA"
+        android:background="#FFBB2F"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/intrattenimento_button"
+        app:layout_constraintTop_toTopOf="@id/intrattenimento_button" />
+
+    <Button
+        android:id="@+id/arte"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        android:text="ARTE"
+        android:background="#FF00"
+        app:layout_constraintEnd_toEndOf="@id/storia"
+        app:layout_constraintHorizontal_bias="0.836"
+        app:layout_constraintStart_toStartOf="@id/storia"
+        app:layout_constraintTop_toTopOf="@id/storia" />
+
+    <Button
+        android:id="@+id/scienze"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="160dp"
+        android:text="SCIENZE"
+        android:background="#4CAF50"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/arte"
+        app:layout_constraintStart_toStartOf="@id/geografia" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

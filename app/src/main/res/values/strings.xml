@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">OpenTrivia</string>
+    <string name="trivia_crack">Trivia Crack</string>
+    <string name="gioca">Gioca</string>
+    <string name="desc" />
+    <string name="Accedi_con_Google">Accedi con Google</string>
+    <string name="Accedi_con_Facebook">Accedi con Facebook</string>
+    <string name="category">Categoria</string>
+    <string name="modalita">Seleziona la modalità di gioco</string>
+    <string name="Difficolta">Seleziona la difficoltà delle domande</string>
+    <string name="difficile">DIFFICILE</string>
+    <string name="facile">FACILE</string>
+    <string name="medio">MEDIO</string>
+    <string name="casuale">Avversario casuale</string>
+    <string name="classica">CLASSICA</string>
+    <string name="argomento">ARGOMENTO SINGOLO</string>
+    <string name="tempo">TEMPO REALE</string>
+    <string name="avversario">Cerca un avversario</string>
+    <string name="start">Inizia partita</string>
+    <string name="facebook_application_id" translatable="false">1379219505984377</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb1379219505984377</string>
+    <string name="facebook_client_token">c9af781f4f2845ad49f129f4a88d2933</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="inizia">Inizia</string>
+</resources>

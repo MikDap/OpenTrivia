@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_gioco"
+    app:startDestination="@id/ruotaFragment">
+
+    <fragment
+        android:id="@+id/ruotaFragment"
+        android:name="com.example.opentrivia.gioco.RuotaFragment"
+        android:label="fragment_ruota"
+        tools:layout="@layout/fragment_ruota" >
+        <action
+            android:id="@+id/action_ruotaFragment_to_sceltaMultiplaFragment"
+            app:destination="@id/sceltaMultiplaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sceltaMultiplaFragment"
+        android:name="com.example.opentrivia.gioco.SceltaMultiplaFragment"
+        android:label="fragment_scelta_multipla"
+        tools:layout="@layout/fragment_scelta_multipla" />
+</navigation>

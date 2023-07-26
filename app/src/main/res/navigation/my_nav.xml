@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/menu">
+    <fragment
+        android:id="@+id/difficolta"
+        android:name="com.example.opentrivia.menu.Difficolta"
+        android:label="fragment_difficolta"
+        tools:layout="@layout/fragment_difficolta" >
+        <action
+            android:id="@+id/action_difficolta_to_modalita"
+            app:destination="@id/modalita" />
+        <action
+            android:id="@+id/action_difficolta_to_sceltaGiocatore"
+            app:destination="@id/sceltaGiocatore" />
+    </fragment>
+    <fragment
+        android:id="@+id/modalita"
+        android:name="com.example.opentrivia.menu.Modalita"
+        android:label="fragment_modalita"
+        tools:layout="@layout/fragment_modalita" >
+        <action
+            android:id="@+id/action_modalita_to_menu4"
+            app:destination="@id/menu" />
+        <action
+            android:id="@+id/action_modalita_to_difficolta"
+            app:destination="@id/difficolta" />
+    </fragment>
+    <fragment
+        android:id="@+id/sceltaGiocatore"
+        android:name="com.example.opentrivia.menu.SceltaGiocatore"
+        android:label="fragment_scelta_giocatore"
+        tools:layout="@layout/fragment_scelta_giocatore" >
+        <action
+            android:id="@+id/action_sceltaGiocatore_to_difficolta"
+            app:destination="@id/difficolta" />
+    </fragment>
+    <fragment
+        android:id="@+id/menu"
+        android:name="com.example.opentrivia.menu.Menu"
+        android:label="menu"
+        tools:layout="@layout/fragment_menu" >
+        <action
+            android:id="@+id/action_menu_to_modalita"
+            app:destination="@id/modalita" />
+    </fragment>
+</navigation>

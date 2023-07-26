@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "267449949748",
+    "firebase_url": "https://opentrivia-fd778-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "opentrivia-fd778",
+    "storage_bucket": "opentrivia-fd778.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:267449949748:android:f9e9bf126626f3fbc73461",
+        "android_client_info": {
+          "package_name": "com.example.opentrivia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "267449949748-fs1rl0mbsh2a1t0nnnntje8rc4mj1mk0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.opentrivia",
+            "certificate_hash": "e5ea0ca12185b2a039cc0727a8e4b65464249b02"
+          }
+        },
+        {
+          "client_id": "267449949748-eu721lkcsnre236130ltcm9gao8e5pmp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASFPW01dtPQolS7WLDHCUlE9I8kdPeKYE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "267449949748-eu721lkcsnre236130ltcm9gao8e5pmp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
