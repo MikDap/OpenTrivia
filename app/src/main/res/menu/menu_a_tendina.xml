@@ -4,14 +4,14 @@
     <group>
         <item
             android:id="@+id/inbox"
-            android:title="Nuove Richieste"/>
+            android:title="Profilo"/>
 
         <item
             android:id="@+id/preferiti"
-            android:title="Preferiti" />
+            android:title="Statistiche" />
 
         <item
             android:id="@+id/sent_mail"
-            android:title="Richieste Inviate" />
+            android:title="Lista Amici" />
     </group>
 </menu>

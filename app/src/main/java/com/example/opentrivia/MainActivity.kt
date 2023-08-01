@@ -2,6 +2,8 @@ package com.example.opentrivia
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -100,6 +102,13 @@ class MainActivity : AppCompatActivity() {
             // response.getError().getErrorCode() and handle the error.
             // ...
         }
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_a_tendina, menu)
+        return true
     }
 }
 
