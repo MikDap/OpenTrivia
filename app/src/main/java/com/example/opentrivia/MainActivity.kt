@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 // Crea un ActivityResultLauncher che registra una callback
 // per il contratto dei risultati dell'attività FirebaseUI:
     val user = Firebase.auth.currentUser
-    if (user == null) {
+  //  if (user == null) {
 
         val signInLauncher = registerForActivityResult(
 
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
 // consentirà di eseguire il login tramite i provider forniti
         signInLauncher.launch(signInIntent)
 
-    }
+  //  }
         val database = Firebase.database("https://opentrivia-fd778-default-rtdb.europe-west1.firebasedatabase.app/")
 
 // Mettere uid, name, email dentro onSignInResult
@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-/*
+
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
@@ -120,4 +120,3 @@ fun GreetingPreview() {
     }
 }
 
- */
