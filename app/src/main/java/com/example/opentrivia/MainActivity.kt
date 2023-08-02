@@ -1,11 +1,13 @@
 package com.example.opentrivia
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +26,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.example.opentrivia.UserMethods
+
 // L'activity eredita dalla classe AppCompatActivity, che fornisce funzionalità aggiuntive rispetto all'Activity standard.
 class MainActivity : AppCompatActivity() {
    private lateinit var userMethods: UserMethods
@@ -91,16 +94,19 @@ class MainActivity : AppCompatActivity() {
     //(può essere ottenuto utilizzando FirebaseAuth.getInstance().currentUser)
 @Override
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
-        val response = result.idpResponse
         if (result.resultCode == RESULT_OK) {
-            // Successfully signed in
-            val user = FirebaseAuth.getInstance().currentUser
-            // ...
         } else {
-            // Sign in failed. If response is null the user canceled the
-            // sign-in flow using the back button. Otherwise check
-            // response.getError().getErrorCode() and handle the error.
-            // ...
+            Toast.makeText(
+                this,
+                "There was an error signing in",
+                Toast.LENGTH_LONG).show()
+
+            val response = result.idpResponse
+            if (response == null) {
+                Log.w(TAG, "Sign in canceled")
+            } else {
+                Log.w(TAG, "Sign in error", response.error)
+            }
         }
     }
 
