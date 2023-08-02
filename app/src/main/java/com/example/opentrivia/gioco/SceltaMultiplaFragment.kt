@@ -73,6 +73,7 @@ class SceltaMultiplaFragment : Fragment() {
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         var risposteRef = database.getReference("partite").child(modalita).child(difficolta).child(partita)
             .child("giocatori").child(uid).child(topic)
+        var partiteInCorsoRef = database.getReference("users").child(uid).child("partite in corso")
 
 
         var rispostaData = false
@@ -267,6 +268,20 @@ class SceltaMultiplaFragment : Fragment() {
 
 
                 }
+
+
+
+                //qua il codice per salvare sul database i dati nel nodo users per utilizzarli nella scrollview
+
+
+
+
+
+
+
+
+
+
             }
 
 

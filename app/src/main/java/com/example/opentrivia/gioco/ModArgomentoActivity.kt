@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
 import androidx.appcompat.app.AppCompatActivity
 import com.example.opentrivia.R
 import com.example.opentrivia.api.ChiamataApi
@@ -41,10 +43,10 @@ class ModArgomentoActivity : AppCompatActivity(), ArgomentoSingoloFragment.MyFra
         //prendiamo i parametri passati dalla SceltaGiocatore
         difficolta = intent.getStringExtra("difficolta") ?: ""
 
-
-
+        invalidateOptionsMenu()
 
     }
+
 // quando viene scelto il topic sul fragment:
     override fun onVariablePassed(topic: String) {
         // Utilizza la variabile passata dal fragment come desiderato

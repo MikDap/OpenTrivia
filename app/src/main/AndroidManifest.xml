@@ -29,15 +29,18 @@
 
         <activity
             android:name=".gioco.ModClassicaActivity"
-            android:label="ModClassica Activity" >
+            android:label="ModClassica Activity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".gioco.ModArgomentoActivity"
-            android:label="ModArgomento Activity" >
+            android:label="ModArgomento Activity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".gioco.ModATempoActivity"
-            android:label="ModATempo Activity" >
+            android:label="ModATempo Activity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_application_id"/>
