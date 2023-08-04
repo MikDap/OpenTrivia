@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group>
         <item
@@ -14,4 +15,11 @@
             android:id="@+id/sent_mail"
             android:title="Lista Amici" />
     </group>
+
+    <item
+        android:id="@+id/chat"
+        android:title="chat"
+        android:icon="@drawable/chat2"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom" />
 </menu>

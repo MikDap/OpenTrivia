@@ -45,5 +45,29 @@
         <action
             android:id="@+id/action_menu_to_modalita"
             app:destination="@id/modalita" />
+        <action
+            android:id="@+id/action_menu_to_listaAmiciFragment"
+            app:destination="@id/listaAmiciFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listaAmiciFragment"
+        android:name="com.example.opentrivia.ListaAmiciFragment"
+        android:label="fragment_lista_amici"
+        tools:layout="@layout/fragment_lista_amici" >
+        <action
+            android:id="@+id/action_listaAmiciFragment_to_menu"
+            app:destination="@id/menu" />
+        <action
+            android:id="@+id/action_listaAmiciFragment_to_aggiungiAmico"
+            app:destination="@id/aggiungiAmico" />
+    </fragment>
+    <fragment
+        android:id="@+id/aggiungiAmico"
+        android:name="com.example.opentrivia.AggiungiAmico"
+        android:label="fragment_aggiungi_amico"
+        tools:layout="@layout/fragment_aggiungi_amico" >
+        <action
+            android:id="@+id/action_aggiungiAmico_to_listaAmiciFragment"
+            app:destination="@id/listaAmiciFragment" />
     </fragment>
 </navigation>
