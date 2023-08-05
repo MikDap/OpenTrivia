@@ -2,9 +2,12 @@ package com.example.opentrivia
 
 import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -13,6 +16,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.MenuProvider
+import androidx.navigation.Navigation
 import com.example.opentrivia.ui.theme.OpenTriviaTheme
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
@@ -26,10 +31,11 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.example.opentrivia.UserMethods
+import com.example.opentrivia.gioco.SceltaMultiplaFragment
 
 // L'activity eredita dalla classe AppCompatActivity, che fornisce funzionalità aggiuntive rispetto all'Activity standard.
 class MainActivity : AppCompatActivity() {
-   private lateinit var userMethods: UserMethods
+    private lateinit var userMethods: UserMethods
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -37,8 +43,8 @@ class MainActivity : AppCompatActivity() {
 
 // Crea un ActivityResultLauncher che registra una callback
 // per il contratto dei risultati dell'attività FirebaseUI:
-    val user = Firebase.auth.currentUser
-  //  if (user == null) {
+        val user = Firebase.auth.currentUser
+        // if (user == null) {
 
         val signInLauncher = registerForActivityResult(
 
@@ -68,22 +74,50 @@ class MainActivity : AppCompatActivity() {
 // consentirà di eseguire il login tramite i provider forniti
         signInLauncher.launch(signInIntent)
 
-  //  }
-        val database = Firebase.database("https://opentrivia-fd778-default-rtdb.europe-west1.firebasedatabase.app/")
-
-// Mettere uid, name, email dentro onSignInResult
-        //uid, nome ed email dell'utente autenticato tramite Firebase Auth
-        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-        val name = FirebaseAuth.getInstance().currentUser?.displayName.toString()
-        val email = FirebaseAuth.getInstance().currentUser?.email.toString()
-        //creiamo un oggetto User, utilizzando i metodi definiti in UserMethods
-        userMethods = UserMethods()
-        userMethods.initializeDatabase()
-        userMethods.writeNewUser(uid,name,email)
+        //  }
+        val database =
+            Firebase.database("https://opentrivia-fd778-default-rtdb.europe-west1.firebasedatabase.app/")
 
 
 
+        addMenuProvider(object : MenuProvider {
+            override fun onPrepareMenu(menu: Menu) {
+                // Handle for example visibility of menu items
+            }
 
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.menu_a_tendina, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                when (menuItem.itemId) {
+                    R.id.chat -> {
+                        // Qui puoi gestire l'evento di click sull'item "chat"
+                        // Ad esempio, puoi navigare verso un altro fragment o eseguire altre azioni
+                        // sostituisci "ChatFragment" con il nome del fragment desiderato
+                        val fragmentManager = supportFragmentManager
+                        val fragmentTransaction = fragmentManager.beginTransaction()
+                        val fragment = ListaAmiciFragment()
+                        fragmentTransaction.replace(R.id.fragmentContainerView2, fragment)
+                        fragmentTransaction.commit()
+                        return true
+                    }
+                    R.id.inbox -> {
+                        // Gestisci l'evento per l'item "Profilo" (inbox)
+                        return true
+                    }
+                    R.id.preferiti -> {
+                        // Gestisci l'evento per l'item "Statistiche" (preferiti)
+                       return true
+                    }
+                    R.id.sent_mail -> {
+                        // Gestisci l'evento per l'item "Lista Amici" (sent_mail)
+                       return true
+                    }
+                }
+                return false
+            }
+        })
 
 
     }
@@ -92,14 +126,24 @@ class MainActivity : AppCompatActivity() {
     // Se l'autenticazione ha avuto successo (RESULT_OK), l'utente è stato correttamente autenticato
     // e l'oggetto FirebaseUser può essere ottenuto,
     //(può essere ottenuto utilizzando FirebaseAuth.getInstance().currentUser)
-@Override
+    @Override
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         if (result.resultCode == RESULT_OK) {
+            // Mettere uid, name, email dentro onSignInResult
+            //uid, nome ed email dell'utente autenticato tramite Firebase Auth
+            val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+            val name = FirebaseAuth.getInstance().currentUser?.displayName.toString()
+            val email = FirebaseAuth.getInstance().currentUser?.email.toString()
+            //creiamo un oggetto User, utilizzando i metodi definiti in UserMethods
+            userMethods = UserMethods()
+            userMethods.initializeDatabase()
+            userMethods.writeNewUser(uid, name, email)
         } else {
             Toast.makeText(
                 this,
                 "There was an error signing in",
-                Toast.LENGTH_LONG).show()
+                Toast.LENGTH_LONG
+            ).show()
 
             val response = result.idpResponse
             if (response == null) {
@@ -111,27 +155,20 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.menu_a_tendina, menu)
-        return true
+    @Composable
+    fun Greeting(name: String, modifier: Modifier = Modifier) {
+        Text(
+            text = "Hello $name!",
+            modifier = modifier
+        )
     }
-}
 
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    OpenTriviaTheme {
-        Greeting("Android")
+    @Preview(showBackground = true)
+    @Composable
+    fun GreetingPreview() {
+        OpenTriviaTheme {
+            Greeting("Android")
+        }
     }
 }
 

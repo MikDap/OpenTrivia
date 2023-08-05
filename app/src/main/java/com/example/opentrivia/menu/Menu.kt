@@ -21,6 +21,8 @@ class Menu : Fragment() {
        val view = inflater.inflate(R.layout.fragment_menu, container, false)
 startButton = view.findViewById(R.id.startButton)
         startButton.setOnClickListener { Navigation.findNavController(view).navigate(R.id.action_menu_to_modalita)}
+
+
         return view
     }
 
