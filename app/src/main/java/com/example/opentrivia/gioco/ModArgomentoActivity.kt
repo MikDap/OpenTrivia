@@ -135,6 +135,8 @@ class ModArgomentoActivity : AppCompatActivity(), ArgomentoSingoloFragment.MyFra
 
     })
 
+//chiamata e callback (da mettere anche in mod classica e mod a tempo)
+
 
     //facciamo la chiamata api
         chiamataApi = ChiamataApi(categoria,difficolta)

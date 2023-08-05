@@ -32,6 +32,8 @@ class SceltaMultiplaFragment : Fragment() {
     private lateinit var risposta3: Button
     private lateinit var risposta4: Button
     private lateinit var modArgomentoActivity: ModArgomentoActivity
+    //mic
+    private lateinit var modClassicaActivity: ModClassicaActivity
     private lateinit var rispostaCorretta: String
 
 
@@ -47,22 +49,41 @@ class SceltaMultiplaFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_scelta_multipla, container, false)
+
         modArgomentoActivity = activity as ModArgomentoActivity
+        //mic
+        //modClassicaActivity= activity as ModClassicaActivity
+        //
         domanda = view.findViewById(R.id.domanda)
         risposta1 = view.findViewById(R.id.risposta1)
         risposta2 = view.findViewById(R.id.risposta2)
         risposta3 = view.findViewById(R.id.risposta3)
         risposta4 = view.findViewById(R.id.risposta4)
-
+        //mic
+        Log.d(modalita,"modalita")
+  if(modalita=="argomento singolo"){
+      //
         domanda.text = modArgomentoActivity.domanda
         risposta1.text = modArgomentoActivity.risposte[0]
         Log.d("risposta1", risposta1.text as String)
         risposta2.text = modArgomentoActivity.risposte[1]
         risposta3.text = modArgomentoActivity.risposte[2]
         risposta4.text = modArgomentoActivity.risposte[3]
+  return view}
+//mich
 
-        rispostaCorretta = modArgomentoActivity.rispostaCorretta
-        return view
+        /*if(modalita=="classica"){
+
+        domanda.text = modClassicaActivity.domanda
+        risposta1.text = modClassicaActivity.risposte[0]
+        Log.d("risposta1Classica", risposta1.text as String)
+        risposta2.text = modClassicaActivity.risposte[1]
+        risposta3.text = modClassicaActivity.risposte[2]
+        risposta4.text = modClassicaActivity.risposte[3]
+        rispostaCorretta = modClassicaActivity.rispostaCorretta
+          //  return view}*/
+//mich fine
+return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -214,12 +235,33 @@ class SceltaMultiplaFragment : Fragment() {
 
                         Log.d("contatoreRisposte", contatoreRisposte.toString())
                         risposteRef.child("risposteTotali").setValue(punti)
+                        //mic
+  //                        if(modalita=="argomento singolo"){
+
                         if (contatoreRisposte < 10) {
                             modArgomentoActivity.getTriviaQuestion()
-                        }
-                        else {startActivity(Intent(activity, MainActivity::class.java))
+                        } else {
+                            startActivity(Intent(activity, MainActivity::class.java))
 
                         }
+
+                        //mic
+                      /*if(modalita=="classica") {
+                          if (contatoreRisposte < 3) {
+                              modClassicaActivity.getTriviaQuestion()
+                          } else {
+                              startActivity(Intent(activity, MainActivity::class.java))
+
+                          }
+                      }
+                          //fine
+
+*/
+
+
+
+
+
 
                     } else {
                         // Il dato non esiste nel database, quindi scrivi qualcosa

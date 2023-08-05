@@ -1,5 +1,6 @@
 package com.example.opentrivia.gioco
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -29,9 +30,9 @@ class RuotaFragment : Fragment() {
     private lateinit var ruotaButton: Button
     private var selectedTopic: String? = null
     private var isWheelStopped: Boolean = true
+    lateinit var topic: String
     //da 0 perchè la ruota parte da 0 gradi
     private var currentAngle: Float = 0f
-
     private val topics = listOf("Sport", "Storia", "Scienza", "Arte", "Geografia", "Musica","Mitologia")
     private val colors = arrayOf(
             Color.parseColor("#FFD1DC"),  // Rosa pastello
@@ -42,7 +43,8 @@ class RuotaFragment : Fragment() {
     Color.parseColor("#B3FFFF"),  // Ciano pastello
     Color.parseColor("#D3D3D3")   // Grigio pastello
     )
-
+    //michele
+    private var listener: RuotaFragment.MyFragmentListener? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,10 +62,16 @@ class RuotaFragment : Fragment() {
                 val randomTopic = getRandomTopic()
                 // richiama la funzione per girare la ruota passandoci l'argomento che è uscito
                 rotateWheel(randomTopic)
+//
+                topic=randomTopic
             }
-        }
+
+
+        }//michele
+
 
         return view
+        passVariableToActivity(topic)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -234,5 +242,33 @@ Log.d("textwidth",textWidth.toString())
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
+
+
+
+    //Michele da 245 a 268
+    //crea un listener (funge da contratto tra il Fragment e la Activity)
+    interface MyFragmentListener {
+        //implementato in ModClassicaActivity
+        fun onVariablePassed(variable: String) {
+        }
+    }
+    //estrae l'Activity ospitante utilizzando requireActivity() e controlla che
+// l'Activity implementi l'interfaccia MyFragmentListener.
+// Quindi, chiama il metodo onVariablePassed
+    fun passVariableToActivity(variable: String) {
+        val activity = requireActivity() as MyFragmentListener
+        activity.onVariablePassed(variable)
+    }
+
+    //viene chiamato quando il Fragment viene associato all'Activity ospitante DA VEDERE SE LEVANDOLO, FUNZIONA
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is MyFragmentListener) {
+            listener = context
+        } else {
+            throw RuntimeException("$context must implement MyFragmentListener")
+        }
+    }
+
 }
 
