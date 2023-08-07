@@ -33,7 +33,7 @@ class RuotaFragment : Fragment() {
     lateinit var topic: String
     //da 0 perchè la ruota parte da 0 gradi
     private var currentAngle: Float = 0f
-    private val topics = listOf("Sport", "Storia", "Scienza", "Arte", "Geografia", "Musica","Mitologia")
+    private val topics = listOf("sport", "storia", "scienze", "arte", "geografia", "culturaPop","jolly")
     private val colors = arrayOf(
             Color.parseColor("#FFD1DC"),  // Rosa pastello
     Color.parseColor("#B2FFA5"),  // Verde pastello
@@ -44,7 +44,7 @@ class RuotaFragment : Fragment() {
     Color.parseColor("#D3D3D3")   // Grigio pastello
     )
     //michele
-    private var listener: RuotaFragment.MyFragmentListener? = null
+    private var listener: MyFragmentListener? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,16 +62,12 @@ class RuotaFragment : Fragment() {
                 val randomTopic = getRandomTopic()
                 // richiama la funzione per girare la ruota passandoci l'argomento che è uscito
                 rotateWheel(randomTopic)
-//
-                topic=randomTopic
             }
 
 
-        }//michele
-
+        }
 
         return view
-        passVariableToActivity(topic)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -127,6 +123,8 @@ Log.d("to",toAngle.toString())
 
                 selectedTopic = topic
                 showToast("Selected topic: $topic")
+
+                passVariableToActivity(topic)
             }
 
             override fun onAnimationRepeat(animation: Animation?) {

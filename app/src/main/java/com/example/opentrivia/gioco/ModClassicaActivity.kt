@@ -177,13 +177,13 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
             i++
         }
 // passiamo al secondo Fragment (DA GESTIRE IL PERMESSO DI RITORNARE INDIETRO DURANTE LA SCHERMATA DELLE DOMANDE E RISPOSTE)
-        val secondFragment = SceltaMultiplaFragment()
+        val secondFragment = SceltaMultiplaFragmentClassica()
 
         secondFragment.setParametriPartita(partita, "classica", difficolta,topic)
         // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, secondFragment).addToBackStack(null).commit();
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerViewGioco2, secondFragment).commit()
+                .replace(R.id.fragmentContainerViewGioco, secondFragment).commit()
         }, 2000)
     }
 
@@ -227,6 +227,5 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
             Log.d("getTriviaQuestion","siii")
 
         }
-
 
 }

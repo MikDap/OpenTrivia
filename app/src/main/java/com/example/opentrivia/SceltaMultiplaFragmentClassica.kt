@@ -23,7 +23,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 
-class SceltaMultiplaFragment : Fragment() {
+class SceltaMultiplaFragmentClassica : Fragment() {
 
     private lateinit var database: FirebaseDatabase
     private lateinit var domanda: TextView
@@ -31,9 +31,9 @@ class SceltaMultiplaFragment : Fragment() {
     private lateinit var risposta2: Button
     private lateinit var risposta3: Button
     private lateinit var risposta4: Button
-    private lateinit var modArgomentoActivity: ModArgomentoActivity
 
 
+    private lateinit var modClassicaActivity: ModClassicaActivity
     private lateinit var rispostaCorretta: String
 
 
@@ -48,11 +48,11 @@ class SceltaMultiplaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_scelta_multipla, container, false)
+        val view = inflater.inflate(R.layout.fragment_scelta_multipla_classica, container, false)
 
 
-        modArgomentoActivity = activity as ModArgomentoActivity
 
+        modClassicaActivity= activity as ModClassicaActivity
 
         domanda = view.findViewById(R.id.domanda)
         risposta1 = view.findViewById(R.id.risposta1)
@@ -62,16 +62,15 @@ class SceltaMultiplaFragment : Fragment() {
 
         Log.d(modalita,"modalita")
 
+            domanda.text = modClassicaActivity.domanda
+            risposta1.text = modClassicaActivity.risposte[0]
+            Log.d("risposta1", risposta1.text as String)
+            risposta2.text = modClassicaActivity.risposte[1]
+            risposta3.text = modClassicaActivity.risposte[2]
+            risposta4.text = modClassicaActivity.risposte[3]
+        rispostaCorretta = modClassicaActivity.rispostaCorretta
 
-        domanda.text = modArgomentoActivity.domanda
-        risposta1.text = modArgomentoActivity.risposte[0]
-        Log.d("risposta1", risposta1.text as String)
-        risposta2.text = modArgomentoActivity.risposte[1]
-        risposta3.text = modArgomentoActivity.risposte[2]
-        risposta4.text = modArgomentoActivity.risposte[3]
-        rispostaCorretta = modArgomentoActivity.rispostaCorretta
-
-return view
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -113,86 +112,86 @@ return view
             }
         }
 
-            risposta2.setOnClickListener {
-                if (!rispostaData) {
-                    if (risposta2.text == rispostaCorretta) {
-                        risposta2.setBackgroundColor(Color.LTGRAY)
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            risposta2.setBackgroundColor(Color.GREEN)
-                        }, 1000)
-                        updateRisposte(risposteRef,"corretta")
+        risposta2.setOnClickListener {
+            if (!rispostaData) {
+                if (risposta2.text == rispostaCorretta) {
+                    risposta2.setBackgroundColor(Color.LTGRAY)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        risposta2.setBackgroundColor(Color.GREEN)
+                    }, 1000)
+                    updateRisposte(risposteRef,"corretta")
 
-                    } else {
-                        risposta2.setBackgroundColor(Color.LTGRAY)
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            risposta2.setBackgroundColor(Color.RED)
-                        }, 1000)
-                        updateRisposte(risposteRef,"sbagliata")
+                } else {
+                    risposta2.setBackgroundColor(Color.LTGRAY)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        risposta2.setBackgroundColor(Color.RED)
+                    }, 1000)
+                    updateRisposte(risposteRef,"sbagliata")
 
-                    }
-                    rispostaData = true
                 }
+                rispostaData = true
             }
+        }
 
 
-            risposta3.setOnClickListener {
-                if (!rispostaData) {
-                    if (risposta3.text == rispostaCorretta) {
-                        risposta3.setBackgroundColor(Color.LTGRAY)
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            risposta3.setBackgroundColor(Color.GREEN)
-                        }, 1000)
-                        updateRisposte(risposteRef,"corretta")
+        risposta3.setOnClickListener {
+            if (!rispostaData) {
+                if (risposta3.text == rispostaCorretta) {
+                    risposta3.setBackgroundColor(Color.LTGRAY)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        risposta3.setBackgroundColor(Color.GREEN)
+                    }, 1000)
+                    updateRisposte(risposteRef,"corretta")
 
-                    } else {
-                        risposta3.setBackgroundColor(Color.LTGRAY)
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            risposta3.setBackgroundColor(Color.RED)
-                        }, 1000)
-                        updateRisposte(risposteRef,"sbagliata")
+                } else {
+                    risposta3.setBackgroundColor(Color.LTGRAY)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        risposta3.setBackgroundColor(Color.RED)
+                    }, 1000)
+                    updateRisposte(risposteRef,"sbagliata")
 
-                    }
-                    rispostaData = true
                 }
+                rispostaData = true
             }
+        }
 
 
-            risposta4.setOnClickListener {
-                if (!rispostaData) {
-                    if (risposta4.text == rispostaCorretta) {
-                        risposta4.setBackgroundColor(Color.LTGRAY)
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            risposta4.setBackgroundColor(Color.GREEN)
-                        }, 1000)
-                        updateRisposte(risposteRef,"corretta")
+        risposta4.setOnClickListener {
+            if (!rispostaData) {
+                if (risposta4.text == rispostaCorretta) {
+                    risposta4.setBackgroundColor(Color.LTGRAY)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        risposta4.setBackgroundColor(Color.GREEN)
+                    }, 1000)
+                    updateRisposte(risposteRef,"corretta")
 
-                    } else {
-                        risposta4.setBackgroundColor(Color.LTGRAY)
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            risposta4.setBackgroundColor(Color.RED)
-                        }, 1000)
-                        updateRisposte(risposteRef,"sbagliata")
+                } else {
+                    risposta4.setBackgroundColor(Color.LTGRAY)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        risposta4.setBackgroundColor(Color.RED)
+                    }, 1000)
+                    updateRisposte(risposteRef,"sbagliata")
 
-                    }
-                    rispostaData = true
                 }
+                rispostaData = true
             }
+        }
 
 
 
     }
-        fun setParametriPartita(
-            partita: String,
-            modalita: String,
-            difficolta: String,
-            topic: String
-        ) {
-            // Imposta il valore della variabile partita come desiderato
-            this.partita = partita
-            this.modalita = modalita
-            this.difficolta = difficolta
-            this.topic = topic
-        }
+    fun setParametriPartita(
+        partita: String,
+        modalita: String,
+        difficolta: String,
+        topic: String
+    ) {
+        // Imposta il valore della variabile partita come desiderato
+        this.partita = partita
+        this.modalita = modalita
+        this.difficolta = difficolta
+        this.topic = topic
+    }
 
 
 
@@ -224,13 +223,14 @@ return view
                         Log.d("contatoreRisposte", contatoreRisposte.toString())
                         risposteRef.child("risposteTotali").setValue(punti)
 
-                            if (contatoreRisposte < 10) {
-                                modArgomentoActivity.getTriviaQuestion()
+
+
+                            if (contatoreRisposte < 3) {
+                                modClassicaActivity.getTriviaQuestion()
                             } else {
                                 startActivity(Intent(activity, MainActivity::class.java))
 
                             }
-
 
 
                     } else {
@@ -238,7 +238,7 @@ return view
                         risposteRef.child("risposteTotali").setValue(1)
                         contatoreRisposte = 1
                         Log.d("contatoreRisposte", contatoreRisposte.toString())
-                        modArgomentoActivity.getTriviaQuestion()
+                        modClassicaActivity.getTriviaQuestion()
                     }
                 }
 
@@ -263,8 +263,8 @@ return view
                         contatoreRisposte = punti
                         Log.d("contatoreRisposte", contatoreRisposte.toString())
                         risposteRef.child("risposteTotali").setValue(punti)
-                        if (contatoreRisposte < 10) {
-                            modArgomentoActivity.getTriviaQuestion()
+                        if (contatoreRisposte < 3) {
+                            modClassicaActivity.getTriviaQuestion()
                         }
                         else {startActivity(Intent(activity, MainActivity::class.java))
 
@@ -275,7 +275,7 @@ return view
                         risposteRef.child("risposteTotali").setValue(1)
                         contatoreRisposte = 1
                         Log.d("contatoreRisposte", contatoreRisposte.toString())
-                        modArgomentoActivity.getTriviaQuestion()
+                        modClassicaActivity.getTriviaQuestion()
                     }
 
 

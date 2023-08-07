@@ -11,12 +11,16 @@
         android:label="fragment_ruota"
         tools:layout="@layout/fragment_ruota" >
         <action
-            android:id="@+id/action_ruotaFragment_to_sceltaMultiplaFragment"
-            app:destination="@id/sceltaMultiplaFragment" />
+            android:id="@+id/action_ruotaFragment_to_sceltaMultiplaFragmentClassica"
+            app:destination="@id/sceltaMultiplaFragmentClassica" />
     </fragment>
     <fragment
-        android:id="@+id/sceltaMultiplaFragment"
-        android:name="com.example.opentrivia.gioco.SceltaMultiplaFragment"
-        android:label="fragment_scelta_multipla"
-        tools:layout="@layout/fragment_scelta_multipla" />
+        android:id="@+id/sceltaMultiplaFragmentClassica"
+        android:name="com.example.opentrivia.gioco.SceltaMultiplaFragmentClassica"
+        android:label="fragment_scelta_multipla_classica"
+        tools:layout="@layout/fragment_scelta_multipla_classica" >
+        <action
+            android:id="@+id/action_sceltaMultiplaFragmentClassica_to_ruotaFragment"
+            app:destination="@id/ruotaFragment" />
+    </fragment>
 </navigation>
