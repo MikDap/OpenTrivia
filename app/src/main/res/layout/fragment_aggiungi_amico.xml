@@ -1,0 +1,28 @@
+<!-- add_friend_layout.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/editTextFriendName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Inserisci il nome dell'utente da cercare"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/buttonSearchFriend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cerca" />
+
+    <!-- RecyclerView per mostrare gli amici trovati -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewFriends"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>
