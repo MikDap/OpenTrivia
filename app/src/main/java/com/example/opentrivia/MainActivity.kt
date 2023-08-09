@@ -2,14 +2,10 @@ package com.example.opentrivia
 
 import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material3.Text
@@ -17,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.MenuProvider
-import androidx.navigation.Navigation
 import com.example.opentrivia.ui.theme.OpenTriviaTheme
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
@@ -25,13 +20,8 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.getValue
-import com.example.opentrivia.UserMethods
-import com.example.opentrivia.gioco.SceltaMultiplaFragment
+import com.example.opentrivia.listaAmici.ListaAmiciFragment
 
 // L'activity eredita dalla classe AppCompatActivity, che fornisce funzionalità aggiuntive rispetto all'Activity standard.
 class MainActivity : AppCompatActivity() {
@@ -110,8 +100,12 @@ class MainActivity : AppCompatActivity() {
                         // Gestisci l'evento per l'item "Statistiche" (preferiti)
                        return true
                     }
-                    R.id.sent_mail -> {
-                        // Gestisci l'evento per l'item "Lista Amici" (sent_mail)
+                    R.id.lista_amici -> {
+                        val fragmentManager = supportFragmentManager
+                        val fragmentTransaction = fragmentManager.beginTransaction()
+                        val fragment = ListaAmiciFragment()
+                        fragmentTransaction.replace(R.id.fragmentContainerView2, fragment)
+                        fragmentTransaction.commit()
                        return true
                     }
                 }

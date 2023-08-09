@@ -11,11 +11,6 @@ import com.example.opentrivia.R
 import com.example.opentrivia.gioco.ModATempoActivity
 import com.example.opentrivia.gioco.ModArgomentoActivity
 import com.example.opentrivia.gioco.ModClassicaActivity
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 class SceltaGiocatore : Fragment() {
 
@@ -30,7 +25,7 @@ class SceltaGiocatore : Fragment() {
 
 
              // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_scelta_giocatore, container, false)
+        val view = inflater.inflate(R.layout.menu_scelta_giocatore, container, false)
         cercaPartitaButton = view.findViewById(R.id.cercaPartitaButton)
         cercaPartitaButton.setOnClickListener {
 

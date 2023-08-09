@@ -48,7 +48,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_scelta_multipla_classica, container, false)
+        val view = inflater.inflate(R.layout.mod_classica_scelta_multipla, container, false)
 
 
 
@@ -92,7 +92,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                     risposta1.setBackgroundColor(Color.LTGRAY)
                     Handler(Looper.getMainLooper()).postDelayed({
                         risposta1.setBackgroundColor(Color.GREEN)
-                    }, 1000)
+                    }, 500)
 
                     updateRisposte(risposteRef,"corretta")
 
@@ -102,7 +102,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                     risposta1.setBackgroundColor(Color.LTGRAY)
                     Handler(Looper.getMainLooper()).postDelayed({
                         risposta1.setBackgroundColor(Color.RED)
-                    }, 1000)
+                    }, 500)
 
                     updateRisposte(risposteRef,"sbagliata")
                 }
@@ -118,14 +118,14 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                     risposta2.setBackgroundColor(Color.LTGRAY)
                     Handler(Looper.getMainLooper()).postDelayed({
                         risposta2.setBackgroundColor(Color.GREEN)
-                    }, 1000)
+                    }, 500)
                     updateRisposte(risposteRef,"corretta")
 
                 } else {
                     risposta2.setBackgroundColor(Color.LTGRAY)
                     Handler(Looper.getMainLooper()).postDelayed({
                         risposta2.setBackgroundColor(Color.RED)
-                    }, 1000)
+                    }, 500)
                     updateRisposte(risposteRef,"sbagliata")
 
                 }
@@ -140,14 +140,14 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                     risposta3.setBackgroundColor(Color.LTGRAY)
                     Handler(Looper.getMainLooper()).postDelayed({
                         risposta3.setBackgroundColor(Color.GREEN)
-                    }, 1000)
+                    }, 500)
                     updateRisposte(risposteRef,"corretta")
 
                 } else {
                     risposta3.setBackgroundColor(Color.LTGRAY)
                     Handler(Looper.getMainLooper()).postDelayed({
                         risposta3.setBackgroundColor(Color.RED)
-                    }, 1000)
+                    }, 500)
                     updateRisposte(risposteRef,"sbagliata")
 
                 }
@@ -162,14 +162,14 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                     risposta4.setBackgroundColor(Color.LTGRAY)
                     Handler(Looper.getMainLooper()).postDelayed({
                         risposta4.setBackgroundColor(Color.GREEN)
-                    }, 1000)
+                    }, 500)
                     updateRisposte(risposteRef,"corretta")
 
                 } else {
                     risposta4.setBackgroundColor(Color.LTGRAY)
                     Handler(Looper.getMainLooper()).postDelayed({
                         risposta4.setBackgroundColor(Color.RED)
-                    }, 1000)
+                    }, 500)
                     updateRisposte(risposteRef,"sbagliata")
 
                 }

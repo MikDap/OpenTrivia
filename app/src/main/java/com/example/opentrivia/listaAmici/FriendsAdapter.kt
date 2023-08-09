@@ -1,4 +1,4 @@
-package com.example.opentrivia.menu
+package com.example.opentrivia.listaAmici
 
 import com.example.opentrivia.R
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 class FriendsAdapter(private val friendsList: List<String>) : RecyclerView.Adapter<FriendsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.friend_item_layout, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.lista_amici_friend_item, parent, false)
         return ViewHolder(itemView)
     }
 

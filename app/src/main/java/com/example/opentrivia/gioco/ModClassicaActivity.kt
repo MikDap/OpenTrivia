@@ -1,6 +1,5 @@
 package com.example.opentrivia.gioco
 
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -36,7 +35,7 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_mod_classica)
+        setContentView(R.layout.mod_classica_activity)
 
         difficolta = intent.getStringExtra("difficolta") ?: ""
 
@@ -184,7 +183,7 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainerViewGioco, secondFragment).commit()
-        }, 2000)
+        }, 500)
     }
 
         // in base al topic ricevuto, restituisco i numeri dedicati al topic (specificati in OpenTriviaDB)

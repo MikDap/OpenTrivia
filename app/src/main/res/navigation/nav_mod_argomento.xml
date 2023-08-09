@@ -9,7 +9,7 @@
         android:id="@+id/argomentoSingoloFragment"
         android:name="com.example.opentrivia.gioco.ArgomentoSingoloFragment"
         android:label="fragment_argomento_singolo"
-        tools:layout="@layout/fragment_argomento_singolo" >
+        tools:layout="@layout/mod_argomento_singolo_scelta_argomento" >
         <action
             android:id="@+id/action_argomentoSingoloFragment_to_sceltaMultiplaFragment2"
             app:destination="@id/sceltaMultiplaFragment2" />

@@ -11,8 +11,6 @@ import android.graphics.Color
 import android.view.animation.RotateAnimation
 import android.view.animation.Animation
 import android.widget.Button
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.OvalShape
 import android.widget.Toast
 import java.util.*
 import android.graphics.Canvas
@@ -49,7 +47,7 @@ class RuotaFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_ruota, container, false)
+        val view = inflater.inflate(R.layout.mod_classica_ruota, container, false)
         wheelView = view.findViewById(R.id.wheelView)
         ruotaButton = view.findViewById(R.id.ruotaButton)
 

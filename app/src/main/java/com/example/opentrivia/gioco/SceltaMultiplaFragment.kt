@@ -48,7 +48,7 @@ class SceltaMultiplaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_scelta_multipla, container, false)
+        val view = inflater.inflate(R.layout.mod_argomento_singolo_scelta_multipla, container, false)
 
 
         modArgomentoActivity = activity as ModArgomentoActivity
