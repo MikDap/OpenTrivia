@@ -10,7 +10,7 @@ class ModATempoActivity : AppCompatActivity() {
     private lateinit var difficolta: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_mod_a_tempo)
+        setContentView(R.layout.mod_a_tempo_activity)
 
         partita = intent.getStringExtra("partita") ?: ""
         difficolta = intent.getStringExtra("difficolta") ?: ""

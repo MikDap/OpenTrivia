@@ -19,7 +19,7 @@ private lateinit var classicaButton: Button
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-       val view = inflater.inflate(R.layout.fragment_modalita, container, false)
+       val view = inflater.inflate(R.layout.menu_modalita, container, false)
         classicaButton = view.findViewById(R.id.classicaButton)
         classicaButton.setOnClickListener {
             //vogliamo passare alla classe difficoltà il nome della modalità

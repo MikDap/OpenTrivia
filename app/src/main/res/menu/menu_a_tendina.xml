@@ -12,7 +12,7 @@
             android:title="Statistiche" />
 
         <item
-            android:id="@+id/sent_mail"
+            android:id="@+id/lista_amici"
             android:title="Lista Amici" />
     </group>
 

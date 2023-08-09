@@ -1,6 +1,5 @@
 package com.example.opentrivia.gioco
 
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -36,7 +35,7 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_mod_classica)
+        setContentView(R.layout.mod_classica_activity)
 
         difficolta = intent.getStringExtra("difficolta") ?: ""
 
@@ -177,14 +176,14 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
             i++
         }
 // passiamo al secondo Fragment (DA GESTIRE IL PERMESSO DI RITORNARE INDIETRO DURANTE LA SCHERMATA DELLE DOMANDE E RISPOSTE)
-        val secondFragment = SceltaMultiplaFragment()
+        val secondFragment = SceltaMultiplaFragmentClassica()
 
         secondFragment.setParametriPartita(partita, "classica", difficolta,topic)
         // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, secondFragment).addToBackStack(null).commit();
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerViewGioco2, secondFragment).commit()
-        }, 2000)
+                .replace(R.id.fragmentContainerViewGioco, secondFragment).commit()
+        }, 500)
     }
 
         // in base al topic ricevuto, restituisco i numeri dedicati al topic (specificati in OpenTriviaDB)
@@ -227,6 +226,5 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
             Log.d("getTriviaQuestion","siii")
 
         }
-
 
 }

@@ -13,7 +13,7 @@ class ChatActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.message_list_activity)
+        setContentView(R.layout.chat_activity)
 
 
         database = FirebaseDatabase.getInstance()

@@ -22,7 +22,7 @@ private lateinit var difficileButton: Button
         val modalita = arguments?.getString("modalita")
 
         // Inflate the layout for this fragment
-       val view = inflater.inflate(R.layout.fragment_difficolta, container, false)
+       val view = inflater.inflate(R.layout.menu_difficolta, container, false)
 
 
         facileButton = view.findViewById(R.id.facileButton)

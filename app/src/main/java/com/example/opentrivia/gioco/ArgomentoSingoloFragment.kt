@@ -7,9 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import com.example.opentrivia.R
-import java.util.Random
 
 
 class ArgomentoSingoloFragment : Fragment() {
@@ -30,7 +28,7 @@ class ArgomentoSingoloFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_argomento_singolo, container, false)
+        val view = inflater.inflate(R.layout.mod_argomento_singolo_scelta_argomento, container, false)
 
         culturaPop = view.findViewById(R.id.intrattenimento_button)
         sport = view.findViewById(R.id.sport)
