@@ -11,9 +11,11 @@ import retrofit2.Response
 import com.google.gson.GsonBuilder
 
 class ChiamataApi(
+    val tipo: String,
     val categoria: String,
     var difficolta: String
 ) {
+
 var domanda: String = ""
  var risposta_corretta: String = ""
  var risposta_sbagliata_1: String = ""
@@ -26,7 +28,7 @@ var domanda: String = ""
         val questionsApi = RetrofitHelper.getInstance().create(ApiOpenTriviaInterface::class.java)
         // launching a new coroutine
         GlobalScope.launch {
-            val result = questionsApi.getTriviaQuestion(1, categoria.toInt(), difficolta, "multiple")
+            val result = questionsApi.getTriviaQuestion(1, categoria.toInt(), difficolta, tipo)
             if (result != null) {
                 // Checking the results
                 val tipo = result.body()?.results?.get(0)?.type.toString()
@@ -47,7 +49,7 @@ Log.d("api,rispost_corr",risposta_corretta)
                         result.body()?.results?.get(0)?.incorrect_answers?.get(1).toString()
                      risposta_sbagliata_3 =
                         result.body()?.results?.get(0)?.incorrect_answers?.get(2).toString()
-                    callback.onTriviaQuestionFetched(domanda, risposta_corretta, risposta_sbagliata_1, risposta_sbagliata_2, risposta_sbagliata_3)
+                    callback.onTriviaQuestionFetched(tipo,domanda, risposta_corretta, risposta_sbagliata_1, risposta_sbagliata_2, risposta_sbagliata_3)
 
                 }
 
@@ -56,14 +58,14 @@ Log.d("api,rispost_corr",risposta_corretta)
 
 
                 if (tipo.equals("boolean")) {
-                    val domanda = result.body()?.results?.get(0)?.question.toString()
+                     domanda = result.body()?.results?.get(0)?.question.toString()
 
-                    val risposta_correttb =
+                     risposta_corretta =
                         result.body()?.results?.get(0)?.correct_answer.toString()
 
-                    val risposta_sbagliata =
+                     risposta_sbagliata_1 =
                         result.body()?.results?.get(0)?.incorrect_answers?.get(0).toString()
-
+                    callback.onTriviaQuestionFetched(tipo,domanda, risposta_corretta, risposta_sbagliata_1,"","")
                 }
             }
         }
@@ -72,7 +74,7 @@ Log.d("api,rispost_corr",risposta_corretta)
 
 
     interface TriviaQuestionCallback {
-        fun onTriviaQuestionFetched(domanda: String, risposta_corretta: String, risposta_sbagliata_1: String, risposta_sbagliata_2: String, risposta_sbagliata_3: String)
+        fun onTriviaQuestionFetched(tipo:String,domanda: String, risposta_corretta: String, risposta_sbagliata_1: String, risposta_sbagliata_2: String, risposta_sbagliata_3: String)
     }
 
 

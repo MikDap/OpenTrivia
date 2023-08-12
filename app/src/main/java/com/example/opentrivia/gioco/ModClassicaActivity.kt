@@ -133,7 +133,7 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
 
 
         //facciamo la chiamata api
-        chiamataApi = ChiamataApi(categoria,difficolta)
+        chiamataApi = ChiamataApi("boolean",categoria,difficolta)
         chiamataApi.fetchTriviaQuestion(this)
 
     }
@@ -141,6 +141,7 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
 
     //quando chiamataApi termina (callback)
     override fun onTriviaQuestionFetched(
+        tipo:String,
         domanda: String,
         risposta_corretta: String,
         risposta_sbagliata_1: String,
@@ -221,7 +222,7 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
 
         //da commentare
         fun getTriviaQuestion() {
-            chiamataApi = ChiamataApi(categoria,difficolta)
+            chiamataApi = ChiamataApi("boolean",categoria,difficolta)
             chiamataApi.fetchTriviaQuestion(this)
             Log.d("getTriviaQuestion","siii")
 
