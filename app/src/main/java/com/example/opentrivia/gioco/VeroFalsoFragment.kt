@@ -25,7 +25,7 @@ import com.google.firebase.database.ValueEventListener
 
 class VeroFalsoFragment : Fragment() {
 
-    private lateinit var timeProgressBar: TimeProgressBarView
+
     private lateinit var database: FirebaseDatabase
     private lateinit var domanda: TextView
     private lateinit var risposta1: Button
@@ -43,16 +43,50 @@ class VeroFalsoFragment : Fragment() {
     private lateinit var topic: String
     private  var contatoreRisposte = 0
 
+
+    companion object {
+        private const val ARG_ELAPSED_TIME = "elapsed_time"
+
+
+
+        fun newInstance(elapsedTime: Long): VeroFalsoFragment {
+            val fragment = VeroFalsoFragment()
+            val args = Bundle()
+            args.putLong(ARG_ELAPSED_TIME, elapsedTime)
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
+
+
+    private var elapsedTimeInMillis: Long = 0
+
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            elapsedTimeInMillis = it.getLong(ARG_ELAPSED_TIME, 0)
+        }
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        val elapsedTime = arguments?.getLong(ARG_ELAPSED_TIME, 0) ?: 0
+        val timeProgressBarView = view?.findViewById<TimeProgressBarView>(R.id.timeProgressBar)
+        timeProgressBarView?.setTotalTimeAndStart(60000) // Imposta anche il tempo totale
+        timeProgressBarView?.elapsedTimeInMillis = elapsedTime // Imposta il tempo trascorso
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_vero_falso, container, false)
-         timeProgressBar = view.findViewById(R.id.timeProgressBar)
+        // timeProgressBar = view.findViewById(R.id.timeProgressBar)
 // Inizializza la barra del tempo con la durata totale
-        timeProgressBar.setTotalTimeAndStart(200000L)
+
+       // timeProgressBar.setTotalTimeAndStart(200000L)
+
 
         modATempoActivity= activity as ModATempoActivity
 
@@ -60,14 +94,13 @@ class VeroFalsoFragment : Fragment() {
         domanda = view.findViewById(R.id.domandavf)
         risposta1 = view.findViewById(R.id.vfrisposta1)
         risposta2 = view.findViewById(R.id.vfrisposta2)
-
         Log.d(modalita,"modalita")
 
 
         domanda.text = modATempoActivity.domanda
-        risposta1.text = modATempoActivity.risposte[0]
+        risposta1.text = "True"
         Log.d("risposta1", risposta1.text as String)
-        risposta2.text = modATempoActivity.risposte[1]
+        risposta2.text = "False"
       //  risposta3.text = modATempoActivity.risposte[2]
         // risposta4.text = modATempoActivity.risposte[3]
         rispostaCorretta = modATempoActivity.rispostaCorretta
@@ -78,7 +111,9 @@ class VeroFalsoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        val timeProgressBarView = view.findViewById<TimeProgressBarView>(R.id.timeProgressBar)
+        // Ora puoi utilizzare timeProgressBarView per impostare il tempo totale e avviare la visualizzazione
+        timeProgressBarView.setTotalTimeAndStart(60000) // Esempio: 120 secondi
         database = FirebaseDatabase.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         var risposteRef = database.getReference("partite").child(modalita).child(difficolta).child(partita)
@@ -186,13 +221,13 @@ class VeroFalsoFragment : Fragment() {
         partita: String,
         modalita: String,
         difficolta: String,
-        topic: String
+        topic:String
     ) {
         // Imposta il valore della variabile partita come desiderato
         this.partita = partita
         this.modalita = modalita
         this.difficolta = difficolta
-        this.topic = topic
+        this.topic=topic
     }
 
 

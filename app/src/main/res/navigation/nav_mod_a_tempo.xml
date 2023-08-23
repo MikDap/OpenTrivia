@@ -3,10 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_mod_a_tempo"
-    app:startDestination="@id/vero_falso">
+    app:startDestination="@id/mod_a_tempo_pronto">
     <fragment
         android:id="@+id/vero_falso"
         android:name="com.example.opentrivia.gioco.VeroFalsoFragment"
         android:label="fragment_vero_falso"
-        tools:layout="@layout/fragment_vero_falso" />
+        tools:layout="@layout/fragment_vero_falso" >
+        <action
+            android:id="@+id/action_vero_falso_to_mod_a_tempo_pronto"
+            app:destination="@id/mod_a_tempo_pronto" />
+    </fragment>
+    <fragment
+        android:id="@+id/mod_a_tempo_pronto"
+        android:name="com.example.opentrivia.gioco.ModATempoProntoFragment"
+        android:label="fragment_mod_a_tempo_pronto"
+        tools:layout="@layout/mod_a_tempo_pronto" >
+        <action
+            android:id="@+id/action_mod_a_tempo_pronto_to_vero_falso"
+            app:destination="@id/vero_falso" />
+    </fragment>
 </navigation>

@@ -31,7 +31,7 @@ var domanda: String = ""
             val result = questionsApi.getTriviaQuestion(1, categoria.toInt(), difficolta, tipo)
             if (result != null) {
                 // Checking the results
-                val tipo = result.body()?.results?.get(0)?.type.toString()
+               // val tipo = result.body()?.results?.get(0)?.type.toString()
 
 
 

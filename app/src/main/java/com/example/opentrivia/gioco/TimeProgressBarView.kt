@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class TimeProgressBarView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val paint = Paint()
     private var totalTimeInMillis = 0L
-    private var elapsedTimeInMillis = 0L
+     var elapsedTimeInMillis = 0L
 
     init {
         paint.color = Color.BLUE

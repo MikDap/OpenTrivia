@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentContainerView
 import com.example.opentrivia.R
@@ -28,7 +29,7 @@ class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback
     var risposta1: String = ""
     var risposta2: String = ""
     var risposte = arrayOf(risposta1, risposta2)
-    //val topics =arrayOf("culturaPop","sport","storia","geografia","arte","scienze" )
+    val topics =arrayOf("culturaPop","sport","storia","geografia","arte","scienze" )
     lateinit var topic: String
     lateinit var categoria: String
     private lateinit var inAttesa: String
@@ -44,12 +45,10 @@ class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback
         invalidateOptionsMenu()
 
     }
-// quando viene scelto il topic sul fragment:
-    //override fun onVariablePassed(topic: String) {
-        // Utilizza la variabile passata dal fragment come desiderato
 
-        //salviamo il topic
-        //this.topic = topic
+
+fun startAtempo() {
+        topic=getRandomTopic(topics)
 //chiamiamo la funzione per ottenere il numero delle categorie per il topic selezionato
         categoria = getCategoria(topic)
 
@@ -57,7 +56,7 @@ class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback
 // prendiamo l'istanza del database (ci serve per creare sul database la partita)
         database = FirebaseDatabase.getInstance()
         // partiteRef = database/partite/modalita/difficolta
-        val partiteRef = database.getReference("partite").child("A Tempo").child(difficolta)
+        val partiteRef = database.getReference("partite").child("a tempo").child(difficolta)
 
 
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
@@ -137,7 +136,16 @@ class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback
         chiamataApi = ChiamataApi("boolean",categoria,difficolta)
         chiamataApi.fetchTriviaQuestion(this)
 
-    //}
+
+
+
+
+    }
+
+// quando viene scelto il topic sul fragment:
+
+
+
 
 
     //quando chiamataApi termina (callback)
@@ -161,24 +169,13 @@ class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback
         val listaRisposte = mutableListOf(
             risposta_corretta,
             risposta_sbagliata_1,
-           // risposta_sbagliata_2,
-         //   risposta_sbagliata_3
         )
-
-        var i = 0
-        while (i <= 1) {
-            val randomIndex = Random().nextInt(listaRisposte.size)
-
-
-            risposte[i] = listaRisposte[randomIndex]
-
-            listaRisposte.removeAt(randomIndex)
-            i++
-        }
 // passiamo al secondo Fragment (DA GESTIRE IL PERMESSO DI RITORNARE INDIETRO DURANTE LA SCHERMATA DELLE DOMANDE E RISPOSTE)
-        val secondFragment = SceltaMultiplaFragmentClassica()
+        val timeProgressBarView = findViewById<TimeProgressBarView>(R.id.timeProgressBar)
+        val elapsedTime = timeProgressBarView.elapsedTimeInMillis
+        val secondFragment = VeroFalsoFragment.newInstance(elapsedTime)
 
-        secondFragment.setParametriPartita(partita, "A Tempo", difficolta,topic)
+        secondFragment.setParametriPartita(partita,"a tempo", difficolta,topic)
         // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, secondFragment).addToBackStack(null).commit();
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction()
@@ -194,7 +191,7 @@ class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback
 
         when (topic) {
 
-            "culturaPop" -> { categoria = getRandomTopic1(categorie_culturaPop) }
+            "culturaPop" -> { categoria = getRandomTopic(categorie_culturaPop) }
 
             "sport" -> {categoria = "21"}
 
@@ -204,7 +201,7 @@ class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback
 
             "arte" -> {categoria = "25"}
 
-            "scienze" -> {categoria = getRandomTopic1(categorie_scienze)}
+            "scienze" -> {categoria = getRandomTopic(categorie_scienze)}
 
         }
         return categoria
@@ -213,7 +210,7 @@ class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback
 
 
     //ritorna una categoria random
-    fun getRandomTopic1(topics: Array<String>): String {
+    fun getRandomTopic(topics: Array<String>): String {
         val randomIndex = Random().nextInt(topics.size)
         return topics[randomIndex]
     }
