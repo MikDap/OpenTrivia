@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- friend_item_layout.xml -->
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -13,6 +13,41 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
+    <ImageView
+        android:id="@+id/clickableImage"
+        android:layout_width="48dp"
+        android:layout_height="32dp"
+        android:src="@drawable/addfriend"
+        android:onClick="onImageClick"
+        android:contentDescription="Immagine Cliccabile"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="16dp"
+        />
+
+    <ImageView
+        android:id="@+id/FriendCheckImage"
+        android:layout_width="48dp"
+        android:layout_height="32dp"
+        android:src="@drawable/addfriendchecked"
+        android:contentDescription="Immagine Cliccabile"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="16dp"
+        />
+
+    <ImageView
+        android:id="@+id/CheckImage"
+        android:layout_width="48dp"
+        android:layout_height="32dp"
+        android:src="@drawable/check"
+        android:contentDescription="Immagine Cliccabile"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="16dp"
+        />
+
+
     <!-- Altri elementi per visualizzare altre informazioni sugli amici, se necessario -->
 
-</LinearLayout>
+</RelativeLayout>

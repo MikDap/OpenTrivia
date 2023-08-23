@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_lista_amici"
+    app:startDestination="@id/listaAmiciFragment2">
+
+    <fragment
+        android:id="@+id/listaAmiciFragment2"
+        android:name="com.example.opentrivia.listaAmici.ListaAmiciFragment"
+        android:label="lista_amici"
+        tools:layout="@layout/lista_amici" >
+        <action
+            android:id="@+id/action_listaAmiciFragment2_to_aggiungiAmico2"
+            app:destination="@id/aggiungiAmico2" />
+    </fragment>
+    <fragment
+        android:id="@+id/aggiungiAmico2"
+        android:name="com.example.opentrivia.listaAmici.AggiungiAmico"
+        android:label="lista_amici_aggiungi_amico"
+        tools:layout="@layout/lista_amici_aggiungi_amico" >
+        <action
+            android:id="@+id/action_aggiungiAmico2_to_listaAmiciFragment2"
+            app:destination="@id/listaAmiciFragment2" />
+    </fragment>
+</navigation>
