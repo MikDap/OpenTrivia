@@ -16,11 +16,11 @@ class ChiamataApi(
     var difficolta: String
 ) {
 
-    var domanda: String = ""
-    var risposta_corretta: String = ""
-    var risposta_sbagliata_1: String = ""
-    var risposta_sbagliata_2: String = ""
-    var risposta_sbagliata_3: String = ""
+var domanda: String = ""
+ var risposta_corretta: String = ""
+ var risposta_sbagliata_1: String = ""
+ var risposta_sbagliata_2: String = ""
+ var risposta_sbagliata_3: String = ""
     private var callback: TriviaQuestionCallback? = null
 
     fun fetchTriviaQuestion(callback: TriviaQuestionCallback) {
@@ -31,7 +31,7 @@ class ChiamataApi(
             val result = questionsApi.getTriviaQuestion(1, categoria.toInt(), difficolta, tipo)
             if (result != null) {
                 // Checking the results
-                val tipo = result.body()?.results?.get(0)?.type.toString()
+               // val tipo = result.body()?.results?.get(0)?.type.toString()
 
 
 
@@ -58,12 +58,14 @@ class ChiamataApi(
 
 
                 if (tipo.equals("boolean")) {
-                    domanda = result.body()?.results?.get(0)?.question.toString()
 
-                    risposta_corretta =
+                     domanda = result.body()?.results?.get(0)?.question.toString()
+
+                     risposta_corretta =
                         result.body()?.results?.get(0)?.correct_answer.toString()
 
-                    risposta_sbagliata_1 =
+                     risposta_sbagliata_1 =
+
                         result.body()?.results?.get(0)?.incorrect_answers?.get(0).toString()
                     callback.onTriviaQuestionFetched(tipo,domanda, risposta_corretta, risposta_sbagliata_1,"","")
                 }

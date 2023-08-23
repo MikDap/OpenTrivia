@@ -138,7 +138,7 @@ class ModArgomentoActivity : AppCompatActivity(), ArgomentoSingoloFragment.MyFra
 
 
     //facciamo la chiamata api
-        chiamataApi = ChiamataApi(categoria,difficolta)
+        chiamataApi = ChiamataApi("multiple",categoria,difficolta)
         chiamataApi.fetchTriviaQuestion(this)
 
     }
@@ -146,6 +146,7 @@ class ModArgomentoActivity : AppCompatActivity(), ArgomentoSingoloFragment.MyFra
 
     //quando chiamataApi termina (callback)
     override fun onTriviaQuestionFetched(
+        tipo: String,
         domanda: String,
         risposta_corretta: String,
         risposta_sbagliata_1: String,
@@ -230,7 +231,7 @@ class ModArgomentoActivity : AppCompatActivity(), ArgomentoSingoloFragment.MyFra
 
     //da commentare
     fun getTriviaQuestion() {
-        chiamataApi = ChiamataApi(categoria,difficolta)
+        chiamataApi = ChiamataApi("multiple",categoria,difficolta)
         chiamataApi.fetchTriviaQuestion(this)
         Log.d("getTriviaQuestion","si")
 
