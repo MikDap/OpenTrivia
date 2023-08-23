@@ -1,6 +1,7 @@
 package com.example.opentrivia.listaAmici
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,57 +17,62 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 
-class AggiungiAmico : Fragment(), UsersAdapter.OnUserClickListener {
+class AggiungiAmico : Fragment() {
 
     private lateinit var database: FirebaseDatabase
     private lateinit var editText: EditText
     private lateinit var buttonSearchFriend: Button
     private lateinit var recyclerView: RecyclerView
 
-    private val userList = mutableListOf<String>()
-    val layoutManager = LinearLayoutManager(requireContext())
-    val adapter = UsersAdapter(userList, this)
+    private val userKeyMap = mutableMapOf<String, String>()  // Chiave: ID utente, Valore: Nome amico
+
+    val adapter = UsersAdapter(userKeyMap)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-      val view = inflater.inflate(R.layout.lista_amici_aggiungi_amico, container, false)
+        val view = inflater.inflate(R.layout.lista_amici_aggiungi_amico, container, false)
 
         editText = view.findViewById(R.id.editTextFriendName)
         buttonSearchFriend = view.findViewById(R.id.buttonSearchFriend)
-        recyclerView = view.findViewById(R.id.recyclerViewFriends)
+        recyclerView = view.findViewById(R.id.recyclerViewUsers)
 
         database = FirebaseDatabase.getInstance()
-
-
-        recyclerView.layoutManager = layoutManager
-
-        recyclerView.adapter = adapter
-
-        buttonSearchFriend.setOnClickListener {
-            val friendNameToSearch = editText.text.toString().trim()
-            searchFriend(friendNameToSearch)
-        }
-
 
 
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.layoutManager = layoutManager
 
+
+        recyclerView.adapter = adapter
+
+        buttonSearchFriend.setOnClickListener {
+            val friendNameToSearch = editText.text.toString().trim()
+            Log.d("amico0", friendNameToSearch)
+            searchFriend(friendNameToSearch)
+        }
+    }
     private fun searchFriend(friendName: String) {
+        Log.d("amico1", friendName)
         val usersRef = database.getReference("users")
-        userList.clear()
-        usersRef.orderByValue().startAt(friendName).endAt(friendName + "\uf8ff")
-            .addListenerForSingleValueEvent(object : ValueEventListener {
+        userKeyMap.clear()
+        usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    for (friendSnapshot in snapshot.children) {
-                        val friendName = friendSnapshot.getValue(String::class.java)
-                        friendName?.let {
-                            userList.add(it)
+                    for (userSnapshot in snapshot.children) {
+                        val userId = userSnapshot.key  // ID utente
+                        val username = userSnapshot.child("username").getValue(String::class.java)
+
+                        if (userId != null && username != null && username.contains(friendName, ignoreCase = true)) {
+                            userKeyMap[userId] = username
                         }
+                        Log.d("amico", friendName)
                     }
                     adapter.notifyDataSetChanged()
                 }
@@ -77,10 +83,5 @@ class AggiungiAmico : Fragment(), UsersAdapter.OnUserClickListener {
             })
     }
 
-
-    override fun onUserClick(username: String) {
-        // Qui puoi gestire l'evento di clic su un utente.
-        // Ad esempio, puoi aggiungere l'utente alla lista degli amici o eseguire altre azioni.
-    }
 
 }

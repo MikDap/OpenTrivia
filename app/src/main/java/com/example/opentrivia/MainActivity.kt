@@ -1,6 +1,7 @@
 package com.example.opentrivia
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -21,6 +22,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.database.ktx.database
+import androidx.navigation.Navigation.findNavController
+import com.example.opentrivia.gioco.ModClassicaActivity
+import com.example.opentrivia.listaAmici.ListaAmiciActivity
 import com.example.opentrivia.listaAmici.ListaAmiciFragment
 
 // L'activity eredita dalla classe AppCompatActivity, che fornisce funzionalità aggiuntive rispetto all'Activity standard.
@@ -30,11 +34,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
 // Crea un ActivityResultLauncher che registra una callback
 // per il contratto dei risultati dell'attività FirebaseUI:
         val user = Firebase.auth.currentUser
-        // if (user == null) {
+        if (user == null) {
 
         val signInLauncher = registerForActivityResult(
 
@@ -64,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 // consentirà di eseguire il login tramite i provider forniti
         signInLauncher.launch(signInIntent)
 
-        //  }
+         }
         val database =
             Firebase.database("https://opentrivia-fd778-default-rtdb.europe-west1.firebasedatabase.app/")
 
@@ -88,8 +91,7 @@ class MainActivity : AppCompatActivity() {
                         val fragmentManager = supportFragmentManager
                         val fragmentTransaction = fragmentManager.beginTransaction()
                         val fragment = ListaAmiciFragment()
-                        fragmentTransaction.replace(R.id.fragmentContainerView2, fragment)
-                        fragmentTransaction.commit()
+                        fragmentTransaction.replace(R.id.fragmentContainerView2, fragment).addToBackStack("Menu").commit()
                         return true
                     }
                     R.id.inbox -> {
@@ -101,12 +103,9 @@ class MainActivity : AppCompatActivity() {
                        return true
                     }
                     R.id.lista_amici -> {
-                        val fragmentManager = supportFragmentManager
-                        val fragmentTransaction = fragmentManager.beginTransaction()
-                        val fragment = ListaAmiciFragment()
-                        fragmentTransaction.replace(R.id.fragmentContainerView2, fragment)
-                        fragmentTransaction.commit()
-                       return true
+                        val intent = Intent(this@MainActivity, ListaAmiciActivity::class.java)
+                        startActivity(intent)
+                    return true
                     }
                 }
                 return false

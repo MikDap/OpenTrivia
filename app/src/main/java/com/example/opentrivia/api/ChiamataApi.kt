@@ -39,15 +39,15 @@ var domanda: String = ""
 
                 if (tipo.equals("multiple")) {
                     domanda = result.body()?.results?.get(0)?.question.toString()
-Log.d("api,domanda",domanda)
-                     risposta_corretta =
+                    Log.d("api,domanda",domanda)
+                    risposta_corretta =
                         result.body()?.results?.get(0)?.correct_answer.toString()
-Log.d("api,rispost_corr",risposta_corretta)
-                     risposta_sbagliata_1 =
+                    Log.d("api,rispost_corr",risposta_corretta)
+                    risposta_sbagliata_1 =
                         result.body()?.results?.get(0)?.incorrect_answers?.get(0).toString()
-                     risposta_sbagliata_2 =
+                    risposta_sbagliata_2 =
                         result.body()?.results?.get(0)?.incorrect_answers?.get(1).toString()
-                     risposta_sbagliata_3 =
+                    risposta_sbagliata_3 =
                         result.body()?.results?.get(0)?.incorrect_answers?.get(2).toString()
                     callback.onTriviaQuestionFetched(tipo,domanda, risposta_corretta, risposta_sbagliata_1, risposta_sbagliata_2, risposta_sbagliata_3)
 
@@ -58,12 +58,14 @@ Log.d("api,rispost_corr",risposta_corretta)
 
 
                 if (tipo.equals("boolean")) {
+
                      domanda = result.body()?.results?.get(0)?.question.toString()
 
                      risposta_corretta =
                         result.body()?.results?.get(0)?.correct_answer.toString()
 
                      risposta_sbagliata_1 =
+
                         result.body()?.results?.get(0)?.incorrect_answers?.get(0).toString()
                     callback.onTriviaQuestionFetched(tipo,domanda, risposta_corretta, risposta_sbagliata_1,"","")
                 }
