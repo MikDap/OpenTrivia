@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentContainerView
+import com.example.opentrivia.AttendiTurnoFragment
 import com.example.opentrivia.R
 import com.example.opentrivia.api.ChiamataApi
 import com.google.firebase.auth.FirebaseAuth
@@ -33,8 +34,8 @@ class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback
     lateinit var topic: String
     lateinit var categoria: String
     private lateinit var inAttesa: String
-
-
+    var elapsedTimeInMillis2: Long = 0
+    var associatedFragment: VeroFalsoFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -171,16 +172,16 @@ fun startAtempo() {
             risposta_sbagliata_1,
         )
 // passiamo al secondo Fragment (DA GESTIRE IL PERMESSO DI RITORNARE INDIETRO DURANTE LA SCHERMATA DELLE DOMANDE E RISPOSTE)
-        val timeProgressBarView = findViewById<TimeProgressBarView>(R.id.timeProgressBar)
-        val elapsedTime = timeProgressBarView.elapsedTimeInMillis
-        val secondFragment = VeroFalsoFragment.newInstance(elapsedTime)
-
+        associatedFragment?.passElapsedTime(associatedFragment!!.progressBarView.elapsedTimeInMillis)
+        // chiamiamo la funzione newInstance del fragment per passare il tempo rimanente al nuovo fragment
+        val secondFragment = VeroFalsoFragment.newInstance(elapsedTimeInMillis2)
+        associatedFragment = secondFragment
         secondFragment.setParametriPartita(partita,"a tempo", difficolta,topic)
         // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, secondFragment).addToBackStack(null).commit();
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainerViewGioco3, secondFragment).commit()
-        }, 500)
+        }, 100)
     }
 
     // in base al topic ricevuto, restituisco i numeri dedicati al topic (specificati in OpenTriviaDB)
@@ -227,8 +228,17 @@ fun startAtempo() {
 
 
 
+//mettere funzioni per passare al fragment vittoria, sconfitta o attendi avversario
+    //verrano chiamate da TimeProgressBarView dopo il ciclo while
+fun schermataAttendi() {
 
+    val fragment = AttendiTurnoFragment()
+    Handler(Looper.getMainLooper()).postDelayed({
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainerViewGioco3, fragment).commit()
+    }, 500)
 
+}
 
 
 }

@@ -42,8 +42,26 @@ class VeroFalsoFragment : Fragment() {
     private lateinit var difficolta: String
     private lateinit var topic: String
     private  var contatoreRisposte = 0
+    var elapsedTimeInMillis: Long = 0
+    lateinit var progressBarView: TimeProgressBarView
 
 
+    //1. in ModATempoActivity creiamo l'istanza di questa classe col tempo settato (la prima volta a 0)
+    //attraverso la funzione newInstance.
+
+    //2. Nell'OnViewCreated passiamo il tempo preso tramite newInstance alla TimeProgressBar.
+
+    //3. Quando l'utente dà la risposta (vero o falso), salviamo il tempo trascorso nella TimeProgressBar
+    // e lo salviamo nella variabile di classe elapsedTimeInMillis.
+
+    //4. Chiamiamo la funzione passElapsedTime per passare elapsedTimeInMillis a ModATempoActivity.
+
+    //5. Riprende dal punto 1.
+
+
+
+
+    //funzione per passare il tempo rimanente dall'activity alla nuova istanza di questo fragment
     companion object {
         private const val ARG_ELAPSED_TIME = "elapsed_time"
 
@@ -60,13 +78,19 @@ class VeroFalsoFragment : Fragment() {
 
 
 
-     var elapsedTimeInMillis: Long = 0
 
 
+//funzione per passare il tempo dall'istanza di questo fragment all'activity
+fun passElapsedTime(elapsedTime: Long) {
+    modATempoActivity= activity as ModATempoActivity
+    modATempoActivity.elapsedTimeInMillis2 = elapsedTime
 
+}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //prende il tempo rimanente che ci siamo salvati in newInstance e lo mette nella variabile di classe
         arguments?.let {
             elapsedTimeInMillis = it.getLong(ARG_ELAPSED_TIME, 0)
         }
@@ -77,16 +101,8 @@ class VeroFalsoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val elapsedTime = arguments?.getLong(ARG_ELAPSED_TIME, 0) ?: 0
-        val timeProgressBarView = view?.findViewById<TimeProgressBarView>(R.id.timeProgressBar)
-        timeProgressBarView?.setTotalTimeAndStart(60000) // Imposta anche il tempo totale
-        timeProgressBarView?.elapsedTimeInMillis = elapsedTime // Imposta il tempo trascorso
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_vero_falso, container, false)
-        // timeProgressBar = view.findViewById(R.id.timeProgressBar)
-// Inizializza la barra del tempo con la durata totale
-
-       // timeProgressBar.setTotalTimeAndStart(200000L)
 
 
         modATempoActivity= activity as ModATempoActivity
@@ -112,9 +128,16 @@ class VeroFalsoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //prende il tempo rimanente da newInstance e lo passa alla timeProgressBar
+        val elapsedTime = arguments?.getLong(ARG_ELAPSED_TIME, 0) ?: 0
         val timeProgressBarView = view.findViewById<TimeProgressBarView>(R.id.timeProgressBar)
         // Ora puoi utilizzare timeProgressBarView per impostare il tempo totale e avviare la visualizzazione
+        timeProgressBarView.associatedFragment = this
         timeProgressBarView.setTotalTimeAndStart(60000) // Esempio: 120 secondi
+        timeProgressBarView.elapsedTimeInMillis = elapsedTime
+        progressBarView = timeProgressBarView
+
+
         database = FirebaseDatabase.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         var risposteRef = database.getReference("partite").child(modalita).child(difficolta).child(partita)
@@ -127,22 +150,23 @@ class VeroFalsoFragment : Fragment() {
             if (!rispostaData) {
 
                 if (risposta1.text == rispostaCorretta) {
-                    risposta1.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
+
                         risposta1.setBackgroundColor(Color.GREEN)
-                    }, 1000)
 
                     updateRisposte(risposteRef,"corretta")
 
-
+                    //aggiorna la variabile di classe col tempo trascorso nella classe timeProgressBar
+          //          passElapsedTime(timeProgressBarView?.elapsedTimeInMillis!!)
 
                 } else {
-                    risposta1.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
+
                         risposta1.setBackgroundColor(Color.RED)
-                    }, 1000)
 
                     updateRisposte(risposteRef,"sbagliata")
+           //         passElapsedTime(timeProgressBarView?.elapsedTimeInMillis!!)
+             //       if (timeProgressBarView.fine == true) {
+             //           modATempoActivity.schermataAttendi()
+             //       }
                 }
                 Log.d("contatoreRisposte2", contatoreRisposte.toString())
                 rispostaData = true
@@ -153,18 +177,16 @@ class VeroFalsoFragment : Fragment() {
         risposta2.setOnClickListener {
             if (!rispostaData) {
                 if (risposta2.text == rispostaCorretta) {
-                    risposta2.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
                         risposta2.setBackgroundColor(Color.GREEN)
-                    }, 1000)
                     updateRisposte(risposteRef,"corretta")
 
+         //           passElapsedTime(timeProgressBarView?.elapsedTimeInMillis!!)
+
                 } else {
-                    risposta2.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
+
                         risposta2.setBackgroundColor(Color.RED)
-                    }, 1000)
                     updateRisposte(risposteRef,"sbagliata")
+          //          passElapsedTime(timeProgressBarView?.elapsedTimeInMillis!!)
 
                 }
                 rispostaData = true
@@ -261,13 +283,8 @@ class VeroFalsoFragment : Fragment() {
                         Log.d("contatoreRisposte", contatoreRisposte.toString())
                         risposteRef.child("risposteTotali").setValue(punti)
 
-                        if (contatoreRisposte < 10) {
+
                             modATempoActivity.getTriviaQuestion()
-                        } else {
-                            startActivity(Intent(activity, MainActivity::class.java))
-
-                        }
-
 
 
                     } else {
@@ -300,12 +317,12 @@ class VeroFalsoFragment : Fragment() {
                         contatoreRisposte = punti
                         Log.d("contatoreRisposte", contatoreRisposte.toString())
                         risposteRef.child("risposteTotali").setValue(punti)
-                        if (contatoreRisposte < 10) {
+                    //    if (contatoreRisposte < 10) {
                             modATempoActivity.getTriviaQuestion()
-                        }
-                        else {startActivity(Intent(activity, MainActivity::class.java))
+               //         }
+               //         else {startActivity(Intent(activity, MainActivity::class.java))
 
-                        }
+             //           }
 
                     } else {
                         // Il dato non esiste nel database, quindi scrivi qualcosa
@@ -341,7 +358,9 @@ class VeroFalsoFragment : Fragment() {
 
     }
 
-
+fun schermataAttendi2() {
+    modATempoActivity.schermataAttendi()
+}
 
 }
 
