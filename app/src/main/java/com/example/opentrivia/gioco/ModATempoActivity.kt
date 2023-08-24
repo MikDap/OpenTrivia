@@ -49,10 +49,6 @@ class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback
 
 
 fun startAtempo() {
-        topic=getRandomTopic(topics)
-//chiamiamo la funzione per ottenere il numero delle categorie per il topic selezionato
-        categoria = getCategoria(topic)
-
 
 // prendiamo l'istanza del database (ci serve per creare sul database la partita)
         database = FirebaseDatabase.getInstance()
@@ -134,9 +130,7 @@ fun startAtempo() {
 
 
         //facciamo la chiamata api
-        chiamataApi = ChiamataApi("boolean",categoria,difficolta)
-        chiamataApi.fetchTriviaQuestion(this)
-
+  getTriviaQuestion()
 
 
 
@@ -219,6 +213,9 @@ fun startAtempo() {
 
     //da commentare
     fun getTriviaQuestion() {
+        topic=getRandomTopic(topics)
+//chiamiamo la funzione per ottenere il numero delle categorie per il topic selezionato
+        categoria = getCategoria(topic)
         chiamataApi = ChiamataApi("boolean",categoria,difficolta)
         chiamataApi.fetchTriviaQuestion(this)
         Log.d("getTriviaQuestion","siii")

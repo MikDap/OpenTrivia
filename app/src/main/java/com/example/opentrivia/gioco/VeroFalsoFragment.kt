@@ -358,8 +358,70 @@ fun passElapsedTime(elapsedTime: Long) {
 
     }
 
-fun schermataAttendi2() {
-    modATempoActivity.schermataAttendi()
+fun finePartita() {
+
+    database = FirebaseDatabase.getInstance()
+    val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+    var giocatoriRef = database.getReference("partite").child(modalita).child(difficolta).child(partita)
+        .child("giocatori")
+var risposte1 = 0
+    var risposte2 = 0
+
+    giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            for (giocatore in dataSnapshot.children) {
+
+                for(topic in giocatore.children) {
+
+                    if (topic.hasChild("risposteCorrette")) {
+
+
+                        if (giocatore.equals(uid)) {
+                            val risposteCorrette = topic.child("risposteCorrette").getValue(Int::class.java)
+                            if (risposteCorrette != null) {
+                                risposte1 += risposteCorrette
+                            }
+                        }
+
+
+                        else {
+                            val risposteCorrette = topic.child("risposteCorrette").getValue(Int::class.java)
+                            if (risposteCorrette != null) {
+                                risposte2 += risposteCorrette
+                            }
+
+                        }
+                    }
+                }
+
+
+            }
+
+
+if (risposte1 > risposte2) {
+
+}
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+        override fun onCancelled(error: DatabaseError) {
+            TODO("Not yet implemented")
+        }
+    })
+
+
+            modATempoActivity.schermataAttendi()
 }
 
 }
