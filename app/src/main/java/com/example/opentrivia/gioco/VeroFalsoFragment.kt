@@ -60,7 +60,8 @@ class VeroFalsoFragment : Fragment() {
 
 
 
-    private var elapsedTimeInMillis: Long = 0
+     var elapsedTimeInMillis: Long = 0
+
 
 
 
