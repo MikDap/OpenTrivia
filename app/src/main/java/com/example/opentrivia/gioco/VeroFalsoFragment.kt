@@ -79,6 +79,7 @@ class VeroFalsoFragment : Fragment() {
 
 
 
+
 //funzione per passare il tempo dall'istanza di questo fragment all'activity
 fun passElapsedTime(elapsedTime: Long) {
     modATempoActivity= activity as ModATempoActivity
