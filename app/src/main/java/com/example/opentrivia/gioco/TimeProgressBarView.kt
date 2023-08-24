@@ -41,7 +41,7 @@ class TimeProgressBarView(context: Context, attrs: AttributeSet) : View(context,
             }
             //chiamate alle funzioni in ModATempoActivity dentro verofalsofragment quando fine = true
       //    fine = true
-            associatedFragment?.schermataAttendi2()
+            associatedFragment?.finePartita()
         }
     }
 
