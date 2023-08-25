@@ -237,5 +237,13 @@ fun schermataAttendi() {
 
 }
 
+    fun schermataVittoria() {
 
+        val fragment = AttendiTurnoFragment()
+        Handler(Looper.getMainLooper()).postDelayed({
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerViewGioco3, fragment).commit()
+        }, 500)
+
+    }
 }
