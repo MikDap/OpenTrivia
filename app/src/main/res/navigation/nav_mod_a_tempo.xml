@@ -16,12 +16,17 @@
 
             android:id="@+id/action_vero_falso_to_attendiTurnoFragment"
             app:destination="@id/attendiTurnoFragment" />
+
+        <action
+            android:id="@+id/action_vero_falso_to_sconfitta"
+            app:destination="@id/sconfitta" />
         <action
             android:id="@+id/action_vero_falso_to_vittoria"
             app:destination="@id/vittoria" />
         <action
-            android:id="@+id/action_vero_falso_to_sconfitta"
-            app:destination="@id/sconfitta" />
+            android:id="@+id/action_vero_falso_to_pareggio2"
+            app:destination="@id/pareggio2" />
+
 
     </fragment>
     <fragment
@@ -29,9 +34,6 @@
         android:name="com.example.opentrivia.gioco.ModATempoProntoFragment"
         android:label="fragment_mod_a_tempo_pronto"
         tools:layout="@layout/mod_a_tempo_pronto" >
-        <action
-            android:id="@+id/action_mod_a_tempo_pronto_to_vero_falso"
-            app:destination="@id/vero_falso" />
     </fragment>
     <fragment
 
@@ -45,9 +47,17 @@
         android:name="com.example.opentrivia.Sconfitta"
         android:label="fragment_sconfitta"
         tools:layout="@layout/fragment_sconfitta" />
+
+
     <fragment
         android:id="@+id/vittoria"
         android:name="com.example.opentrivia.Vittoria"
         android:label="Vittoria" />
+
+    <fragment
+        android:id="@+id/pareggio2"
+        android:name="com.example.opentrivia.gioco.pareggio"
+        android:label="fragment_pareggio"
+        tools:layout="@layout/fragment_pareggio" />
 
 </navigation>

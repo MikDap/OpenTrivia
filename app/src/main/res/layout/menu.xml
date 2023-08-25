@@ -6,7 +6,8 @@
     android:id="@+id/textHello"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".menu.Menu">
+    tools:context=".menu.Menu"
+    android:background="#062E40">
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
@@ -14,11 +15,12 @@
         android:layout_marginStart="143dp"
         android:layout_marginTop="72dp"
         android:layout_marginEnd="143dp"
-        android:text="@string/trivia_crack"
-        android:textSize="24sp"
+        android:text="OPEN TRIVIA"
+        android:textSize="50sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <Button
         android:id="@+id/startButton"
@@ -35,7 +37,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <!-- ScrollView orizzontale per le partite in corso -->
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        android:src="@drawable/image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.396" />
+
     <HorizontalScrollView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -56,5 +71,6 @@
             <!-- Ad esempio, puoi creare una vista personalizzata per rappresentare ogni partita in corso. -->
 
         </LinearLayout>
+
     </HorizontalScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

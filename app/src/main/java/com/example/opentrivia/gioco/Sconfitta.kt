@@ -7,12 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 
 
-
 class Sconfitta : Fragment() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(
@@ -20,7 +20,9 @@ class Sconfitta : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_sconfitta, container, false)
+
     }
 
 
