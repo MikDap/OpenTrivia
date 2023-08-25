@@ -69,19 +69,24 @@ fun startAtempo() {
                 if (dataSnapshot.hasChildren()) {
                     for (sottonodo in dataSnapshot.children) {
                         //se c'è almeno una partita con un giocatore in attesa..(lo associa)
-                        if (sottonodo.child("inAttesa").value == "si" && sottonodo.hasChild("topic")) {
-                            if (sottonodo.child("topic").value == topic) {
+                        var giocatorediverso = true
+                        if (sottonodo.child("giocatori").hasChild(uid)) {
+                            giocatorediverso = false
+                        }
+                        if (sottonodo.child("inAttesa").value == "si" && giocatorediverso) {
                                 //prende id della partita
                                 partita = sottonodo.key.toString()
                                 //setta database/partite/modalita/difficolta/giocatori/id
                                 partiteRef.child(partita).child("giocatori").child(uid)
                                     .setValue(name)
+                            partiteRef.child(partita).child("giocatori").child(uid)
+                                .child("fineTurno").setValue("no")
+
                                 //cambia inAttesa in no
                                 partiteRef.child(partita).child("inAttesa").setValue("no")
                                 condizioneSoddisfatta = true
 
                                 break
-                            }
                         }
                     }
 
@@ -98,6 +103,8 @@ fun startAtempo() {
                         .setValue(topic)
                     partiteRef.child(partita).child("giocatori")
                         .child(uid).setValue(name)
+                    partiteRef.child(partita).child("giocatori").child(uid)
+                        .child("fineTurno").setValue("no")
                     condizioneSoddisfatta = true
 
                 }
@@ -116,6 +123,8 @@ fun startAtempo() {
                         .setValue(topic)
                     partiteRef.child(partita).child("giocatori")
                         .child(uid).setValue(name)
+                    partiteRef.child(partita).child("giocatori").child(uid)
+                        .child("fineTurno").setValue("no")
                     //   partiteRef.child(partita).child("giocatori").child(uid).child(name).child("risposteCorrette").setValue(0)
                     condizioneSoddisfatta = true
                 }
@@ -239,7 +248,27 @@ fun schermataAttendi() {
 
     fun schermataVittoria() {
 
-        val fragment = AttendiTurnoFragment()
+        val fragment = Vittoria()
+        Handler(Looper.getMainLooper()).postDelayed({
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerViewGioco3, fragment).commit()
+        }, 500)
+
+    }
+
+    fun schermataPareggio() {
+
+        val fragment = Pareggio()
+        Handler(Looper.getMainLooper()).postDelayed({
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerViewGioco3, fragment).commit()
+        }, 500)
+
+    }
+
+    fun schermataSconfitta() {
+
+        val fragment = Sconfitta()
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainerViewGioco3, fragment).commit()
