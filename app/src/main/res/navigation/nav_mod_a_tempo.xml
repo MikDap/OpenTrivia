@@ -16,7 +16,7 @@
 
             android:id="@+id/action_vero_falso_to_attendiTurnoFragment"
             app:destination="@id/attendiTurnoFragment" />
-
+        <action
             android:id="@+id/action_vero_falso_to_vittoria"
             app:destination="@id/vittoria" />
         <action
@@ -39,14 +39,15 @@
         android:name="com.example.opentrivia.AttendiTurnoFragment"
         android:label="fragment_attendi_turno"
         tools:layout="@layout/fragment_attendi_turno" />
-        android:id="@+id/vittoria"
-        android:name="com.example.opentrivia.gioco.vittoria"
-        android:label="fragment_vittoria"
-        tools:layout="@layout/fragment_vittoria" />
+
     <fragment
         android:id="@+id/sconfitta"
-        android:name="com.example.opentrivia.gioco.sconfitta"
+        android:name="com.example.opentrivia.Sconfitta"
         android:label="fragment_sconfitta"
         tools:layout="@layout/fragment_sconfitta" />
+    <fragment
+        android:id="@+id/vittoria"
+        android:name="com.example.opentrivia.Vittoria"
+        android:label="Vittoria" />
 
 </navigation>

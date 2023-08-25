@@ -398,17 +398,8 @@ var risposte1 = 0
             }
 
 
-if (risposte1 > risposte2) {
-
-}
-
 
         }
-
-
-
-
-
 
 
 
@@ -420,6 +411,15 @@ if (risposte1 > risposte2) {
         }
     })
 
+
+
+    if (risposte1 > risposte2) {
+
+    }
+
+   else if (risposte1 == risposte2) {}
+
+    else if (risposte1 < risposte2) {}
 
             modATempoActivity.schermataAttendi()
 }
