@@ -12,14 +12,11 @@ import android.widget.TextView
 import com.example.opentrivia.R
 
 
-class pareggio : Fragment() {
+class Pareggio : Fragment() {
     lateinit var pareggio:TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
     }
 
     override fun onCreateView(

@@ -72,8 +72,8 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
                 if (dataSnapshot.hasChildren()) {
                     for (sottonodo in dataSnapshot.children) {
                         //se c'è almeno una partita con un giocatore in attesa..(lo associa)
-                        if (sottonodo.child("inAttesa").value == "si" && sottonodo.hasChild("topic")) {
-                            if (sottonodo.child("topic").value == topic) {
+                        if (sottonodo.child("inAttesa").value == "si") {
+
                                 //prende id della partita
                                 partita = sottonodo.key.toString()
                                 //setta database/partite/modalita/difficolta/giocatori/id
@@ -84,7 +84,6 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
                                 condizioneSoddisfatta = true
 
                                 break
-                            }
                         }
                     }
 

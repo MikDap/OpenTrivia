@@ -44,19 +44,19 @@
 
     <fragment
         android:id="@+id/sconfitta"
-        android:name="com.example.opentrivia.Sconfitta"
+        android:name="com.example.opentrivia.gioco.Sconfitta"
         android:label="fragment_sconfitta"
         tools:layout="@layout/fragment_sconfitta" />
 
 
     <fragment
         android:id="@+id/vittoria"
-        android:name="com.example.opentrivia.Vittoria"
+        android:name="com.example.opentrivia.gioco.Vittoria"
         android:label="Vittoria" />
 
     <fragment
         android:id="@+id/pareggio2"
-        android:name="com.example.opentrivia.gioco.pareggio"
+        android:name="com.example.opentrivia.gioco.Pareggio"
         android:label="fragment_pareggio"
         tools:layout="@layout/fragment_pareggio" />
 
