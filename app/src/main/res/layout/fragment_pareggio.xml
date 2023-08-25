@@ -12,11 +12,11 @@
         android:layout_height="100dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:background="#F44336"
-        android:text="HAI PERSO"
-        android:gravity="center"
-        android:textColor="#F2F3EC"
+        android:background="#AEA3A7"
+        android:text="PAREGGIO"
+        android:textColor="#121010"
         android:textSize="30sp"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +48,7 @@
         app:layout_constraintStart_toStartOf="@id/congratulazioni"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="20dp"
-         />
+        />
 
     <Button
         android:id="@+id/nuova1"
