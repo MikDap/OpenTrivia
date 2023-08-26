@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_ruotaFragment_to_sceltaMultiplaFragmentClassica"
             app:destination="@id/sceltaMultiplaFragmentClassica" />
+        <action
+            android:id="@+id/action_ruotaFragment_to_mod_classica_conquista"
+            app:destination="@id/mod_classica_conquista" />
     </fragment>
     <fragment
         android:id="@+id/sceltaMultiplaFragmentClassica"
@@ -22,5 +25,14 @@
         <action
             android:id="@+id/action_sceltaMultiplaFragmentClassica_to_ruotaFragment"
             app:destination="@id/ruotaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mod_classica_conquista"
+        android:name="com.example.opentrivia.mod_classica_conquista"
+        android:label="fragment_mod_classica_conquista"
+        tools:layout="@layout/mod_classica_conquista" >
+        <action
+            android:id="@+id/action_mod_classica_conquista_to_sceltaMultiplaFragmentClassica"
+            app:destination="@id/sceltaMultiplaFragmentClassica" />
     </fragment>
 </navigation>

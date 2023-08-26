@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".gioco.RuotaFragment"
+    android:background="#062E40">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <!-- Aggiungi i sette rettangoli colorati -->
+        <LinearLayout
+            android:id="@+id/rectangleContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/sport"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/contour_background"
+                    android:backgroundTint="#FF0006"
+                    android:elevation="4dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/storia"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/contour_background"
+                    android:backgroundTint="#00FF00" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/scienze"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/contour_background"
+                    android:backgroundTint="#0000FF" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/arte"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/contour_background"
+                    android:backgroundTint="#FFFF00" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/geografia"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/contour_background"
+                    android:backgroundTint="#FF00FF" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="0dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/culturaPop"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/contour_background"
+                    android:backgroundTint="#00FFFF" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="45dp"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/sport2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/contour_background"
+                    android:backgroundTint="#FF0006" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/storia2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/contour_background"
+                    android:backgroundTint="#00FF00" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/scienze2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/contour_background"
+                    android:backgroundTint="#0000FF" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/arte2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/contour_background"
+                    android:backgroundTint="#FFFF00" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/geografia2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/contour_background"
+                    android:backgroundTint="#FF00FF" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="0dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/culturaPop2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/contour_background"
+                    android:backgroundTint="#00FFFF" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/storiabutton"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="200dp"
+            android:background="#FFEB3B"
+            app:layout_constraintStart_toStartOf="@id/rectangleContainer"
+            app:layout_constraintTop_toBottomOf="@id/rectangleContainer"
+
+            />
+
+        <Button
+            android:id="@+id/geografiabutton"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="10dp"
+            android:background="#3F51B5"
+            app:layout_constraintEnd_toStartOf="@id/artebutton"
+            app:layout_constraintStart_toEndOf="@id/storiabutton"
+            app:layout_constraintTop_toTopOf="@id/storiabutton" />
+
+        <Button
+            android:id="@+id/artebutton"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="10dp"
+            android:background="#F44336"
+            app:layout_constraintEnd_toEndOf="@id/rectangleContainer"
+            app:layout_constraintStart_toEndOf="@id/geografiabutton"
+            app:layout_constraintTop_toTopOf="@id/geografiabutton" />
+
+        <Button
+            android:id="@+id/sportbutton"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="30dp"
+            android:background="#FF9800"
+            app:layout_constraintStart_toStartOf="@id/rectangleContainer"
+            app:layout_constraintTop_toBottomOf="@id/storiabutton" />
+
+        <Button
+            android:id="@+id/intrattenimentobutton"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="10dp"
+            android:background="#E7A2F3"
+            app:layout_constraintEnd_toStartOf="@id/scienzebutton"
+            app:layout_constraintStart_toEndOf="@id/sportbutton"
+            app:layout_constraintTop_toTopOf="@id/sportbutton" />
+
+        <Button
+            android:id="@+id/scienzebutton"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="10dp"
+            android:background="#00BCD4"
+            app:layout_constraintEnd_toEndOf="@id/rectangleContainer"
+            app:layout_constraintStart_toEndOf="@id/intrattenimentobutton"
+            app:layout_constraintTop_toTopOf="@id/intrattenimentobutton" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

@@ -18,9 +18,9 @@ class TimeProgressBarView(context: Context, attrs: AttributeSet) : View(context,
   //   var fine = false
   var associatedFragment: VeroFalsoFragment? = null // Variabile per il fragment associato
 
-    init {
-        paint.color = Color.BLUE
-    }
+    //init {
+      //  paint.color = Color.BLUE
+    //}
 
     fun setTotalTimeAndStart(totalTime: Long) {
         totalTimeInMillis = totalTime
@@ -44,13 +44,25 @@ class TimeProgressBarView(context: Context, attrs: AttributeSet) : View(context,
             associatedFragment?.finePartita()
         }
     }
+    private val progressColors = Color.parseColor("#FF7514")
+    private val totalTimeColor = Color.parseColor("#F4F4F4")
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        val progress = (elapsedTimeInMillis.toFloat() / totalTimeInMillis.toFloat())
+
+        val progress = elapsedTimeInMillis.toFloat() / totalTimeInMillis.toFloat()
         val width = width.toFloat()
         val height = height.toFloat()
-        canvas?.drawRect(0f, 0f, width * progress, height, paint)
+
+        // Disegna la barra del tempo totale
+        val totalTimeBarWidth = width
+        paint.color = totalTimeColor
+        canvas?.drawRect(0f, 0f, totalTimeBarWidth, height, paint)
+
+        // Disegna la barra di avanzamento
+        val progressBarWidth = width * progress
+        paint.color = progressColors
+        canvas?.drawRect(0f, 0f, progressBarWidth, height, paint)
     }
 }
 
