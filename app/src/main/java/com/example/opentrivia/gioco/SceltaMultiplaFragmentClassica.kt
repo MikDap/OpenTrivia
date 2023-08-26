@@ -81,6 +81,8 @@ class SceltaMultiplaFragmentClassica : Fragment() {
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         var risposteRef = database.getReference("partite").child(modalita).child(difficolta).child(partita)
             .child("giocatori").child(uid).child(topic)
+        var risposteDiFilaRef = database.getReference("partite").child(modalita).child(difficolta).child(partita)
+            .child("giocatori").child(uid).child("risposteDiFila")
         var partiteInCorsoRef = database.getReference("users").child(uid).child("partite in corso")
 
 
@@ -95,6 +97,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                     }, 500)
 
                     updateRisposte(risposteRef,"corretta")
+                    updateRisposteDiFila(risposteDiFilaRef,"corretta")
 
 
 
@@ -105,6 +108,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                     }, 500)
 
                     updateRisposte(risposteRef,"sbagliata")
+                    updateRisposteDiFila(risposteDiFilaRef,"sbagliata")
                 }
                 Log.d("contatoreRisposte2", contatoreRisposte.toString())
                 rispostaData = true
@@ -120,6 +124,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         risposta2.setBackgroundColor(Color.GREEN)
                     }, 500)
                     updateRisposte(risposteRef,"corretta")
+                    updateRisposteDiFila(risposteDiFilaRef,"corretta")
 
                 } else {
                     risposta2.setBackgroundColor(Color.LTGRAY)
@@ -127,6 +132,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         risposta2.setBackgroundColor(Color.RED)
                     }, 500)
                     updateRisposte(risposteRef,"sbagliata")
+                    updateRisposteDiFila(risposteDiFilaRef,"sbagliata")
 
                 }
                 rispostaData = true
@@ -142,6 +148,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         risposta3.setBackgroundColor(Color.GREEN)
                     }, 500)
                     updateRisposte(risposteRef,"corretta")
+                    updateRisposteDiFila(risposteDiFilaRef,"corretta")
 
                 } else {
                     risposta3.setBackgroundColor(Color.LTGRAY)
@@ -149,6 +156,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         risposta3.setBackgroundColor(Color.RED)
                     }, 500)
                     updateRisposte(risposteRef,"sbagliata")
+                    updateRisposteDiFila(risposteDiFilaRef,"sbagliata")
 
                 }
                 rispostaData = true
@@ -164,6 +172,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         risposta4.setBackgroundColor(Color.GREEN)
                     }, 500)
                     updateRisposte(risposteRef,"corretta")
+                    updateRisposteDiFila(risposteDiFilaRef,"corretta")
 
                 } else {
                     risposta4.setBackgroundColor(Color.LTGRAY)
@@ -171,6 +180,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         risposta4.setBackgroundColor(Color.RED)
                     }, 500)
                     updateRisposte(risposteRef,"sbagliata")
+                    updateRisposteDiFila(risposteDiFilaRef,"sbagliata")
 
                 }
                 rispostaData = true
@@ -303,6 +313,57 @@ class SceltaMultiplaFragmentClassica : Fragment() {
         })
 
     }
+
+
+
+
+
+
+
+
+
+
+    fun updateRisposteDiFila(
+        risposteDiFilaRef: DatabaseReference, tipo: String,
+    ) {
+        risposteDiFilaRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(risposteDiFila: DataSnapshot) {
+
+                if (tipo == "corretta") {
+
+                    var risposte_di_fila = risposteDiFila.value.toString().toInt()
+
+                    risposte_di_fila++
+
+               risposteDiFilaRef.setValue(risposte_di_fila)
+                }
+
+
+                if (tipo == "sbagliata") {
+
+                }
+
+
+
+            }
+
+
+
+
+
+
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+
+
+
+
 
 
 
