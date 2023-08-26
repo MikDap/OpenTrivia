@@ -224,7 +224,68 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
             chiamataApi = ChiamataApi("multiple",categoria,difficolta)
             chiamataApi.fetchTriviaQuestion(this)
             Log.d("getTriviaQuestion","siii")
-
+           addToUserDatabase()
         }
+
+//salva la partita nel nodo users, per poterla poi mostrare sulla scrollview del menu principale
+    fun addToUserDatabase() {
+        lateinit var avversarioID: String
+        lateinit var avversario_nome: String
+        var risposte1 = 0
+        var risposte2= 0
+        database = FirebaseDatabase.getInstance()
+        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+        val partiteInCorsoRef = database.getReference("users").child(uid).child("partiteInCorso")
+        partiteInCorsoRef.child(partita)
+
+
+        val partitaRef = database.getReference("partite").child("classica").child(difficolta).child(partita)
+
+
+        partitaRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(partita: DataSnapshot) {
+
+                if (partita.hasChildren()) {
+                    for (giocatore in partita.children) {
+
+                        for (topic in giocatore.children) {
+
+
+                            if (topic.hasChild("risposteCorrette")) {}
+
+                            
+
+                         }
+                     }
+
+
+
+                    }
+
+            }
+
+
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
+
+    }
+
+
+    fun chiamaRuota() {
+        val RuotaFragment = RuotaFragment()
+
+ //       RuotaFragment.setParametriPartita(partita, "classica", difficolta,topic)
+        // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, secondFragment).addToBackStack(null).commit();
+        Handler(Looper.getMainLooper()).postDelayed({
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerViewGioco, RuotaFragment).commit()
+        }, 500)
+
+    }
+
 
 }

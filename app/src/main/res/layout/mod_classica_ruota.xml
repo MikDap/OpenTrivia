@@ -9,6 +9,281 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
+        <!-- Aggiungi i sette rettangoli colorati -->
+        <LinearLayout
+            android:id="@+id/rectangleContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="5dp">
+
+            <View
+                android:id="@+id/sport"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/contour_background"
+                android:backgroundTint="@color/black"
+                android:elevation="4dp"
+                android:layout_centerInParent="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp">
+
+                <View
+                    android:id="@+id/storia"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="#00FF00" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp">
+
+                <View
+                    android:id="@+id/scienze"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="#0000FF" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+                android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp">
+
+            <View
+                android:id="@+id/arte"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="#FFFF00" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                 />
+
+        </LinearLayout>
+            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+                android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp">
+
+            <View
+                android:id="@+id/geografia"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="#FF00FF" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                 />
+
+        </LinearLayout>
+
+
+            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+                android:layout_marginStart="5dp"
+            android:layout_marginEnd="0dp">
+
+            <View
+                android:id="@+id/culturaPop"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="#00FFFF" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+        </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginStart="45dp"
+                android:layout_marginEnd="5dp">
+
+                <View
+                    android:id="@+id/sport2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="#FF69B4" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp">
+
+                <View
+                    android:id="@+id/storia2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="#00FF00" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp">
+
+                <View
+                    android:id="@+id/scienze2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="#0000FF" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp">
+
+                <View
+                    android:id="@+id/arte2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="#FFFF00" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                     />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp">
+
+                <View
+                    android:id="@+id/geografia2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="#FF00FF" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="0dp">
+
+                <View
+                    android:id="@+id/culturaPop2"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="#00FFFF" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
     <View
         android:id="@+id/wheelView"
         android:layout_width="300dp"
