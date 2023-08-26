@@ -37,9 +37,9 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:background="@drawable/contour_background"
-                android:backgroundTint="@color/black"
+                android:backgroundTint="#FF69B4"
                 android:elevation="4dp"
-                android:layout_centerInParent="true"/>
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -59,7 +59,10 @@
                     android:id="@+id/storia"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:background="#00FF00" />
+                    android:background="@drawable/contour_background"
+                    android:backgroundTint="#00FF00"
+                    android:elevation="4dp"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
