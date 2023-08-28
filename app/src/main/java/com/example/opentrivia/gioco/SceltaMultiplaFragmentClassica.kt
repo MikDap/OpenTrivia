@@ -81,8 +81,8 @@ class SceltaMultiplaFragmentClassica : Fragment() {
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         var risposteRef = database.getReference("partite").child(modalita).child(difficolta).child(partita)
             .child("giocatori").child(uid).child(topic)
-        var risposteDiFilaRef = database.getReference("partite").child(modalita).child(difficolta).child(partita)
-            .child("giocatori").child(uid).child("risposteDiFila")
+        var giocatoreRef = database.getReference("partite").child(modalita).child(difficolta).child(partita)
+            .child("giocatori").child(uid)
         var partiteInCorsoRef = database.getReference("users").child(uid).child("partite in corso")
 
 
@@ -97,7 +97,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                     }, 500)
 
                     updateRisposte(risposteRef,"corretta")
-                    updateRisposteDiFila(risposteDiFilaRef,"corretta")
+                    updateRisposteDiFila(giocatoreRef,"corretta")
 
 
 
@@ -108,7 +108,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                     }, 500)
 
                     updateRisposte(risposteRef,"sbagliata")
-                    updateRisposteDiFila(risposteDiFilaRef,"sbagliata")
+                    updateRisposteDiFila(giocatoreRef,"sbagliata")
                 }
                 Log.d("contatoreRisposte2", contatoreRisposte.toString())
                 rispostaData = true
@@ -124,7 +124,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         risposta2.setBackgroundColor(Color.GREEN)
                     }, 500)
                     updateRisposte(risposteRef,"corretta")
-                    updateRisposteDiFila(risposteDiFilaRef,"corretta")
+                    updateRisposteDiFila(giocatoreRef,"corretta")
 
                 } else {
                     risposta2.setBackgroundColor(Color.LTGRAY)
@@ -132,7 +132,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         risposta2.setBackgroundColor(Color.RED)
                     }, 500)
                     updateRisposte(risposteRef,"sbagliata")
-                    updateRisposteDiFila(risposteDiFilaRef,"sbagliata")
+                    updateRisposteDiFila(giocatoreRef,"sbagliata")
 
                 }
                 rispostaData = true
@@ -148,7 +148,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         risposta3.setBackgroundColor(Color.GREEN)
                     }, 500)
                     updateRisposte(risposteRef,"corretta")
-                    updateRisposteDiFila(risposteDiFilaRef,"corretta")
+                    updateRisposteDiFila(giocatoreRef,"corretta")
 
                 } else {
                     risposta3.setBackgroundColor(Color.LTGRAY)
@@ -156,7 +156,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         risposta3.setBackgroundColor(Color.RED)
                     }, 500)
                     updateRisposte(risposteRef,"sbagliata")
-                    updateRisposteDiFila(risposteDiFilaRef,"sbagliata")
+                    updateRisposteDiFila(giocatoreRef,"sbagliata")
 
                 }
                 rispostaData = true
@@ -172,7 +172,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         risposta4.setBackgroundColor(Color.GREEN)
                     }, 500)
                     updateRisposte(risposteRef,"corretta")
-                    updateRisposteDiFila(risposteDiFilaRef,"corretta")
+                    updateRisposteDiFila(giocatoreRef,"corretta")
 
                 } else {
                     risposta4.setBackgroundColor(Color.LTGRAY)
@@ -180,7 +180,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         risposta4.setBackgroundColor(Color.RED)
                     }, 500)
                     updateRisposte(risposteRef,"sbagliata")
-                    updateRisposteDiFila(risposteDiFilaRef,"sbagliata")
+                    updateRisposteDiFila(giocatoreRef,"sbagliata")
 
                 }
                 rispostaData = true
@@ -235,12 +235,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
 
 
-                            if (contatoreRisposte < 3) {
-                                modClassicaActivity.getTriviaQuestion()
-                            } else {
-                                startActivity(Intent(activity, MainActivity::class.java))
-
-                            }
+                            modClassicaActivity.chiamaRuota()
 
 
                     } else {
@@ -248,7 +243,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         risposteRef.child("risposteTotali").setValue(1)
                         contatoreRisposte = 1
                         Log.d("contatoreRisposte", contatoreRisposte.toString())
-                        modClassicaActivity.getTriviaQuestion()
+                        modClassicaActivity.chiamaRuota()
                     }
                 }
 
@@ -273,19 +268,14 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         contatoreRisposte = punti
                         Log.d("contatoreRisposte", contatoreRisposte.toString())
                         risposteRef.child("risposteTotali").setValue(punti)
-                        if (contatoreRisposte < 3) {
-                            modClassicaActivity.getTriviaQuestion()
-                        }
-                        else {startActivity(Intent(activity, MainActivity::class.java))
-
-                        }
+                         modClassicaActivity.chiamaRuota()
 
                     } else {
                         // Il dato non esiste nel database, quindi scrivi qualcosa
                         risposteRef.child("risposteTotali").setValue(1)
                         contatoreRisposte = 1
                         Log.d("contatoreRisposte", contatoreRisposte.toString())
-                        modClassicaActivity.getTriviaQuestion()
+                        modClassicaActivity.chiamaRuota()
                     }
 
 
@@ -324,18 +314,26 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
 
     fun updateRisposteDiFila(
-        risposteDiFilaRef: DatabaseReference, tipo: String,
+        giocatoreRef: DatabaseReference, tipo: String,
     ) {
-        risposteDiFilaRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(risposteDiFila: DataSnapshot) {
+        giocatoreRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(giocatore: DataSnapshot) {
 
                 if (tipo == "corretta") {
 
-                    var risposte_di_fila = risposteDiFila.value.toString().toInt()
+                    if (giocatore.hasChild("risposteDiFila")) {
 
-                    risposte_di_fila++
+                        var risposte_di_fila =
+                            giocatore.child("risposteDiFila").value.toString().toInt()
 
-               risposteDiFilaRef.setValue(risposte_di_fila)
+                        risposte_di_fila++
+
+                        giocatoreRef.child("risposteDiFila").setValue(risposte_di_fila)
+                    }
+                    else {
+
+                        giocatoreRef.child("risposteDiFila").setValue(1)
+                    }
                 }
 
 

@@ -16,7 +16,7 @@ import java.util.Random
 
 class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener,ChiamataApi.TriviaQuestionCallback {
 
-    private lateinit var partita: String
+     var partita: String = ""
     private lateinit var difficolta: String
     private lateinit var chiamataApi: ChiamataApi
     private lateinit var database: FirebaseDatabase
@@ -53,81 +53,11 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
         categoria = getCategoria(topic)
 
 
-// prendiamo l'istanza del database (ci serve per creare sul database la partita)
-        database = FirebaseDatabase.getInstance()
-        // partiteRef = database/partite/modalita/difficolta
-        val partiteRef = database.getReference("partite").child("classica").child(difficolta)
 
-
-        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-        val name = FirebaseAuth.getInstance().currentUser?.displayName.toString()
-        var condizioneSoddisfatta = false
-
-//Listener per database/partite/modalita/difficolta
-        partiteRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-
-/// Se database/partite/modalita/difficolta ha almeno una partita(con qualcuno in attesa):
-                if (dataSnapshot.hasChildren()) {
-                    for (sottonodo in dataSnapshot.children) {
-                        //se c'è almeno una partita con un giocatore in attesa..(lo associa)
-                        if (sottonodo.child("inAttesa").value == "si") {
-
-                                //prende id della partita
-                                partita = sottonodo.key.toString()
-                                //setta database/partite/modalita/difficolta/giocatori/id
-                                partiteRef.child(partita).child("giocatori").child(uid)
-                                    .setValue(name)
-                                //cambia inAttesa in no
-                                partiteRef.child(partita).child("inAttesa").setValue("no")
-                                condizioneSoddisfatta = true
-
-                                break
-                        }
-                    }
-
-
-
-/// se database/partite/modalita/difficolta non ha partite:
-                } else {
-                    //crea id della partita ecc
-                    partita = partiteRef.push().key.toString()
-                    inAttesa = "si"
-                    partiteRef.child(partita).child("inAttesa")
-                        .setValue(inAttesa)
-                    partiteRef.child(partita).child("topic")
-                        .setValue(topic)
-                    partiteRef.child(partita).child("giocatori")
-                        .child(uid).setValue(name)
-                    condizioneSoddisfatta = true
-
-                }
-
-
-
-
-
-                // Se database/partite/modalita/difficolta ha almeno una partita ma nessuno in Attesa
-                if (!condizioneSoddisfatta) {
-                    partita = partiteRef.push().key.toString()
-                    inAttesa = "si"
-                    partiteRef.child(partita).child("inAttesa")
-                        .setValue(inAttesa)
-                    partiteRef.child(partita).child("topic")
-                        .setValue(topic)
-                    partiteRef.child(partita).child("giocatori")
-                        .child(uid).setValue(name)
-                    //   partiteRef.child(partita).child("giocatori").child(uid).child(name).child("risposteCorrette").setValue(0)
-                    condizioneSoddisfatta = true
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        })
+        // Controlla se partita non è stata inizializzata
+        if (partita == "") {
+            creaPartitaDatabase()
+        }
 
 
 
@@ -283,9 +213,87 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainerViewGioco, RuotaFragment).commit()
-        }, 500)
+        }, 1500)
 
     }
 
 
+
+    fun creaPartitaDatabase() {
+        // prendiamo l'istanza del database (ci serve per creare sul database la partita)
+        database = FirebaseDatabase.getInstance()
+        // partiteRef = database/partite/modalita/difficolta
+        val partiteRef = database.getReference("partite").child("classica").child(difficolta)
+
+
+        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+        val name = FirebaseAuth.getInstance().currentUser?.displayName.toString()
+        var condizioneSoddisfatta = false
+
+//Listener per database/partite/modalita/difficolta
+        partiteRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+
+/// Se database/partite/modalita/difficolta ha almeno una partita(con qualcuno in attesa):
+                if (dataSnapshot.hasChildren()) {
+                    for (sottonodo in dataSnapshot.children) {
+                        //se c'è almeno una partita con un giocatore in attesa..(lo associa)
+                        if (sottonodo.child("inAttesa").value == "si") {
+
+                            //prende id della partita
+                            partita = sottonodo.key.toString()
+                            //setta database/partite/modalita/difficolta/giocatori/id
+                            partiteRef.child(partita).child("giocatori").child(uid)
+                                .setValue(name)
+                            //cambia inAttesa in no
+                            partiteRef.child(partita).child("inAttesa").setValue("no")
+                            condizioneSoddisfatta = true
+
+                            break
+                        }
+                    }
+
+
+
+/// se database/partite/modalita/difficolta non ha partite:
+                } else {
+                    //crea id della partita ecc
+                    partita = partiteRef.push().key.toString()
+                    inAttesa = "si"
+                    partiteRef.child(partita).child("inAttesa")
+                        .setValue(inAttesa)
+                    partiteRef.child(partita).child("topic")
+                        .setValue(topic)
+                    partiteRef.child(partita).child("giocatori")
+                        .child(uid).setValue(name)
+                    condizioneSoddisfatta = true
+
+                }
+
+
+
+
+
+                // Se database/partite/modalita/difficolta ha almeno una partita ma nessuno in Attesa
+                if (!condizioneSoddisfatta) {
+                    partita = partiteRef.push().key.toString()
+                    inAttesa = "si"
+                    partiteRef.child(partita).child("inAttesa")
+                        .setValue(inAttesa)
+                    partiteRef.child(partita).child("topic")
+                        .setValue(topic)
+                    partiteRef.child(partita).child("giocatori")
+                        .child(uid).setValue(name)
+                    //   partiteRef.child(partita).child("giocatori").child(uid).child(name).child("risposteCorrette").setValue(0)
+                    condizioneSoddisfatta = true
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
 }
