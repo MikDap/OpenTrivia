@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.opentrivia.R
 import com.example.opentrivia.api.ChiamataApi
+import com.example.opentrivia.mod_classica_conquista
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -17,7 +18,7 @@ import java.util.Random
 class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener,ChiamataApi.TriviaQuestionCallback {
 
      var partita: String = ""
-    private lateinit var difficolta: String
+     lateinit var difficolta: String
     private lateinit var chiamataApi: ChiamataApi
     private lateinit var database: FirebaseDatabase
     var domanda : String = ""
@@ -213,10 +214,22 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainerViewGioco, RuotaFragment).commit()
-        }, 1500)
+        }, 100)
 
     }
 
+
+    fun chiamaConquista() {
+        val conquistaFragment = mod_classica_conquista()
+
+        //       RuotaFragment.setParametriPartita(partita, "classica", difficolta,topic)
+        // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, secondFragment).addToBackStack(null).commit();
+        Handler(Looper.getMainLooper()).postDelayed({
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerViewGioco, conquistaFragment).commit()
+        }, 100)
+
+    }
 
 
     fun creaPartitaDatabase() {
@@ -239,7 +252,11 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
                 if (dataSnapshot.hasChildren()) {
                     for (sottonodo in dataSnapshot.children) {
                         //se c'è almeno una partita con un giocatore in attesa..(lo associa)
-                        if (sottonodo.child("inAttesa").value == "si") {
+                        var giocatorediverso = true
+                        if (sottonodo.child("giocatori").hasChild(uid)) {
+                            giocatorediverso = false
+                        }
+                        if (sottonodo.child("inAttesa").value == "si" && giocatorediverso) {
 
                             //prende id della partita
                             partita = sottonodo.key.toString()

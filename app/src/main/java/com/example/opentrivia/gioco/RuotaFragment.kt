@@ -20,6 +20,12 @@ import android.graphics.drawable.BitmapDrawable
 import android.util.Log
 import android.graphics.PathMeasure
 import com.example.opentrivia.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
 class RuotaFragment : Fragment() {
@@ -29,18 +35,24 @@ class RuotaFragment : Fragment() {
     private var selectedTopic: String? = null
     private var isWheelStopped: Boolean = true
     lateinit var topic: String
+
+    private lateinit var database: FirebaseDatabase
+    private lateinit var modClassicaActivity: ModClassicaActivity
+
     //da 0 perchè la ruota parte da 0 gradi
     private var currentAngle: Float = 0f
-    private val topics = listOf("sport", "storia", "scienze", "arte", "geografia", "culturaPop","jolly")
+    private val topics =
+        listOf("sport", "storia", "scienze", "arte", "geografia", "culturaPop", "jolly")
     private val colors = arrayOf(
-            Color.parseColor("#FFD1DC"),  // Rosa pastello
-    Color.parseColor("#B2FFA5"),  // Verde pastello
-    Color.parseColor("#AEC6FF"),  // Blu pastello
-    Color.parseColor("#FFF8B3"),  // Giallo pastello
-    Color.parseColor("#FFB2FF"),  // Magenta pastello
-    Color.parseColor("#B3FFFF"),  // Ciano pastello
-    Color.parseColor("#D3D3D3")   // Grigio pastello
+        Color.parseColor("#FFD1DC"),  // Rosa pastello
+        Color.parseColor("#B2FFA5"),  // Verde pastello
+        Color.parseColor("#AEC6FF"),  // Blu pastello
+        Color.parseColor("#FFF8B3"),  // Giallo pastello
+        Color.parseColor("#FFB2FF"),  // Magenta pastello
+        Color.parseColor("#B3FFFF"),  // Ciano pastello
+        Color.parseColor("#D3D3D3")   // Grigio pastello
     )
+
     //michele
     private var listener: MyFragmentListener? = null
     override fun onCreateView(
@@ -51,6 +63,19 @@ class RuotaFragment : Fragment() {
         wheelView = view.findViewById(R.id.wheelView)
         ruotaButton = view.findViewById(R.id.ruotaButton)
 
+        modClassicaActivity = activity as ModClassicaActivity
+        val partita = modClassicaActivity.partita
+        val modalita = "classica"
+        val difficolta = modClassicaActivity.difficolta
+
+        database = FirebaseDatabase.getInstance()
+        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+        var giocatoreRef =
+            database.getReference("partite").child(modalita).child(difficolta).child(partita)
+                .child("giocatori").child(uid)
+
+
+              leggiRisposteDiFila(giocatoreRef)
 
 
 
@@ -67,6 +92,7 @@ class RuotaFragment : Fragment() {
 
         return view
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // ...
@@ -77,7 +103,6 @@ class RuotaFragment : Fragment() {
 
         }
     }
-
 
 
     // funzione che genera un argomento random (indice random)
@@ -91,11 +116,11 @@ class RuotaFragment : Fragment() {
     private fun rotateWheel(topic: String) {
 
         val fromAngle = currentAngle
-        Log.d("from",fromAngle.toString())
+        Log.d("from", fromAngle.toString())
 
-        val toAngle =  3600f + calculateTargetAngle(topic)
-Log.d("to",toAngle.toString())
-        Log.d("calculate",calculateTargetAngle(topic).toString())
+        val toAngle = 3600f + calculateTargetAngle(topic)
+        Log.d("to", toAngle.toString())
+        Log.d("calculate", calculateTargetAngle(topic).toString())
         val rotateAnimation = RotateAnimation(
             fromAngle, toAngle,
             //0,5 perchè il cerchio deve ruotare rispetto al suo centro
@@ -116,7 +141,7 @@ Log.d("to",toAngle.toString())
                 isWheelStopped = true
                 // perchè in toAngle abbiamo 3600 + angolo corrente
                 currentAngle = toAngle % 360f
-                Log.d("currentAngle",currentAngle.toString())
+                Log.d("currentAngle", currentAngle.toString())
 
 
                 selectedTopic = topic
@@ -150,7 +175,7 @@ Log.d("to",toAngle.toString())
         angle = 360f - startAngle
 
         return angle
-        }
+    }
 
 
     private fun drawWheelOverlay(backgroundColor: Int) {
@@ -182,7 +207,7 @@ Log.d("to",toAngle.toString())
 //disegno il cerchio con il percorso specificato e il colore specificato
         canvas.drawPath(path, backgroundPaint)
 
-       //ci serve per le scritte
+        //ci serve per le scritte
         val textPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         textPaint.textSize = 60f
         textPaint.color = Color.BLACK
@@ -196,20 +221,20 @@ Log.d("to",toAngle.toString())
             val endAngle = (i + 1) * angoloSezione
 
             val text = topics[i]
-            Log.d("materia",text)
+            Log.d("materia", text)
 
             val textWidth = textPaint.measureText(text)
 //centro della sezione angolare relativa all'argomento
             val textAngle = (startAngle + endAngle) / 2f
 
-            Log.d("textAngle",textAngle.toString())
+            Log.d("textAngle", textAngle.toString())
 
 // creo un altro oggetto canvas passandogli la stessa Bitmap, perchè se usassi quella fuori dal ciclo
 // quando uso il metodo rotate per argomenti successivi al primo mi va a ruotare di nuovo gli argomenti
             //precedenti a quello del ciclo in corso, i quali erano nell'angolazione giusta
             val canvas2 = Canvas(overlayBitmap)
             // 0.. 51,4.. 102,8.....308,6 senso orario
-            canvas2.rotate(startAngle,centerX,centerY)
+            canvas2.rotate(startAngle, centerX, centerY)
 
 //scelgo l'indice del colore dello spicchio
             val colorIndex = i % colors.size
@@ -220,7 +245,16 @@ Log.d("to",toAngle.toString())
             // (startAngle + 270f perchè nel drawTextOnPath viene modificata
             // di 270 gradi la posizione della scritta nell'hOffset,
             // - (angoloSezione/2f) per centrare la sezione)
-            canvas.drawArc(0f, 0f, diameter.toFloat(), diameter.toFloat(), startAngle + 270f - (angoloSezione/2f), angoloSezione, true, backgroundPaint)
+            canvas.drawArc(
+                0f,
+                0f,
+                diameter.toFloat(),
+                diameter.toFloat(),
+                startAngle + 270f - (angoloSezione / 2f),
+                angoloSezione,
+                true,
+                backgroundPaint
+            )
 
 
 //mi calcolo il perimetro del cerchio
@@ -228,8 +262,14 @@ Log.d("to",toAngle.toString())
             val pathLength = pathMeasure.length
 
             //dovuto scrivere cosi perchè hOffset non può uscire fuori dalla lunghezza del percorso ( deve essere tra 0 e perimetro del cerchio)
-            canvas2.drawTextOnPath(text, path,(3 * pathLength) / 4f - textWidth/ 2f, 60f, textPaint)
-Log.d("textwidth",textWidth.toString())
+            canvas2.drawTextOnPath(
+                text,
+                path,
+                (3 * pathLength) / 4f - textWidth / 2f,
+                60f,
+                textPaint
+            )
+            Log.d("textwidth", textWidth.toString())
         }
 
         wheelView.background = BitmapDrawable(resources, overlayBitmap)
@@ -240,7 +280,6 @@ Log.d("textwidth",textWidth.toString())
     }
 
 
-
     //Michele da 245 a 268
     //crea un listener (funge da contratto tra il Fragment e la Activity)
     interface MyFragmentListener {
@@ -248,6 +287,7 @@ Log.d("textwidth",textWidth.toString())
         fun onVariablePassed(variable: String) {
         }
     }
+
     //estrae l'Activity ospitante utilizzando requireActivity() e controlla che
 // l'Activity implementi l'interfaccia MyFragmentListener.
 // Quindi, chiama il metodo onVariablePassed
@@ -266,5 +306,38 @@ Log.d("textwidth",textWidth.toString())
         }
     }
 
+
+    fun leggiRisposteDiFila(
+        giocatoreRef: DatabaseReference
+    ) {
+        giocatoreRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(giocatore: DataSnapshot) {
+
+
+                if (giocatore.hasChild("risposteDiFila")) {
+
+                    var risposte_di_fila =
+                        giocatore.child("risposteDiFila").value.toString().toInt()
+
+                    if (risposte_di_fila == 3) {
+
+                        // chiama schermata conquista argomento
+                        giocatoreRef.child("risposteDiFila").setValue(0)
+
+                     modClassicaActivity.chiamaConquista()
+                    }
+
+                }
+
+
+            }
+
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
 }
 
