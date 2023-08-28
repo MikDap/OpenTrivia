@@ -290,64 +290,79 @@
 
         </LinearLayout>
 
-        <Button
+        <ImageButton
             android:id="@+id/storiabutton"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginTop="200dp"
             android:background="#FFEB3B"
+            android:src="@drawable/storia"
+            android:scaleType="fitCenter"
             app:layout_constraintStart_toStartOf="@id/rectangleContainer"
             app:layout_constraintTop_toBottomOf="@id/rectangleContainer"
 
             />
 
-        <Button
+        <ImageButton
             android:id="@+id/geografiabutton"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginLeft="10dp"
             android:background="#3F51B5"
+            android:src="@drawable/geografia"
+            android:scaleType="fitCenter"
             app:layout_constraintEnd_toStartOf="@id/artebutton"
             app:layout_constraintStart_toEndOf="@id/storiabutton"
             app:layout_constraintTop_toTopOf="@id/storiabutton" />
 
-        <Button
+        <ImageButton
             android:id="@+id/artebutton"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginLeft="10dp"
             android:background="#F44336"
+            android:src="@drawable/arte"
+            android:scaleType="fitCenter"
             app:layout_constraintEnd_toEndOf="@id/rectangleContainer"
             app:layout_constraintStart_toEndOf="@id/geografiabutton"
             app:layout_constraintTop_toTopOf="@id/geografiabutton" />
 
-        <Button
+        <ImageButton
             android:id="@+id/sportbutton"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginTop="30dp"
             android:background="#FF9800"
+            android:src="@drawable/sport"
+            android:scaleType="fitCenter"
             app:layout_constraintStart_toStartOf="@id/rectangleContainer"
             app:layout_constraintTop_toBottomOf="@id/storiabutton" />
 
-        <Button
+        <ImageButton
             android:id="@+id/intrattenimentobutton"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginLeft="10dp"
             android:background="#E7A2F3"
+            android:src="@drawable/culturapop"
+            android:scaleType="fitCenter"
             app:layout_constraintEnd_toStartOf="@id/scienzebutton"
             app:layout_constraintStart_toEndOf="@id/sportbutton"
             app:layout_constraintTop_toTopOf="@id/sportbutton" />
 
-        <Button
+        <ImageButton
             android:id="@+id/scienzebutton"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginLeft="10dp"
             android:background="#00BCD4"
+            android:src="@drawable/scienze"
+            android:scaleType="fitCenter"
             app:layout_constraintEnd_toEndOf="@id/rectangleContainer"
             app:layout_constraintStart_toEndOf="@id/intrattenimentobutton"
             app:layout_constraintTop_toTopOf="@id/intrattenimentobutton" />
+
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
