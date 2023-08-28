@@ -227,7 +227,7 @@ return view
                             if (contatoreRisposte < 10) {
                                 modArgomentoActivity.getTriviaQuestion()
                             } else {
-                                startActivity(Intent(activity, MainActivity::class.java))
+                                finePartita()
 
                             }
 
@@ -304,6 +304,82 @@ return view
 
     }
 
+    //modifica di mic
+
+    fun finePartita() {
+
+        database = FirebaseDatabase.getInstance()
+        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+        var giocatoriRef =
+            database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
+        var risposte1 = 0
+        var risposte2 = 0
+        var giocatore2esiste = false
+
+        giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (giocatore in dataSnapshot.children) {
+
+                    for (topic in giocatore.children) {
+
+                        if (topic.hasChild("risposteCorrette")) {
+
+
+                            if (giocatore.equals(uid)) {
+                                Log.d("giocatore2esiste",giocatore2esiste.toString())
+                                val risposteCorrette =
+                                    topic.child("risposteCorrette").getValue(Int::class.java)
+                                if (risposteCorrette != null) {
+                                    risposte1 += risposteCorrette
+                                }
+                            } else {
+                                giocatore2esiste = true
+                                Log.d("giocatore2esiste",giocatore2esiste.toString())
+                                val risposteCorrette =
+                                    topic.child("risposteCorrette").getValue(Int::class.java)
+                                if (risposteCorrette != null) {
+                                    risposte2 += risposteCorrette
+                                }
+
+                            }
+                        }
+                    }
+
+
+                }
+
+
+                Log.d("giocatore2esiste alla fine", giocatore2esiste.toString())
+                if (giocatore2esiste == false) {
+                    giocatoriRef.child(uid).child("fineTurno").setValue("si")
+                    modArgomentoActivity.schermataAttendi()
+                } else {
+                    Log.d("entra in else", "si")
+                    if (risposte1 > risposte2) {
+                        giocatoriRef.child(uid).child("fineTurno").setValue("si")
+                        modArgomentoActivity.schermataVittoria()
+                    }
+                    else if (risposte1 == risposte2) {
+                        giocatoriRef.child(uid).child("fineTurno").setValue("si")
+                        modArgomentoActivity.schermataPareggio()
+                    }
+                    else if (risposte1 < risposte2) {
+                        giocatoriRef.child(uid).child("fineTurno").setValue("si")
+                        modArgomentoActivity.schermataSconfitta()
+                    }
+
+                }
+
+            }
+
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
+
+    }
 
 
 }
