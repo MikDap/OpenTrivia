@@ -70,9 +70,7 @@ class RuotaFragment : Fragment() {
 
         database = FirebaseDatabase.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-        var giocatoreRef =
-            database.getReference("partite").child(modalita).child(difficolta).child(partita)
-                .child("giocatori").child(uid)
+        var giocatoreRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori").child(uid)
 
 
               leggiRisposteDiFila(giocatoreRef)
