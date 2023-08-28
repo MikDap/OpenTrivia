@@ -32,6 +32,8 @@ class SceltaMultiplaFragmentClassica : Fragment() {
     private lateinit var risposta3: Button
     private lateinit var risposta4: Button
 
+    private lateinit var continua: Button
+
 
     private lateinit var modClassicaActivity: ModClassicaActivity
     private lateinit var rispostaCorretta: String
@@ -59,6 +61,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
         risposta2 = view.findViewById(R.id.risposta2)
         risposta3 = view.findViewById(R.id.risposta3)
         risposta4 = view.findViewById(R.id.risposta4)
+        continua = view.findViewById(R.id.continua)
 
         Log.d(modalita,"modalita")
 
@@ -235,7 +238,13 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
 
 
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            continua.visibility = View.VISIBLE
+                        }, 1500)
+
+                        continua.setOnClickListener {
                             modClassicaActivity.chiamaRuota()
+                        }
 
 
                     } else {
@@ -243,7 +252,14 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         risposteRef.child("risposteTotali").setValue(1)
                         contatoreRisposte = 1
                         Log.d("contatoreRisposte", contatoreRisposte.toString())
-                        modClassicaActivity.chiamaRuota()
+
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            continua.visibility = View.VISIBLE
+                        }, 1500)
+
+                        continua.setOnClickListener {
+                            modClassicaActivity.chiamaRuota()
+                        }
                     }
                 }
 
@@ -268,14 +284,36 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         contatoreRisposte = punti
                         Log.d("contatoreRisposte", contatoreRisposte.toString())
                         risposteRef.child("risposteTotali").setValue(punti)
-                         modClassicaActivity.chiamaRuota()
+
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            continua.visibility = View.VISIBLE
+                        }, 1500)
+
+                        continua.setOnClickListener {
+                            // Torna al menu
+                            val intent = Intent(requireContext(), MainActivity::class.java)
+                            startActivity(intent)
+                            requireActivity().finish()
+
+                        }
 
                     } else {
                         // Il dato non esiste nel database, quindi scrivi qualcosa
                         risposteRef.child("risposteTotali").setValue(1)
                         contatoreRisposte = 1
                         Log.d("contatoreRisposte", contatoreRisposte.toString())
-                        modClassicaActivity.chiamaRuota()
+
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            continua.visibility = View.VISIBLE
+                        }, 1500)
+
+                        continua.setOnClickListener {
+                            // Torna al menu
+                            val intent = Intent(requireContext(), MainActivity::class.java)
+                            startActivity(intent)
+                            requireActivity().finish()
+
+                        }
                     }
 
 
