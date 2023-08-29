@@ -291,77 +291,134 @@
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/storiabutton"
+            android:id="@+id/storiaCardView"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginTop="200dp"
-            android:background="#FFBB2F"
-            android:src="@drawable/storia"
-            android:scaleType="fitCenter"
+            android:layout_marginLeft="10dp"
+            app:cardBackgroundColor="#FFBB2F"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
             app:layout_constraintStart_toStartOf="@id/rectangleContainer"
-            app:layout_constraintTop_toBottomOf="@id/rectangleContainer"
-            />
+            app:layout_constraintTop_toBottomOf="@id/rectangleContainer">
 
+        <ImageButton
+            android:id="@+id/storiabutton"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:background="#FFBB2F"
+            android:scaleType="fitCenter"
+            android:src="@drawable/storia"
+            />
+    </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/geografiaCardView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="10dp"
+            app:cardBackgroundColor="#0000FF"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:layout_constraintEnd_toStartOf="@id/arteCardView"
+            app:layout_constraintStart_toEndOf="@id/storiaCardView"
+            app:layout_constraintTop_toTopOf="@id/storiaCardView">
         <ImageButton
             android:id="@+id/geografiabutton"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginLeft="10dp"
-            android:background="#0000FF"
-            android:src="@drawable/geografia"
-            android:scaleType="fitCenter"
-            app:layout_constraintEnd_toStartOf="@id/artebutton"
-            app:layout_constraintStart_toEndOf="@id/storiabutton"
-            app:layout_constraintTop_toTopOf="@id/storiabutton" />
 
-        <ImageButton
-            android:id="@+id/artebutton"
+            android:background="#0000FF"
+            android:scaleType="fitCenter"
+            android:src="@drawable/geografia"
+             />
+
+           </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/arteCardView"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginLeft="10dp"
-            android:background="#FF00"
-            android:src="@drawable/arte"
-            android:scaleType="fitCenter"
+            app:cardBackgroundColor="#FF00"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
             app:layout_constraintEnd_toEndOf="@id/rectangleContainer"
-            app:layout_constraintStart_toEndOf="@id/geografiabutton"
-            app:layout_constraintTop_toTopOf="@id/geografiabutton" />
+            app:layout_constraintStart_toEndOf="@id/geografiaCardView"
+            app:layout_constraintTop_toTopOf="@id/geografiaCardView">
 
+            <ImageButton
+                android:id="@+id/artebutton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FF00"
+                android:scaleType="fitCenter"
+                android:src="@drawable/arte" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/sportCardView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="10dp"
+            app:cardBackgroundColor="#FFEB3B"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintStart_toStartOf="@id/rectangleContainer"
+            app:layout_constraintTop_toBottomOf="@id/storiaCardView">
         <ImageButton
             android:id="@+id/sportbutton"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginTop="30dp"
             android:background="#FFEB3B"
-            android:src="@drawable/sport"
             android:scaleType="fitCenter"
-            app:layout_constraintStart_toStartOf="@id/rectangleContainer"
-            app:layout_constraintTop_toBottomOf="@id/storiabutton" />
+            android:src="@drawable/sport"
+           />
+    </androidx.cardview.widget.CardView>
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/intrattenimentoCardView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="10dp"
+            app:cardBackgroundColor="#FF00FF"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:layout_constraintEnd_toStartOf="@id/scienzeCardView"
+            app:layout_constraintStart_toEndOf="@id/sportCardView"
+            app:layout_constraintTop_toTopOf="@id/sportCardView">
         <ImageButton
             android:id="@+id/intrattenimentobutton"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginLeft="10dp"
             android:background="#FF00FF"
-            android:src="@drawable/culturapop"
             android:scaleType="fitCenter"
-            app:layout_constraintEnd_toStartOf="@id/scienzebutton"
-            app:layout_constraintStart_toEndOf="@id/sportbutton"
-            app:layout_constraintTop_toTopOf="@id/sportbutton" />
+            android:src="@drawable/culturapop"
+            />
+        </androidx.cardview.widget.CardView>
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/scienzeCardView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="10dp"
+            app:cardBackgroundColor="#4CAF50"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:layout_constraintEnd_toEndOf="@id/rectangleContainer"
+            app:layout_constraintStart_toEndOf="@id/intrattenimentoCardView"
+            app:layout_constraintTop_toTopOf="@id/intrattenimentoCardView">
         <ImageButton
             android:id="@+id/scienzebutton"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginLeft="10dp"
             android:background="#4CAF50"
-            android:src="@drawable/scienze"
             android:scaleType="fitCenter"
-            app:layout_constraintEnd_toEndOf="@id/rectangleContainer"
-            app:layout_constraintStart_toEndOf="@id/intrattenimentobutton"
-            app:layout_constraintTop_toTopOf="@id/intrattenimentobutton" />
-
-
+            android:src="@drawable/scienze"
+             />
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

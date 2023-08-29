@@ -10,18 +10,15 @@
         android:id="@+id/congratulazioni"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginTop="164dp"
         android:background="#05D528"
+        android:gravity="center"
         android:text="HAI VINTO"
+        android:textAlignment="center"
         android:textColor="#F2F3EC"
         android:textSize="30sp"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.299" />
+        tools:layout_editor_absoluteX="8dp" />
 
     <Button
         android:id="@+id/esci"
