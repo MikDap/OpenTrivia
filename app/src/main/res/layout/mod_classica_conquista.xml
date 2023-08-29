@@ -38,7 +38,7 @@
                     android:layout_height="20dp"
                     android:layout_centerInParent="true"
                     android:background="@drawable/contour_background"
-                    android:backgroundTint="#FF0006"
+                    android:backgroundTint="#FFEB3B"
                     android:elevation="4dp" />
 
                 <TextView
@@ -60,7 +60,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
-                    android:backgroundTint="#00FF00" />
+                    android:backgroundTint="#FFBB2F" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -81,7 +81,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
-                    android:backgroundTint="#0000FF" />
+                    android:backgroundTint="#4CAF50" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -102,7 +102,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
-                    android:backgroundTint="#FFFF00" />
+                    android:backgroundTint="#FF00" />
 
 
                 <TextView
@@ -124,7 +124,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
-                    android:backgroundTint="#FF00FF" />
+                    android:backgroundTint="#0000FF" />
 
 
                 <TextView
@@ -147,7 +147,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
-                    android:backgroundTint="#00FFFF" />
+                    android:backgroundTint="#FF00FF" />
 
 
                 <TextView
@@ -170,7 +170,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
-                    android:backgroundTint="#FF0006" />
+                    android:backgroundTint="#FFEB3B" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -191,7 +191,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
-                    android:backgroundTint="#00FF00" />
+                    android:backgroundTint="#FFBB2F" />
 
 
                 <TextView
@@ -213,7 +213,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
-                    android:backgroundTint="#0000FF" />
+                    android:backgroundTint="#4CAF50" />
 
 
                 <TextView
@@ -235,7 +235,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
-                    android:backgroundTint="#FFFF00" />
+                    android:backgroundTint="#FF00" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -256,7 +256,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
-                    android:backgroundTint="#FF00FF" />
+                    android:backgroundTint="#0000FF" />
 
 
                 <TextView
@@ -279,7 +279,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
-                    android:backgroundTint="#00FFFF" />
+                    android:backgroundTint="#FF00FF" />
 
 
                 <TextView
@@ -295,7 +295,7 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginTop="200dp"
-            android:background="#FFEB3B"
+            android:background="#FFBB2F"
             android:src="@drawable/storia"
             android:scaleType="fitCenter"
             app:layout_constraintStart_toStartOf="@id/rectangleContainer"
@@ -307,7 +307,7 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginLeft="10dp"
-            android:background="#3F51B5"
+            android:background="#0000FF"
             android:src="@drawable/geografia"
             android:scaleType="fitCenter"
             app:layout_constraintEnd_toStartOf="@id/artebutton"
@@ -319,7 +319,7 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginLeft="10dp"
-            android:background="#F44336"
+            android:background="#FF00"
             android:src="@drawable/arte"
             android:scaleType="fitCenter"
             app:layout_constraintEnd_toEndOf="@id/rectangleContainer"
@@ -331,7 +331,7 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginTop="30dp"
-            android:background="#FF9800"
+            android:background="#FFEB3B"
             android:src="@drawable/sport"
             android:scaleType="fitCenter"
             app:layout_constraintStart_toStartOf="@id/rectangleContainer"
@@ -342,7 +342,7 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginLeft="10dp"
-            android:background="#E7A2F3"
+            android:background="#FF00FF"
             android:src="@drawable/culturapop"
             android:scaleType="fitCenter"
             app:layout_constraintEnd_toStartOf="@id/scienzebutton"
@@ -354,7 +354,7 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginLeft="10dp"
-            android:background="#00BCD4"
+            android:background="#4CAF50"
             android:src="@drawable/scienze"
             android:scaleType="fitCenter"
             app:layout_constraintEnd_toEndOf="@id/rectangleContainer"
