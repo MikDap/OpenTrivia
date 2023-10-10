@@ -2,5 +2,12 @@
 <!-- game_item_background.xml -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="#FFA41E" />
-    <corners android:radius="8dp" />
+    <corners android:radius="12dp" />
+    <stroke
+        android:width="3dp"
+    android:color="#C0C0C0" />
+    <gradient
+        android:startColor="#FF5722"
+        android:endColor="#FFC107"
+        android:angle="45" />
 </shape>
