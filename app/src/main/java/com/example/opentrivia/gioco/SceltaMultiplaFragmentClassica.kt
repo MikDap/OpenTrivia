@@ -43,7 +43,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
     private lateinit var modalita: String
     private lateinit var difficolta: String
     private lateinit var topic: String
-    private  var contatoreRisposte = 0
+    private var contatoreRisposte = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,7 +54,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
 
 
-        modClassicaActivity= activity as ModClassicaActivity
+        modClassicaActivity = activity as ModClassicaActivity
 
         domanda = view.findViewById(R.id.domanda)
         risposta1 = view.findViewById(R.id.risposta1)
@@ -63,14 +63,14 @@ class SceltaMultiplaFragmentClassica : Fragment() {
         risposta4 = view.findViewById(R.id.risposta4)
         continua = view.findViewById(R.id.continua)
 
-        Log.d(modalita,"modalita")
+        Log.d(modalita, "modalita")
 
-            domanda.text = modClassicaActivity.domanda
-            risposta1.text = modClassicaActivity.risposte[0]
-            Log.d("risposta1", risposta1.text as String)
-            risposta2.text = modClassicaActivity.risposte[1]
-            risposta3.text = modClassicaActivity.risposte[2]
-            risposta4.text = modClassicaActivity.risposte[3]
+        domanda.text = modClassicaActivity.domanda
+        risposta1.text = modClassicaActivity.risposte[0]
+        Log.d("risposta1", risposta1.text as String)
+        risposta2.text = modClassicaActivity.risposte[1]
+        risposta3.text = modClassicaActivity.risposte[2]
+        risposta4.text = modClassicaActivity.risposte[3]
         rispostaCorretta = modClassicaActivity.rispostaCorretta
 
         return view
@@ -82,12 +82,13 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
         database = FirebaseDatabase.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-        var risposteRef = database.getReference("partite").child(modalita).child(difficolta).child(partita)
-            .child("giocatori").child(uid).child(topic)
-        var giocatoreRef = database.getReference("partite").child(modalita).child(difficolta).child(partita)
-            .child("giocatori").child(uid)
-        var partiteInCorsoRef = database.getReference("users").child(uid).child("partite in corso")
-
+        val risposteRef =
+            database.getReference("partite").child(modalita).child(difficolta).child(partita)
+                .child("giocatori").child(uid).child(topic)
+        val giocatoreRef =
+            database.getReference("partite").child(modalita).child(difficolta).child(partita)
+                .child("giocatori").child(uid)
+        val partiteInCorsoRef = database.getReference("users").child(uid).child("partite in corso")
 
         var rispostaData = false
         risposta1.setOnClickListener {
@@ -99,9 +100,8 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         risposta1.setBackgroundColor(Color.GREEN)
                     }, 500)
 
-                    updateRisposte(risposteRef,"corretta")
-                    updateRisposteDiFila(giocatoreRef,"corretta")
-
+                    updateRisposte(risposteRef, "corretta",giocatoreRef)
+                    updateRisposteTotCorrette_ContinuaButton(giocatoreRef,"corretta")
 
 
                 } else {
@@ -110,8 +110,8 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         risposta1.setBackgroundColor(Color.RED)
                     }, 500)
 
-                    updateRisposte(risposteRef,"sbagliata")
-                    updateRisposteDiFila(giocatoreRef,"sbagliata")
+                    updateRisposte(risposteRef, "sbagliata",giocatoreRef)
+                    updateRisposteTotCorrette_ContinuaButton(giocatoreRef,"sbagliata")
                 }
                 Log.d("contatoreRisposte2", contatoreRisposte.toString())
                 rispostaData = true
@@ -126,16 +126,17 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                     Handler(Looper.getMainLooper()).postDelayed({
                         risposta2.setBackgroundColor(Color.GREEN)
                     }, 500)
-                    updateRisposte(risposteRef,"corretta")
-                    updateRisposteDiFila(giocatoreRef,"corretta")
+                    updateRisposte(risposteRef, "corretta",giocatoreRef)
+                    updateRisposteTotCorrette_ContinuaButton(giocatoreRef,"corretta")
 
                 } else {
                     risposta2.setBackgroundColor(Color.LTGRAY)
                     Handler(Looper.getMainLooper()).postDelayed({
                         risposta2.setBackgroundColor(Color.RED)
                     }, 500)
-                    updateRisposte(risposteRef,"sbagliata")
-                    updateRisposteDiFila(giocatoreRef,"sbagliata")
+                    updateRisposte(risposteRef, "sbagliata",giocatoreRef)
+                    updateRisposteTotCorrette_ContinuaButton(giocatoreRef,"sbagliata")
+
 
                 }
                 rispostaData = true
@@ -150,16 +151,17 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                     Handler(Looper.getMainLooper()).postDelayed({
                         risposta3.setBackgroundColor(Color.GREEN)
                     }, 500)
-                    updateRisposte(risposteRef,"corretta")
-                    updateRisposteDiFila(giocatoreRef,"corretta")
+                    updateRisposte(risposteRef, "corretta",giocatoreRef)
+                    updateRisposteTotCorrette_ContinuaButton(giocatoreRef,"corretta")
 
                 } else {
                     risposta3.setBackgroundColor(Color.LTGRAY)
                     Handler(Looper.getMainLooper()).postDelayed({
                         risposta3.setBackgroundColor(Color.RED)
                     }, 500)
-                    updateRisposte(risposteRef,"sbagliata")
-                    updateRisposteDiFila(giocatoreRef,"sbagliata")
+                    updateRisposte(risposteRef, "sbagliata",giocatoreRef)
+                    updateRisposteTotCorrette_ContinuaButton(giocatoreRef,"sbagliata")
+
 
                 }
                 rispostaData = true
@@ -174,16 +176,16 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                     Handler(Looper.getMainLooper()).postDelayed({
                         risposta4.setBackgroundColor(Color.GREEN)
                     }, 500)
-                    updateRisposte(risposteRef,"corretta")
-                    updateRisposteDiFila(giocatoreRef,"corretta")
+                    updateRisposte(risposteRef, "corretta",giocatoreRef)
+                    updateRisposteTotCorrette_ContinuaButton(giocatoreRef,"corretta")
 
                 } else {
                     risposta4.setBackgroundColor(Color.LTGRAY)
                     Handler(Looper.getMainLooper()).postDelayed({
                         risposta4.setBackgroundColor(Color.RED)
                     }, 500)
-                    updateRisposte(risposteRef,"sbagliata")
-                    updateRisposteDiFila(giocatoreRef,"sbagliata")
+                    updateRisposte(risposteRef, "sbagliata",giocatoreRef)
+                    updateRisposteTotCorrette_ContinuaButton(giocatoreRef,"sbagliata")
 
                 }
                 rispostaData = true
@@ -191,8 +193,8 @@ class SceltaMultiplaFragmentClassica : Fragment() {
         }
 
 
-
     }
+
     fun setParametriPartita(
         partita: String,
         modalita: String,
@@ -207,12 +209,14 @@ class SceltaMultiplaFragmentClassica : Fragment() {
     }
 
 
-
     fun updateRisposte(
         risposteRef: DatabaseReference, tipo: String,
+        giocatoreRef: DatabaseReference
     ) {
         risposteRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+
 
                 if (tipo == "corretta") {
                     if (dataSnapshot.child("risposteCorrette").exists()) {
@@ -238,30 +242,17 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
 
 
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            continua.visibility = View.VISIBLE
-                        }, 1500)
-
-                        continua.setOnClickListener {
-                            modClassicaActivity.chiamaRuota()
-                        }
-
-
                     } else {
                         // Il dato non esiste nel database, quindi scrivi qualcosa
                         risposteRef.child("risposteTotali").setValue(1)
                         contatoreRisposte = 1
                         Log.d("contatoreRisposte", contatoreRisposte.toString())
-
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            continua.visibility = View.VISIBLE
-                        }, 1500)
-
-                        continua.setOnClickListener {
-                            modClassicaActivity.chiamaRuota()
-                        }
                     }
                 }
+
+
+
+
 
                 else if (tipo == "sbagliata") {
 
@@ -285,24 +276,121 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         Log.d("contatoreRisposte", contatoreRisposte.toString())
                         risposteRef.child("risposteTotali").setValue(punti)
 
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            continua.visibility = View.VISIBLE
-                        }, 1500)
-
-                        continua.setOnClickListener {
-                            // Torna al menu
-                            val intent = Intent(requireContext(), MainActivity::class.java)
-                            startActivity(intent)
-                            requireActivity().finish()
-
-                        }
-
                     } else {
                         // Il dato non esiste nel database, quindi scrivi qualcosa
                         risposteRef.child("risposteTotali").setValue(1)
                         contatoreRisposte = 1
                         Log.d("contatoreRisposte", contatoreRisposte.toString())
 
+                    }
+                }
+
+
+                //qua il codice per salvare sul database i dati nel nodo users per utilizzarli nella scrollview
+
+
+            }
+
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
+    }
+
+
+    fun updateRisposteTotCorrette_ContinuaButton(
+        giocatoreRef: DatabaseReference, tipo :String
+    ) {
+        giocatoreRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(giocatore: DataSnapshot) {
+
+
+
+                    if (giocatore.hasChild("risposteTotCorrette")) {
+
+                        var risposte_corrette =
+                            giocatore.child("risposteTotCorrette").value.toString().toInt()
+
+                        risposte_corrette++
+
+                        giocatoreRef.child("risposteTotCorrette").setValue(risposte_corrette)
+                    } else {
+
+                        giocatoreRef.child("risposteTotCorrette").setValue(1)
+                    }
+
+                updateContinuaButton(giocatoreRef, tipo)
+            }
+
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+
+    fun updatePartiteInCorso(
+        partiteInCorsoRef: DatabaseReference, tipo: String,
+    ) {
+        partiteInCorsoRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(giocatore: DataSnapshot) {
+              partiteInCorsoRef.child(partita)
+            }
+
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+
+
+    fun updateContinuaButton(
+        giocatoreRef: DatabaseReference,tipo: String
+    ) {
+        giocatoreRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(giocatore: DataSnapshot) {
+
+                //chiamo conquista
+                if (giocatore.hasChild("risposteTotCorrette")) {
+
+                    var risposte_corrette =
+                        giocatore.child("risposteTotCorrette").value.toString().toInt()
+
+
+                    if (risposte_corrette == 3) {
+
+                        giocatoreRef.child("risposteTotCorrette").setValue(0)
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            continua.visibility = View.VISIBLE
+                        }, 1500)
+
+                        continua.setOnClickListener {
+                            modClassicaActivity.chiamaConquista()
+                        }
+                    }
+
+
+                }
+
+                else {
+                    if (tipo == "corretta") {
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            continua.visibility = View.VISIBLE
+                        }, 1500)
+
+                        continua.setOnClickListener {
+                            modClassicaActivity.chiamaRuota()
+                        }
+
+                    } else if (tipo == "sbagliata") {
+
                         Handler(Looper.getMainLooper()).postDelayed({
                             continua.visibility = View.VISIBLE
                         }, 1500)
@@ -314,72 +402,10 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                             requireActivity().finish()
 
                         }
+
                     }
 
-
                 }
-
-
-
-                //qua il codice per salvare sul database i dati nel nodo users per utilizzarli nella scrollview
-
-
-
-
-
-
-
-
-
-
-            }
-
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
-
-    }
-
-
-
-
-
-
-
-
-
-
-    fun updateRisposteDiFila(
-        giocatoreRef: DatabaseReference, tipo: String,
-    ) {
-        giocatoreRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(giocatore: DataSnapshot) {
-
-                if (tipo == "corretta") {
-
-                    if (giocatore.hasChild("risposteDiFila")) {
-
-                        var risposte_di_fila =
-                            giocatore.child("risposteDiFila").value.toString().toInt()
-
-                        risposte_di_fila++
-
-                        giocatoreRef.child("risposteDiFila").setValue(risposte_di_fila)
-                    }
-                    else {
-
-                        giocatoreRef.child("risposteDiFila").setValue(1)
-                    }
-                }
-
-
-                if (tipo == "sbagliata") {
-
-                }
-
-
 
             }
 
@@ -392,16 +418,8 @@ class SceltaMultiplaFragmentClassica : Fragment() {
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-
         })
     }
-
-
-
-
-
-
-
 
 }
 
