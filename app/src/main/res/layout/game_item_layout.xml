@@ -1,30 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- game_item_layout.xml -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="160dp"
-    android:layout_height="100dp"
+    android:layout_height="150dp"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="15dp"
     android:background="@drawable/game_item_background"
     android:layout_marginEnd="3dp"
     >
 
-    <!-- Aggiungi qui gli elementi per visualizzare il punteggio e il nome dell'avversario -->
-    <TextView
-        android:id="@+id/scoreTextView"
-        android:layout_width="122dp"
-        android:layout_height="50dp"
-        android:text="Punteggio: 0"
-        android:textColor="#000000"
-        android:textSize="18sp" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="160dp"
+        android:layout_height="90dp"
+        android:layout_gravity="center_vertical"
+        >
 
-    <TextView
-        android:id="@+id/opponentNameTextView"
-        android:layout_width="wrap_content"
+        <!-- Aggiungi qui gli elementi per visualizzare il punteggio e il nome dell'avversario -->
+        <TextView
+            android:id="@+id/opponentNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/game_item_background"
+            android:backgroundTint=""
+            android:text="Nome avversario"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/scoreme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/game_item_background"
+            android:backgroundTint=""
+            android:gravity="center"
+            android:text= "0"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-" />
+        <TextView
+            android:id="@+id/scoreavversario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/giocaincorso"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nome avversario"
-        android:textSize="16sp"
-        android:textColor="#000000" />
+        android:text="GIOCA"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#E9967A"
+        android:background="@drawable/game_item_background"
+        />
 
 </LinearLayout>
