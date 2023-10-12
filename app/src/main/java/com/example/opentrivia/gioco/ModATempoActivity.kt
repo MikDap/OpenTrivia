@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentContainerView
 import com.example.opentrivia.AttendiTurnoFragment
 import com.example.opentrivia.R
 import com.example.opentrivia.api.ChiamataApi
@@ -16,7 +14,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.util.Random
-import com.example.opentrivia.gioco.TimeProgressBarView
 
 
 class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback {

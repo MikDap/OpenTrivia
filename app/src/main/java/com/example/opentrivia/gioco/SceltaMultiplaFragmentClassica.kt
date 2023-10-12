@@ -13,7 +13,6 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.opentrivia.MainActivity
-
 import com.example.opentrivia.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -38,12 +37,16 @@ class SceltaMultiplaFragmentClassica : Fragment() {
     private lateinit var modClassicaActivity: ModClassicaActivity
     private lateinit var rispostaCorretta: String
 
-
     private lateinit var partita: String
     private lateinit var modalita: String
     private lateinit var difficolta: String
     private lateinit var topic: String
     private var contatoreRisposte = 0
+
+    private lateinit var nomeAvversario: String
+    private var argomenti_conquistati_miei = 0
+    private var argomenti_conquistati_avversario = 0
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -88,6 +91,8 @@ class SceltaMultiplaFragmentClassica : Fragment() {
         val giocatoreRef =
             database.getReference("partite").child(modalita).child(difficolta).child(partita)
                 .child("giocatori").child(uid)
+        val giocatoriRef = database.getReference("partite").child(modalita).child(difficolta).child(partita)
+            .child("giocatori")
         val partiteInCorsoRef = database.getReference("users").child(uid).child("partite in corso")
 
         var rispostaData = false
@@ -301,27 +306,45 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
 
     fun updateRisposteTotCorrette_ContinuaButton(
-        giocatoreRef: DatabaseReference, tipo :String
+        giocatoriRef: DatabaseReference, tipo :String
     ) {
-        giocatoreRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(giocatore: DataSnapshot) {
+        giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(giocatori: DataSnapshot) {
+                val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
-
-
-                    if (giocatore.hasChild("risposteTotCorrette")) {
+                    if (giocatori.child(uid).hasChild("risposteTotCorrette")) {
 
                         var risposte_corrette =
-                            giocatore.child("risposteTotCorrette").value.toString().toInt()
+                            giocatori.child(uid).child("risposteTotCorrette").value.toString().toInt()
 
                         risposte_corrette++
 
-                        giocatoreRef.child("risposteTotCorrette").setValue(risposte_corrette)
+                        giocatoriRef.child(uid).child("risposteTotCorrette").setValue(risposte_corrette)
                     } else {
 
-                        giocatoreRef.child("risposteTotCorrette").setValue(1)
+                        giocatoriRef.child(uid).child("risposteTotCorrette").setValue(1)
                     }
 
+                for (giocatore in giocatori.children) {
+
+                    if (giocatore.hasChild("Argomenti_Conquistati")) {
+                        if (giocatore.equals(uid)) {
+                            argomenti_conquistati_miei = giocatore.child("Argomenti_Conquistati").value.toString().toInt()
+                        }
+                        else {
+                            nomeAvversario = giocatore.child("name").value.toString()
+                            argomenti_conquistati_avversario = giocatore.child("Argomenti_Conquistati").value.toString().toInt()
+                        }
+                    }
+
+                }
+
+
+                val giocatoreRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori").child(uid)
+
                 updateContinuaButton(giocatoreRef, tipo)
+                updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario)
+
             }
 
 
@@ -334,11 +357,18 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
 
     fun updateScrollView(
-        partiteInCorsoRef: DatabaseReference, tipo: String,
+        nomeAvversario: String, punteggioMio: Int, punteggioAvversario: Int,
     ) {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+        val partiteInCorsoRef = database.getReference("users").child(uid).child("partite in corso")
+
         partiteInCorsoRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(giocatore: DataSnapshot) {
-              partiteInCorsoRef.child(partita)
+              partiteInCorsoRef.child(partita).child("Avversario").setValue(nomeAvversario)
+                partiteInCorsoRef.child(partita).child("PunteggioMio").setValue(punteggioMio)
+                partiteInCorsoRef.child(partita).child("PunteggioAvversario").setValue(punteggioAvversario)
+
+
             }
 
 

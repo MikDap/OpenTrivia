@@ -43,7 +43,7 @@ startButton = view.findViewById(R.id.startButton)
 
                         val gameView = inflater.inflate(R.layout.game_item_layout, partitaContainer, false)
 
-                        val scoreTextView = gameView.findViewById<TextView>(R.id.scoreTextView)
+          //              val scoreTextView = gameView.findViewById<TextView>(R.id.scoreTextView)
                         val opponentNameTextView = gameView.findViewById<TextView>(R.id.opponentNameTextView)
 
 
@@ -51,7 +51,7 @@ startButton = view.findViewById(R.id.startButton)
                         var punteggioMio = partita.child("PunteggioMio").value.toString()
                         var punteggioAvversario = partita.child("PunteggioAvversario").value.toString()
 
-                        scoreTextView.text = punteggioMio
+      //                  scoreTextView.text = punteggioMio
                         opponentNameTextView.text = avversario
 
                         partitaContainer.addView(gameView)
