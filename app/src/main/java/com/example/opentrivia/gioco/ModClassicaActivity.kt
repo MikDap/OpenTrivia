@@ -241,6 +241,7 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
 
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         val name = FirebaseAuth.getInstance().currentUser?.displayName.toString()
+        Log.d("name11",name)
         var condizioneSoddisfatta = false
 
 //Listener per database/partite/modalita/difficolta
@@ -261,8 +262,8 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
                             //prende id della partita
                             partita = sottonodo.key.toString()
                             //setta database/partite/modalita/difficolta/giocatori/id
-                            partiteRef.child(partita).child("giocatori").child(uid)
-                                .setValue(name)
+                            partiteRef.child(partita).child("giocatori").child(uid).child("name").setValue(name)
+                            Log.d("name",name)
                             //cambia inAttesa in no
                             partiteRef.child(partita).child("inAttesa").setValue("no")
                             condizioneSoddisfatta = true
@@ -282,8 +283,7 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
                         .setValue(inAttesa)
                     partiteRef.child(partita).child("topic")
                         .setValue(topic)
-                    partiteRef.child(partita).child("giocatori")
-                        .child(uid).setValue(name)
+                    partiteRef.child(partita).child("giocatori").child(uid).child("name").setValue(name)
                     condizioneSoddisfatta = true
 
                 }
@@ -300,8 +300,7 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
                         .setValue(inAttesa)
                     partiteRef.child(partita).child("topic")
                         .setValue(topic)
-                    partiteRef.child(partita).child("giocatori")
-                        .child(uid).setValue(name)
+                    partiteRef.child(partita).child("giocatori").child(uid).child("name").setValue(name)
                     //   partiteRef.child(partita).child("giocatori").child(uid).child(name).child("risposteCorrette").setValue(0)
                     condizioneSoddisfatta = true
                 }

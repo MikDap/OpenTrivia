@@ -1,8 +1,7 @@
 package com.example.opentrivia.api
 
 import android.util.Log
-import android.widget.Button
-import com.google.gson.Gson
+import com.example.opentrivia.mod_classica_conquista
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import retrofit2.Call
