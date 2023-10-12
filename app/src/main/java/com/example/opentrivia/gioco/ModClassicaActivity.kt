@@ -221,6 +221,7 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
 
     fun chiamaConquista() {
         val conquistaFragment = mod_classica_conquista()
+        conquistaFragment.setDifficolta(difficolta)
 
         //       RuotaFragment.setParametriPartita(partita, "classica", difficolta,topic)
         // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, secondFragment).addToBackStack(null).commit();
