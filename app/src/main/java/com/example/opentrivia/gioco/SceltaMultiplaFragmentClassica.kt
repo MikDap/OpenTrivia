@@ -333,7 +333,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
     }
 
 
-    fun updatePartiteInCorso(
+    fun updateScrollView(
         partiteInCorsoRef: DatabaseReference, tipo: String,
     ) {
         partiteInCorsoRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -367,6 +367,8 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                     if (risposte_corrette == 3) {
 
                         giocatoreRef.child("risposteTotCorrette").setValue(0)
+
+
                         Handler(Looper.getMainLooper()).postDelayed({
                             continua.visibility = View.VISIBLE
                         }, 1500)
