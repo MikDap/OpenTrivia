@@ -94,8 +94,6 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
         val randomIndex = Random().nextInt(topics.size)
         return topics[randomIndex]
     }
-    fun setDifficolta (difficolta: String){this.difficolta=difficolta
-    }
     fun getTriviaQuestion(topic: String) {
 //chiamiamo la funzione per ottenere il numero delle categorie per il topic selezionato
         categoria = getCategoria(topic)
@@ -121,6 +119,9 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
         val risposta_sbagliata_1 = chiamataApi.risposta_sbagliata_1
 
     }
+
+fun setDifficolta (difficolta: String) {
+    this.difficolta = difficolta}
 
 
 }
