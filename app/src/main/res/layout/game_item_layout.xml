@@ -1,72 +1,71 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="172dp"
+    android:layout_width="165dp"
     android:layout_height="165dp"
     android:layout_gravity="center_vertical"
-    android:background="@drawable/rounded_square">
+    android:background="@drawable/game_item_background">
 
     <TextView
         android:id="@+id/opponentNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:background="@drawable/game_item_background"
+        android:padding="5dp"
         android:text="@string/nome_avversario"
         android:textColor="#000000"
-        android:textSize="16sp"
-        android:padding="5dp"
-        android:layout_marginTop="5dp"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.5"
-    app:layout_constraintVertical_bias="0.1"
-    />
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
 
     <TextView
         android:id="@+id/scoreme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
         android:background="@drawable/game_item_background"
         android:gravity="center"
         android:padding="4dp"
         android:text="@string/zero"
         android:textColor="#000000"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/giocaincorso"
         app:layout_constraintEnd_toStartOf="@+id/dashTextView"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/opponentNameTextView"
-        app:layout_constraintBottom_toTopOf="@+id/giocaincorso"
-    />
+        app:layout_constraintTop_toBottomOf="@+id/opponentNameTextView" />
 
     <TextView
         android:id="@+id/dashTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/trattino"
-        app:layout_constraintStart_toEndOf="@+id/scoreme"
+        android:textSize="30sp"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/scoreme"
         app:layout_constraintEnd_toStartOf="@+id/scoreavversario"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintTop_toTopOf="@+id/scoreme"
-    app:layout_constraintBottom_toBottomOf="@+id/scoreme"
-    />
+        app:layout_constraintStart_toEndOf="@+id/scoreme"
+        app:layout_constraintTop_toTopOf="@+id/scoreme" />
 
     <TextView
         android:id="@+id/scoreavversario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
         android:background="@drawable/game_item_background"
-        android:text="@string/zero"
         android:padding="4dp"
+        android:text="@string/zero"
         android:textColor="#000000"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/dashTextView"
+        app:layout_constraintBottom_toBottomOf="@+id/scoreme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintTop_toTopOf="@+id/scoreme"
-    app:layout_constraintBottom_toBottomOf="@+id/scoreme"
-    />
+        app:layout_constraintStart_toEndOf="@+id/dashTextView"
+        app:layout_constraintTop_toTopOf="@+id/scoreme" />
 
     <Button
         android:id="@+id/giocaincorso"
@@ -75,9 +74,10 @@
         android:background="@drawable/game_item_background"
         android:text="@string/gioca"
         android:textSize="15sp"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scoreme"
         app:layout_constraintVertical_bias="1.0" />
