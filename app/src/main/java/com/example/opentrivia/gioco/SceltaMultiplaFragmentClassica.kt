@@ -43,7 +43,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
     private lateinit var topic: String
     private var contatoreRisposte = 0
 
-    private lateinit var nomeAvversario: String
+     var nomeAvversario: String = "-"
     private var argomenti_conquistati_miei = 0
     private var argomenti_conquistati_avversario = 0
 
@@ -106,7 +106,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                     }, 500)
 
                     updateRisposte(risposteRef, "corretta",giocatoreRef)
-                    updateRisposteTotCorrette_ContinuaButton(giocatoreRef,"corretta")
+                    updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"corretta")
 
 
                 } else {
@@ -116,7 +116,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                     }, 500)
 
                     updateRisposte(risposteRef, "sbagliata",giocatoreRef)
-                    updateRisposteTotCorrette_ContinuaButton(giocatoreRef,"sbagliata")
+                    updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"sbagliata")
                 }
                 Log.d("contatoreRisposte2", contatoreRisposte.toString())
                 rispostaData = true
@@ -132,7 +132,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         risposta2.setBackgroundColor(Color.GREEN)
                     }, 500)
                     updateRisposte(risposteRef, "corretta",giocatoreRef)
-                    updateRisposteTotCorrette_ContinuaButton(giocatoreRef,"corretta")
+                    updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"corretta")
 
                 } else {
                     risposta2.setBackgroundColor(Color.LTGRAY)
@@ -140,7 +140,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         risposta2.setBackgroundColor(Color.RED)
                     }, 500)
                     updateRisposte(risposteRef, "sbagliata",giocatoreRef)
-                    updateRisposteTotCorrette_ContinuaButton(giocatoreRef,"sbagliata")
+                    updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"sbagliata")
 
 
                 }
@@ -157,7 +157,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         risposta3.setBackgroundColor(Color.GREEN)
                     }, 500)
                     updateRisposte(risposteRef, "corretta",giocatoreRef)
-                    updateRisposteTotCorrette_ContinuaButton(giocatoreRef,"corretta")
+                    updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"corretta")
 
                 } else {
                     risposta3.setBackgroundColor(Color.LTGRAY)
@@ -165,7 +165,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         risposta3.setBackgroundColor(Color.RED)
                     }, 500)
                     updateRisposte(risposteRef, "sbagliata",giocatoreRef)
-                    updateRisposteTotCorrette_ContinuaButton(giocatoreRef,"sbagliata")
+                    updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"sbagliata")
 
 
                 }
@@ -182,7 +182,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         risposta4.setBackgroundColor(Color.GREEN)
                     }, 500)
                     updateRisposte(risposteRef, "corretta",giocatoreRef)
-                    updateRisposteTotCorrette_ContinuaButton(giocatoreRef,"corretta")
+                    updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"corretta")
 
                 } else {
                     risposta4.setBackgroundColor(Color.LTGRAY)
@@ -190,7 +190,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         risposta4.setBackgroundColor(Color.RED)
                     }, 500)
                     updateRisposte(risposteRef, "sbagliata",giocatoreRef)
-                    updateRisposteTotCorrette_ContinuaButton(giocatoreRef,"sbagliata")
+                    updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"sbagliata")
 
                 }
                 rispostaData = true
@@ -310,6 +310,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
     ) {
         giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(giocatori: DataSnapshot) {
+
                 val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
                     if (giocatori.child(uid).hasChild("risposteTotCorrette")) {
@@ -342,8 +343,8 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
                 val giocatoreRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori").child(uid)
 
-                updateContinuaButton(giocatoreRef, tipo)
                 updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario)
+                updateContinuaButton(giocatoreRef, tipo)
 
             }
 
@@ -406,6 +407,35 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         continua.setOnClickListener {
                             modClassicaActivity.chiamaConquista()
                         }
+                    }
+
+                    else {
+
+                        if (tipo == "corretta") {
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                continua.visibility = View.VISIBLE
+                            }, 1500)
+
+                            continua.setOnClickListener {
+                                modClassicaActivity.chiamaRuota()
+                            }
+
+                        } else if (tipo == "sbagliata") {
+
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                continua.visibility = View.VISIBLE
+                            }, 1500)
+
+                            continua.setOnClickListener {
+                                // Torna al menu
+                                val intent = Intent(requireContext(), MainActivity::class.java)
+                                startActivity(intent)
+                                requireActivity().finish()
+
+                            }
+
+                        }
+
                     }
 
 
