@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.opentrivia.ConquistaSceltaMultipla
 import com.example.opentrivia.R
 import com.example.opentrivia.api.ChiamataApi
 import com.example.opentrivia.mod_classica_conquista
@@ -14,6 +15,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.util.Random
+import com.example.opentrivia.utils.ModClassicaUtils
 
 class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener,ChiamataApi.TriviaQuestionCallback {
 
@@ -34,6 +36,16 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
 
 
 
+    lateinit var topicConquista : String
+    lateinit var domandaConquista : String
+    lateinit var risposta1Conquista: String
+    lateinit var risposta2Conquista: String
+    lateinit var risposta3Conquista: String
+    lateinit var risposta4Conquista: String
+    lateinit var rispostaCorrettaConquista: String
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.mod_classica_activity)
@@ -50,21 +62,23 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
 
         //salviamo il topic
         this.topic = topic
+
+        if (topic == "jolly") {chiamaConquista()}
+        else {
 //chiamiamo la funzione per ottenere il numero delle categorie per il topic selezionato
-        categoria = getCategoria(topic)
+            categoria = getCategoria(topic)
 
 
+            // Controlla se partita non è stata inizializzata
+            if (partita == "") {
+                creaPartitaDatabase()
+            }
 
-        // Controlla se partita non è stata inizializzata
-        if (partita == "") {
-            creaPartitaDatabase()
+
+            //facciamo la chiamata api
+            chiamataApi = ChiamataApi("multiple", categoria, difficolta)
+            chiamataApi.fetchTriviaQuestion(this)
         }
-
-
-
-        //facciamo la chiamata api
-        chiamataApi = ChiamataApi("multiple",categoria,difficolta)
-        chiamataApi.fetchTriviaQuestion(this)
 
     }
 
@@ -221,7 +235,7 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
 
     fun chiamaConquista() {
         val conquistaFragment = mod_classica_conquista()
-        conquistaFragment.setDifficolta(difficolta)
+        conquistaFragment.setDifficolta(partita, difficolta)
 
         //       RuotaFragment.setParametriPartita(partita, "classica", difficolta,topic)
         // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, secondFragment).addToBackStack(null).commit();
@@ -312,5 +326,32 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
             }
 
         })
+    }
+
+    fun chiamaConquistaSceltaMultipla(topic:String, domanda:String, risposta1:String, risposta2:String, risposta3:String, risposta4:String, rispostaCorretta:String) {
+
+        domandaConquista = domanda
+        risposta1Conquista = risposta1
+        risposta2Conquista = risposta2
+        risposta3Conquista = risposta3
+        risposta4Conquista = risposta4
+        rispostaCorrettaConquista = rispostaCorretta
+        topicConquista = topic
+
+        Log.d("risposta1Conquista", risposta1Conquista)
+
+        // passiamo al secondo Fragment (DA GESTIRE IL PERMESSO DI RITORNARE INDIETRO DURANTE LA SCHERMATA DELLE DOMANDE E RISPOSTE)
+        val secondFragment = ConquistaSceltaMultipla()
+
+        Log.d("domandaconqSceltaMultipla", domanda)
+        // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, secondFragment).addToBackStack(null).commit();
+        Handler(Looper.getMainLooper()).postDelayed({
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerViewGioco, secondFragment).commit()
+        }, 500)
+
+
+
+
     }
 }

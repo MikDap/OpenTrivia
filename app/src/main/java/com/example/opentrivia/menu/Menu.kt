@@ -32,7 +32,7 @@ startButton = view.findViewById(R.id.startButton)
         partitaContainer = view.findViewById(R.id.linearLayout)
         database = FirebaseDatabase.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-        val partiteInCorsoRef = database.getReference("users").child(uid).child("partiteInCorso")
+        val partiteInCorsoRef = database.getReference("users").child(uid).child("partite in corso")
 
 
         partiteInCorsoRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -43,16 +43,20 @@ startButton = view.findViewById(R.id.startButton)
 
                         val gameView = inflater.inflate(R.layout.game_item_layout, partitaContainer, false)
 
-          //              val scoreTextView = gameView.findViewById<TextView>(R.id.scoreTextView)
+
                         val opponentNameTextView = gameView.findViewById<TextView>(R.id.opponentNameTextView)
+                        val scoremeTextView = gameView.findViewById<TextView>(R.id.scoreme)
+                        val scoreavversarioTextView = gameView.findViewById<TextView>(R.id.scoreavversario)
+                        val giocaButton = gameView.findViewById<TextView>(R.id.giocaincorso)
 
 
                         var avversario = partita.child("Avversario").value.toString()
                         var punteggioMio = partita.child("PunteggioMio").value.toString()
                         var punteggioAvversario = partita.child("PunteggioAvversario").value.toString()
 
-      //                  scoreTextView.text = punteggioMio
+                        scoremeTextView.text = punteggioMio
                         opponentNameTextView.text = avversario
+                        scoreavversarioTextView.text = punteggioAvversario
 
                         partitaContainer.addView(gameView)
 

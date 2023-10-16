@@ -19,6 +19,7 @@ import android.graphics.Path
 import android.graphics.drawable.BitmapDrawable
 import android.util.Log
 import android.graphics.PathMeasure
+import android.graphics.Typeface
 import com.example.opentrivia.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -44,13 +45,13 @@ class RuotaFragment : Fragment() {
     private val topics =
         listOf("sport", "storia", "scienze", "arte", "geografia", "culturaPop", "jolly")
     private val colors = arrayOf(
-        Color.parseColor("#FFD1DC"),  // Rosa pastello
-        Color.parseColor("#B2FFA5"),  // Verde pastello
-        Color.parseColor("#AEC6FF"),  // Blu pastello
-        Color.parseColor("#FFF8B3"),  // Giallo pastello
-        Color.parseColor("#FFB2FF"),  // Magenta pastello
-        Color.parseColor("#B3FFFF"),  // Ciano pastello
-        Color.parseColor("#D3D3D3")   // Grigio pastello
+        Color.parseColor("#FFEB3B"),
+        Color.parseColor("#FFBB2F"),
+        Color.parseColor("#4CAF50"),
+        Color.parseColor("#FF0000"),
+        Color.parseColor("#0000FF"),
+        Color.parseColor("#FF00FF"),
+        Color.parseColor("#BBBBBB")
     )
 
     //michele
@@ -209,6 +210,8 @@ class RuotaFragment : Fragment() {
         val textPaint = Paint(Paint.ANTI_ALIAS_FLAG)
         textPaint.textSize = 60f
         textPaint.color = Color.BLACK
+        val boldTypeface = Typeface.defaultFromStyle(Typeface.BOLD)
+        textPaint.setTypeface(boldTypeface)
 
 
         //per ogni materia, la scrivo in una certa posizione e una certa angolazione nel cerchio
@@ -259,6 +262,9 @@ class RuotaFragment : Fragment() {
             val pathMeasure = PathMeasure(path, false)
             val pathLength = pathMeasure.length
 
+            if (text == "jolly") {
+                textPaint.color = Color.YELLOW
+            }
             //dovuto scrivere cosi perchè hOffset non può uscire fuori dalla lunghezza del percorso ( deve essere tra 0 e perimetro del cerchio)
             canvas2.drawTextOnPath(
                 text,
