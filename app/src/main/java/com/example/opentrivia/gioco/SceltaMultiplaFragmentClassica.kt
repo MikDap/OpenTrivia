@@ -20,7 +20,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-
+import com.example.opentrivia.utils.ModClassicaUtils
 
 class SceltaMultiplaFragmentClassica : Fragment() {
 
@@ -54,7 +54,6 @@ class SceltaMultiplaFragmentClassica : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.mod_classica_scelta_multipla, container, false)
-
 
 
         modClassicaActivity = activity as ModClassicaActivity
@@ -99,26 +98,18 @@ class SceltaMultiplaFragmentClassica : Fragment() {
         risposta1.setOnClickListener {
             if (!rispostaData) {
 
-                if (risposta1.text == rispostaCorretta) {
-                    risposta1.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        risposta1.setBackgroundColor(Color.GREEN)
-                    }, 500)
 
-                    updateRisposte(risposteRef, "corretta",giocatoreRef)
-                    updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"corretta")
+               if (ModClassicaUtils.QuestaèLaRispostaCorretta(risposta1, rispostaCorretta)) {
 
+                   updateRisposte(risposteRef, "corretta",giocatoreRef)
+                   updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"corretta")
+               }
 
-                } else {
-                    risposta1.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        risposta1.setBackgroundColor(Color.RED)
-                    }, 500)
-
+                else {
                     updateRisposte(risposteRef, "sbagliata",giocatoreRef)
                     updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"sbagliata")
                 }
-                Log.d("contatoreRisposte2", contatoreRisposte.toString())
+
                 rispostaData = true
 
             }
@@ -126,72 +117,41 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
         risposta2.setOnClickListener {
             if (!rispostaData) {
-                if (risposta2.text == rispostaCorretta) {
-                    risposta2.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        risposta2.setBackgroundColor(Color.GREEN)
-                    }, 500)
+                if (ModClassicaUtils.QuestaèLaRispostaCorretta(risposta2, rispostaCorretta)) {
                     updateRisposte(risposteRef, "corretta",giocatoreRef)
                     updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"corretta")
-
-                } else {
-                    risposta2.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        risposta2.setBackgroundColor(Color.RED)
-                    }, 500)
+                }
+                else {
                     updateRisposte(risposteRef, "sbagliata",giocatoreRef)
                     updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"sbagliata")
-
-
                 }
                 rispostaData = true
             }
         }
-
 
         risposta3.setOnClickListener {
             if (!rispostaData) {
-                if (risposta3.text == rispostaCorretta) {
-                    risposta3.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        risposta3.setBackgroundColor(Color.GREEN)
-                    }, 500)
+                if (ModClassicaUtils.QuestaèLaRispostaCorretta(risposta3, rispostaCorretta)) {
                     updateRisposte(risposteRef, "corretta",giocatoreRef)
                     updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"corretta")
-
-                } else {
-                    risposta3.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        risposta3.setBackgroundColor(Color.RED)
-                    }, 500)
+                }
+                else {
                     updateRisposte(risposteRef, "sbagliata",giocatoreRef)
                     updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"sbagliata")
-
-
                 }
                 rispostaData = true
             }
         }
 
-
         risposta4.setOnClickListener {
             if (!rispostaData) {
-                if (risposta4.text == rispostaCorretta) {
-                    risposta4.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        risposta4.setBackgroundColor(Color.GREEN)
-                    }, 500)
+                if (ModClassicaUtils.QuestaèLaRispostaCorretta(risposta4, rispostaCorretta)) {
                     updateRisposte(risposteRef, "corretta",giocatoreRef)
                     updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"corretta")
-
-                } else {
-                    risposta4.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        risposta4.setBackgroundColor(Color.RED)
-                    }, 500)
+                }
+                else {
                     updateRisposte(risposteRef, "sbagliata",giocatoreRef)
                     updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"sbagliata")
-
                 }
                 rispostaData = true
             }
@@ -343,7 +303,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
                 val giocatoreRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori").child(uid)
 
-                updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario)
+                ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, database)
                 updateContinuaButton(giocatoreRef, tipo)
 
             }
@@ -357,28 +317,6 @@ class SceltaMultiplaFragmentClassica : Fragment() {
     }
 
 
-    fun updateScrollView(
-        nomeAvversario: String, punteggioMio: Int, punteggioAvversario: Int,
-    ) {
-        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-        val partiteInCorsoRef = database.getReference("users").child(uid).child("partite in corso")
-
-        partiteInCorsoRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(giocatore: DataSnapshot) {
-              partiteInCorsoRef.child(partita).child("Avversario").setValue(nomeAvversario)
-                partiteInCorsoRef.child(partita).child("PunteggioMio").setValue(punteggioMio)
-                partiteInCorsoRef.child(partita).child("PunteggioAvversario").setValue(punteggioAvversario)
-
-
-            }
-
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        })
-    }
 
 
 
@@ -456,27 +394,16 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         Handler(Looper.getMainLooper()).postDelayed({
                             continua.visibility = View.VISIBLE
                         }, 1500)
-
                         continua.setOnClickListener {
                             // Torna al menu
                             val intent = Intent(requireContext(), MainActivity::class.java)
                             startActivity(intent)
                             requireActivity().finish()
-
                         }
-
                     }
 
                 }
-
             }
-
-
-
-
-
-
-
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
