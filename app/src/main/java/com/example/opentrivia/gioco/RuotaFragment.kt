@@ -27,12 +27,30 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-
+import kotlin.collections.ArrayList
+import com.example.opentrivia.utils.ModClassicaUtils
 
 class RuotaFragment : Fragment() {
 
     private lateinit var wheelView: View
     private lateinit var ruotaButton: Button
+
+
+
+    private lateinit var storia : View
+    private lateinit var sport : View
+    private lateinit var scienze : View
+    private lateinit var geografia : View
+    private lateinit var arte : View
+    private lateinit var culturaPop : View
+
+    private lateinit var storia2 : View
+    private lateinit var sport2 : View
+    private lateinit var scienze2 : View
+    private lateinit var geografia2 : View
+    private lateinit var arte2 : View
+    private lateinit var culturaPop2 : View
+
     private var selectedTopic: String? = null
     private var isWheelStopped: Boolean = true
     lateinit var topic: String
@@ -64,6 +82,20 @@ class RuotaFragment : Fragment() {
         wheelView = view.findViewById(R.id.wheelView)
         ruotaButton = view.findViewById(R.id.ruotaButton)
 
+        storia = view.findViewById(R.id.storia)
+        sport = view.findViewById(R.id.sport)
+        geografia = view.findViewById(R.id.geografia)
+        arte = view.findViewById(R.id.arte)
+        scienze = view.findViewById(R.id.scienze)
+        culturaPop = view.findViewById(R.id.culturaPop)
+
+        storia2 = view.findViewById(R.id.storia2)
+        sport2 = view.findViewById(R.id.sport2)
+        geografia2 = view.findViewById(R.id.geografia2)
+        arte2 = view.findViewById(R.id.arte2)
+        scienze2 = view.findViewById(R.id.scienze2)
+        culturaPop2 = view.findViewById(R.id.culturaPop2)
+
         modClassicaActivity = activity as ModClassicaActivity
         val partita = modClassicaActivity.partita
         val modalita = "classica"
@@ -72,10 +104,18 @@ class RuotaFragment : Fragment() {
         database = FirebaseDatabase.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         val giocatoreRef= database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori").child(uid)
-
+        val giocatoriRef= database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
 
      //nel caso un giocatore esce quando sta per passare alla schermata conquista         leggiRisposteDiFila(giocatoreRef)
 
+
+
+       ModClassicaUtils.QualiArgomentiConquistati(giocatoriRef) { argomentiMiei, argomentiAvversario ->
+           if (argomentiMiei.isEmpty())Log.d("argomentiMieiVuoti","si")
+           if(argomentiMiei.isNotEmpty())  {      Log.d("argomentiMiei", argomentiMiei[0]) }
+           coloraQuadratini(argomentiMiei,true)
+           coloraQuadratini(argomentiAvversario, false)
+        }
 
 
         ruotaButton.setOnClickListener {
@@ -343,5 +383,84 @@ class RuotaFragment : Fragment() {
 
         })
     }
+
+
+
+// METTERE SE ARGOMENTIMIEI O ARGOMENTIAVVERS
+fun coloraQuadratini(Argomenti: ArrayList<String>, miei: Boolean) {
+
+    for (argomento in Argomenti) {
+
+        if (miei) {
+            when (argomento) {
+
+                "storia" -> {
+                    storia.setBackgroundColor(Color.parseColor("#FFBB2F"))
+                }
+
+                "sport" -> {
+                    sport.setBackgroundColor(Color.parseColor("#FFEB3B"))
+                }
+
+                "geografia" -> {
+                    geografia.setBackgroundColor(Color.parseColor("#0000FF"))
+                }
+
+                "arte" -> {
+                    arte.setBackgroundColor(Color.parseColor("#FF0000"))
+                }
+
+                "scienze" -> {
+                    scienze.setBackgroundColor(Color.parseColor("#4CAF50"))
+                }
+
+                "culturaPop" -> {
+                    culturaPop.setBackgroundColor(Color.parseColor("#FF00FF"))
+                }
+
+
+            }
+
+        }
+
+        else {
+                when (argomento) {
+
+                    "storia" -> {
+                        storia2.setBackgroundColor(Color.parseColor("#FFBB2F"))
+                    }
+
+                    "sport" -> {
+                        sport2.setBackgroundColor(Color.parseColor("#FFEB3B"))
+                    }
+
+                    "geografia" -> {
+                        geografia2.setBackgroundColor(Color.parseColor("#0000FF"))
+                    }
+
+                    "arte" -> {
+                        arte2.setBackgroundColor(Color.parseColor("#FF0000"))
+                    }
+
+                    "scienze" -> {
+                        scienze2.setBackgroundColor(Color.parseColor("#4CAF50"))
+                    }
+
+                    "culturaPop" -> {
+                        culturaPop2.setBackgroundColor(Color.parseColor("#FF00FF"))
+                    }
+
+
+                }
+
+        }
+    }
+
+
+}
+
+
+
+
 }
 

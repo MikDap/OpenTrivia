@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.example.opentrivia.utils.ModClassicaUtils
 
 class ConquistaSceltaMultipla : Fragment() {
 
@@ -83,7 +84,8 @@ coloraSfondo(NomeArgomento.text.toString())
         val giocatoreRef =
             database.getReference("partite").child("classica").child(difficolta).child(partita)
                 .child("giocatori").child(uid)
-
+        val giocatoriRef = database.getReference("partite").child("classica").child(difficolta).child(partita)
+            .child("giocatori")
 
 
 
@@ -98,7 +100,14 @@ coloraSfondo(NomeArgomento.text.toString())
                         risposta1.setBackgroundColor(Color.GREEN)
                     }, 500)
 
-                    updateArgomentiConquistati(giocatoreRef)
+                    updateArgomentiConquistati(giocatoreRef){
+                        //callback di updateArgomentiConquistati
+                        ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
+                                nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                            ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, database)
+                        }
+                    }
+
                     Handler(Looper.getMainLooper()).postDelayed({
                         modClassicaActivity.chiamaRuota()
                     }, 1000)
@@ -108,6 +117,11 @@ coloraSfondo(NomeArgomento.text.toString())
                     Handler(Looper.getMainLooper()).postDelayed({
                         risposta1.setBackgroundColor(Color.RED)
                     }, 500)
+
+                    ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
+                            nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, database)
+                    }
 
                     Handler(Looper.getMainLooper()).postDelayed({
                         modClassicaActivity.chiamaRuota()
@@ -126,7 +140,13 @@ coloraSfondo(NomeArgomento.text.toString())
                         risposta2.setBackgroundColor(Color.GREEN)
                     }, 500)
 
-                    updateArgomentiConquistati(giocatoreRef)
+                    updateArgomentiConquistati(giocatoreRef){
+                        //callback di updateArgomentiConquistati
+                        ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
+                                nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                            ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, database)
+                        }
+                    }
                     Handler(Looper.getMainLooper()).postDelayed({
                         modClassicaActivity.chiamaRuota()
                     }, 1000)
@@ -135,6 +155,11 @@ coloraSfondo(NomeArgomento.text.toString())
                     Handler(Looper.getMainLooper()).postDelayed({
                         risposta2.setBackgroundColor(Color.RED)
                     }, 500)
+
+                    ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
+                            nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, database)
+                    }
 
                     Handler(Looper.getMainLooper()).postDelayed({
                         modClassicaActivity.chiamaRuota()
@@ -154,7 +179,13 @@ coloraSfondo(NomeArgomento.text.toString())
                         risposta3.setBackgroundColor(Color.GREEN)
                     }, 500)
 
-                    updateArgomentiConquistati(giocatoreRef)
+                    updateArgomentiConquistati(giocatoreRef){
+                        //callback di updateArgomentiConquistati
+                        ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
+                                nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                            ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, database)
+                        }
+                    }
                     Handler(Looper.getMainLooper()).postDelayed({
                         modClassicaActivity.chiamaRuota()
                     }, 1000)
@@ -163,6 +194,11 @@ coloraSfondo(NomeArgomento.text.toString())
                     Handler(Looper.getMainLooper()).postDelayed({
                         risposta3.setBackgroundColor(Color.RED)
                     }, 500)
+
+                    ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
+                            nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, database)
+                    }
 
                     Handler(Looper.getMainLooper()).postDelayed({
                         modClassicaActivity.chiamaRuota()
@@ -182,7 +218,13 @@ coloraSfondo(NomeArgomento.text.toString())
                         risposta4.setBackgroundColor(Color.GREEN)
                     }, 500)
 
-                    updateArgomentiConquistati(giocatoreRef)
+                    updateArgomentiConquistati(giocatoreRef){
+                        //callback di updateArgomentiConquistati
+                        ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
+                                nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                            ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, database)
+                        }
+                    }
                     Handler(Looper.getMainLooper()).postDelayed({
                         modClassicaActivity.chiamaRuota()
                     }, 1000)
@@ -191,6 +233,12 @@ coloraSfondo(NomeArgomento.text.toString())
                     Handler(Looper.getMainLooper()).postDelayed({
                         risposta4.setBackgroundColor(Color.RED)
                     }, 500)
+
+
+                    ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
+                            nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, database)
+                    }
 
                     Handler(Looper.getMainLooper()).postDelayed({
                         modClassicaActivity.chiamaRuota()
@@ -205,13 +253,25 @@ coloraSfondo(NomeArgomento.text.toString())
 
 
 
-    fun updateArgomentiConquistati(giocatoreRef: DatabaseReference) {
+
+
+
+
+
+
+
+
+
+
+
+    fun updateArgomentiConquistati(giocatoreRef: DatabaseReference,
+     callback: () -> Unit
+    ) {
 
         giocatoreRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(giocatore: DataSnapshot) {
-
                     giocatoreRef.child("ArgomentiConquistati").child(NomeArgomento.text.toString()).setValue("si")
-
+                callback()
             }
 
 
@@ -233,7 +293,7 @@ fun coloraSfondo (topic: String) {
     when (topic) {
         "storia" -> layout.setBackgroundColor(Color.parseColor("#FFBB2F"))
         "geografia" -> layout.setBackgroundColor(Color.parseColor("#0000FF"))
-        "arte" -> layout.setBackgroundColor(Color.parseColor("#FF00"))
+        "arte" -> layout.setBackgroundColor(Color.parseColor("FF0000"))  // il rosso da problemi
         "sport" -> layout.setBackgroundColor(Color.parseColor("#FFEB3B"))
         "culturaPop" -> layout.setBackgroundColor(Color.parseColor("#FF00FF"))
         "scienze" -> layout.setBackgroundColor(Color.parseColor("#4CAF50"))

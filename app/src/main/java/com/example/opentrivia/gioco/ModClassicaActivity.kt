@@ -123,7 +123,11 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
 // passiamo al secondo Fragment (DA GESTIRE IL PERMESSO DI RITORNARE INDIETRO DURANTE LA SCHERMATA DELLE DOMANDE E RISPOSTE)
         val secondFragment = SceltaMultiplaFragmentClassica()
 
-        secondFragment.setParametriPartita(partita, "classica", difficolta,topic)
+        secondFragment.partita = partita
+        secondFragment.modalita = "classica"
+        secondFragment.difficolta = difficolta
+        secondFragment.topic = topic
+
         // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, secondFragment).addToBackStack(null).commit();
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction()

@@ -101,7 +101,7 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:background="@drawable/contour_background"
-                            android:backgroundTint="#FF00" />
+                            android:backgroundTint="#FF0000" />
 
 
                         <TextView

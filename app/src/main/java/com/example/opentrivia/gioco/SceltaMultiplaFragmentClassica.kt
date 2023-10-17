@@ -37,15 +37,10 @@ class SceltaMultiplaFragmentClassica : Fragment() {
     private lateinit var modClassicaActivity: ModClassicaActivity
     private lateinit var rispostaCorretta: String
 
-    private lateinit var partita: String
-    private lateinit var modalita: String
-    private lateinit var difficolta: String
-    private lateinit var topic: String
-    private var contatoreRisposte = 0
-
-     var nomeAvversario: String = "-"
-    private var argomenti_conquistati_miei = 0
-    private var argomenti_conquistati_avversario = 0
+    lateinit var partita: String
+    lateinit var modalita: String
+    lateinit var difficolta: String
+    lateinit var topic: String
 
 
     override fun onCreateView(
@@ -100,14 +95,27 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
 
                if (ModClassicaUtils.QuestaèLaRispostaCorretta(risposta1, rispostaCorretta)) {
+                   ModClassicaUtils.updateRisposte(risposteRef, "corretta")
 
-                   updateRisposte(risposteRef, "corretta",giocatoreRef)
-                   updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"corretta")
+                   //IMPORTANTE: PROVARE AD AGGIUNGERE CALLBACK UPDATECONTATORE E POI DENTRO FINO A UPD CONTINUA
+                   ModClassicaUtils.updateContatoreRisposteCorrette(giocatoriRef)
+                   //aggiorna ScrollView
+                   ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef){
+                           nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                       ModClassicaUtils.updateScrollView(nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, database)
+                   }
+
+                   updateContinuaButton(giocatoreRef,"corretta")
                }
 
                 else {
-                    updateRisposte(risposteRef, "sbagliata",giocatoreRef)
-                    updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"sbagliata")
+                   ModClassicaUtils.updateRisposte(risposteRef, "sbagliata")
+                   ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef){
+                           nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                       ModClassicaUtils.updateScrollView(nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, database)
+                   }
+
+                   updateContinuaButton(giocatoreRef,"sbagliata")
                 }
 
                 rispostaData = true
@@ -118,12 +126,23 @@ class SceltaMultiplaFragmentClassica : Fragment() {
         risposta2.setOnClickListener {
             if (!rispostaData) {
                 if (ModClassicaUtils.QuestaèLaRispostaCorretta(risposta2, rispostaCorretta)) {
-                    updateRisposte(risposteRef, "corretta",giocatoreRef)
-                    updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"corretta")
+                    ModClassicaUtils.updateContatoreRisposteCorrette(giocatoriRef)
+                    ModClassicaUtils.updateRisposte(risposteRef, "corretta")
+                    ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef){
+                            nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.updateScrollView(nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, database)
+                    }
+
+                    updateContinuaButton(giocatoreRef,"corretta")
                 }
                 else {
-                    updateRisposte(risposteRef, "sbagliata",giocatoreRef)
-                    updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"sbagliata")
+                    ModClassicaUtils.updateRisposte(risposteRef, "sbagliata")
+                    ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef){
+                            nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.updateScrollView(nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, database)
+                    }
+
+                    updateContinuaButton(giocatoreRef,"sbagliata")
                 }
                 rispostaData = true
             }
@@ -132,12 +151,23 @@ class SceltaMultiplaFragmentClassica : Fragment() {
         risposta3.setOnClickListener {
             if (!rispostaData) {
                 if (ModClassicaUtils.QuestaèLaRispostaCorretta(risposta3, rispostaCorretta)) {
-                    updateRisposte(risposteRef, "corretta",giocatoreRef)
-                    updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"corretta")
+                    ModClassicaUtils.updateContatoreRisposteCorrette(giocatoriRef)
+                    ModClassicaUtils.updateRisposte(risposteRef, "corretta")
+                    ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef){
+                            nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.updateScrollView(nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, database)
+                    }
+
+                    updateContinuaButton(giocatoreRef,"corretta")
                 }
                 else {
-                    updateRisposte(risposteRef, "sbagliata",giocatoreRef)
-                    updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"sbagliata")
+                    ModClassicaUtils.updateRisposte(risposteRef, "sbagliata")
+                    ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef){
+                            nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.updateScrollView(nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, database)
+                    }
+
+                    updateContinuaButton(giocatoreRef,"sbagliata")
                 }
                 rispostaData = true
             }
@@ -146,12 +176,23 @@ class SceltaMultiplaFragmentClassica : Fragment() {
         risposta4.setOnClickListener {
             if (!rispostaData) {
                 if (ModClassicaUtils.QuestaèLaRispostaCorretta(risposta4, rispostaCorretta)) {
-                    updateRisposte(risposteRef, "corretta",giocatoreRef)
-                    updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"corretta")
+                    ModClassicaUtils.updateContatoreRisposteCorrette(giocatoriRef)
+                    ModClassicaUtils.updateRisposte(risposteRef, "corretta")
+                    ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef){
+                            nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.updateScrollView(nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, database)
+                    }
+
+                    updateContinuaButton(giocatoreRef,"corretta")
                 }
                 else {
-                    updateRisposte(risposteRef, "sbagliata",giocatoreRef)
-                    updateRisposteTotCorrette_ContinuaButton(giocatoriRef,"sbagliata")
+                    ModClassicaUtils.updateRisposte(risposteRef, "sbagliata")
+                    ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef){
+                            nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.updateScrollView(nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, database)
+                    }
+
+                    updateContinuaButton(giocatoreRef,"sbagliata")
                 }
                 rispostaData = true
             }
@@ -160,161 +201,6 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
     }
 
-    fun setParametriPartita(
-        partita: String,
-        modalita: String,
-        difficolta: String,
-        topic: String
-    ) {
-        // Imposta il valore della variabile partita come desiderato
-        this.partita = partita
-        this.modalita = modalita
-        this.difficolta = difficolta
-        this.topic = topic
-    }
-
-
-    fun updateRisposte(
-        risposteRef: DatabaseReference, tipo: String,
-        giocatoreRef: DatabaseReference
-    ) {
-        risposteRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-
-
-                if (tipo == "corretta") {
-                    if (dataSnapshot.child("risposteCorrette").exists()) {
-                        // Il dato esiste nel database
-                        var punti = dataSnapshot.child("risposteCorrette").value.toString().toInt()
-                        punti++
-                        risposteRef.child("risposteCorrette").setValue(punti)
-
-                    } else {
-                        // Il dato non esiste nel database, quindi scrivi qualcosa
-                        risposteRef.child("risposteCorrette").setValue(1)
-                    }
-
-
-                    if (dataSnapshot.child("risposteTotali").exists()) {
-                        // Il dato esiste nel database
-                        var punti = dataSnapshot.child("risposteTotali").value.toString().toInt()
-                        punti++
-                        contatoreRisposte = punti
-
-                        Log.d("contatoreRisposte", contatoreRisposte.toString())
-                        risposteRef.child("risposteTotali").setValue(punti)
-
-
-
-                    } else {
-                        // Il dato non esiste nel database, quindi scrivi qualcosa
-                        risposteRef.child("risposteTotali").setValue(1)
-                        contatoreRisposte = 1
-                        Log.d("contatoreRisposte", contatoreRisposte.toString())
-                    }
-                }
-
-
-
-
-
-                else if (tipo == "sbagliata") {
-
-                    if (dataSnapshot.child("risposteSbagliate").exists()) {
-                        // Il dato esiste nel database
-                        var punti = dataSnapshot.child("risposteSbagliate").value.toString().toInt()
-                        punti++
-                        risposteRef.child("risposteSbagliate").setValue(punti)
-
-                    } else {
-                        // Il dato non esiste nel database, quindi scrivi qualcosa
-                        risposteRef.child("risposteSbagliate").setValue(1)
-                    }
-
-
-                    if (dataSnapshot.child("risposteTotali").exists()) {
-                        // Il dato esiste nel database
-                        var punti = dataSnapshot.child("risposteTotali").value.toString().toInt()
-                        punti++
-                        contatoreRisposte = punti
-                        Log.d("contatoreRisposte", contatoreRisposte.toString())
-                        risposteRef.child("risposteTotali").setValue(punti)
-
-                    } else {
-                        // Il dato non esiste nel database, quindi scrivi qualcosa
-                        risposteRef.child("risposteTotali").setValue(1)
-                        contatoreRisposte = 1
-                        Log.d("contatoreRisposte", contatoreRisposte.toString())
-
-                    }
-                }
-
-
-                //qua il codice per salvare sul database i dati nel nodo users per utilizzarli nella scrollview
-
-
-            }
-
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
-
-    }
-
-
-    fun updateRisposteTotCorrette_ContinuaButton(
-        giocatoriRef: DatabaseReference, tipo :String
-    ) {
-        giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(giocatori: DataSnapshot) {
-
-                val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-
-                    if (giocatori.child(uid).hasChild("risposteTotCorrette")) {
-
-                        var risposte_corrette =
-                            giocatori.child(uid).child("risposteTotCorrette").value.toString().toInt()
-
-                        risposte_corrette++
-
-                        giocatoriRef.child(uid).child("risposteTotCorrette").setValue(risposte_corrette)
-                    } else {
-
-                        giocatoriRef.child(uid).child("risposteTotCorrette").setValue(1)
-                    }
-
-                for (giocatore in giocatori.children) {
-
-                    if (giocatore.hasChild("Argomenti_Conquistati")) {
-                        if (giocatore.equals(uid)) {
-                            argomenti_conquistati_miei = giocatore.child("Argomenti_Conquistati").value.toString().toInt()
-                        }
-                        else {
-                            nomeAvversario = giocatore.child("name").value.toString()
-                            argomenti_conquistati_avversario = giocatore.child("Argomenti_Conquistati").value.toString().toInt()
-                        }
-                    }
-
-                }
-
-
-                val giocatoreRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori").child(uid)
-
-                ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, database)
-                updateContinuaButton(giocatoreRef, tipo)
-
-            }
-
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        })
-    }
 
 
 
