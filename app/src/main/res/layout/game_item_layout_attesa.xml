@@ -4,7 +4,7 @@
     android:layout_width="140dp"
     android:layout_height="140dp"
     android:layout_gravity="center_vertical"
-    android:background="@drawable/game_item_background"
+    android:background="@drawable/game_item_attesa2_background"
     android:layout_marginEnd="3dp">
 
     <TextView
@@ -78,8 +78,8 @@
         android:id="@+id/giocaincorso"
         android:layout_width="130dp"
         android:layout_height="48dp"
-        android:background="@drawable/game_item_background"
-        android:text="@string/gioca"
+        android:background="@drawable/game_item_attesa_background"
+        android:text="@string/inattesa"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -89,4 +89,3 @@
         app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
- 
