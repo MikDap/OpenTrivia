@@ -27,12 +27,12 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
     lateinit var categoria: String
     private lateinit var partita: String
     private lateinit var difficolta: String
-    private lateinit var storiaButton: CardView
-    private lateinit var geografiaButton: CardView
-    private lateinit var arteButton: CardView
-    private lateinit var sportButton: CardView
-    private lateinit var intrattenimentoButton: CardView
-    private lateinit var scienzeButton: CardView
+    private lateinit var storiaButton: Button
+    private lateinit var geografiaButton: Button
+    private lateinit var arteButton: Button
+    private lateinit var sportButton: Button
+    private lateinit var intrattenimentoButton: Button
+    private lateinit var scienzeButton: Button
     private lateinit var storia: View
     private lateinit var sport: View
     private lateinit var geografia: View
