@@ -290,78 +290,174 @@
 
         </LinearLayout>
 
+        <!-- Prima CardView -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/storiabutton"
+            android:id="@+id/storiacard"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginTop="200dp"
-            android:background="#FFBB2F"
-            android:src="@drawable/storia"
-            android:scaleType="fitCenter"
-            app:layout_constraintStart_toStartOf="@id/rectangleContainer"
-            app:layout_constraintTop_toBottomOf="@id/rectangleContainer"
-            />
+            android:layout_marginTop="215dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/geografiacard"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#FFBB2F">
 
-        <ImageButton
-            android:id="@+id/geografiabutton"
+            <ImageButton
+                android:id="@+id/storiabutton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@drawable/storia"
+                android:scaleType="centerInside"
+                android:contentDescription="History Button"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Seconda CardView -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/geografiacard"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="215dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_center"
+            app:layout_constraintStart_toEndOf="@+id/storiacard"
+            app:layout_constraintEnd_toStartOf="@+id/artecard"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#0000FF">
+
+            <ImageButton
+                android:id="@+id/geografiabutton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@drawable/geografia"
+                android:scaleType="centerInside"
+                android:contentDescription="Geography Button"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Terza CardView -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/artecard"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="215dp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_center"
+            app:layout_constraintStart_toEndOf="@+id/geografiacard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#FF00">
+
+            <ImageButton
+                android:id="@+id/artebutton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@drawable/arte"
+                android:scaleType="centerInside"
+                android:contentDescription="Art Button"/>
+        </androidx.cardview.widget.CardView>
+
+
+        <!-- Quarta CardView -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/sportcard"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginLeft="10dp"
-            android:background="#0000FF"
-            android:src="@drawable/geografia"
-            android:scaleType="fitCenter"
-            app:layout_constraintEnd_toStartOf="@id/artebutton"
-            app:layout_constraintStart_toEndOf="@id/storiabutton"
-            app:layout_constraintTop_toTopOf="@id/storiabutton" />
+            app:layout_constraintTop_toBottomOf="@+id/guideline_center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/intrattenimentocard"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#FFEB3B">
 
-        <ImageButton
-            android:id="@+id/artebutton"
+            <ImageButton
+                android:id="@+id/sportbutton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@drawable/sport"
+                android:scaleType="centerInside"
+                android:contentDescription="Sport Button"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Quinta CardView -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/intrattenimentocard"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginLeft="10dp"
-            android:background="#FF00"
-            android:src="@drawable/arte"
-            android:scaleType="fitCenter"
-            app:layout_constraintEnd_toEndOf="@id/rectangleContainer"
-            app:layout_constraintStart_toEndOf="@id/geografiabutton"
-            app:layout_constraintTop_toTopOf="@id/geografiabutton" />
+            app:layout_constraintTop_toBottomOf="@+id/guideline_center"
+            app:layout_constraintStart_toEndOf="@+id/sportcard"
+            app:layout_constraintEnd_toStartOf="@+id/scienzecard"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#FF00FF">
 
-        <ImageButton
-            android:id="@+id/sportbutton"
+            <ImageButton
+                android:id="@+id/intrattenimentobutton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@drawable/culturapop"
+                android:scaleType="centerInside"
+                android:contentDescription="Entertainment Button"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Sesta CardView -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/scienzecard"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginTop="30dp"
-            android:background="#FFEB3B"
-            android:src="@drawable/sport"
-            android:scaleType="fitCenter"
-            app:layout_constraintStart_toStartOf="@id/rectangleContainer"
-            app:layout_constraintTop_toBottomOf="@id/storiabutton" />
+            android:layout_marginRight="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/guideline_center"
+            app:layout_constraintStart_toEndOf="@+id/intrattenimentocard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#4CAF50">
 
-        <ImageButton
-            android:id="@+id/intrattenimentobutton"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginLeft="10dp"
-            android:background="#FF00FF"
-            android:src="@drawable/culturapop"
-            android:scaleType="fitCenter"
-            app:layout_constraintEnd_toStartOf="@id/scienzebutton"
-            app:layout_constraintStart_toEndOf="@id/sportbutton"
-            app:layout_constraintTop_toTopOf="@id/sportbutton" />
+            <ImageButton
+                android:id="@+id/scienzebutton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:attr/selectableItemBackground"
+                android:src="@drawable/scienze"
+                android:scaleType="centerInside"
+                android:contentDescription="Science Button"/>
+        </androidx.cardview.widget.CardView>
 
-        <ImageButton
-            android:id="@+id/scienzebutton"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginLeft="10dp"
-            android:background="#4CAF50"
-            android:src="@drawable/scienze"
-            android:scaleType="fitCenter"
-            app:layout_constraintEnd_toEndOf="@id/rectangleContainer"
-            app:layout_constraintStart_toEndOf="@id/intrattenimentobutton"
-            app:layout_constraintTop_toTopOf="@id/intrattenimentobutton" />
-
-
+        <!-- Guideline per il posizionamento verticale al centro -->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

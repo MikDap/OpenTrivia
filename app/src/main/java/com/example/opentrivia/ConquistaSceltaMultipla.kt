@@ -82,8 +82,7 @@ coloraSfondo(NomeArgomento.text.toString())
         database = FirebaseDatabase.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         val giocatoreRef =
-            database.getReference("partite").child("classica").child(difficolta).child(partita)
-                .child("giocatori").child(uid)
+            database.getReference("partite").child("classica").child(difficolta).child(partita).child("giocatori").child(uid)
         val giocatoriRef = database.getReference("partite").child("classica").child(difficolta).child(partita)
             .child("giocatori")
 
@@ -293,7 +292,7 @@ fun coloraSfondo (topic: String) {
     when (topic) {
         "storia" -> layout.setBackgroundColor(Color.parseColor("#FFBB2F"))
         "geografia" -> layout.setBackgroundColor(Color.parseColor("#0000FF"))
-        "arte" -> layout.setBackgroundColor(Color.parseColor("FF0000"))  // il rosso da problemi
+        "arte" -> layout.setBackgroundColor(Color.RED)  // il rosso da problemi
         "sport" -> layout.setBackgroundColor(Color.parseColor("#FFEB3B"))
         "culturaPop" -> layout.setBackgroundColor(Color.parseColor("#FF00FF"))
         "scienze" -> layout.setBackgroundColor(Color.parseColor("#4CAF50"))

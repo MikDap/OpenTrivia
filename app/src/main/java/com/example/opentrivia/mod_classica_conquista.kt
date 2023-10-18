@@ -1,5 +1,6 @@
 package com.example.opentrivia
 
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -10,9 +11,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import androidx.cardview.widget.CardView
 import com.example.opentrivia.api.ChiamataApi
 import com.example.opentrivia.gioco.ModClassicaActivity
 import com.example.opentrivia.gioco.SceltaMultiplaFragmentClassica
+import com.example.opentrivia.utils.ModClassicaUtils
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import java.util.Random
 
 
@@ -22,19 +27,32 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
     lateinit var categoria: String
     private lateinit var partita: String
     private lateinit var difficolta: String
-    private lateinit var storiaButton: ImageButton
-    private lateinit var geografiaButton: ImageButton
-    private lateinit var arteButton: ImageButton
-    private lateinit var sportButton: ImageButton
-    private lateinit var intrattenimentoButton: ImageButton
-    private lateinit var scienzeButton: ImageButton
-    var domanda : String = ""
-    var rispostaCorretta : String = ""
+    private lateinit var storiaButton: Button
+    private lateinit var geografiaButton: Button
+    private lateinit var arteButton: Button
+    private lateinit var sportButton: Button
+    private lateinit var intrattenimentoButton: Button
+    private lateinit var scienzeButton: Button
+    private lateinit var storia: View
+    private lateinit var sport: View
+    private lateinit var geografia: View
+    private lateinit var arte: View
+    private lateinit var scienze: View
+    private lateinit var culturaPop: View
+    private lateinit var storia2: View
+    private lateinit var sport2: View
+    private lateinit var geografia2: View
+    private lateinit var arte2: View
+    private lateinit var scienze2: View
+    private lateinit var culturaPop2: View
+    var domanda: String = ""
+    var rispostaCorretta: String = ""
     var risposta1: String = ""
     var risposta2: String = ""
     var risposta3: String = ""
     var risposta4: String = ""
     var risposte = arrayOf(risposta1, risposta2, risposta3, risposta4)
+    private lateinit var database: FirebaseDatabase
     private lateinit var modClassicaActivity: ModClassicaActivity
     lateinit var topic: String
 
@@ -45,7 +63,45 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.mod_classica_conquista, container, false)
 
+        //quadratini
+        storia = view.findViewById(R.id.storia)
+        sport = view.findViewById(R.id.sport)
+        geografia = view.findViewById(R.id.geografia)
+        arte = view.findViewById(R.id.arte)
+        scienze = view.findViewById(R.id.scienze)
+        culturaPop = view.findViewById(R.id.culturaPop)
 
+        storia2 = view.findViewById(R.id.storia2)
+        sport2 = view.findViewById(R.id.sport2)
+        geografia2 = view.findViewById(R.id.geografia2)
+        arte2 = view.findViewById(R.id.arte2)
+        scienze2 = view.findViewById(R.id.scienze2)
+        culturaPop2 = view.findViewById(R.id.culturaPop2)
+
+        modClassicaActivity = activity as ModClassicaActivity
+        val partita = modClassicaActivity.partita
+        val modalita = "classica"
+        val difficolta = modClassicaActivity.difficolta
+
+        database = FirebaseDatabase.getInstance()
+        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+        val giocatoreRef =
+            database.getReference("partite").child(modalita).child(difficolta).child(partita)
+                .child("giocatori").child(uid)
+        val giocatoriRef =
+            database.getReference("partite").child(modalita).child(difficolta).child(partita)
+                .child("giocatori")
+
+        ModClassicaUtils.QualiArgomentiConquistati(giocatoriRef) { argomentiMiei, argomentiAvversario ->
+            if (argomentiMiei.isEmpty()) Log.d("argomentiMieiVuoti", "si")
+            if (argomentiMiei.isNotEmpty()) {
+                Log.d("argomentiMiei", argomentiMiei[0])
+            }
+            coloraQuadratini(argomentiMiei, true)
+            coloraQuadratini(argomentiAvversario, false)
+        }
+
+        //button
         modClassicaActivity = activity as ModClassicaActivity
         storiaButton = view.findViewById(R.id.storiabutton)
         geografiaButton = view.findViewById(R.id.geografiabutton)
@@ -87,22 +143,35 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
 
     fun getCategoria(topic: String): String {
         lateinit var categoria: String
-        val categorie_culturaPop = arrayOf("9","10","11","12","13","14","15","16","29","31","32")
-        val categorie_scienze = arrayOf("17","18","19","30")
+        val categorie_culturaPop =
+            arrayOf("9", "10", "11", "12", "13", "14", "15", "16", "29", "31", "32")
+        val categorie_scienze = arrayOf("17", "18", "19", "30")
 
         when (topic) {
 
-            "culturaPop" -> { categoria = getRandomCategoria(categorie_culturaPop) }
+            "culturaPop" -> {
+                categoria = getRandomCategoria(categorie_culturaPop)
+            }
 
-            "sport" -> {categoria = "21"}
+            "sport" -> {
+                categoria = "21"
+            }
 
-            "storia" ->{categoria = "23"}
+            "storia" -> {
+                categoria = "23"
+            }
 
-            "geografia" -> {categoria= "22"}
+            "geografia" -> {
+                categoria = "22"
+            }
 
-            "arte" -> {categoria = "25"}
+            "arte" -> {
+                categoria = "25"
+            }
 
-            "scienze" -> {categoria = getRandomCategoria(categorie_scienze)}
+            "scienze" -> {
+                categoria = getRandomCategoria(categorie_scienze)
+            }
 
         }
         return categoria
@@ -112,22 +181,23 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
         val randomIndex = Random().nextInt(topics.size)
         return topics[randomIndex]
     }
+
     fun getTriviaQuestion(topic: String) {
 //chiamiamo la funzione per ottenere il numero delle categorie per il topic selezionato
         categoria = getCategoria(topic)
-        chiamataApi = ChiamataApi("multiple",categoria,difficolta)
+        chiamataApi = ChiamataApi("multiple", categoria, difficolta)
         chiamataApi.fetchTriviaQuestion(this)
-        Log.d("getTriviaQuestion","siii")
+        Log.d("getTriviaQuestion", "siii")
 
     }
 
     override fun onTriviaQuestionFetched(
-        tipo:String,
+        tipo: String,
         domanda: String,
         risposta_corretta: String,
         risposta_sbagliata_1: String,
-        risposta_sbagliata_2:String,
-        risposta_sbagliata_3:String
+        risposta_sbagliata_2: String,
+        risposta_sbagliata_3: String
     ) {
 
         Log.d("domandaonfetched", domanda)
@@ -160,15 +230,91 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
             Log.d("risposta1OnFetched", risposta1)
         }
 
-Log.d("risposta1OnFetched", risposta1)
-        modClassicaActivity.chiamaConquistaSceltaMultipla(topic, domanda, risposte[0], risposte[1], risposte[2], risposte[3], rispostaCorretta)
+        Log.d("risposta1OnFetched", risposta1)
+        modClassicaActivity.chiamaConquistaSceltaMultipla(
+            topic,
+            domanda,
+            risposte[0],
+            risposte[1],
+            risposte[2],
+            risposte[3],
+            rispostaCorretta
+        )
     }
 
-fun setDifficolta (partita:String, difficolta: String) {
-    this.partita = partita
-    this.difficolta = difficolta}
+    fun setDifficolta(partita: String, difficolta: String) {
+        this.partita = partita
+        this.difficolta = difficolta
+    }
 
 
+    fun coloraQuadratini(Argomenti: ArrayList<String>, miei: Boolean) {
+
+        for (argomento in Argomenti) {
+
+            if (miei) {
+                when (argomento) {
+
+                    "storia" -> {
+                        storia.setBackgroundColor(Color.parseColor("#FFBB2F"))
+                    }
+
+                    "sport" -> {
+                        sport.setBackgroundColor(Color.parseColor("#FFEB3B"))
+                    }
+
+                    "geografia" -> {
+                        geografia.setBackgroundColor(Color.parseColor("#0000FF"))
+                    }
+
+                    "arte" -> {
+                        arte.setBackgroundColor(Color.parseColor("#FF0006"))
+                    }
+
+                    "scienze" -> {
+                        scienze.setBackgroundColor(Color.parseColor("#4CAF50"))
+                    }
+
+                    "culturaPop" -> {
+                        culturaPop.setBackgroundColor(Color.parseColor("#FF00FF"))
+                    }
+
+
+                }
+
+            } else {
+                when (argomento) {
+
+                    "storia" -> {
+                        storia2.setBackgroundColor(Color.parseColor("#FFBB2F"))
+                    }
+
+                    "sport" -> {
+                        sport2.setBackgroundColor(Color.parseColor("#FFEB3B"))
+                    }
+
+                    "geografia" -> {
+                        geografia2.setBackgroundColor(Color.parseColor("#0000FF"))
+                    }
+
+                    "arte" -> {
+                        arte2.setBackgroundColor(Color.parseColor("#FF0006"))
+                    }
+
+                    "scienze" -> {
+                        scienze2.setBackgroundColor(Color.parseColor("#4CAF50"))
+                    }
+
+                    "culturaPop" -> {
+                        culturaPop2.setBackgroundColor(Color.parseColor("#FF00FF"))
+                    }
+
+
+                }
+
+            }
+        }
+
+
+    }
 }
-
- 
