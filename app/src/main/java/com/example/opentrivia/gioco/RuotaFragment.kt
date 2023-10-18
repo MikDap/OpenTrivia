@@ -51,6 +51,10 @@ class RuotaFragment : Fragment() {
     private lateinit var arte2 : View
     private lateinit var culturaPop2 : View
 
+    private lateinit var rettangolo1:View
+    private lateinit var rettangolo2:View
+    private lateinit var rettangolo3:View
+
     private var selectedTopic: String? = null
     private var isWheelStopped: Boolean = true
     lateinit var topic: String
@@ -95,6 +99,9 @@ class RuotaFragment : Fragment() {
         arte2 = view.findViewById(R.id.arte2)
         scienze2 = view.findViewById(R.id.scienze2)
         culturaPop2 = view.findViewById(R.id.culturaPop2)
+        rettangolo1 = view.findViewById(R.id.rettangolo1)
+        rettangolo2 = view.findViewById(R.id.rettangolo2)
+        rettangolo3 = view.findViewById(R.id.rettangolo3)
 
         modClassicaActivity = activity as ModClassicaActivity
         val partita = modClassicaActivity.partita
@@ -106,18 +113,21 @@ class RuotaFragment : Fragment() {
         val giocatoreRef= database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori").child(uid)
         val giocatoriRef= database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
 
-     //nel caso un giocatore esce quando sta per passare alla schermata conquista         leggiRisposteDiFila(giocatoreRef)
+        //nel caso un giocatore esce quando sta per passare alla schermata conquista         leggiRisposteDiFila(giocatoreRef)<<
 
 
 
-       ModClassicaUtils.QualiArgomentiConquistati(giocatoriRef) { argomentiMiei, argomentiAvversario ->
-           if (argomentiMiei.isEmpty())Log.d("argomentiMieiVuoti","si")
-           if(argomentiMiei.isNotEmpty())  {      Log.d("argomentiMiei", argomentiMiei[0]) }
-           coloraQuadratini(argomentiMiei,true)
-           coloraQuadratini(argomentiAvversario, false)
+        ModClassicaUtils.QualiArgomentiConquistati(giocatoriRef) { argomentiMiei, argomentiAvversario ->
+            if (argomentiMiei.isEmpty())Log.d("argomentiMieiVuoti","si")
+            if(argomentiMiei.isNotEmpty())  {      Log.d("argomentiMiei", argomentiMiei[0]) }
+            coloraQuadratini(argomentiMiei,true)
+            coloraQuadratini(argomentiAvversario, false)
         }
 
+        ModClassicaUtils.leggiRisposteCorrette(giocatoreRef) {statoRiposte ->
 
+            coloraStatoRisposte(statoRiposte)
+        }
         ruotaButton.setOnClickListener {
             if (isWheelStopped) {
                 // richiama la funzione per ottenere un argomento in modo random
@@ -128,6 +138,13 @@ class RuotaFragment : Fragment() {
 
 
         }
+
+
+
+
+
+
+
 
         return view
     }
@@ -368,7 +385,7 @@ class RuotaFragment : Fragment() {
                         // chiama schermata conquista argomento
                         giocatoreRef.child("risposteDiFila").setValue(0)
 
-                     modClassicaActivity.chiamaConquista()
+                        modClassicaActivity.chiamaConquista()
                     }
 
                 }
@@ -386,44 +403,44 @@ class RuotaFragment : Fragment() {
 
 
 
-// METTERE SE ARGOMENTIMIEI O ARGOMENTIAVVERS
-fun coloraQuadratini(Argomenti: ArrayList<String>, miei: Boolean) {
+    // METTERE SE ARGOMENTIMIEI O ARGOMENTIAVVERS
+    fun coloraQuadratini(Argomenti: ArrayList<String>, miei: Boolean) {
 
-    for (argomento in Argomenti) {
+        for (argomento in Argomenti) {
 
-        if (miei) {
-            when (argomento) {
+            if (miei) {
+                when (argomento) {
 
-                "storia" -> {
-                    storia.setBackgroundColor(Color.parseColor("#FFBB2F"))
+                    "storia" -> {
+                        storia.setBackgroundColor(Color.parseColor("#FFBB2F"))
+                    }
+
+                    "sport" -> {
+                        sport.setBackgroundColor(Color.parseColor("#FFEB3B"))
+                    }
+
+                    "geografia" -> {
+                        geografia.setBackgroundColor(Color.parseColor("#0000FF"))
+                    }
+
+                    "arte" -> {
+                        arte.setBackgroundColor(Color.parseColor("#FF0000"))
+                    }
+
+                    "scienze" -> {
+                        scienze.setBackgroundColor(Color.parseColor("#4CAF50"))
+                    }
+
+                    "culturaPop" -> {
+                        culturaPop.setBackgroundColor(Color.parseColor("#FF00FF"))
+                    }
+
+
                 }
-
-                "sport" -> {
-                    sport.setBackgroundColor(Color.parseColor("#FFEB3B"))
-                }
-
-                "geografia" -> {
-                    geografia.setBackgroundColor(Color.parseColor("#0000FF"))
-                }
-
-                "arte" -> {
-                    arte.setBackgroundColor(Color.parseColor("#FF0000"))
-                }
-
-                "scienze" -> {
-                    scienze.setBackgroundColor(Color.parseColor("#4CAF50"))
-                }
-
-                "culturaPop" -> {
-                    culturaPop.setBackgroundColor(Color.parseColor("#FF00FF"))
-                }
-
 
             }
 
-        }
-
-        else {
+            else {
                 when (argomento) {
 
                     "storia" -> {
@@ -453,14 +470,32 @@ fun coloraQuadratini(Argomenti: ArrayList<String>, miei: Boolean) {
 
                 }
 
+            }
+        }
+
+
+    }
+
+    fun coloraStatoRisposte (stato: Int){
+        when(stato) {
+            1 ->rettangolo1.setBackgroundColor(Color.parseColor("#FFEB3B"))
+
+            2->{rettangolo1.setBackgroundColor(Color.parseColor("#FFEB3B"))
+                rettangolo2.setBackgroundColor(Color.parseColor("#FFEB3B"))}
+
+            3->{rettangolo1.setBackgroundColor(Color.parseColor("#FFEB3B"))
+                rettangolo2.setBackgroundColor(Color.parseColor("#FFEB3B"))
+                rettangolo3.setBackgroundColor(Color.parseColor("#FFEB3B")) }
+
         }
     }
 
 
+
+
+
+
+
 }
 
-
-
-
-}
-
+ 

@@ -41,6 +41,29 @@ startButton = view.findViewById(R.id.startButton)
                 if (partiteInCorso.hasChildren()) {
                     for (partita in partiteInCorso.children) {
 
+
+                        // FAI FUNZIONE CHE LEGGE TURNO DAL DATABASE, DA METTERE FUORI SEMPRE IN QUESTA CLASSE
+                        // (vedi in modClassicaUtils come potresti farla)
+                        // (trova partitaRef, il turno sta in partitaRef.child("Turno");
+                        //
+                        //
+                        //   SCRIVERE IN QUESTA FUNZIONE (for partita) tutto il codice sotto:
+                        //
+                        //  1- chiami qui la funzione di sopra
+                        //
+                        //
+                        //
+                        //       (IL TURNO PRESO SOPRA LO CONFRONTI)
+                        //  2- SE (TURNO == UID)  {
+
+                        //  ---    GIOCABUTTON.listener DEVE COLLEGARMI ALLA PARTITA:
+                        //               istanziare MODCLASSICAACTIITY
+                        //       modClassicaActivity.partita = partita
+                        //       passare a modclassicaactivty
+                        //
+                        //  ---   TROVARE ID SFONDO PULSANTE E CAMBIARE COLORE
+                        // }
+                        //
                         val gameView = inflater.inflate(R.layout.game_item_layout, partitaContainer, false)
 
 

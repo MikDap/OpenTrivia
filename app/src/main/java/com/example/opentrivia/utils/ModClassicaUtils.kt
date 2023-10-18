@@ -86,7 +86,7 @@ class ModClassicaUtils {
 
 // usato quando il giocatore risponde correttamente ( dobbiamo usarla per illuminare i 3 quadratini sotto)
         fun updateContatoreRisposteCorrette(
-            giocatoriRef: DatabaseReference
+            giocatoriRef: DatabaseReference, callback: () -> Unit
         ) {
             giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(giocatori: DataSnapshot) {
@@ -105,7 +105,7 @@ class ModClassicaUtils {
 
                         giocatoriRef.child(uid).child("risposteTotCorrette").setValue(1)
                     }
-
+                        callback()
                 }
 
 
@@ -207,7 +207,6 @@ class ModClassicaUtils {
 
                         val giocatore1 = giocatore.key.toString()
 
-                          Log.d("giocatore1", giocatore1)
 
                         if (giocatore.hasChild("ArgomentiConquistati")) {
                             if (giocatore1 == uid) {
@@ -330,6 +329,30 @@ class ModClassicaUtils {
 
 
 
+// LEGGE LO STATO DELLE RISPOSTE
+
+        fun leggiRisposteCorrette(
+            giocatoreRef: DatabaseReference, callback: (statoRisposte: Int) -> Unit
+        ) {
+            giocatoreRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(giocatore: DataSnapshot) {
+
+                   var statoRisposte = 0
+                    if (giocatore.hasChild("risposteTotCorrette")) {
+
+                         statoRisposte = giocatore.child("risposteTotCorrette").value.toString().toInt()
+
+                    }
+                    callback(statoRisposte)
+                }
+
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+        }
 
 
 
@@ -341,7 +364,37 @@ class ModClassicaUtils {
 
 
 
+        fun ottieniNomeAvversario(
+            giocatoriRef: DatabaseReference,
+            callback: (nomeAvversario: String) -> Unit
+        ) {
+            giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(giocatori: DataSnapshot) {
 
+                    val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+                    var nomeAvversario = "non hai un avversario"
+
+                    for (giocatore in giocatori.children) {
+
+                        var giocatore1 = giocatore.key.toString()
+
+
+                            if (giocatore1 != uid) {
+                                nomeAvversario = giocatore.child("name").value.toString()
+                                }
+                        }
+
+
+                    callback(nomeAvversario)
+                }
+
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+        }
 
 
 

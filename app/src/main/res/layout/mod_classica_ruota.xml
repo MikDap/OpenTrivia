@@ -101,7 +101,7 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:background="@drawable/contour_background"
-                            android:backgroundTint="#FF0000" />
+                            android:backgroundTint="#FF0006" />
 
 
                         <TextView
@@ -234,7 +234,7 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:background="@drawable/contour_background"
-                            android:backgroundTint="#FF00" />
+                            android:backgroundTint="#FF0006" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -335,6 +335,7 @@
             app:layout_constraintTop_toBottomOf="@id/ruotaButton">
 
             <View
+                android:id = "@+id/rettangolo1"
                 android:layout_width="60dp"
                 android:layout_height="15dp"
                 android:background="@drawable/contour_background"
@@ -342,6 +343,7 @@
                 android:layout_marginEnd="5dp" />
 
             <View
+                android:id = "@+id/rettangolo2"
                 android:layout_width="60dp"
                 android:layout_height="15dp"
                 android:background="@drawable/contour_background"
@@ -349,6 +351,7 @@
                 android:layout_marginEnd="5dp" />
 
             <View
+                android:id = "@+id/rettangolo3"
                 android:layout_width="60dp"
                 android:layout_height="15dp"
                 android:background="@drawable/contour_background"

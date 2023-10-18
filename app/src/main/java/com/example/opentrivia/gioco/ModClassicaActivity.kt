@@ -62,17 +62,15 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
 
         //salviamo il topic
         this.topic = topic
+        // Controlla se partita non è stata inizializzata
+        if (partita == "") {
+            creaPartitaDatabase()
+        }
 
         if (topic == "jolly") {chiamaConquista()}
         else {
 //chiamiamo la funzione per ottenere il numero delle categorie per il topic selezionato
             categoria = getCategoria(topic)
-
-
-            // Controlla se partita non è stata inizializzata
-            if (partita == "") {
-                creaPartitaDatabase()
-            }
 
 
             //facciamo la chiamata api
@@ -265,26 +263,36 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
 
 //Listener per database/partite/modalita/difficolta
         partiteRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
+            override fun onDataChange(listaPartite: DataSnapshot) {
 
 
 /// Se database/partite/modalita/difficolta ha almeno una partita(con qualcuno in attesa):
-                if (dataSnapshot.hasChildren()) {
-                    for (sottonodo in dataSnapshot.children) {
-                        //se c'è almeno una partita con un giocatore in attesa..(lo associa)
+                if (listaPartite.hasChildren()) {
+                    for (partita1 in listaPartite.children) {
+
+
                         var giocatorediverso = true
-                        if (sottonodo.child("giocatori").hasChild(uid)) {
+                        if (partita1.child("giocatori").hasChild(uid)) {
                             giocatorediverso = false
                         }
-                        if (sottonodo.child("inAttesa").value == "si" && giocatorediverso) {
+
+                        var haFinitoTurno = false
+                        val turno : String =  partita1.child("Turno").value.toString()
+                        if (turno == "-") {
+                            haFinitoTurno = true
+                        }
+
+                        //se c'è almeno una partita, con un giocatore in attesa e ha finito il turno, lo associa
+                        if (partita1.child("inAttesa").value == "si" && giocatorediverso && haFinitoTurno) {
 
                             //prende id della partita
-                            partita = sottonodo.key.toString()
+                            partita = partita1.key.toString()
                             //setta database/partite/modalita/difficolta/giocatori/id
                             partiteRef.child(partita).child("giocatori").child(uid).child("name").setValue(name)
                             Log.d("name",name)
                             //cambia inAttesa in no
                             partiteRef.child(partita).child("inAttesa").setValue("no")
+
                             condizioneSoddisfatta = true
 
                             break
@@ -302,6 +310,8 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
                         .setValue(inAttesa)
                     partiteRef.child(partita).child("topic")
                         .setValue(topic)
+                    partiteRef.child(partita).child("Turno")
+                        .setValue(uid)
                     partiteRef.child(partita).child("giocatori").child(uid).child("name").setValue(name)
                     condizioneSoddisfatta = true
 
@@ -319,6 +329,8 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
                         .setValue(inAttesa)
                     partiteRef.child(partita).child("topic")
                         .setValue(topic)
+                    partiteRef.child(partita).child("Turno")
+                        .setValue(uid)
                     partiteRef.child(partita).child("giocatori").child(uid).child("name").setValue(name)
                     //   partiteRef.child(partita).child("giocatori").child(uid).child(name).child("risposteCorrette").setValue(0)
                     condizioneSoddisfatta = true
