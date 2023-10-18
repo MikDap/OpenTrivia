@@ -30,7 +30,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginTop="345dp"
-        android:background="#FFA41E"
+        android:background="@drawable/game_item_background"
         android:text="@string/gioca"
         android:textColor="#5D4037"
         app:layout_constraintBottom_toBottomOf="parent"

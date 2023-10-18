@@ -57,7 +57,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_marginTop="20dp"
-            android:background="#E6FFA41E"
+            android:background="@drawable/game_item_background"
             android:paddingTop="15sp"
             android:paddingBottom="15sp"
             android:text="@string/start"

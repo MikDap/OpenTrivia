@@ -305,6 +305,7 @@
             android:id="@+id/ruotaButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_background"
             android:text="@string/inizia"
             android:layout_marginTop="350dp"
             app:layout_constraintEnd_toEndOf="@id/wheelView"

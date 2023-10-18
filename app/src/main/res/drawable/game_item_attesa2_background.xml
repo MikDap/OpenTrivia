@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- game_item_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#FFFFFF" />
+    <corners android:radius="12dp" />
+    <stroke
+        android:width="3dp"
+        android:color="#F53CBFF8" />
+    <gradient
+        android:startColor="#CD88C4F4"
+        android:endColor="#EDF1F3FA"
+        android:angle="45" />
+</shape>
