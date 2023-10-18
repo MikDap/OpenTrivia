@@ -1,6 +1,7 @@
 package com.example.opentrivia.menu
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Layout
 import androidx.fragment.app.Fragment
@@ -10,6 +11,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.Navigation
 import com.example.opentrivia.R
 import com.example.opentrivia.gioco.ModClassicaActivity
@@ -26,17 +29,17 @@ class Menu : Fragment() {
     private lateinit var partitaContainer: LinearLayout
     private lateinit var database: FirebaseDatabase
     private lateinit var giocaincorso: Button
+    private lateinit var inattesa: Button
     private lateinit var modClassicaActivity: ModClassicaActivity
+    private lateinit var background_game_item: ConstraintLayout
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
        val view = inflater.inflate(R.layout.menu, container, false)
-        val view2= inflater.inflate(R.layout.game_item_layout,container,false)
-startButton = view.findViewById(R.id.startButton)
+        startButton = view.findViewById(R.id.startButton)
         partitaContainer = view.findViewById(R.id.linearLayout)
-        giocaincorso=view2.findViewById(R.id.giocaincorso)
         database = FirebaseDatabase.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         val partiteInCorsoRef = database.getReference("users").child(uid).child("partite in corso")
@@ -46,54 +49,9 @@ startButton = view.findViewById(R.id.startButton)
 
                 if (partiteInCorso.hasChildren()) {
                     for (partita in partiteInCorso.children) {
-            var difficolta=partita.child("difficolta").value.toString()
-             //instanziare giocabutton
-             leggiTurno(partita.toString(),difficolta,modalitaRef){
-                 turno -> if(turno == uid ) {
-                     giocaincorso.setOnClickListener(){
-                         modClassicaActivity.partita= partita.toString()
-                         var intent = Intent(activity, ModClassicaActivity::class.java)
-                         startActivity(intent)
-                     }
-                 giocaincorso.visibility= View.VISIBLE
-
-                 }
-             }
-
-
-
-
-
-
-                        //   SCRIVERE IN QUESTA FUNZIONE (for partita) tutto il codice sotto:
-                        //
-                        //  1- chiami qui la funzione di sopra
-                        //
-                        //
-                        //
-                        //       (IL TURNO PRESO SOPRA LO CONFRONTI)
-                        //  2- SE (TURNO == UID)  {
-
-                        //  ---    GIOCABUTTON.listener DEVE COLLEGARMI ALLA PARTITA:
-                        //               istanziare MODCLASSICAACTIITY
-                        //
-                        //       modClassicaActivity.partita = partita
-                        //       passare a modclassicaactivty
-                        //
-                        //  ---   TROVARE ID SFONDO PULSANTE E CAMBIARE COLORE
-                        // }
-                        //
-
-
-
-
-
-
-
-
                         val gameView = inflater.inflate(R.layout.game_item_layout, partitaContainer, false)
-
-
+                        giocaincorso=gameView.findViewById(R.id.giocaincorso)
+                        background_game_item=gameView.findViewById(R.id.background_game_item)
                         val opponentNameTextView = gameView.findViewById<TextView>(R.id.opponentNameTextView)
                         val scoremeTextView = gameView.findViewById<TextView>(R.id.scoreme)
                         val scoreavversarioTextView = gameView.findViewById<TextView>(R.id.scoreavversario)
@@ -107,6 +65,28 @@ startButton = view.findViewById(R.id.startButton)
                         scoremeTextView.text = punteggioMio
                         opponentNameTextView.text = avversario
                         scoreavversarioTextView.text = punteggioAvversario
+            var difficolta=partita.child("difficolta").value.toString()
+
+             leggiTurno(partita.toString(),difficolta,modalitaRef){
+                 turno -> if(turno == uid ) {
+                     giocaincorso.setOnClickListener(){
+                         modClassicaActivity.partita= partita.toString()
+                         var intent = Intent(activity, ModClassicaActivity::class.java)
+                         startActivity(intent)
+                     }
+                 giocaincorso.visibility= View.VISIBLE
+                 inattesa.visibility=View.INVISIBLE
+                 }
+                 else {giocaincorso.visibility=View.INVISIBLE
+                       inattesa.visibility=View.VISIBLE
+                 val drawableId=R.drawable.game_item_attesa2_background
+                 val drawable=ResourcesCompat.getDrawable(resources,drawableId,null)
+                       background_game_item.background=drawable
+
+
+                  }
+
+             }
 
                         partitaContainer.addView(gameView)
 
