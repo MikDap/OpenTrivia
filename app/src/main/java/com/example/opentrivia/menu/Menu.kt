@@ -37,7 +37,7 @@ class Menu : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-       val view = inflater.inflate(R.layout.menu, container, false)
+        val view = inflater.inflate(R.layout.menu, container, false)
         startButton = view.findViewById(R.id.startButton)
         partitaContainer = view.findViewById(R.id.linearLayout)
         database = FirebaseDatabase.getInstance()
@@ -56,6 +56,7 @@ class Menu : Fragment() {
                         val scoremeTextView = gameView.findViewById<TextView>(R.id.scoreme)
                         val scoreavversarioTextView = gameView.findViewById<TextView>(R.id.scoreavversario)
                         val giocaButton = gameView.findViewById<TextView>(R.id.giocaincorso)
+                        inattesa = gameView.findViewById(R.id.inattesa)
 
 
                         var avversario = partita.child("Avversario").value.toString()
@@ -65,28 +66,28 @@ class Menu : Fragment() {
                         scoremeTextView.text = punteggioMio
                         opponentNameTextView.text = avversario
                         scoreavversarioTextView.text = punteggioAvversario
-            var difficolta=partita.child("difficolta").value.toString()
+                        var difficolta=partita.child("difficolta").value.toString()
 
-             leggiTurno(partita.toString(),difficolta,modalitaRef){
-                 turno -> if(turno == uid ) {
-                     giocaincorso.setOnClickListener(){
-                         modClassicaActivity.partita= partita.toString()
-                         var intent = Intent(activity, ModClassicaActivity::class.java)
-                         startActivity(intent)
-                     }
-                 giocaincorso.visibility= View.VISIBLE
-                 inattesa.visibility=View.INVISIBLE
-                 }
-                 else {giocaincorso.visibility=View.INVISIBLE
-                       inattesa.visibility=View.VISIBLE
-                 val drawableId=R.drawable.game_item_attesa2_background
-                 val drawable=ResourcesCompat.getDrawable(resources,drawableId,null)
-                       background_game_item.background=drawable
+                        leggiTurno(partita.toString(),difficolta,modalitaRef){
+                                turno -> if(turno == uid ) {
+                            giocaincorso.setOnClickListener(){
+                                modClassicaActivity.partita= partita.toString()
+                                var intent = Intent(activity, ModClassicaActivity::class.java)
+                                startActivity(intent)
+                            }
+                            giocaincorso.visibility= View.VISIBLE
+                            inattesa.visibility=View.INVISIBLE
+                        }
+                        else {giocaincorso.visibility=View.INVISIBLE
+                            inattesa.visibility=View.VISIBLE
+                            val drawableId=R.drawable.game_item_attesa2_background
+                            val drawable=ResourcesCompat.getDrawable(resources,drawableId,null)
+                            background_game_item.background=drawable
 
 
-                  }
+                        }
 
-             }
+                        }
 
                         partitaContainer.addView(gameView)
 
@@ -130,17 +131,17 @@ class Menu : Fragment() {
             override fun onDataChange(modalitaRef: DataSnapshot) {
 
                 if (modalitaRef.child(difficolta).child(partita).hasChild("Turno")) {
-                     turno= modalitaRef.child(difficolta).child(partita).child("Turno").toString()
+                    turno= modalitaRef.child(difficolta).child(partita).child("Turno").toString()
                 }
 
-         callback(turno);
+                callback(turno);
             }
 
 
             override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
-                    }
-
-                })
+                TODO("Not yet implemented")
             }
-        }
+
+        })
+    }
+}
