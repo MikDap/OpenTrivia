@@ -20,7 +20,7 @@ class ModClassicaUtils {
 
 
         fun updateScrollView(
-            nomeAvversario: String, punteggioMio: Int, punteggioAvversario: Int, partita: String, database: FirebaseDatabase
+            nomeAvversario: String, punteggioMio: Int, punteggioAvversario: Int, partita: String, difficolta: String, database: FirebaseDatabase
         ) {
             val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
             val partiteInCorsoRef = database.getReference("users").child(uid).child("partite in corso")
@@ -30,6 +30,7 @@ class ModClassicaUtils {
                     partiteInCorsoRef.child(partita).child("Avversario").setValue(nomeAvversario)
                     partiteInCorsoRef.child(partita).child("PunteggioMio").setValue(punteggioMio)
                     partiteInCorsoRef.child(partita).child("PunteggioAvversario").setValue(punteggioAvversario)
+                    partiteInCorsoRef.child(partita).child("difficolta").setValue(difficolta)
 
 
                 }

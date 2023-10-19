@@ -1,7 +1,6 @@
 package com.example.opentrivia.gioco
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -105,6 +104,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                                argomenti_conquistati_miei,
                                argomenti_conquistati_avversario,
                                partita,
+                               difficolta,
                                database
                            )
                        }
@@ -117,7 +117,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                    ModClassicaUtils.updateRisposte(risposteRef, "sbagliata")
                    ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef){
                            nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                       ModClassicaUtils.updateScrollView(nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, database)
+                       ModClassicaUtils.updateScrollView(nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, difficolta, database)
                    }
 
                    updateContinuaButton(giocatoreRef,"sbagliata")
@@ -141,6 +141,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                                 argomenti_conquistati_miei,
                                 argomenti_conquistati_avversario,
                                 partita,
+                                difficolta,
                                 database
                             )
                         }
@@ -152,7 +153,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                     ModClassicaUtils.updateRisposte(risposteRef, "sbagliata")
                     ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef){
                             nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                        ModClassicaUtils.updateScrollView(nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, database)
+                        ModClassicaUtils.updateScrollView(nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, difficolta, database)
                     }
 
                     updateContinuaButton(giocatoreRef,"sbagliata")
@@ -174,6 +175,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                                 argomenti_conquistati_miei,
                                 argomenti_conquistati_avversario,
                                 partita,
+                                difficolta,
                                 database
                             )
                         }
@@ -185,7 +187,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                     ModClassicaUtils.updateRisposte(risposteRef, "sbagliata")
                     ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef){
                             nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                        ModClassicaUtils.updateScrollView(nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, database)
+                        ModClassicaUtils.updateScrollView(nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, difficolta, database)
                     }
 
                     updateContinuaButton(giocatoreRef,"sbagliata")
@@ -207,6 +209,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                                 argomenti_conquistati_miei,
                                 argomenti_conquistati_avversario,
                                 partita,
+                                difficolta,
                                 database
                             )
                         }
@@ -218,7 +221,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                     ModClassicaUtils.updateRisposte(risposteRef, "sbagliata")
                     ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef){
                             nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                        ModClassicaUtils.updateScrollView(nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, database)
+                        ModClassicaUtils.updateScrollView(nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, difficolta, database)
                     }
 
                     updateContinuaButton(giocatoreRef,"sbagliata")
