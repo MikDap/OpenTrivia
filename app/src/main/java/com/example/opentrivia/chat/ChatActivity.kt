@@ -19,8 +19,8 @@ class ChatActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance()
         val chatRef = database.getReference("partite").child("argomento singolo")
 
-        val editText = findViewById<EditText>(R.id.edit_gchat_message)
-        val sendButton = findViewById<Button>(R.id.button_gchat_send)
+        val editText = findViewById<EditText>(R.id.edit_message)
+        val sendButton = findViewById<Button>(R.id.button_send)
 
         sendButton.setOnClickListener {
             val testo = editText.text

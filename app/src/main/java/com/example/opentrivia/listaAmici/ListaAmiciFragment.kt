@@ -63,7 +63,6 @@ class ListaAmiciFragment : Fragment() {
         val layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
 
-
         recyclerView.adapter = adapter
 
 
