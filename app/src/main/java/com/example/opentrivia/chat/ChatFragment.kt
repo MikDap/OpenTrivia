@@ -26,7 +26,7 @@ class ChatFragment : Fragment() {
 
     //l'utente lo passiamo a sta classe quando la istanziamo in chatListaAmici
 private lateinit var utente:String
-    val adapter = ChatAdapter(utente)
+   // val adapter = ChatAdapter(utente)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
