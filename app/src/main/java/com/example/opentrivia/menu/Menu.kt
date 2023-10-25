@@ -37,7 +37,7 @@ class Menu : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-       val view = inflater.inflate(R.layout.menu, container, false)
+        val view = inflater.inflate(R.layout.menu, container, false)
         startButton = view.findViewById(R.id.startButton)
         partitaContainer = view.findViewById(R.id.linearLayout)
         database = FirebaseDatabase.getInstance()
@@ -55,6 +55,7 @@ class Menu : Fragment() {
                         val opponentNameTextView = gameView.findViewById<TextView>(R.id.opponentNameTextView)
                         val scoremeTextView = gameView.findViewById<TextView>(R.id.scoreme)
                         val scoreavversarioTextView = gameView.findViewById<TextView>(R.id.scoreavversario)
+
                         inattesa = gameView.findViewById(R.id.inattesa)
 
 
@@ -65,7 +66,8 @@ class Menu : Fragment() {
                         scoremeTextView.text = punteggioMio
                         opponentNameTextView.text = avversario
                         scoreavversarioTextView.text = punteggioAvversario
-            var difficolta=partita.child("difficolta").value.toString()
+                        var difficolta=partita.child("difficolta").value.toString()
+
 
              leggiTurno(partita.toString(),difficolta,modalitaRef){
                  turno -> if(turno == uid ) {
@@ -87,9 +89,9 @@ class Menu : Fragment() {
                        background_game_item.background=drawable
 
 
-                  }
+                        }
 
-             }
+                        }
 
                         partitaContainer.addView(gameView)
 
@@ -133,17 +135,17 @@ class Menu : Fragment() {
             override fun onDataChange(modalitaRef: DataSnapshot) {
 
                 if (modalitaRef.child(difficolta).child(partita).hasChild("Turno")) {
-                     turno= modalitaRef.child(difficolta).child(partita).child("Turno").toString()
+                    turno= modalitaRef.child(difficolta).child(partita).child("Turno").toString()
                 }
 
-         callback(turno);
+                callback(turno);
             }
 
 
             override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
-                    }
-
-                })
+                TODO("Not yet implemented")
             }
-        }
+
+        })
+    }
+}
