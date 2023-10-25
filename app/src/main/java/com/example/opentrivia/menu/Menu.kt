@@ -55,7 +55,7 @@ class Menu : Fragment() {
                         val opponentNameTextView = gameView.findViewById<TextView>(R.id.opponentNameTextView)
                         val scoremeTextView = gameView.findViewById<TextView>(R.id.scoreme)
                         val scoreavversarioTextView = gameView.findViewById<TextView>(R.id.scoreavversario)
-                        val giocaButton = gameView.findViewById<TextView>(R.id.giocaincorso)
+                        inattesa = gameView.findViewById(R.id.inattesa)
 
 
                         var avversario = partita.child("Avversario").value.toString()
@@ -69,15 +69,18 @@ class Menu : Fragment() {
 
              leggiTurno(partita.toString(),difficolta,modalitaRef){
                  turno -> if(turno == uid ) {
-                     giocaincorso.setOnClickListener(){
+                 giocaincorso.visibility= View.VISIBLE
+                 inattesa.visibility=View.INVISIBLE
+
+                     giocaincorso.setOnClickListener {
                          modClassicaActivity.partita= partita.toString()
                          var intent = Intent(activity, ModClassicaActivity::class.java)
                          startActivity(intent)
                      }
-                 giocaincorso.visibility= View.VISIBLE
-                 inattesa.visibility=View.INVISIBLE
+
                  }
-                 else {giocaincorso.visibility=View.INVISIBLE
+                 else {
+                     giocaincorso.visibility=View.INVISIBLE
                        inattesa.visibility=View.VISIBLE
                  val drawableId=R.drawable.game_item_attesa2_background
                  val drawable=ResourcesCompat.getDrawable(resources,drawableId,null)
@@ -125,7 +128,7 @@ class Menu : Fragment() {
     }
     fun leggiTurno (partita : String, difficolta: String, modalitaRef: DatabaseReference,callback:(turno:String)-> Unit)
     {
-        var turno : String =""
+        var turno =""
         modalitaRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(modalitaRef: DataSnapshot) {
 
