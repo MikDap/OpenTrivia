@@ -20,17 +20,20 @@ class ModClassicaUtils {
 
 
         fun updateScrollView(
-            nomeAvversario: String, punteggioMio: Int, punteggioAvversario: Int, partita: String, difficolta: String, database: FirebaseDatabase
+            nomeAvversario: String,idAvversario: String, punteggioMio: Int, punteggioAvversario: Int, partita: String, difficolta: String, database: FirebaseDatabase
         ) {
             val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-            val partiteInCorsoRef = database.getReference("users").child(uid).child("partite in corso")
+            val nomeMio = FirebaseAuth.getInstance().currentUser?.displayName.toString()
+            val partiteInCorsoMioRef = database.getReference("users").child(uid).child("partite in corso")
+            val partiteInCorsoAvversarioRef = database.getReference("users").child(idAvversario).child("partite in corso")
 
-            partiteInCorsoRef.addListenerForSingleValueEvent(object : ValueEventListener {
+
+            partiteInCorsoMioRef.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(giocatore: DataSnapshot) {
-                    partiteInCorsoRef.child(partita).child("Avversario").setValue(nomeAvversario)
-                    partiteInCorsoRef.child(partita).child("PunteggioMio").setValue(punteggioMio)
-                    partiteInCorsoRef.child(partita).child("PunteggioAvversario").setValue(punteggioAvversario)
-                    partiteInCorsoRef.child(partita).child("difficolta").setValue(difficolta)
+                    partiteInCorsoMioRef.child(partita).child("Avversario").setValue(nomeAvversario)
+                    partiteInCorsoMioRef.child(partita).child("PunteggioMio").setValue(punteggioMio)
+                    partiteInCorsoMioRef.child(partita).child("PunteggioAvversario").setValue(punteggioAvversario)
+                    partiteInCorsoMioRef.child(partita).child("difficolta").setValue(difficolta)
 
 
                 }
@@ -41,6 +44,30 @@ class ModClassicaUtils {
                 }
 
             })
+
+
+            if (nomeAvversario != "-") {
+
+                partiteInCorsoAvversarioRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(giocatore: DataSnapshot) {
+                        partiteInCorsoAvversarioRef.child(partita).child("Avversario")
+                            .setValue(nomeMio)
+                        partiteInCorsoAvversarioRef.child(partita).child("PunteggioMio")
+                            .setValue(punteggioAvversario)
+                        partiteInCorsoAvversarioRef.child(partita).child("PunteggioAvversario")
+                            .setValue(punteggioMio)
+                        partiteInCorsoAvversarioRef.child(partita).child("difficolta").setValue(difficolta)
+
+
+                    }
+
+
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+
+                })
+            }
         }
 
 
@@ -145,13 +172,14 @@ class ModClassicaUtils {
         //AGGIORNARE: ottiene numero argomenti conquistati non quali
         fun ottieniNomeAvversario_e_argomentiConquistati(
             giocatoriRef: DatabaseReference,
-            callback: (nomeAvversario: String, argomenti_conquistati_miei: Int, argomenti_conquistati_avversario: Int) -> Unit
+            callback: (nomeAvversario: String,idAvversario: String, argomenti_conquistati_miei: Int, argomenti_conquistati_avversario: Int) -> Unit
         ) {
             giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(giocatori: DataSnapshot) {
 
                     val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
                     var nomeAvversario = "-"
+                    var idAvversario = "-"
                     var argomenti_conquistati_miei = 0
                     var  argomenti_conquistati_avversario = 0
 
@@ -167,15 +195,25 @@ class ModClassicaUtils {
                             }
                             else {
                                  nomeAvversario = giocatore.child("name").value.toString()
+                                idAvversario = giocatore1
                                 for (argomento in giocatore.child("ArgomentiConquistati").children) {
                                     argomenti_conquistati_avversario++
                                 }
                             }
                         }
 
+                        else {
+                            if (giocatore1 != uid){
+                               nomeAvversario = giocatore.child("name").value.toString()
+                                idAvversario = giocatore1
+                            }
+                        }
+
+
+
                     }
 
-                    callback(nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario)
+                    callback(nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario)
                 }
 
 
@@ -378,6 +416,7 @@ class ModClassicaUtils {
                     for (giocatore in giocatori.children) {
 
                         var giocatore1 = giocatore.key.toString()
+
 
                             if (giocatore1 != uid) {
                                 nomeAvversario = giocatore.child("name").value.toString()

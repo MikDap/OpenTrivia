@@ -102,8 +102,10 @@ coloraSfondo(NomeArgomento.text.toString())
                     updateArgomentiConquistati(giocatoreRef){
                         //callback di updateArgomentiConquistati
                         ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
-                                nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                            ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita,difficolta, database)
+
+                                nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                            ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+
                         }
                     }
 
@@ -118,8 +120,10 @@ coloraSfondo(NomeArgomento.text.toString())
                     }, 500)
 
                     ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
-                            nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                        ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita,difficolta, database)
+
+                            nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+
                     }
 
                     Handler(Looper.getMainLooper()).postDelayed({
@@ -142,8 +146,10 @@ coloraSfondo(NomeArgomento.text.toString())
                     updateArgomentiConquistati(giocatoreRef){
                         //callback di updateArgomentiConquistati
                         ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
-                                nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                            ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita,difficolta, database)
+
+                                nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                            ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+
                         }
                     }
                     Handler(Looper.getMainLooper()).postDelayed({
@@ -156,8 +162,10 @@ coloraSfondo(NomeArgomento.text.toString())
                     }, 500)
 
                     ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
-                            nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                        ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta,database)
+
+                            nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+
                     }
 
                     Handler(Looper.getMainLooper()).postDelayed({
@@ -181,8 +189,10 @@ coloraSfondo(NomeArgomento.text.toString())
                     updateArgomentiConquistati(giocatoreRef){
                         //callback di updateArgomentiConquistati
                         ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
-                                nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                            ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita,difficolta, database)
+
+                                nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                            ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+
                         }
                     }
                     Handler(Looper.getMainLooper()).postDelayed({
@@ -195,8 +205,10 @@ coloraSfondo(NomeArgomento.text.toString())
                     }, 500)
 
                     ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
-                            nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                        ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita,difficolta, database)
+
+                            nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+
                     }
 
                     Handler(Looper.getMainLooper()).postDelayed({
@@ -220,8 +232,10 @@ coloraSfondo(NomeArgomento.text.toString())
                     updateArgomentiConquistati(giocatoreRef){
                         //callback di updateArgomentiConquistati
                         ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
-                                nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                            ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita,difficolta, database)
+
+                                nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                            ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+
                         }
                     }
                     Handler(Looper.getMainLooper()).postDelayed({
@@ -235,8 +249,10 @@ coloraSfondo(NomeArgomento.text.toString())
 
 
                     ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
-                            nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                        ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita,difficolta, database)
+
+                            nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+
                     }
 
                     Handler(Looper.getMainLooper()).postDelayed({
