@@ -418,7 +418,7 @@ class ModClassicaUtils {
                         var giocatore1 = giocatore.key.toString()
 
 
-                            if (giocatore1 != uid) {
+                            if (giocatore1!= uid) {
                                 nomeAvversario = giocatore.child("name").value.toString()
                                 }
                         }
