@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Layout
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -37,66 +38,26 @@ class Menu : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.menu, container, false)
+       val view = inflater.inflate(R.layout.menu, container, false)
         startButton = view.findViewById(R.id.startButton)
         partitaContainer = view.findViewById(R.id.linearLayout)
         database = FirebaseDatabase.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+        val nomeMio = FirebaseAuth.getInstance().currentUser?.displayName.toString()
         val partiteInCorsoRef = database.getReference("users").child(uid).child("partite in corso")
         val modalitaRef= database.getReference("partite").child("classica")
         partiteInCorsoRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(partiteInCorso: DataSnapshot) {
 
                 if (partiteInCorso.hasChildren()) {
-                    for (partita in partiteInCorso.children) {
-                        val gameView = inflater.inflate(R.layout.game_item_layout, partitaContainer, false)
-                        giocaincorso=gameView.findViewById(R.id.giocaincorso)
-                        background_game_item=gameView.findViewById(R.id.background_game_item)
-                        val opponentNameTextView = gameView.findViewById<TextView>(R.id.opponentNameTextView)
-                        val scoremeTextView = gameView.findViewById<TextView>(R.id.scoreme)
-                        val scoreavversarioTextView = gameView.findViewById<TextView>(R.id.scoreavversario)
+                    val partiteIterator = partiteInCorso.children.iterator()
 
-                        inattesa = gameView.findViewById(R.id.inattesa)
-
-
-                        var avversario = partita.child("Avversario").value.toString()
-                        var punteggioMio = partita.child("PunteggioMio").value.toString()
-                        var punteggioAvversario = partita.child("PunteggioAvversario").value.toString()
-
-                        scoremeTextView.text = punteggioMio
-                        opponentNameTextView.text = avversario
-                        scoreavversarioTextView.text = punteggioAvversario
-                        var difficolta=partita.child("difficolta").value.toString()
-
-
-             leggiTurno(partita.toString(),difficolta,modalitaRef){
-                 turno -> if(turno == uid ) {
-                 giocaincorso.visibility= View.VISIBLE
-                 inattesa.visibility=View.INVISIBLE
-
-                     giocaincorso.setOnClickListener {
-                         modClassicaActivity.partita= partita.toString()
-                         var intent = Intent(activity, ModClassicaActivity::class.java)
-                         startActivity(intent)
-                     }
-
-                 }
-                 else {
-                     giocaincorso.visibility=View.INVISIBLE
-                       inattesa.visibility=View.VISIBLE
-                 val drawableId=R.drawable.game_item_attesa2_background
-                 val drawable=ResourcesCompat.getDrawable(resources,drawableId,null)
-                       background_game_item.background=drawable
-
-
-                        }
-
-                        }
-
-                        partitaContainer.addView(gameView)
-
-
+                    // Avvia il processo delle partite in corso
+                    processaPartiteInCorso(partiteIterator) {
+                        // Questa callback verrà chiamata quando tutte le partite sono state processate
+                        // Puoi fare qui qualsiasi cosa vuoi fare dopo aver completato il ciclo
                     }
+
                 }
 
 
@@ -134,18 +95,93 @@ class Menu : Fragment() {
         modalitaRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(modalitaRef: DataSnapshot) {
 
+                Log.d("2","2")
+
                 if (modalitaRef.child(difficolta).child(partita).hasChild("Turno")) {
-                    turno= modalitaRef.child(difficolta).child(partita).child("Turno").toString()
+                     turno= modalitaRef.child(difficolta).child(partita).child("Turno").value.toString()
+                    Log.d("entranellif", "si")
                 }
 
-                callback(turno);
+         callback(turno);
             }
 
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                        TODO("Not yet implemented")
+                    }
+
+                })
             }
 
-        })
+
+
+
+    fun processaPartiteInCorso(partite: Iterator<DataSnapshot>, callback: () -> Unit) {
+        if (!partite.hasNext()) {
+            // Quando tutti gli elementi sono stati processati, chiamare la callback
+            callback()
+            return
+        }
+        val nomeMio = FirebaseAuth.getInstance().currentUser?.displayName.toString()
+        val modalitaRef= database.getReference("partite").child("classica")
+
+
+
+        val partita = partite.next()
+
+
+        val inflater = LayoutInflater.from(requireContext())
+        Log.d("1","1")
+        var partita1 = partita.key.toString()
+        val gameView = inflater.inflate(R.layout.game_item_layout, partitaContainer, false)
+        giocaincorso=gameView.findViewById(R.id.giocaincorso)
+        background_game_item=gameView.findViewById(R.id.background_game_item)
+        val opponentNameTextView = gameView.findViewById<TextView>(R.id.opponentNameTextView)
+        val scoremeTextView = gameView.findViewById<TextView>(R.id.scoreme)
+        val scoreavversarioTextView = gameView.findViewById<TextView>(R.id.scoreavversario)
+        inattesa = gameView.findViewById(R.id.inattesa)
+
+
+        var avversario = partita.child("Avversario").value.toString()
+        var punteggioMio = partita.child("PunteggioMio").value.toString()
+        var punteggioAvversario = partita.child("PunteggioAvversario").value.toString()
+
+        scoremeTextView.text = punteggioMio
+        opponentNameTextView.text = avversario
+        scoreavversarioTextView.text = punteggioAvversario
+        var difficolta=partita.child("difficolta").value.toString()
+
+        leggiTurno(partita1,difficolta,modalitaRef){
+                turno ->
+            Log.d("3","3")
+            if(turno == nomeMio ) {
+                giocaincorso.visibility= View.VISIBLE
+                inattesa.visibility= View.INVISIBLE
+
+                giocaincorso.setOnClickListener{
+                    var intent = Intent(activity, ModClassicaActivity::class.java)
+                    intent.putExtra("partita",partita1)
+                    intent.putExtra("difficolta",difficolta)
+                    startActivity(intent)
+                }
+
+            }
+            else {
+                giocaincorso.visibility=View.INVISIBLE
+                inattesa.visibility=View.VISIBLE
+                val drawableId=R.drawable.game_item_attesa2_background
+                val drawable=ResourcesCompat.getDrawable(resources,drawableId,null)
+                background_game_item.background=drawable
+
+
+            }
+            partitaContainer.addView(gameView)
+
+
+
+
+            // Richiama la funzione ricorsivamente per processare il prossimo elemento
+            processaPartiteInCorso(partite, callback)
+        }
     }
-}
+        }

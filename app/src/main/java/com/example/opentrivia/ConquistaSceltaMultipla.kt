@@ -126,6 +126,19 @@ coloraSfondo(NomeArgomento.text.toString())
 
                     }
 
+
+                    ModClassicaUtils.ottieniNomeAvversario(giocatoriRef) { nomeAvversario ->
+
+                        val partitaRef =
+                            database.getReference("partite").child("classica").child(difficolta)
+                                .child(partita)
+                        if (nomeAvversario == "non hai un avversario") {
+
+                            partitaRef.child("Turno").setValue("-")
+                        } else {
+                            partitaRef.child("Turno").setValue(nomeAvversario)
+                        }
+                    }
                     Handler(Looper.getMainLooper()).postDelayed({
                         modClassicaActivity.chiamaRuota()
                     }, 1000)
@@ -166,6 +179,19 @@ coloraSfondo(NomeArgomento.text.toString())
                             nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
                         ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
 
+                    }
+
+                    ModClassicaUtils.ottieniNomeAvversario(giocatoriRef) { nomeAvversario ->
+
+                        val partitaRef =
+                            database.getReference("partite").child("classica").child(difficolta)
+                                .child(partita)
+                        if (nomeAvversario == "non hai un avversario") {
+
+                            partitaRef.child("Turno").setValue("-")
+                        } else {
+                            partitaRef.child("Turno").setValue(nomeAvversario)
+                        }
                     }
 
                     Handler(Looper.getMainLooper()).postDelayed({
@@ -211,6 +237,19 @@ coloraSfondo(NomeArgomento.text.toString())
 
                     }
 
+                    ModClassicaUtils.ottieniNomeAvversario(giocatoriRef) { nomeAvversario ->
+
+                        val partitaRef =
+                            database.getReference("partite").child("classica").child(difficolta)
+                                .child(partita)
+                        if (nomeAvversario == "non hai un avversario") {
+
+                            partitaRef.child("Turno").setValue("-")
+                        } else {
+                            partitaRef.child("Turno").setValue(nomeAvversario)
+                        }
+                    }
+
                     Handler(Looper.getMainLooper()).postDelayed({
                         modClassicaActivity.chiamaRuota()
                     }, 1000)
@@ -253,6 +292,19 @@ coloraSfondo(NomeArgomento.text.toString())
                             nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
                         ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
 
+                    }
+
+                    ModClassicaUtils.ottieniNomeAvversario(giocatoriRef) { nomeAvversario ->
+
+                        val partitaRef =
+                            database.getReference("partite").child("classica").child(difficolta)
+                                .child(partita)
+                        if (nomeAvversario == "non hai un avversario") {
+
+                            partitaRef.child("Turno").setValue("-")
+                        } else {
+                            partitaRef.child("Turno").setValue(nomeAvversario)
+                        }
                     }
 
                     Handler(Looper.getMainLooper()).postDelayed({
