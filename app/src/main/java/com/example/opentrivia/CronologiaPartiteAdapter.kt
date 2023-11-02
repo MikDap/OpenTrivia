@@ -14,7 +14,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class CronologiaPartiteAdapter(private val partiteList: MutableMap<Int, Triple<String, String, String>>) : RecyclerView.Adapter<CronologiaPartiteAdapter.ViewHolder>() {
+class CronologiaPartiteAdapter(private val partiteList: MutableMap<Int, PartitaTerminata>) : RecyclerView.Adapter<CronologiaPartiteAdapter.ViewHolder>() {
     private lateinit var database: FirebaseDatabase
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,6 +23,13 @@ class CronologiaPartiteAdapter(private val partiteList: MutableMap<Int, Triple<S
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        var partita = partiteList[position]
+        if (partita != null) {
+            holder.nomeAvv.text = partita.nomeAvv
+            holder.scoreTextView1.text = partita.punteggioMio
+            holder.scoreTextView3.text = partita.punteggioAvv
+            holder.modalita.text = partita.modalita
+        }
 
     }
 
