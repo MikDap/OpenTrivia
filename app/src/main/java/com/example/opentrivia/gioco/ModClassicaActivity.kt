@@ -51,9 +51,9 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
         setContentView(R.layout.mod_classica_activity)
 
         difficolta = intent.getStringExtra("difficolta") ?: ""
+        partita = intent.getStringExtra("partita") ?:""
 
      invalidateOptionsMenu()
-
     }
     //mic
 // quando viene scelto il topic sul fragment:
@@ -67,7 +67,17 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
             creaPartitaDatabase()
         }
 
-        if (topic == "jolly") {chiamaConquista()}
+        if (topic == "jolly") {
+            chiamaConquista()
+
+            val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+
+            val giocatoreRef =
+                database.getReference("partite").child("classica").child(difficolta).child(partita)
+                    .child("giocatori").child(uid)
+            giocatoreRef.child("risposteTotCorrette").setValue(0)
+
+                }
         else {
 //chiamiamo la funzione per ottenere il numero delle categorie per il topic selezionato
             categoria = getCategoria(topic)
@@ -366,8 +376,44 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
                 .replace(R.id.fragmentContainerViewGioco, secondFragment).commit()
         }, 500)
 
+    }
 
 
+
+    fun schermataVittoria() {
+
+        val fragment = Vittoria()
+        Handler(Looper.getMainLooper()).postDelayed({
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerViewGioco2, fragment).commit()
+        }, 500)
 
     }
+
+    fun schermataPareggio() {
+
+        val fragment = Pareggio()
+        Handler(Looper.getMainLooper()).postDelayed({
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerViewGioco2, fragment).commit()
+        }, 500)
+
+    }
+
+    fun schermataSconfitta() {
+
+        val fragment = Sconfitta()
+        Handler(Looper.getMainLooper()).postDelayed({
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerViewGioco2, fragment).commit()
+        }, 500)
+
+    }
+
+
+
+
+
+
+
 }

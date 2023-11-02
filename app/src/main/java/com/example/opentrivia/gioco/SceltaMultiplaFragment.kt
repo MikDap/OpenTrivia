@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import com.example.opentrivia.MainActivity
 
 import com.example.opentrivia.R
+import com.example.opentrivia.StatisticheFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -266,7 +267,8 @@ return view
                         if (contatoreRisposte < 10) {
                             modArgomentoActivity.getTriviaQuestion()
                         }
-                        else {startActivity(Intent(activity, MainActivity::class.java))
+                        else {
+                            finePartita()
 
                         }
 
@@ -307,7 +309,7 @@ return view
     //modifica di mic
 
     fun finePartita() {
-
+             Log.d("finePartita","si")
         database = FirebaseDatabase.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         var giocatoriRef =
@@ -315,6 +317,7 @@ return view
         var risposte1 = 0
         var risposte2 = 0
         var giocatore2esiste = false
+        var avversario = ""
 
         giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -322,10 +325,14 @@ return view
 
                     for (topic in giocatore.children) {
 
-                        if (topic.hasChild("risposteCorrette")) {
+                        if (topic.hasChild("risposteTotali")) {
 
 
-                            if (giocatore.equals(uid)) {
+                             var giocatore1 = giocatore.key.toString()
+
+                            Log.d("giocatore1", giocatore1)
+                            Log.d("uid",uid)
+                            if (giocatore1 == uid) {
                                 Log.d("giocatore2esiste",giocatore2esiste.toString())
                                 val risposteCorrette =
                                     topic.child("risposteCorrette").getValue(Int::class.java)
@@ -333,6 +340,7 @@ return view
                                     risposte1 += risposteCorrette
                                 }
                             } else {
+                                avversario = giocatore1
                                 giocatore2esiste = true
                                 Log.d("giocatore2esiste",giocatore2esiste.toString())
                                 val risposteCorrette =
@@ -350,21 +358,27 @@ return view
 
 
                 Log.d("giocatore2esiste alla fine", giocatore2esiste.toString())
-                if (giocatore2esiste == false) {
+                if (!giocatore2esiste) {
                     giocatoriRef.child(uid).child("fineTurno").setValue("si")
                     modArgomentoActivity.schermataAttendi()
                 } else {
                     Log.d("entra in else", "si")
                     if (risposte1 > risposte2) {
                         giocatoriRef.child(uid).child("fineTurno").setValue("si")
+                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,uid)
+                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,avversario)
                         modArgomentoActivity.schermataVittoria()
                     }
                     else if (risposte1 == risposte2) {
                         giocatoriRef.child(uid).child("fineTurno").setValue("si")
+                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,uid)
+                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,avversario)
                         modArgomentoActivity.schermataPareggio()
                     }
                     else if (risposte1 < risposte2) {
                         giocatoriRef.child(uid).child("fineTurno").setValue("si")
+                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,uid)
+                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,avversario)
                         modArgomentoActivity.schermataSconfitta()
                     }
 

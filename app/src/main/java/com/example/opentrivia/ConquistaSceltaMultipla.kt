@@ -102,8 +102,16 @@ coloraSfondo(NomeArgomento.text.toString())
                     updateArgomentiConquistati(giocatoreRef){
                         //callback di updateArgomentiConquistati
                         ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
-                                nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                            ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita,difficolta, database)
+
+                                nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                            // CHIAMA VITTORIA SE ARGOMENTICONQUISTATI MIEI = 6
+                            if (argomenti_conquistati_miei == 6) {
+                                modClassicaActivity.schermataVittoria()
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,uid)
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,idAvversario)
+                            }
+                            ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+
                         }
                     }
 
@@ -118,10 +126,25 @@ coloraSfondo(NomeArgomento.text.toString())
                     }, 500)
 
                     ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
-                            nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                        ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita,difficolta, database)
+
+                            nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+
                     }
 
+
+                    ModClassicaUtils.ottieniNomeAvversario(giocatoriRef) { nomeAvversario ->
+
+                        val partitaRef =
+                            database.getReference("partite").child("classica").child(difficolta)
+                                .child(partita)
+                        if (nomeAvversario == "non hai un avversario") {
+
+                            partitaRef.child("Turno").setValue("-")
+                        } else {
+                            partitaRef.child("Turno").setValue(nomeAvversario)
+                        }
+                    }
                     Handler(Looper.getMainLooper()).postDelayed({
                         modClassicaActivity.chiamaRuota()
                     }, 1000)
@@ -142,8 +165,16 @@ coloraSfondo(NomeArgomento.text.toString())
                     updateArgomentiConquistati(giocatoreRef){
                         //callback di updateArgomentiConquistati
                         ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
-                                nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                            ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita,difficolta, database)
+
+                                nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                            // CHIAMA VITTORIA SE ARGOMENTICONQUISTATI MIEI = 6
+                            if (argomenti_conquistati_miei == 6) {
+                                modClassicaActivity.schermataVittoria()
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,uid)
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,idAvversario)
+                            }
+                            ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+
                         }
                     }
                     Handler(Looper.getMainLooper()).postDelayed({
@@ -156,8 +187,23 @@ coloraSfondo(NomeArgomento.text.toString())
                     }, 500)
 
                     ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
-                            nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                        ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta,database)
+
+                            nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+
+                    }
+
+                    ModClassicaUtils.ottieniNomeAvversario(giocatoriRef) { nomeAvversario ->
+
+                        val partitaRef =
+                            database.getReference("partite").child("classica").child(difficolta)
+                                .child(partita)
+                        if (nomeAvversario == "non hai un avversario") {
+
+                            partitaRef.child("Turno").setValue("-")
+                        } else {
+                            partitaRef.child("Turno").setValue(nomeAvversario)
+                        }
                     }
 
                     Handler(Looper.getMainLooper()).postDelayed({
@@ -181,8 +227,15 @@ coloraSfondo(NomeArgomento.text.toString())
                     updateArgomentiConquistati(giocatoreRef){
                         //callback di updateArgomentiConquistati
                         ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
-                                nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                            ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita,difficolta, database)
+                                nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                            // CHIAMA VITTORIA SE ARGOMENTICONQUISTATI MIEI = 6
+                            if (argomenti_conquistati_miei == 6) {
+                                modClassicaActivity.schermataVittoria()
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,uid)
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,idAvversario)
+                            }
+                            ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+
                         }
                     }
                     Handler(Looper.getMainLooper()).postDelayed({
@@ -195,8 +248,23 @@ coloraSfondo(NomeArgomento.text.toString())
                     }, 500)
 
                     ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
-                            nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                        ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita,difficolta, database)
+
+                            nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+
+                    }
+
+                    ModClassicaUtils.ottieniNomeAvversario(giocatoriRef) { nomeAvversario ->
+
+                        val partitaRef =
+                            database.getReference("partite").child("classica").child(difficolta)
+                                .child(partita)
+                        if (nomeAvversario == "non hai un avversario") {
+
+                            partitaRef.child("Turno").setValue("-")
+                        } else {
+                            partitaRef.child("Turno").setValue(nomeAvversario)
+                        }
                     }
 
                     Handler(Looper.getMainLooper()).postDelayed({
@@ -220,8 +288,16 @@ coloraSfondo(NomeArgomento.text.toString())
                     updateArgomentiConquistati(giocatoreRef){
                         //callback di updateArgomentiConquistati
                         ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
-                                nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                            ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita,difficolta, database)
+
+                                nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                            // CHIAMA VITTORIA SE ARGOMENTICONQUISTATI MIEI = 6
+                            if (argomenti_conquistati_miei == 6) {
+                                modClassicaActivity.schermataVittoria()
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,uid)
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,idAvversario)
+                            }
+                            ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+
                         }
                     }
                     Handler(Looper.getMainLooper()).postDelayed({
@@ -235,8 +311,23 @@ coloraSfondo(NomeArgomento.text.toString())
 
 
                     ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
-                            nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                        ModClassicaUtils.updateScrollView(nomeAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita,difficolta, database)
+
+                            nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+
+                    }
+
+                    ModClassicaUtils.ottieniNomeAvversario(giocatoriRef) { nomeAvversario ->
+
+                        val partitaRef =
+                            database.getReference("partite").child("classica").child(difficolta)
+                                .child(partita)
+                        if (nomeAvversario == "non hai un avversario") {
+
+                            partitaRef.child("Turno").setValue("-")
+                        } else {
+                            partitaRef.child("Turno").setValue(nomeAvversario)
+                        }
                     }
 
                     Handler(Looper.getMainLooper()).postDelayed({

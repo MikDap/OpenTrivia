@@ -9,28 +9,21 @@ import com.google.firebase.database.FirebaseDatabase
 
 class ChatActivity : AppCompatActivity() {
 
-     private lateinit var database: FirebaseDatabase
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.chat_activity)
 
 
-        database = FirebaseDatabase.getInstance()
-        val chatRef = database.getReference("partite").child("argomento singolo")
-
-        val editText = findViewById<EditText>(R.id.edit_message)
-        val sendButton = findViewById<Button>(R.id.button_send)
-
-        sendButton.setOnClickListener {
-            val testo = editText.text
-
-
-        }
+    }
 
 
 
+    fun chiamaChat(idAmico: String, nomeAmico: String) {
 
-
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        val fragment = ChatFragment()
+        fragmentTransaction.replace(R.id.fragmentContainerView2, fragment).addToBackStack("ChatListaAmici").commit()
     }
 }

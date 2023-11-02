@@ -23,6 +23,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.database.ktx.database
 import androidx.navigation.Navigation.findNavController
+import com.example.opentrivia.chat.ChatActivity
 import com.example.opentrivia.gioco.ModClassicaActivity
 import com.example.opentrivia.listaAmici.ListaAmiciActivity
 import com.example.opentrivia.listaAmici.ListaAmiciFragment
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 // Crea un ActivityResultLauncher che registra una callback
 // per il contratto dei risultati dell'attività FirebaseUI:
         val user = Firebase.auth.currentUser
-        //if (user == null) {
+        if (user == null) {
 
         val signInLauncher = registerForActivityResult(
 
@@ -67,7 +68,7 @@ class MainActivity : AppCompatActivity() {
 // consentirà di eseguire il login tramite i provider forniti
         signInLauncher.launch(signInIntent)
 
-         //}
+         }
         val database =
             Firebase.database("https://opentrivia-fd778-default-rtdb.europe-west1.firebasedatabase.app/")
 
@@ -88,10 +89,8 @@ class MainActivity : AppCompatActivity() {
                         // Qui puoi gestire l'evento di click sull'item "chat"
                         // Ad esempio, puoi navigare verso un altro fragment o eseguire altre azioni
                         // sostituisci "ChatFragment" con il nome del fragment desiderato
-                        val fragmentManager = supportFragmentManager
-                        val fragmentTransaction = fragmentManager.beginTransaction()
-                        val fragment = ListaAmiciFragment()
-                        fragmentTransaction.replace(R.id.fragmentContainerView2, fragment).addToBackStack("Menu").commit()
+                        val intent = Intent(this@MainActivity, ChatActivity::class.java)
+                        startActivity(intent)
                         return true
                     }
                     R.id.inbox -> {

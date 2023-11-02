@@ -84,8 +84,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
         val giocatoreRef =
             database.getReference("partite").child(modalita).child(difficolta).child(partita)
                 .child("giocatori").child(uid)
-        val giocatoriRef = database.getReference("partite").child(modalita).child(difficolta).child(partita)
-            .child("giocatori")
+        val giocatoriRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
         val partiteInCorsoRef = database.getReference("users").child(uid).child("partite in corso")
 
         var rispostaData = false
@@ -98,9 +97,10 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
                    ModClassicaUtils.updateContatoreRisposteCorrette(giocatoriRef) { ->
                        //aggiorna ScrollView
-                       ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) { nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                       ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) { nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
                            ModClassicaUtils.updateScrollView(
                                nomeAvversario,
+                               idAvversario,
                                argomenti_conquistati_miei,
                                argomenti_conquistati_avversario,
                                partita,
@@ -116,8 +116,8 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                 else {
                    ModClassicaUtils.updateRisposte(risposteRef, "sbagliata")
                    ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef){
-                           nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                       ModClassicaUtils.updateScrollView(nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, difficolta, database)
+                           nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                       ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, difficolta, database)
                    }
 
                    updateContinuaButton(giocatoreRef,"sbagliata")
@@ -135,9 +135,10 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
                     ModClassicaUtils.updateContatoreRisposteCorrette(giocatoriRef) { ->
                         //aggiorna ScrollView
-                        ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) { nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) { nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
                             ModClassicaUtils.updateScrollView(
                                 nomeAvversario,
+                                idAvversario,
                                 argomenti_conquistati_miei,
                                 argomenti_conquistati_avversario,
                                 partita,
@@ -152,8 +153,8 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                 else {
                     ModClassicaUtils.updateRisposte(risposteRef, "sbagliata")
                     ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef){
-                            nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                        ModClassicaUtils.updateScrollView(nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, difficolta, database)
+                            nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, difficolta, database)
                     }
 
                     updateContinuaButton(giocatoreRef,"sbagliata")
@@ -169,9 +170,10 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
                     ModClassicaUtils.updateContatoreRisposteCorrette(giocatoriRef) { ->
                         //aggiorna ScrollView
-                        ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) { nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) { nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
                             ModClassicaUtils.updateScrollView(
                                 nomeAvversario,
+                                idAvversario,
                                 argomenti_conquistati_miei,
                                 argomenti_conquistati_avversario,
                                 partita,
@@ -186,8 +188,8 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                 else {
                     ModClassicaUtils.updateRisposte(risposteRef, "sbagliata")
                     ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef){
-                            nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                        ModClassicaUtils.updateScrollView(nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, difficolta, database)
+                            nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, difficolta, database)
                     }
 
                     updateContinuaButton(giocatoreRef,"sbagliata")
@@ -203,9 +205,10 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
                     ModClassicaUtils.updateContatoreRisposteCorrette(giocatoriRef) { ->
                         //aggiorna ScrollView
-                        ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) { nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) { nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
                             ModClassicaUtils.updateScrollView(
                                 nomeAvversario,
+                                idAvversario,
                                 argomenti_conquistati_miei,
                                 argomenti_conquistati_avversario,
                                 partita,
@@ -220,8 +223,8 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                 else {
                     ModClassicaUtils.updateRisposte(risposteRef, "sbagliata")
                     ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef){
-                            nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                        ModClassicaUtils.updateScrollView(nomeAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, difficolta, database)
+                            nomeAvversario, idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                        ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, difficolta, database)
                     }
 
                     updateContinuaButton(giocatoreRef,"sbagliata")
@@ -244,6 +247,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
         giocatoreRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(giocatore: DataSnapshot) {
 
+                val giocatoriRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
                 val partitaRef = database.getReference("partite").child(modalita).child(difficolta).child(partita)
                 //chiamo conquista
                 if (giocatore.hasChild("risposteTotCorrette")) {
@@ -279,7 +283,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
                         } else if (tipo == "sbagliata") {
 
-                            ModClassicaUtils.ottieniNomeAvversario(giocatoreRef){
+                            ModClassicaUtils.ottieniNomeAvversario(giocatoriRef){
                                     nomeAvversario ->
 
                                 if (nomeAvversario == "non hai un avversario"){
@@ -322,7 +326,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
                     } else if (tipo == "sbagliata") {
 
-                        ModClassicaUtils.ottieniNomeAvversario(giocatoreRef){
+                        ModClassicaUtils.ottieniNomeAvversario(giocatoriRef){
                             nomeAvversario ->
 
                             if (nomeAvversario == "non hai un avversario"){

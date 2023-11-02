@@ -27,4 +27,15 @@
     <string name="zero">0</string>
     <string name="trattino">-</string>
     <string name="inattesa">In attesa</string>
+    <string name="Partite_terminate">Partite terminate </string>
+    <string name="amico">amico</string>
+    <string name="geografia">Geografia</string>
+    <string name="sport">Sport</string>
+    <string name="arte">Arte</string>
+    <string name="intrattenimento">Intrattenimento</string>
+    <string name="scienze">Scienze</string>
+    <string name="storia">Storia</string>
+    <string name="statistiche">Statistiche</string>
+    <string name="Modalita">Modalità</string>
+
 </resources>
