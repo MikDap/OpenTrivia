@@ -380,9 +380,13 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
 
 
 
-    fun schermataVittoria() {
+    fun schermataVittoria(nomeAvv: String,scoreMio: Int, scoreAvv:Int) {
 
         val fragment = Vittoria()
+        fragment.nomeAvv = nomeAvv
+        fragment.scoreMio = scoreMio.toString()
+        fragment.scoreAvv = scoreAvv.toString()
+        fragment.mod = "argomento singolo"
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainerViewGioco2, fragment).commit()
@@ -390,9 +394,13 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
 
     }
 
-    fun schermataPareggio() {
+    fun schermataPareggio(nomeAvv: String,scoreMio: Int, scoreAvv:Int) {
 
         val fragment = Pareggio()
+        fragment.nomeAvv = nomeAvv
+        fragment.scoreMio = scoreMio.toString()
+        fragment.scoreAvv = scoreAvv.toString()
+        fragment.mod = "argomento singolo"
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainerViewGioco2, fragment).commit()
@@ -400,9 +408,13 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
 
     }
 
-    fun schermataSconfitta() {
+    fun schermataSconfitta(nomeAvv: String,scoreMio: Int, scoreAvv:Int) {
 
         val fragment = Sconfitta()
+        fragment.nomeAvv = nomeAvv
+        fragment.scoreMio = scoreMio.toString()
+        fragment.scoreAvv = scoreAvv.toString()
+        fragment.mod = "argomento singolo"
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainerViewGioco2, fragment).commit()
