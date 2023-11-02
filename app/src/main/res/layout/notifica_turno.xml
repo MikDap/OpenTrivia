@@ -33,7 +33,7 @@
         android:layout_centerVertical="true"
         android:text="Vai alla partita"
         android:textSize="12sp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="6dp"
         android:textColor="@android:color/white"
         android:background="@drawable/notification_background2" />
 
