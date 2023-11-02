@@ -45,5 +45,17 @@
         <action
             android:id="@+id/action_menu_to_modalita"
             app:destination="@id/modalita" />
+        <action
+            android:id="@+id/action_menu_to_cronologiaPartite"
+            app:destination="@id/cronologiaPartite" />
+    </fragment>
+    <fragment
+        android:id="@+id/cronologiaPartite"
+        android:name="com.example.opentrivia.CronologiaPartite"
+        android:label="visualizza_cronologia"
+        tools:layout="@layout/visualizza_cronologia" >
+        <action
+            android:id="@+id/action_cronologiaPartite_to_menu"
+            app:destination="@id/menu" />
     </fragment>
 </navigation>

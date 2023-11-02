@@ -19,8 +19,12 @@
         android:name="com.example.opentrivia.chat.ChatFragment"
         android:label="fragment_chat"
         tools:layout="@layout/fragment_chat" >
+
         <action
             android:id="@+id/action_chatFragment_to_chatListaAmici"
-            app:destination="@id/chatListaAmici" />
+            app:destination="@id/chatListaAmici"
+            />
+
     </fragment>
+
 </navigation>

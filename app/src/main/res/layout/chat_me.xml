@@ -6,7 +6,7 @@
     android:layout_marginEnd="8dp"
     android:layout_marginTop="16dp">
     <TextView
-        android:id="@+id/text_date_me"
+        android:id="@+id/text_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -29,7 +29,7 @@
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_date_me">
+        app:layout_constraintTop_toBottomOf="@id/text_data">
         <LinearLayout
             android:id="@+id/layout_container_me"
             android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
     <TextView
-        android:id="@+id/text_timestamp_me"
+        android:id="@+id/text_timestamp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="10:00"
