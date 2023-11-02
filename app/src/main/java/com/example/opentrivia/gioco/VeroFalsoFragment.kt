@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import com.example.opentrivia.MainActivity
 
 import com.example.opentrivia.R
+import com.example.opentrivia.StatisticheFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -367,17 +368,19 @@ fun finePartita() {
     var risposte1 = 0
     var risposte2 = 0
     var giocatore2esiste = false
+    var avversario = ""
 
     giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             for (giocatore in dataSnapshot.children) {
 
+                var giocatore1 = giocatore.key.toString()
                 for (topic in giocatore.children) {
 
                     if (topic.hasChild("risposteCorrette")) {
 
 
-                        if (giocatore.equals(uid)) {
+                        if (giocatore1.equals(uid)) {
                             Log.d("giocatore2esiste",giocatore2esiste.toString())
                             val risposteCorrette =
                                 topic.child("risposteCorrette").getValue(Int::class.java)
@@ -385,6 +388,7 @@ fun finePartita() {
                                 risposte1 += risposteCorrette
                             }
                         } else {
+                            avversario = giocatore1
                             giocatore2esiste = true
                             Log.d("giocatore2esiste",giocatore2esiste.toString())
                             val risposteCorrette =
@@ -409,14 +413,20 @@ fun finePartita() {
                 Log.d("entra in else", "si")
                 if (risposte1 > risposte2) {
                     giocatoriRef.child(uid).child("fineTurno").setValue("si")
+                    StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,uid)
+                    StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,avversario)
                     modATempoActivity.schermataVittoria()
                 }
                 else if (risposte1 == risposte2) {
                     giocatoriRef.child(uid).child("fineTurno").setValue("si")
+                    StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,uid)
+                    StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,avversario)
                     modATempoActivity.schermataPareggio()
                 }
                 else if (risposte1 < risposte2) {
                     giocatoriRef.child(uid).child("fineTurno").setValue("si")
+                    StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,uid)
+                    StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,avversario)
                     modATempoActivity.schermataSconfitta()
                 }
 

@@ -44,7 +44,12 @@
         </activity>
         <activity
             android:name=".listaAmici.ListaAmiciActivity"
-            android:label="ModATempo Activity"
+            android:label="ListaAmici Activity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".chat.ChatActivity"
+            android:label="Chat Activity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <meta-data android:name="com.facebook.sdk.ApplicationId"

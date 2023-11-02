@@ -104,6 +104,12 @@ coloraSfondo(NomeArgomento.text.toString())
                         ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
 
                                 nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                            // CHIAMA VITTORIA SE ARGOMENTICONQUISTATI MIEI = 6
+                            if (argomenti_conquistati_miei == 6) {
+                                modClassicaActivity.schermataVittoria()
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,uid)
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,idAvversario)
+                            }
                             ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
 
                         }
@@ -161,6 +167,12 @@ coloraSfondo(NomeArgomento.text.toString())
                         ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
 
                                 nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                            // CHIAMA VITTORIA SE ARGOMENTICONQUISTATI MIEI = 6
+                            if (argomenti_conquistati_miei == 6) {
+                                modClassicaActivity.schermataVittoria()
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,uid)
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,idAvversario)
+                            }
                             ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
 
                         }
@@ -215,8 +227,13 @@ coloraSfondo(NomeArgomento.text.toString())
                     updateArgomentiConquistati(giocatoreRef){
                         //callback di updateArgomentiConquistati
                         ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
-
                                 nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                            // CHIAMA VITTORIA SE ARGOMENTICONQUISTATI MIEI = 6
+                            if (argomenti_conquistati_miei == 6) {
+                                modClassicaActivity.schermataVittoria()
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,uid)
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,idAvversario)
+                            }
                             ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
 
                         }
@@ -273,6 +290,12 @@ coloraSfondo(NomeArgomento.text.toString())
                         ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
 
                                 nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
+                            // CHIAMA VITTORIA SE ARGOMENTICONQUISTATI MIEI = 6
+                            if (argomenti_conquistati_miei == 6) {
+                                modClassicaActivity.schermataVittoria()
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,uid)
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,idAvversario)
+                            }
                             ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
 
                         }

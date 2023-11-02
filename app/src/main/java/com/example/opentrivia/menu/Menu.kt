@@ -33,6 +33,7 @@ class Menu : Fragment() {
     private lateinit var inattesa: Button
     private lateinit var modClassicaActivity: ModClassicaActivity
     private lateinit var background_game_item: ConstraintLayout
+    private lateinit var visualizzaCronologia: Button
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,6 +41,7 @@ class Menu : Fragment() {
         // Inflate the layout for this fragment
        val view = inflater.inflate(R.layout.menu, container, false)
         startButton = view.findViewById(R.id.startButton)
+        visualizzaCronologia = view.findViewById(R.id.historyTextView)
         partitaContainer = view.findViewById(R.id.linearLayout)
         database = FirebaseDatabase.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
@@ -85,6 +87,7 @@ class Menu : Fragment() {
 
 
         startButton.setOnClickListener { Navigation.findNavController(view).navigate(R.id.action_menu_to_modalita)}
+        visualizzaCronologia.setOnClickListener{ Navigation.findNavController(view).navigate(R.id.action_menu_to_cronologiaPartite)    }
 
 
         return view

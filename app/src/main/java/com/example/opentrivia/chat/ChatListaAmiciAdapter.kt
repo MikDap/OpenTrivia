@@ -4,33 +4,52 @@ import com.example.opentrivia.R
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
+import com.example.opentrivia.chat.ChatListaAmici
 
-class ChatListaAmiciAdapter(private val friendsList: List<String>) : RecyclerView.Adapter<ChatListaAmiciAdapter.ViewHolder>() {
+class ChatListaAmiciAdapter(private val userKeyMap: Map<String, String>, private val clickListener: ChatListaAmici.OnAmicoClickListener) : RecyclerView.Adapter<ChatListaAmiciAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.lista_amici_friend_item, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.chat_amico_item, parent, false)
         return ViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val friendName = friendsList[position]
-        holder.textViewFriendName.text = friendName
+        val userId = userKeyMap.keys.elementAt(position)
+        val username = userKeyMap[userId]
+        holder.amico.text = username
+        holder.amico.setOnClickListener {
+            if (username != null) {
+                clickListener.onAmicoClick(userId, username)
+            }
+        }
     }
 
     override fun getItemCount(): Int {
-        return friendsList.size
+        return userKeyMap.size
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textViewFriendName: TextView = itemView.findViewById(R.id.textViewFriendName)
+        val amico: Button = itemView.findViewById(R.id.textViewFriendName)
+
+
+        init {
+
+        amico.setOnClickListener{
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+
+
+            }
+        }
+
     }
+    }
+
+
+
+
 }
 
