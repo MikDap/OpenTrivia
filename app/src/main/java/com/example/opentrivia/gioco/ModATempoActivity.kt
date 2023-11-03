@@ -74,8 +74,7 @@ fun startAtempo() {
                                 //prende id della partita
                                 partita = sottonodo.key.toString()
                                 //setta database/partite/modalita/difficolta/giocatori/id
-                                partiteRef.child(partita).child("giocatori").child(uid)
-                                    .setValue(name)
+                                partiteRef.child(partita).child("giocatori").child(uid).child("name").setValue(name)
                             partiteRef.child(partita).child("giocatori").child(uid)
                                 .child("fineTurno").setValue("no")
 
@@ -99,7 +98,7 @@ fun startAtempo() {
                     partiteRef.child(partita).child("topic")
                         .setValue(topic)
                     partiteRef.child(partita).child("giocatori")
-                        .child(uid).setValue(name)
+                        .child(uid).child("name").setValue(name)
                     partiteRef.child(partita).child("giocatori").child(uid)
                         .child("fineTurno").setValue("no")
                     condizioneSoddisfatta = true
@@ -119,7 +118,7 @@ fun startAtempo() {
                     partiteRef.child(partita).child("topic")
                         .setValue(topic)
                     partiteRef.child(partita).child("giocatori")
-                        .child(uid).setValue(name)
+                        .child(uid).child("name").setValue(name)
                     partiteRef.child(partita).child("giocatori").child(uid)
                         .child("fineTurno").setValue("no")
                     //   partiteRef.child(partita).child("giocatori").child(uid).child(name).child("risposteCorrette").setValue(0)
@@ -243,9 +242,13 @@ fun schermataAttendi() {
 
 }
 
-    fun schermataVittoria() {
+    fun schermataVittoria(nomeAvv: String,scoreMio: Int, scoreAvv:Int) {
 
         val fragment = Vittoria()
+        fragment.nomeAvv = nomeAvv
+        fragment.scoreMio = scoreMio.toString()
+        fragment.scoreAvv = scoreAvv.toString()
+        fragment.mod = "argomento singolo"
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainerViewGioco3, fragment).commit()
@@ -253,9 +256,13 @@ fun schermataAttendi() {
 
     }
 
-    fun schermataPareggio() {
+    fun schermataPareggio(nomeAvv: String,scoreMio: Int, scoreAvv:Int) {
 
         val fragment = Pareggio()
+        fragment.nomeAvv = nomeAvv
+        fragment.scoreMio = scoreMio.toString()
+        fragment.scoreAvv = scoreAvv.toString()
+        fragment.mod = "argomento singolo"
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainerViewGioco3, fragment).commit()
@@ -263,9 +270,13 @@ fun schermataAttendi() {
 
     }
 
-    fun schermataSconfitta() {
+    fun schermataSconfitta(nomeAvv: String,scoreMio: Int, scoreAvv:Int) {
 
         val fragment = Sconfitta()
+        fragment.nomeAvv = nomeAvv
+        fragment.scoreMio = scoreMio.toString()
+        fragment.scoreAvv = scoreAvv.toString()
+        fragment.mod = "argomento singolo"
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainerViewGioco3, fragment).commit()

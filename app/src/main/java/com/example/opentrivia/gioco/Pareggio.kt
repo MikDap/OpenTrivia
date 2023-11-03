@@ -13,7 +13,15 @@ import com.example.opentrivia.R
 
 
 class Pareggio : Fragment() {
-    lateinit var pareggio:TextView
+
+    private lateinit var NomeAvversario: TextView
+    private lateinit var scoreTextView1: TextView
+    private lateinit var scoreTextView3: TextView
+    private lateinit var modalita: TextView
+    lateinit var nomeAvv: String
+    lateinit var scoreMio: String
+    lateinit var scoreAvv: String
+    lateinit var mod: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,13 +32,22 @@ class Pareggio : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pareggio, container, false)
+        val view = inflater.inflate(R.layout.fragment_pareggio, container, false)
 
-       //pareggio = (view?.findViewById(R.id.congratulazioni) ?: pareggio.setBackgroundColor(Color.LTGRAY )) as TextView
-        //Handler(Looper.getMainLooper()).postDelayed({
-          //  pareggio.setBackgroundColor(Color.RED)
-        //}, 1000)
+        NomeAvversario = view.findViewById(R.id.NomeAvversario)
+        scoreTextView1 = view.findViewById(R.id.scoreTextView1)
+        scoreTextView3 = view.findViewById(R.id.scoreTextView3)
+        modalita = view.findViewById(R.id.modalita)
+
+        return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        NomeAvversario.text = nomeAvv
+        scoreTextView1.text = scoreMio
+        scoreTextView3.text = scoreAvv
+        modalita.text = mod
+    }
 }

@@ -318,6 +318,7 @@ return view
         var risposte2 = 0
         var giocatore2esiste = false
         var avversario = ""
+        var nomeAvv = ""
 
         giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -341,6 +342,7 @@ return view
                                 }
                             } else {
                                 avversario = giocatore1
+                                nomeAvv = giocatore.child("name").value.toString()
                                 giocatore2esiste = true
                                 Log.d("giocatore2esiste",giocatore2esiste.toString())
                                 val risposteCorrette =
@@ -365,21 +367,21 @@ return view
                     Log.d("entra in else", "si")
                     if (risposte1 > risposte2) {
                         giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,uid)
-                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,avversario)
-                        modArgomentoActivity.schermataVittoria()
+                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,uid,risposte1,risposte2)
+                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,avversario,risposte1,risposte2)
+                        modArgomentoActivity.schermataVittoria(nomeAvv, risposte1, risposte2)
                     }
                     else if (risposte1 == risposte2) {
                         giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,uid)
-                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,avversario)
-                        modArgomentoActivity.schermataPareggio()
+                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,uid,risposte1,risposte2)
+                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,avversario,risposte1,risposte2)
+                        modArgomentoActivity.schermataPareggio(nomeAvv, risposte1, risposte2)
                     }
                     else if (risposte1 < risposte2) {
                         giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,uid)
-                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,avversario)
-                        modArgomentoActivity.schermataSconfitta()
+                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,uid,risposte1,risposte2)
+                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,avversario,risposte1,risposte2)
+                        modArgomentoActivity.schermataSconfitta(nomeAvv, risposte1, risposte2)
                     }
 
                 }

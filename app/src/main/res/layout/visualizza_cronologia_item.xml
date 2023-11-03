@@ -51,6 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/NomeAvversario"
         android:layout_marginEnd="190dp"/>
     <TextView
+        android:id= "@+id/modalita"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Modalita"

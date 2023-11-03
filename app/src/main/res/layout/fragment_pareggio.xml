@@ -6,61 +6,97 @@
     android:layout_height="match_parent"
     android:background="#062E40">
 
+
+    <TextView
+        android:layout_marginTop="5dp"
+        android:id="@+id/NomeAvversario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:text="@string/nome_avversario"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5" />
+    <TextView
+        android:id="@+id/scoreTextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/zero"
+        android:textSize="30dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NomeAvversario"
+        android:layout_marginStart="170dp"/>
+    <TextView
+        android:id="@+id/scoreTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/trattino"
+        android:textSize="30dp"
+        android:gravity="center"
+        app:layout_constraintStart_toEndOf="@+id/scoreTextView1"
+        app:layout_constraintEnd_toStartOf="@+id/scoreTextView3"
+        app:layout_constraintTop_toBottomOf="@+id/NomeAvversario" />
+    <TextView
+        android:id="@+id/scoreTextView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/zero"
+        android:textSize="30dp"
+        android:gravity="center"
+        app:layout_constraintStart_toEndOf="@+id/scoreTextView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NomeAvversario"
+        android:layout_marginEnd="170dp"/>
+    <TextView
+        android:id = "@+id/modalita"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Modalita"
+        android:textSize="25dp"
+        android:layout_marginTop="110dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="#74FFFFFF"
+        android:padding="1dp"
+        />
     <TextView
         android:id="@+id/congratulazioni"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginTop="164dp"
-        android:background="#AEA3A7"
         android:gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="180dp"
+        android:background="#AEA3A7"
         android:text="HAI PAREGGIATO"
-        android:textAlignment="center"
-        android:textColor="#121010"
+        android:textColor="#F2F3EC"
         android:textSize="30sp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="8dp" />
+        app:layout_constraintVertical_bias="0.299" />
 
     <Button
         android:id="@+id/esci"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="180dp"
         android:layout_marginRight="20dp"
-        android:background="#4E4D4D"
-        android:text="Esci"
+        android:background="@drawable/button_background"
+        android:text="Torna al menù"
         android:textAlignment="center"
         android:textSize="25sp"
-        app:layout_constraintEnd_toEndOf="@id/nuova1"
-        app:layout_constraintStart_toStartOf="@id/nuova1"
-        app:layout_constraintTop_toTopOf="@id/nuova1" />
-
-    <Button
-        android:id="@+id/statistiche"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="8dp"
-        android:drawableBottom="?android:attr/actionModeFindDrawable"
-        app:layout_constraintRight_toLeftOf="@id/congratulazioni"
-        app:layout_constraintStart_toStartOf="@id/congratulazioni"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="20dp"
-        />
-
-    <Button
-        android:id="@+id/nuova1"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="240dp"
-        android:layout_marginRight="20dp"
-        android:background="#FF9800"
-        android:text="Nuova Partita"
-        android:textSize="25sp"
-        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="@id/congratulazioni"
         app:layout_constraintStart_toStartOf="@id/congratulazioni"
         app:layout_constraintTop_toTopOf="@id/congratulazioni" />
+
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
