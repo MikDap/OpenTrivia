@@ -15,7 +15,7 @@ class TimeProgressBarView(context: Context, attrs: AttributeSet) : View(context,
     private val paint = Paint()
     private var totalTimeInMillis = 0L
      var elapsedTimeInMillis = 0L
-  //   var fine = false
+   var fine = true
   var associatedFragment: VeroFalsoFragment? = null // Variabile per il fragment associato
 
     //init {
@@ -40,8 +40,9 @@ class TimeProgressBarView(context: Context, attrs: AttributeSet) : View(context,
                 delay(interval)
             }
             //chiamate alle funzioni in ModATempoActivity dentro verofalsofragment quando fine = true
-      //    fine = true
-            associatedFragment?.finePartita()
+           if (fine) {
+               associatedFragment?.finePartita()
+           }
         }
     }
     private val progressColors = Color.parseColor("#FF7514")

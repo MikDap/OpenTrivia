@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#062E40">
-
     <TextView android:id="@+id/textViewCentered"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +17,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="0.25"
         app:layout_constraintHorizontal_bias="0.5"/>
-
     <ImageView
         android:id="@+id/clessidra"
         android:layout_width="wrap_content"
@@ -30,7 +28,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.499"
         app:srcCompat="@drawable/clessidra" />
-
     <Button
         android:id="@+id/esci"
         android:layout_width="match_parent"
@@ -45,6 +42,5 @@
         app:layout_constraintEnd_toEndOf="@id/clessidra"
         app:layout_constraintStart_toStartOf="@id/clessidra"
         app:layout_constraintTop_toTopOf="@id/clessidra" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

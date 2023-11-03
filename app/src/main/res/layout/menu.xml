@@ -30,9 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startButton"
         android:layout_marginTop="8dp" />
-
     <!-- ScrollView orizzontale per le partite in corso -->
-
     <Button
         android:id="@+id/historyTextView"
         android:layout_width="100sp"
@@ -47,6 +45,21 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@id/startButton"
         app:layout_constraintTop_toBottomOf="@id/startButton" />
+    <TextView
+        android:id="@+id/notificationBadge"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/orange_circle_background"
+        android:gravity="center"
+        android:text="1"
+        android:textSize="10dp"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toTopOf="@id/orangeBar"
+        app:layout_constraintEnd_toEndOf="@id/orangeBar" />
+
+    <!-- Il resto del tuo layout rimane invariato -->
 
     <TextView
         android:id="@+id/notificationBadge"
@@ -112,4 +125,3 @@
         </LinearLayout>
     </HorizontalScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
- 

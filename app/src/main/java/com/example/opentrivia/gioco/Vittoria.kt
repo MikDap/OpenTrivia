@@ -1,12 +1,16 @@
 package com.example.opentrivia.gioco
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import com.example.opentrivia.MainActivity
 import com.example.opentrivia.R
+import com.example.opentrivia.menu.Menu
 
 
 class Vittoria : Fragment() {
@@ -15,10 +19,12 @@ class Vittoria : Fragment() {
     private lateinit var scoreTextView1: TextView
     private lateinit var scoreTextView3: TextView
     private lateinit var modalita: TextView
-     lateinit var nomeAvv: String
-     lateinit var scoreMio: String
-     lateinit var scoreAvv: String
-     lateinit var mod: String
+    lateinit var nomeAvv: String
+    lateinit var scoreMio: String
+    lateinit var scoreAvv: String
+    lateinit var mod: String
+    lateinit var menu: Button
+    lateinit var intent:Intent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +44,7 @@ class Vittoria : Fragment() {
         scoreTextView1 = view.findViewById(R.id.scoreTextView1)
         scoreTextView3 = view.findViewById(R.id.scoreTextView3)
         modalita = view.findViewById(R.id.modalita)
-
+        menu = view.findViewById(R.id.esci)
 
 
 
@@ -53,5 +59,10 @@ class Vittoria : Fragment() {
         scoreTextView1.text = scoreMio
         scoreTextView3.text = scoreAvv
         modalita.text = mod
+        menu.setOnClickListener {
+                intent= Intent(activity, MainActivity::class.java)
+                startActivity(intent)
+
+            }
+        }
     }
-}
