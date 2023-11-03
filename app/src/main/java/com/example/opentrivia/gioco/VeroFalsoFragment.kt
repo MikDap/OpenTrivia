@@ -150,44 +150,6 @@ class VeroFalsoFragment : Fragment() {
             }
         }
 
-        /*  risposta3.setOnClickListener {
-              if (!rispostaData) {
-                  if (risposta3.text == rispostaCorretta) {
-                      risposta3.setBackgroundColor(Color.LTGRAY)
-                      Handler(Looper.getMainLooper()).postDelayed({
-                          risposta3.setBackgroundColor(Color.GREEN)
-                      }, 1000)
-                      updateRisposte(risposteRef,"corretta")
-                  } else {
-                      risposta3.setBackgroundColor(Color.LTGRAY)
-                      Handler(Looper.getMainLooper()).postDelayed({
-                          risposta3.setBackgroundColor(Color.RED)
-                      }, 1000)
-                      updateRisposte(risposteRef,"sbagliata")
-                  }
-                  rispostaData = true
-              }
-          }
-
-          risposta4.setOnClickListener {
-              if (!rispostaData) {
-                  if (risposta4.text == rispostaCorretta) {
-                      risposta4.setBackgroundColor(Color.LTGRAY)
-                      Handler(Looper.getMainLooper()).postDelayed({
-                          risposta4.setBackgroundColor(Color.GREEN)
-                      }, 1000)
-                      updateRisposte(risposteRef,"corretta")
-                  } else {
-                      risposta4.setBackgroundColor(Color.LTGRAY)
-                      Handler(Looper.getMainLooper()).postDelayed({
-                          risposta4.setBackgroundColor(Color.RED)
-                      }, 1000)
-                      updateRisposte(risposteRef,"sbagliata")
-                  }
-                  rispostaData = true
-              }
-          }*/
-
     }
     fun setParametriPartita(
         partita: String,
@@ -282,24 +244,33 @@ class VeroFalsoFragment : Fragment() {
             }
         })
     }
-    fun finePartita() {
-        database = FirebaseDatabase.getInstance()
-        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-        var giocatoriRef =
-            database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
-        var risposte1 = 0
-        var risposte2 = 0
-        var giocatore2esiste = false
-        var avversario = ""
-        var nomeAvv = ""
+
+fun finePartita() {
+
+    database = FirebaseDatabase.getInstance()
+    val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+    var giocatoriRef =
+        database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
+    var risposte1 = 0
+    var risposte2 = 0
+    var giocatore2esiste = false
+    var avversario = ""
+    var nomeAvv = ""
+
         giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+
                 for (giocatore in dataSnapshot.children) {
+
                     for (topic in giocatore.children) {
+
                         if (topic.hasChild("risposteCorrette")) {
+
                             var giocatore1 = giocatore.key.toString()
+
                             if (giocatore1.equals(uid)) {
-                                Log.d("giocatore2esiste",giocatore2esiste.toString())
+                                Log.d("giocatore2esiste", giocatore2esiste.toString())
+
                                 val risposteCorrette =
                                     topic.child("risposteCorrette").getValue(Int::class.java)
                                 if (risposteCorrette != null) {
@@ -309,17 +280,25 @@ class VeroFalsoFragment : Fragment() {
                                 avversario = giocatore1
                                 nomeAvv = giocatore.child("name").value.toString()
                                 giocatore2esiste = true
-                                Log.d("giocatore2esiste",giocatore2esiste.toString())
+
+                                Log.d("giocatore2esiste", giocatore2esiste.toString())
+
                                 val risposteCorrette =
                                     topic.child("risposteCorrette").getValue(Int::class.java)
                                 if (risposteCorrette != null) {
                                     risposte2 += risposteCorrette
                                 }
+
+
                             }
                         }
                     }
 
+
                 }
+
+
+
 
                 Log.d("giocatore2esiste alla fine", giocatore2esiste.toString())
                 if (giocatore2esiste == false) {
@@ -330,27 +309,71 @@ class VeroFalsoFragment : Fragment() {
                     if (risposte1 > risposte2) {
                         var fineTurno = giocatoriRef.child(uid).child("fineTurno").setValue("si")
                         fineTurno.addOnCompleteListener {
-                            StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,uid,risposte1,risposte2)
-                            StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,avversario,risposte1,risposte2)
+
+                            StatisticheFragment.StatisticheTerminate(
+                                partita,
+                                modalita,
+                                difficolta,
+                                uid,
+                                risposte1,
+                                risposte2
+                            )
+                            StatisticheFragment.StatisticheTerminate(
+                                partita,
+                                modalita,
+                                difficolta,
+                                avversario,
+                                risposte1,
+                                risposte2
+                            )
                             modATempoActivity.schermataVittoria(nomeAvv, risposte1, risposte2)
                         }
-                    }
-                    else if (risposte1 == risposte2) {
+                    } else if (risposte1 == risposte2) {
                         var fineTurno = giocatoriRef.child(uid).child("fineTurno").setValue("si")
                         fineTurno.addOnCompleteListener {
-                            StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,uid,risposte1,risposte2)
-                            StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,avversario,risposte1,risposte2)
+
+                            StatisticheFragment.StatisticheTerminate(
+                                partita,
+                                modalita,
+                                difficolta,
+                                uid,
+                                risposte1,
+                                risposte2
+                            )
+                            StatisticheFragment.StatisticheTerminate(
+                                partita,
+                                modalita,
+                                difficolta,
+                                avversario,
+                                risposte1,
+                                risposte2
+                            )
                             modATempoActivity.schermataPareggio(nomeAvv, risposte1, risposte2)
                         }
-                    }
-                    else if (risposte1 < risposte2) {
+                    } else if (risposte1 < risposte2) {
                         var fineTurno = giocatoriRef.child(uid).child("fineTurno").setValue("si")
                         fineTurno.addOnCompleteListener {
-                            StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,uid,risposte1,risposte2)
-                            StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,avversario,risposte1,risposte2)
+
+                            StatisticheFragment.StatisticheTerminate(
+                                partita,
+                                modalita,
+                                difficolta,
+                                uid,
+                                risposte1,
+                                risposte2
+                            )
+                            StatisticheFragment.StatisticheTerminate(
+                                partita,
+                                modalita,
+                                difficolta,
+                                avversario,
+                                risposte1,
+                                risposte2
+                            )
                             modATempoActivity.schermataSconfitta(nomeAvv, risposte1, risposte2)
                         }
                     }
+                           
                 }
             }
 

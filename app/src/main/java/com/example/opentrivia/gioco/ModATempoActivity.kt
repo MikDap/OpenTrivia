@@ -37,7 +37,7 @@ class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback
         invalidateOptionsMenu()
     }
 
-    fun startAtempo() {
+fun startAtempo() {
 // prendiamo l'istanza del database (ci serve per creare sul database la partita)
         database = FirebaseDatabase.getInstance()
         // partiteRef = database/partite/modalita/difficolta
@@ -58,24 +58,24 @@ class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback
                         if (sottonodo.child("giocatori").hasChild(uid)) {
                             giocatorediverso = false
                         }
-                        for (giocatore in sottonodo.child("giocatori").children){
-                            var fineTurno = giocatore.child("fineTurno").value.toString()
-                            if (fineTurno == "si"){
-                                haFinitoTurno = true
+                            for (giocatore in sottonodo.child("giocatori").children){
+                                var fineTurno = giocatore.child("fineTurno").value.toString()
+                                if (fineTurno == "si"){
+                                    haFinitoTurno = true
+                                }
                             }
-                        }
                         //se c'è almeno una partita con un giocatore in attesa e ha finito il turno..(lo associa)
                         if (sottonodo.child("inAttesa").value == "si" && giocatorediverso && haFinitoTurno) {
-                            //prende id della partita
-                            partita = sottonodo.key.toString()
-                            //setta database/partite/modalita/difficolta/giocatori/id
-                            partiteRef.child(partita).child("giocatori").child(uid).child("name").setValue(name)
+                                //prende id della partita
+                                partita = sottonodo.key.toString()
+                                //setta database/partite/modalita/difficolta/giocatori/id
+                                partiteRef.child(partita).child("giocatori").child(uid).child("name").setValue(name)
                             partiteRef.child(partita).child("giocatori").child(uid)
                                 .child("fineTurno").setValue("no")
-                            //cambia inAttesa in no
-                            partiteRef.child(partita).child("inAttesa").setValue("no")
-                            condizioneSoddisfatta = true
-                            break
+                                //cambia inAttesa in no
+                                partiteRef.child(partita).child("inAttesa").setValue("no")
+                                condizioneSoddisfatta = true
+                                break
                         }
                     }
 
@@ -118,7 +118,7 @@ class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback
         })
 
         //facciamo la chiamata api
-        getTriviaQuestion()
+  getTriviaQuestion()
 
 
     }
@@ -147,6 +147,9 @@ class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback
         )
 // passiamo al secondo Fragment (DA GESTIRE IL PERMESSO DI RITORNARE INDIETRO DURANTE LA SCHERMATA DELLE DOMANDE E RISPOSTE)
         associatedFragment?.passElapsedTime(associatedFragment!!.progressBarView.elapsedTimeInMillis)
+        if (associatedFragment != null) {
+            associatedFragment!!.progressBarView.fine = false
+        }
         // chiamiamo la funzione newInstance del fragment per passare il tempo rimanente al nuovo fragment
         val secondFragment = VeroFalsoFragment.newInstance(elapsedTimeInMillis2)
         associatedFragment = secondFragment
@@ -190,15 +193,15 @@ class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback
     }
 
 
-    //mettere funzioni per passare al fragment vittoria, sconfitta o attendi avversario
+//mettere funzioni per passare al fragment vittoria, sconfitta o attendi avversario
     //verrano chiamate da TimeProgressBarView dopo il ciclo while
-    fun schermataAttendi() {
-        val fragment = AttendiTurnoFragment()
-        Handler(Looper.getMainLooper()).postDelayed({
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerViewGioco3, fragment).commit()
-        }, 500)
-    }
+fun schermataAttendi() {
+    val fragment = AttendiTurnoFragment()
+    Handler(Looper.getMainLooper()).postDelayed({
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainerViewGioco3, fragment).commit()
+    }, 500)
+}
     fun schermataVittoria(nomeAvv: String,scoreMio: Int, scoreAvv:Int) {
         val fragment = Vittoria()
         fragment.nomeAvv = nomeAvv

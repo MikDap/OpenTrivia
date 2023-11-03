@@ -74,11 +74,7 @@ class CronologiaPartite : Fragment() {
                                     var scoreMio = partita.child("esito").child("io").value.toString()
                                     var scoreAvv = partita.child("esito").child("io").value.toString()
 
-                                    var partitaTer = partitaTerminata
-                                    partitaTer.nomeAvv = nomeAvv
-                                    partitaTer.punteggioMio= scoreMio
-                                    partitaTer.punteggioAvv = scoreAvv
-                                    partitaTer.modalita = modalita.key.toString()
+                                    var partitaTer = PartitaTerminata(nomeAvv,scoreMio, scoreAvv, modalita.key.toString())
                                     partiteList[position] = partitaTer
                                 }
 
