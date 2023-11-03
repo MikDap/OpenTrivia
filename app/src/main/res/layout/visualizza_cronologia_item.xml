@@ -28,9 +28,11 @@
         android:layout_height="wrap_content"
         android:text="@string/zero"
         android:gravity="center"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NomeAvversario"
-        android:layout_marginStart="195dp"/>
+        />
     <TextView
         android:id="@+id/scoreTextView2"
         android:layout_width="wrap_content"
@@ -46,10 +48,11 @@
         android:layout_height="wrap_content"
         android:text="@string/zero"
         android:gravity="center"
-        app:layout_constraintStart_toEndOf="@+id/scoreTextView2"
+        app:layout_constraintHorizontal_bias="0.55"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NomeAvversario"
-        android:layout_marginEnd="190dp"/>
+        />
     <TextView
         android:id= "@+id/modalita"
         android:layout_width="wrap_content"
