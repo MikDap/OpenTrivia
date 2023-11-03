@@ -181,9 +181,13 @@ creaPartitaDatabase()
 
     }
 
-    fun schermataVittoria() {
+    fun schermataVittoria(nomeAvv: String,scoreMio: Int, scoreAvv:Int) {
 
         val fragment = Vittoria()
+        fragment.nomeAvv = nomeAvv
+        fragment.scoreMio = scoreMio.toString()
+        fragment.scoreAvv = scoreAvv.toString()
+        fragment.mod = "argomento singolo"
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainerViewGioco2, fragment).commit()
@@ -191,9 +195,13 @@ creaPartitaDatabase()
 
     }
 
-    fun schermataPareggio() {
+    fun schermataPareggio(nomeAvv: String,scoreMio: Int, scoreAvv:Int) {
 
         val fragment = Pareggio()
+        fragment.nomeAvv = nomeAvv
+        fragment.scoreMio = scoreMio.toString()
+        fragment.scoreAvv = scoreAvv.toString()
+        fragment.mod = "argomento singolo"
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainerViewGioco2, fragment).commit()
@@ -201,9 +209,13 @@ creaPartitaDatabase()
 
     }
 
-    fun schermataSconfitta() {
+    fun schermataSconfitta(nomeAvv: String,scoreMio: Int, scoreAvv:Int) {
 
         val fragment = Sconfitta()
+        fragment.nomeAvv = nomeAvv
+        fragment.scoreMio = scoreMio.toString()
+        fragment.scoreAvv = scoreAvv.toString()
+        fragment.mod = "argomento singolo"
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainerViewGioco2, fragment).commit()
@@ -243,8 +255,7 @@ creaPartitaDatabase()
                                 //prende id della partita
                                 partita = sottonodo.key.toString()
                                 //setta database/partite/modalita/difficolta/giocatori/id
-                                partiteRef.child(partita).child("giocatori").child(uid)
-                                    .setValue(name)
+                                partiteRef.child(partita).child("giocatori").child(uid).child("name").setValue(name)
                                 //cambia inAttesa in no
                                 partiteRef.child(partita).child("inAttesa").setValue("no")
                                 condizioneSoddisfatta = true
@@ -265,7 +276,7 @@ creaPartitaDatabase()
                     partiteRef.child(partita).child("topic")
                         .setValue(topic)
                     partiteRef.child(partita).child("giocatori")
-                        .child(uid).setValue(name)
+                        .child(uid).child("name").setValue(name)
                     condizioneSoddisfatta = true
 
                 }
@@ -280,7 +291,7 @@ creaPartitaDatabase()
                     partiteRef.child(partita).child("topic")
                         .setValue(topic)
                     partiteRef.child(partita).child("giocatori")
-                        .child(uid).setValue(name)
+                        .child(uid).child("name").setValue(name)
                     //   partiteRef.child(partita).child("giocatori").child(uid).child(name).child("risposteCorrette").setValue(0)
                     condizioneSoddisfatta = true
                 }

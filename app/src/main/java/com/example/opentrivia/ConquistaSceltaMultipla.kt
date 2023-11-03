@@ -106,9 +106,9 @@ coloraSfondo(NomeArgomento.text.toString())
                                 nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
                             // CHIAMA VITTORIA SE ARGOMENTICONQUISTATI MIEI = 6
                             if (argomenti_conquistati_miei == 6) {
-                                modClassicaActivity.schermataVittoria()
-                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,uid)
-                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,idAvversario)
+                                modClassicaActivity.schermataVittoria(nomeAvversario,argomenti_conquistati_miei,argomenti_conquistati_avversario)
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,uid,argomenti_conquistati_miei,argomenti_conquistati_avversario)
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,idAvversario,argomenti_conquistati_miei,argomenti_conquistati_avversario)
                             }
                             ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
 
@@ -169,9 +169,9 @@ coloraSfondo(NomeArgomento.text.toString())
                                 nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
                             // CHIAMA VITTORIA SE ARGOMENTICONQUISTATI MIEI = 6
                             if (argomenti_conquistati_miei == 6) {
-                                modClassicaActivity.schermataVittoria()
-                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,uid)
-                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,idAvversario)
+                                modClassicaActivity.schermataVittoria(nomeAvversario,argomenti_conquistati_miei,argomenti_conquistati_avversario)
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,uid,argomenti_conquistati_miei,argomenti_conquistati_avversario)
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,idAvversario,argomenti_conquistati_miei,argomenti_conquistati_avversario)
                             }
                             ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
 
@@ -230,9 +230,9 @@ coloraSfondo(NomeArgomento.text.toString())
                                 nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
                             // CHIAMA VITTORIA SE ARGOMENTICONQUISTATI MIEI = 6
                             if (argomenti_conquistati_miei == 6) {
-                                modClassicaActivity.schermataVittoria()
-                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,uid)
-                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,idAvversario)
+                                modClassicaActivity.schermataVittoria(nomeAvversario,argomenti_conquistati_miei,argomenti_conquistati_avversario)
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,uid,argomenti_conquistati_miei,argomenti_conquistati_avversario)
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,idAvversario,argomenti_conquistati_miei,argomenti_conquistati_avversario)
                             }
                             ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
 
@@ -292,9 +292,9 @@ coloraSfondo(NomeArgomento.text.toString())
                                 nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
                             // CHIAMA VITTORIA SE ARGOMENTICONQUISTATI MIEI = 6
                             if (argomenti_conquistati_miei == 6) {
-                                modClassicaActivity.schermataVittoria()
-                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,uid)
-                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,idAvversario)
+                                modClassicaActivity.schermataVittoria(nomeAvversario,argomenti_conquistati_miei,argomenti_conquistati_avversario)
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,uid,argomenti_conquistati_miei,argomenti_conquistati_avversario)
+                                StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,idAvversario,argomenti_conquistati_miei,argomenti_conquistati_avversario)
                             }
                             ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
 
