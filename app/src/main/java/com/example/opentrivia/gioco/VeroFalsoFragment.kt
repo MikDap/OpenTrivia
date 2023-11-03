@@ -195,48 +195,6 @@ fun passElapsedTime(elapsedTime: Long) {
         }
 
 
-      /*  risposta3.setOnClickListener {
-            if (!rispostaData) {
-                if (risposta3.text == rispostaCorretta) {
-                    risposta3.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        risposta3.setBackgroundColor(Color.GREEN)
-                    }, 1000)
-                    updateRisposte(risposteRef,"corretta")
-
-                } else {
-                    risposta3.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        risposta3.setBackgroundColor(Color.RED)
-                    }, 1000)
-                    updateRisposte(risposteRef,"sbagliata")
-
-                }
-                rispostaData = true
-            }
-        }
-
-
-        risposta4.setOnClickListener {
-            if (!rispostaData) {
-                if (risposta4.text == rispostaCorretta) {
-                    risposta4.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        risposta4.setBackgroundColor(Color.GREEN)
-                    }, 1000)
-                    updateRisposte(risposteRef,"corretta")
-
-                } else {
-                    risposta4.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        risposta4.setBackgroundColor(Color.RED)
-                    }, 1000)
-                    updateRisposte(risposteRef,"sbagliata")
-
-                }
-                rispostaData = true
-            }
-        }*/
 
 
 
@@ -370,77 +328,127 @@ fun finePartita() {
     var giocatore2esiste = false
     var avversario = ""
     var nomeAvv = ""
-    giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-            for (giocatore in dataSnapshot.children) {
 
-                var giocatore1 = giocatore.key.toString()
-                for (topic in giocatore.children) {
+        giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                    if (topic.hasChild("risposteCorrette")) {
+                for (giocatore in dataSnapshot.children) {
 
+                    for (topic in giocatore.children) {
 
-                        if (giocatore1.equals(uid)) {
-                            Log.d("giocatore2esiste",giocatore2esiste.toString())
-                            val risposteCorrette =
-                                topic.child("risposteCorrette").getValue(Int::class.java)
-                            if (risposteCorrette != null) {
-                                risposte1 += risposteCorrette
+                        if (topic.hasChild("risposteCorrette")) {
+
+                            var giocatore1 = giocatore.key.toString()
+
+                            if (giocatore1.equals(uid)) {
+                                Log.d("giocatore2esiste", giocatore2esiste.toString())
+                                val risposteCorrette =
+                                    topic.child("risposteCorrette").getValue(Int::class.java)
+                                if (risposteCorrette != null) {
+                                    risposte1 += risposteCorrette
+                                }
+                            } else {
+                                avversario = giocatore1
+                                nomeAvv = giocatore.child("name").value.toString()
+                                giocatore2esiste = true
+                                Log.d("giocatore2esiste", giocatore2esiste.toString())
+                                val risposteCorrette =
+                                    topic.child("risposteCorrette").getValue(Int::class.java)
+                                if (risposteCorrette != null) {
+                                    risposte2 += risposteCorrette
+                                }
+
                             }
-                        } else {
-                            avversario = giocatore1
-                            nomeAvv = giocatore.child("name").value.toString()
-                            giocatore2esiste = true
-                            Log.d("giocatore2esiste",giocatore2esiste.toString())
-                            val risposteCorrette =
-                                topic.child("risposteCorrette").getValue(Int::class.java)
-                            if (risposteCorrette != null) {
-                                risposte2 += risposteCorrette
-                            }
-
                         }
                     }
+
+
                 }
 
+
+                Log.d("giocatore2esiste alla fine", giocatore2esiste.toString())
+                if (giocatore2esiste == false) {
+                    giocatoriRef.child(uid).child("fineTurno").setValue("si")
+                    modATempoActivity.schermataAttendi()
+                } else {
+                    Log.d("entra in else", "si")
+                    if (risposte1 > risposte2) {
+                        var fineTurno = giocatoriRef.child(uid).child("fineTurno").setValue("si")
+                        fineTurno.addOnCompleteListener {
+
+                            StatisticheFragment.StatisticheTerminate(
+                                partita,
+                                modalita,
+                                difficolta,
+                                uid,
+                                risposte1,
+                                risposte2
+                            )
+                            StatisticheFragment.StatisticheTerminate(
+                                partita,
+                                modalita,
+                                difficolta,
+                                avversario,
+                                risposte1,
+                                risposte2
+                            )
+                            modATempoActivity.schermataVittoria(nomeAvv, risposte1, risposte2)
+                        }
+                    } else if (risposte1 == risposte2) {
+                        var fineTurno = giocatoriRef.child(uid).child("fineTurno").setValue("si")
+                        fineTurno.addOnCompleteListener {
+
+                            StatisticheFragment.StatisticheTerminate(
+                                partita,
+                                modalita,
+                                difficolta,
+                                uid,
+                                risposte1,
+                                risposte2
+                            )
+                            StatisticheFragment.StatisticheTerminate(
+                                partita,
+                                modalita,
+                                difficolta,
+                                avversario,
+                                risposte1,
+                                risposte2
+                            )
+                            modATempoActivity.schermataPareggio(nomeAvv, risposte1, risposte2)
+                        }
+                    } else if (risposte1 < risposte2) {
+                        var fineTurno = giocatoriRef.child(uid).child("fineTurno").setValue("si")
+                        fineTurno.addOnCompleteListener {
+
+                            StatisticheFragment.StatisticheTerminate(
+                                partita,
+                                modalita,
+                                difficolta,
+                                uid,
+                                risposte1,
+                                risposte2
+                            )
+                            StatisticheFragment.StatisticheTerminate(
+                                partita,
+                                modalita,
+                                difficolta,
+                                avversario,
+                                risposte1,
+                                risposte2
+                            )
+                            modATempoActivity.schermataSconfitta(nomeAvv, risposte1, risposte2)
+                        }
+                    }
+
+                }
 
             }
 
 
-            Log.d("giocatore2esiste alla fine", giocatore2esiste.toString())
-            if (giocatore2esiste == false) {
-                giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                modATempoActivity.schermataAttendi()
-            } else {
-                Log.d("entra in else", "si")
-                if (risposte1 > risposte2) {
-                    giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                    StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,uid,risposte1,risposte2)
-                    StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,avversario,risposte1,risposte2)
-                    modATempoActivity.schermataVittoria(nomeAvv, risposte1, risposte2)
-                }
-                else if (risposte1 == risposte2) {
-                    giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                    StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,uid,risposte1,risposte2)
-                    StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,avversario,risposte1,risposte2)
-                    modATempoActivity.schermataPareggio(nomeAvv, risposte1, risposte2)
-                }
-                else if (risposte1 < risposte2) {
-                    giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                    StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,uid,risposte1,risposte2)
-                    StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,avversario,risposte1,risposte2)
-                    modATempoActivity.schermataSconfitta(nomeAvv, risposte1, risposte2)
-                }
-
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
             }
-
-        }
-
-
-        override fun onCancelled(error: DatabaseError) {
-            TODO("Not yet implemented")
-        }
-    })
-
+        })
 
 }
 }

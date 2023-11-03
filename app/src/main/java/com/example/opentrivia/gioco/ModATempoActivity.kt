@@ -65,12 +65,22 @@ fun startAtempo() {
 /// Se database/partite/modalita/difficolta ha almeno una partita(con qualcuno in attesa):
                 if (dataSnapshot.hasChildren()) {
                     for (sottonodo in dataSnapshot.children) {
-                        //se c'è almeno una partita con un giocatore in attesa..(lo associa)
+
+                        var haFinitoTurno = false
                         var giocatorediverso = true
                         if (sottonodo.child("giocatori").hasChild(uid)) {
                             giocatorediverso = false
                         }
-                        if (sottonodo.child("inAttesa").value == "si" && giocatorediverso) {
+
+                            for (giocatore in sottonodo.child("giocatori").children){
+                                var fineTurno = giocatore.child("fineTurno").value.toString()
+                                if (fineTurno == "si"){
+                                    haFinitoTurno = true
+                                }
+                            }
+
+                        //se c'è almeno una partita con un giocatore in attesa e ha finito il turno..(lo associa)
+                        if (sottonodo.child("inAttesa").value == "si" && giocatorediverso && haFinitoTurno) {
                                 //prende id della partita
                                 partita = sottonodo.key.toString()
                                 //setta database/partite/modalita/difficolta/giocatori/id
@@ -172,6 +182,9 @@ fun startAtempo() {
         )
 // passiamo al secondo Fragment (DA GESTIRE IL PERMESSO DI RITORNARE INDIETRO DURANTE LA SCHERMATA DELLE DOMANDE E RISPOSTE)
         associatedFragment?.passElapsedTime(associatedFragment!!.progressBarView.elapsedTimeInMillis)
+        if (associatedFragment != null) {
+            associatedFragment!!.progressBarView.fine = false
+        }
         // chiamiamo la funzione newInstance del fragment per passare il tempo rimanente al nuovo fragment
         val secondFragment = VeroFalsoFragment.newInstance(elapsedTimeInMillis2)
         associatedFragment = secondFragment

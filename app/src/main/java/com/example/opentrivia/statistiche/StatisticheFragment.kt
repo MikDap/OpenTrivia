@@ -37,6 +37,17 @@ class StatisticheFragment {
                                 refToCopy.removeValue()
                                 Log.e("FirebaseCopy", "SUCCESSO")
                                 // I dati sono stati copiati con successo
+                                val refToNewNode =
+                                    database.getReference("users").child(utente).child("partite terminate")
+                                        .child(modalita).child(difficolta).child(partita)
+                                if (utente == uid) {
+                                    refToNewNode.child("esito").child("io").setValue(risposte1)
+                                    refToNewNode.child("esito").child("avversario").setValue(risposte2)
+                                }
+                                else {
+                                    refToNewNode.child("esito").child("io").setValue(risposte2)
+                                    refToNewNode.child("esito").child("avversario").setValue(risposte1)
+                                }
                             } else {
                                 Log.e("FirebaseCopy", "Errori scrittura")
                                 // Gestisci errori di scrittura qui
@@ -51,17 +62,6 @@ class StatisticheFragment {
             })
 
             // CONTROLLARE SE DA PROBLEMI VISTO CHE LA PARTE DI SOPRA è ASINCRONA
-            val refToNewNode =
-                database.getReference("users").child(utente).child("partite terminate")
-                    .child(modalita).child(difficolta).child(partita)
-            if (utente == uid) {
-                refToNewNode.child("esito").child("io").setValue(risposte1)
-                refToNewNode.child("esito").child("avversario").setValue(risposte2)
-            }
-            else {
-                refToNewNode.child("esito").child("io").setValue(risposte2)
-                refToNewNode.child("esito").child("avversario").setValue(risposte1)
-            }
 
         }
 
