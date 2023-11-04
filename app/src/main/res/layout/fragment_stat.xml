@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/statistiche"
+        android:textSize="30sp"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="16dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/percentualeStoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0" />
+    <TextView
+        android:id="@+id/storia"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="200dp"
+        android:text="@string/storia_40"
+        android:elevation="1dp"
+        android:textSize="25sp"
+        android:textColor="#FFFFFF"
+        android:gravity="start|center_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    <TextView
+        android:id="@+id/subject1"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="200dp"
+        android:background="@drawable/rounded_border_background"
+        android:gravity="center"
+        android:backgroundTint="#FFBB2F"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/percentualeStoria"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/percentualeGeografia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0" />
+    <TextView
+        android:id="@+id/geografia"
+        android:layout_marginTop="30dp"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:text="@string/geografia_50"
+        android:elevation="1dp"
+        android:textSize="25sp"
+        android:textColor="#FFFFFF"
+        android:gravity="start|center_vertical"
+        app:layout_constraintTop_toBottomOf="@+id/subject1"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    <TextView
+        android:layout_marginTop="30dp"
+        android:id="@+id/subject2"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:background="@drawable/rounded_border_background"
+        android:textSize="25sp"
+        android:backgroundTint="#0000FF"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/subject1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/percentualeGeografia" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/percentualeArte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0" />
+    <TextView
+        android:id="@+id/arte"
+        android:layout_marginTop="30dp"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:text="@string/arte_60"
+        android:elevation="1dp"
+        android:textSize="25sp"
+        android:textColor="#FFFFFF"
+        android:gravity="start|center_vertical"
+        app:layout_constraintTop_toBottomOf="@+id/subject2"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    <TextView
+        android:layout_marginTop="30dp"
+        android:id="@+id/subject3"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:background="@drawable/rounded_border_background"
+        android:textSize="25sp"
+        android:backgroundTint="#FF00"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/subject2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/percentualeArte" />
+
+
+
+
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/percentualeSport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0" />
+    <TextView
+        android:id="@+id/sport"
+        android:layout_marginTop="30dp"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:text="@string/sport_70"
+        android:elevation="1dp"
+        android:textSize="25sp"
+        android:textColor="#FFFFFF"
+        android:gravity="start|center_vertical"
+        app:layout_constraintTop_toBottomOf="@+id/subject3"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:layout_marginTop="30dp"
+        android:id="@+id/subject4"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:background="@drawable/rounded_border_background"
+        android:textSize="25sp"
+        android:textColor="#99000000"
+        android:backgroundTint="#FFEB3B"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/subject3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/percentualeSport"
+        />
+
+
+
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/percentualeIntrattenimento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0" />
+    <TextView
+        android:id="@+id/intrattenimento"
+        android:layout_marginTop="30dp"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:text="@string/intrattenimento_80"
+        android:textSize="25sp"
+        android:textColor="#FFFFFF"
+        android:elevation="1dp"
+        android:gravity="start|center_vertical"
+        app:layout_constraintTop_toBottomOf="@+id/subject4"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:layout_marginTop="30dp"
+        android:id="@+id/subject5"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:background="@drawable/rounded_border_background"
+        android:textSize="25sp"
+        android:backgroundTint="#FF00FF"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/subject4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/percentualeIntrattenimento"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/percentualeScienze"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0" />
+    <TextView
+        android:id="@+id/scienze"
+        android:layout_marginTop="30dp"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:text="@string/scienze_100"
+        android:elevation="1dp"
+        android:textSize="25sp"
+        android:textColor="#FFFFFF"
+        android:gravity="start|center_vertical"
+        app:layout_constraintTop_toBottomOf="@+id/subject5"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:layout_marginTop="30dp"
+        android:id="@+id/subject6"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:background="@drawable/rounded_border_background"
+        android:textSize="25sp"
+        android:backgroundTint="#4CAF50"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/subject5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/percentualeScienze"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
