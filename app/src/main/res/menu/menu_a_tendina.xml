@@ -8,7 +8,7 @@
             android:title="Profilo"/>
 
         <item
-            android:id="@+id/preferiti"
+            android:id="@+id/statistiche"
             android:title="Statistiche" />
 
         <item

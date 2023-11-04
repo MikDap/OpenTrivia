@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_stat"
+    app:startDestination="@id/statFragment">
+
+    <fragment
+        android:id="@+id/statFragment"
+        android:name="com.example.opentrivia.StatFragment"
+        android:label="fragment_stat"
+        tools:layout="@layout/fragment_stat" />
+</navigation>
