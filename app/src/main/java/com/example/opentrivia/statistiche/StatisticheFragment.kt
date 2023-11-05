@@ -34,7 +34,13 @@ class StatisticheFragment {
                         // Scrivi i dati nel nuovo nodo
                         refToNewNode.setValue(dataToCopy).addOnCompleteListener { task ->
                             if (task.isSuccessful) {
+
+
                                 refToCopy.removeValue()
+
+                                if(modalita.equals("classica")){
+                                    database.getReference("users").child(uid).child("partite in corso").child(partita).removeValue()
+                                }
                                 Log.e("FirebaseCopy", "SUCCESSO")
                                 // I dati sono stati copiati con successo
                                 val refToNewNode =
@@ -48,6 +54,8 @@ class StatisticheFragment {
                                     refToNewNode.child("esito").child("io").setValue(risposte2)
                                     refToNewNode.child("esito").child("avversario").setValue(risposte1)
                                 }
+
+
                             } else {
                                 Log.e("FirebaseCopy", "Errori scrittura")
                                 // Gestisci errori di scrittura qui
@@ -62,6 +70,78 @@ class StatisticheFragment {
             })
 
 
+        }
+
+
+
+
+
+
+        fun updateStatTopic(
+            topic: String,
+            tipo: String
+        ) {
+            database = FirebaseDatabase.getInstance()
+            var uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+            var statRef = database.getReference("users").child(uid).child("stat")
+            statRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(statistiche: DataSnapshot) {
+
+
+                    if (statistiche.child(topic).hasChild("risposteTotali")) {
+
+                            var risposteCorretteDatabase = 0F
+
+                            if (statistiche.child(topic).hasChild("risposteCorrette")) {
+
+                                risposteCorretteDatabase = statistiche.child(topic).child("risposteCorrette").value.toString().toFloat()
+
+                            }
+
+                        var risposteCorretteAggiornate = risposteCorretteDatabase
+                        if (tipo == "corretta") {
+
+                            risposteCorretteAggiornate += 1
+
+                        }
+
+                        var risposteTotaliDatabase = statistiche.child(topic).child("risposteTotali").value.toString().toFloat()
+
+
+                        var risposteTotaliAggiornate = risposteTotaliDatabase +1
+
+                        //aggiorno la percentuale delle risposte corrette
+                        var risposteCorrettePercentuale =
+                            (risposteCorretteAggiornate * 100 / risposteTotaliAggiornate)
+
+                        //e la setto sul database
+                        statRef.child(topic).child("%risposteCorrette").setValue(risposteCorrettePercentuale)
+                        statRef.child(topic).child("risposteCorrette").setValue(risposteCorretteAggiornate)
+                        statRef.child(topic).child("risposteTotali").setValue(risposteTotaliAggiornate)
+                    }
+                    else {
+                        var risposteCorretteAggiornate = 0
+                          if (tipo == "corretta") {
+                           risposteCorretteAggiornate = 1
+                           }
+
+                        var risposteTotaliAggiornate = 1
+
+                        //aggiorno la percentuale delle risposte corrette
+                        var risposteCorrettePercentuale =
+                            (risposteCorretteAggiornate * 100 / risposteTotaliAggiornate)
+
+                        //e  setto sul database
+                        statRef.child(topic).child("%risposteCorrette").setValue(risposteCorrettePercentuale)
+                        statRef.child(topic).child("risposteCorrette").setValue(risposteCorretteAggiornate)
+                        statRef.child(topic).child("risposteTotali").setValue(risposteTotaliAggiornate)
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
         }
 
 

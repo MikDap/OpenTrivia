@@ -37,12 +37,12 @@
     <string name="storia">Storia</string>
     <string name="statistiche">Statistiche</string>
     <string name="Modalita">Modalità</string>
-    <string name="storia_40">Storia 100%</string>
-    <string name="geografia_50">Geografia 100%</string>
-    <string name="arte_60">Arte 100%</string>
-    <string name="sport_70">Sport 100%</string>
-    <string name="intrattenimento_80">Intrattenimento 100%</string>
-    <string name="scienze_100">Scienze 100%</string>
+    <string name="storia_40">Storia n/d</string>
+    <string name="geografia_50">Geografia n/d</string>
+    <string name="arte_60">Arte n/d</string>
+    <string name="sport_70">Sport n/d</string>
+    <string name="intrattenimento_80">Intrattenimento n/d</string>
+    <string name="scienze_100">Scienze n/d</string>
     <string name="argomento_percentuale"> %1$s %2$s%% </string>
 
 </resources>

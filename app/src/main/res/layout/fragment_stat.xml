@@ -33,9 +33,10 @@
         android:elevation="1dp"
         android:textSize="25sp"
         android:textColor="#FFFFFF"
-        android:gravity="start|center_vertical"
+        android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         />
     <TextView
         android:id="@+id/subject1"
@@ -66,9 +67,10 @@
         android:elevation="1dp"
         android:textSize="25sp"
         android:textColor="#FFFFFF"
-        android:gravity="start|center_vertical"
+        android:gravity="center"
         app:layout_constraintTop_toBottomOf="@+id/subject1"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         />
     <TextView
         android:layout_marginTop="30dp"
@@ -98,9 +100,10 @@
         android:elevation="1dp"
         android:textSize="25sp"
         android:textColor="#FFFFFF"
-        android:gravity="start|center_vertical"
+        android:gravity="center"
         app:layout_constraintTop_toBottomOf="@+id/subject2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         />
     <TextView
         android:layout_marginTop="30dp"
@@ -136,9 +139,10 @@
         android:elevation="1dp"
         android:textSize="25sp"
         android:textColor="#FFFFFF"
-        android:gravity="start|center_vertical"
+        android:gravity="center"
         app:layout_constraintTop_toBottomOf="@+id/subject3"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         />
 
     <TextView
@@ -176,9 +180,10 @@
         android:textSize="25sp"
         android:textColor="#FFFFFF"
         android:elevation="1dp"
-        android:gravity="start|center_vertical"
+        android:gravity="center"
         app:layout_constraintTop_toBottomOf="@+id/subject4"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         />
 
     <TextView
@@ -210,9 +215,10 @@
         android:elevation="1dp"
         android:textSize="25sp"
         android:textColor="#FFFFFF"
-        android:gravity="start|center_vertical"
+        android:gravity="center"
         app:layout_constraintTop_toBottomOf="@+id/subject5"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         />
 
     <TextView
