@@ -2,6 +2,7 @@ package com.example.opentrivia
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -58,22 +59,20 @@ class StatFragment : Fragment() {
         intrattenimentoPerc = view.findViewById(R.id.percentualeIntrattenimento)
         scienzePerc = view.findViewById(R.id.percentualeScienze)
 
-        updateStatistiche()
-
-        var uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         database = FirebaseDatabase.getInstance()
-        var statRef = database.getReference("users").child(uid).child("stat")
 
+var uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+            var statRef = database.getReference("users").child(uid).child("stat")
+            statRef.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(statistiche: DataSnapshot) {
 
-        statRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(statistiche: DataSnapshot) {
+                    Log.d("entraCallbackStat2", "si")
+                    for (topic1 in statistiche.children) {
 
+                        var argomento = topic1.key.toString()
 
-                for (topic1 in statistiche.children) {
-
-                    var argomento = topic1.key.toString()
                         controllaTopic(argomento){
-                            topic, topicPerc ->
+                                topic, topicPerc ->
 
                             var percentualeRiposte =
                                 topic1.child("%risposteCorrette").value.toString().toFloat()
@@ -84,136 +83,33 @@ class StatFragment : Fragment() {
                             params.guidePercent = floatPerc
 
                             topicPerc.layoutParams = params
-
-                            val Text = getString(R.string.argomento_percentuale, argomento, percentualeRiposte.toInt().toString())
+                            val context = activity?.applicationContext
+                            val Text = context?.getString(R.string.argomento_percentuale, argomento, percentualeRiposte.toInt().toString())
                             topic.text = Text
 
                         }
 
+                    }
+
+
                 }
 
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
 
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
         return view
     }
 
-
-    // partiteTerminate/modalita/idPartita/
-    // esito(lo calcoliamo dopo) - io - avversario/               <- argomenti conquistati
-    // topic/
-    //  arte../risposte corr-sba-tot
-
-    //NELL'ONCREATE DEL FRAGMENT :
-    fun updateStatistiche() {
-        var uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-        database = FirebaseDatabase.getInstance()
-        var partiteTerminateRef =
-            database.getReference("users").child(uid).child("partite terminate")
-        partiteTerminateRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(partiteTerminate: DataSnapshot) {
-                for (modalita in partiteTerminate.children) {
-                    for (difficolta in modalita.children)
-                    for (partita in difficolta.children) {
-                        val uidSnapshot = partita.child("giocatori").child(uid)
-                        for (topic in uidSnapshot.children) {
-                            if(topic.hasChild("risposteTotali")) {
-                                var topicNome = topic.key.toString()
-                                var risposteCorrette = 0
-                                if (topic.hasChild("risposteCorrette")) {
-                                     risposteCorrette =
-                                        topic.child("risposteCorrette").value.toString().toInt()
-                                }
-                                var risposteTotali =
-                                    topic.child("risposteTotali").value.toString().toInt()
-                                updateStatisticheTopic(
-                                    topicNome,
-                                    risposteCorrette,
-                                    risposteTotali
-                                )
-                            }
-
-                        }
-                    }
-                }
-            }
-
-
-            override fun onCancelled(error: DatabaseError) {
-                // Gestisci l'errore, se necessario
-            }
-        })
-    }
-//      users/uid/stat/topic/
-//  /risposte corrette-sbagliate-totali  % risposte corrette
-
-    fun updateStatisticheTopic(
-        topic: String,
-        risposteCorrette: Int,
-        risposteTotali: Int
-    ) {
-        database = FirebaseDatabase.getInstance()
-        var uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-        var statRef = database.getReference("users").child(uid).child("stat")
-        statRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(statistiche: DataSnapshot) {
-
-
-                if (statistiche.child(topic).hasChild("risposteTotali")) {
-                    var risposteCorretteDatabase = 0F
-                    if (statistiche.child(topic).hasChild("risposteCorrette")) {
-                         risposteCorretteDatabase = statistiche.child(topic).child("risposteCorrette").value.toString().toFloat()
-                    }
-                    var risposteTotaliDatabase =
-                        statistiche.child(topic).child("risposteTotali").value.toString().toFloat()
-
-
-                    var risposteCorretteAggiornate = risposteCorretteDatabase + risposteCorrette
-                    var risposteTotaliAggiornate = risposteTotaliDatabase + risposteTotali
-
-                    //aggiorno la percentuale delle risposte corrette
-                    var risposteCorrettePercentuale =
-                        (risposteCorretteAggiornate * 100 / risposteTotaliAggiornate)
-                    //e la setto sul database
-                    statRef.child(topic).child("%risposteCorrette")
-                        .setValue(risposteCorrettePercentuale)
-                }
-                else {
-
-
-                    var risposteCorretteAggiornate =risposteCorrette.toFloat()
-                    var risposteTotaliAggiornate = risposteTotali.toFloat()
-
-                    //aggiorno la percentuale delle risposte corrette
-                    var risposteCorrettePercentuale =
-                        (risposteCorretteAggiornate * 100 / risposteTotaliAggiornate)
-                    //e la setto sul database
-                    statRef.child(topic).child("%risposteCorrette")
-                        .setValue(risposteCorrettePercentuale)
-                    statRef.child(topic).child("risposteCorrette")
-                        .setValue(risposteCorretteAggiornate)
-                    statRef.child(topic).child("risposteTotali")
-                        .setValue(risposteTotaliAggiornate)
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
-    }
 
 
     fun controllaTopic(
         argomento: String,
         callback: (topic: TextView, topicPerc: Guideline) -> Unit
     ) {
-var topic= storia
-var topicPerc= storiaPerc
+           var topic= storia
+           var topicPerc= storiaPerc
 
         when (argomento) {
 

@@ -114,7 +114,7 @@ coloraSfondo(NomeArgomento.text.toString())
 
                         }
                     }
-
+                    StatisticheFragment.updateStatTopic(modClassicaActivity.topicConquista,"corretta")
                     Handler(Looper.getMainLooper()).postDelayed({
                         modClassicaActivity.chiamaRuota()
                     }, 1000)
@@ -145,6 +145,7 @@ coloraSfondo(NomeArgomento.text.toString())
                             partitaRef.child("Turno").setValue(nomeAvversario)
                         }
                     }
+                    StatisticheFragment.updateStatTopic(modClassicaActivity.topicConquista,"sbagliata")
                     Handler(Looper.getMainLooper()).postDelayed({
                         modClassicaActivity.chiamaRuota()
                     }, 1000)
@@ -177,6 +178,7 @@ coloraSfondo(NomeArgomento.text.toString())
 
                         }
                     }
+                    StatisticheFragment.updateStatTopic(modClassicaActivity.topicConquista,"corretta")
                     Handler(Looper.getMainLooper()).postDelayed({
                         modClassicaActivity.chiamaRuota()
                     }, 1000)
@@ -206,6 +208,7 @@ coloraSfondo(NomeArgomento.text.toString())
                         }
                     }
 
+                    StatisticheFragment.updateStatTopic(modClassicaActivity.topicConquista,"sbagliata")
                     Handler(Looper.getMainLooper()).postDelayed({
                         modClassicaActivity.chiamaRuota()
                     }, 1000)
@@ -238,6 +241,7 @@ coloraSfondo(NomeArgomento.text.toString())
 
                         }
                     }
+                    StatisticheFragment.updateStatTopic(modClassicaActivity.topicConquista,"corretta")
                     Handler(Looper.getMainLooper()).postDelayed({
                         modClassicaActivity.chiamaRuota()
                     }, 1000)
@@ -267,6 +271,7 @@ coloraSfondo(NomeArgomento.text.toString())
                         }
                     }
 
+                    StatisticheFragment.updateStatTopic(modClassicaActivity.topicConquista,"sbagliata")
                     Handler(Looper.getMainLooper()).postDelayed({
                         modClassicaActivity.chiamaRuota()
                     }, 1000)
@@ -300,6 +305,8 @@ coloraSfondo(NomeArgomento.text.toString())
 
                         }
                     }
+
+                    StatisticheFragment.updateStatTopic(modClassicaActivity.topicConquista,"corretta")
                     Handler(Looper.getMainLooper()).postDelayed({
                         modClassicaActivity.chiamaRuota()
                     }, 1000)
@@ -330,6 +337,7 @@ coloraSfondo(NomeArgomento.text.toString())
                         }
                     }
 
+                    StatisticheFragment.updateStatTopic(modClassicaActivity.topicConquista,"sbagliata")
                     Handler(Looper.getMainLooper()).postDelayed({
                         modClassicaActivity.chiamaRuota()
                     }, 1000)
