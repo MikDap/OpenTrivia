@@ -121,15 +121,11 @@ class VeroFalsoFragment : Fragment() {
                 if (risposta1.text == rispostaCorretta) {
                     risposta1.setBackgroundColor(Color.GREEN)
                     updateRisposte(risposteRef,"corretta")
-                    //aggiorna la variabile di classe col tempo trascorso nella classe timeProgressBar
-                    //          passElapsedTime(timeProgressBarView?.elapsedTimeInMillis!!)
+                    StatisticheFragment.updateStatTopic(topic,"corretta")
                 } else {
                     risposta1.setBackgroundColor(Color.RED)
                     updateRisposte(risposteRef,"sbagliata")
-                    //         passElapsedTime(timeProgressBarView?.elapsedTimeInMillis!!)
-                    //       if (timeProgressBarView.fine == true) {
-                    //           modATempoActivity.schermataAttendi()
-                    //       }
+                    StatisticheFragment.updateStatTopic(topic,"sbagliata")
                 }
                 Log.d("contatoreRisposte2", contatoreRisposte.toString())
                 rispostaData = true
@@ -140,11 +136,11 @@ class VeroFalsoFragment : Fragment() {
                 if (risposta2.text == rispostaCorretta) {
                     risposta2.setBackgroundColor(Color.GREEN)
                     updateRisposte(risposteRef,"corretta")
-                    //           passElapsedTime(timeProgressBarView?.elapsedTimeInMillis!!)
+                    StatisticheFragment.updateStatTopic(topic,"corretta")
                 } else {
                     risposta2.setBackgroundColor(Color.RED)
                     updateRisposte(risposteRef,"sbagliata")
-                    //          passElapsedTime(timeProgressBarView?.elapsedTimeInMillis!!)
+                    StatisticheFragment.updateStatTopic(topic,"sbagliata")
                 }
                 rispostaData = true
             }

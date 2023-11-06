@@ -71,7 +71,7 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
             chiamaConquista()
 
             val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-
+                 database = FirebaseDatabase.getInstance()
             val giocatoreRef =
                 database.getReference("partite").child("classica").child(difficolta).child(partita)
                     .child("giocatori").child(uid)
@@ -386,43 +386,13 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
         fragment.nomeAvv = nomeAvv
         fragment.scoreMio = scoreMio.toString()
         fragment.scoreAvv = scoreAvv.toString()
-        fragment.mod = "argomento singolo"
+        fragment.mod = "classica"
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerViewGioco2, fragment).commit()
+                .replace(R.id.fragmentContainerViewGioco, fragment).commit()
         }, 500)
 
     }
-
-    fun schermataPareggio(nomeAvv: String,scoreMio: Int, scoreAvv:Int) {
-
-        val fragment = Pareggio()
-        fragment.nomeAvv = nomeAvv
-        fragment.scoreMio = scoreMio.toString()
-        fragment.scoreAvv = scoreAvv.toString()
-        fragment.mod = "argomento singolo"
-        Handler(Looper.getMainLooper()).postDelayed({
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerViewGioco2, fragment).commit()
-        }, 500)
-
-    }
-
-    fun schermataSconfitta(nomeAvv: String,scoreMio: Int, scoreAvv:Int) {
-
-        val fragment = Sconfitta()
-        fragment.nomeAvv = nomeAvv
-        fragment.scoreMio = scoreMio.toString()
-        fragment.scoreAvv = scoreAvv.toString()
-        fragment.mod = "argomento singolo"
-        Handler(Looper.getMainLooper()).postDelayed({
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerViewGioco2, fragment).commit()
-        }, 500)
-
-    }
-
-
 
 
 

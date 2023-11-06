@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.opentrivia.MainActivity
 import com.example.opentrivia.R
+import com.example.opentrivia.StatisticheFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -110,6 +111,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                        }
 
                        updateContinuaButton(giocatoreRef, "corretta")
+                       StatisticheFragment.updateStatTopic(topic,"corretta")
                    }
                }
 
@@ -121,6 +123,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                    }
 
                    updateContinuaButton(giocatoreRef,"sbagliata")
+                   StatisticheFragment.updateStatTopic(topic,"sbagliata")
                 }
 
                 rispostaData = true
@@ -148,6 +151,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         }
 
                         updateContinuaButton(giocatoreRef, "corretta")
+                        StatisticheFragment.updateStatTopic(topic,"corretta")
                     }
                 }
                 else {
@@ -158,6 +162,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                     }
 
                     updateContinuaButton(giocatoreRef,"sbagliata")
+                    StatisticheFragment.updateStatTopic(topic,"sbagliata")
                 }
                 rispostaData = true
             }
@@ -183,6 +188,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         }
 
                         updateContinuaButton(giocatoreRef, "corretta")
+                        StatisticheFragment.updateStatTopic(topic,"corretta")
                     }
                 }
                 else {
@@ -193,6 +199,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                     }
 
                     updateContinuaButton(giocatoreRef,"sbagliata")
+                    StatisticheFragment.updateStatTopic(topic,"sbagliata")
                 }
                 rispostaData = true
             }
@@ -218,6 +225,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         }
 
                         updateContinuaButton(giocatoreRef, "corretta")
+                        StatisticheFragment.updateStatTopic(topic,"corretta")
                     }
                 }
                 else {
@@ -228,6 +236,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                     }
 
                     updateContinuaButton(giocatoreRef,"sbagliata")
+                    StatisticheFragment.updateStatTopic(topic,"sbagliata")
                 }
                 rispostaData = true
             }

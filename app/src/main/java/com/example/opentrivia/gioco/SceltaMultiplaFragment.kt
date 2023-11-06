@@ -42,14 +42,15 @@ class SceltaMultiplaFragment : Fragment() {
     private lateinit var modalita: String
     private lateinit var difficolta: String
     private lateinit var topic: String
-    private  var contatoreRisposte = 0
+    private var contatoreRisposte = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.mod_argomento_singolo_scelta_multipla, container, false)
+        val view =
+            inflater.inflate(R.layout.mod_argomento_singolo_scelta_multipla, container, false)
 
 
         modArgomentoActivity = activity as ModArgomentoActivity
@@ -61,7 +62,7 @@ class SceltaMultiplaFragment : Fragment() {
         risposta3 = view.findViewById(R.id.risposta3)
         risposta4 = view.findViewById(R.id.risposta4)
 
-        Log.d(modalita,"modalita")
+        Log.d(modalita, "modalita")
 
 
         domanda.text = modArgomentoActivity.domanda
@@ -72,7 +73,7 @@ class SceltaMultiplaFragment : Fragment() {
         risposta4.text = modArgomentoActivity.risposte[3]
         rispostaCorretta = modArgomentoActivity.rispostaCorretta
 
-return view
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -81,8 +82,9 @@ return view
 
         database = FirebaseDatabase.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-        var risposteRef = database.getReference("partite").child(modalita).child(difficolta).child(partita)
-            .child("giocatori").child(uid).child(topic)
+        var risposteRef =
+            database.getReference("partite").child(modalita).child(difficolta).child(partita)
+                .child("giocatori").child(uid).child(topic)
         var partiteInCorsoRef = database.getReference("users").child(uid).child("partite in corso")
 
 
@@ -96,8 +98,8 @@ return view
                         risposta1.setBackgroundColor(Color.GREEN)
                     }, 1000)
 
-                    updateRisposte(risposteRef,"corretta")
-
+                    updateRisposte(risposteRef, "corretta")
+                    StatisticheFragment.updateStatTopic(topic,"corretta")
 
 
                 } else {
@@ -106,7 +108,8 @@ return view
                         risposta1.setBackgroundColor(Color.RED)
                     }, 1000)
 
-                    updateRisposte(risposteRef,"sbagliata")
+                    updateRisposte(risposteRef, "sbagliata")
+                    StatisticheFragment.updateStatTopic(topic,"sbagliata")
                 }
                 Log.d("contatoreRisposte2", contatoreRisposte.toString())
                 rispostaData = true
@@ -114,87 +117,92 @@ return view
             }
         }
 
-            risposta2.setOnClickListener {
-                if (!rispostaData) {
-                    if (risposta2.text == rispostaCorretta) {
-                        risposta2.setBackgroundColor(Color.LTGRAY)
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            risposta2.setBackgroundColor(Color.GREEN)
-                        }, 1000)
-                        updateRisposte(risposteRef,"corretta")
+        risposta2.setOnClickListener {
+            if (!rispostaData) {
+                if (risposta2.text == rispostaCorretta) {
+                    risposta2.setBackgroundColor(Color.LTGRAY)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        risposta2.setBackgroundColor(Color.GREEN)
+                    }, 1000)
+                    updateRisposte(risposteRef, "corretta")
+                    StatisticheFragment.updateStatTopic(topic,"corretta")
 
-                    } else {
-                        risposta2.setBackgroundColor(Color.LTGRAY)
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            risposta2.setBackgroundColor(Color.RED)
-                        }, 1000)
-                        updateRisposte(risposteRef,"sbagliata")
+                } else {
+                    risposta2.setBackgroundColor(Color.LTGRAY)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        risposta2.setBackgroundColor(Color.RED)
+                    }, 1000)
+                    updateRisposte(risposteRef, "sbagliata")
+                    StatisticheFragment.updateStatTopic(topic,"sbagliata")
 
-                    }
-                    rispostaData = true
                 }
+                rispostaData = true
             }
+        }
 
 
-            risposta3.setOnClickListener {
-                if (!rispostaData) {
-                    if (risposta3.text == rispostaCorretta) {
-                        risposta3.setBackgroundColor(Color.LTGRAY)
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            risposta3.setBackgroundColor(Color.GREEN)
-                        }, 1000)
-                        updateRisposte(risposteRef,"corretta")
+        risposta3.setOnClickListener {
+            if (!rispostaData) {
+                if (risposta3.text == rispostaCorretta) {
+                    risposta3.setBackgroundColor(Color.LTGRAY)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        risposta3.setBackgroundColor(Color.GREEN)
+                    }, 1000)
+                    updateRisposte(risposteRef, "corretta")
+                    StatisticheFragment.updateStatTopic(topic,"corretta")
 
-                    } else {
-                        risposta3.setBackgroundColor(Color.LTGRAY)
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            risposta3.setBackgroundColor(Color.RED)
-                        }, 1000)
-                        updateRisposte(risposteRef,"sbagliata")
+                } else {
+                    risposta3.setBackgroundColor(Color.LTGRAY)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        risposta3.setBackgroundColor(Color.RED)
+                    }, 1000)
+                    updateRisposte(risposteRef, "sbagliata")
+                    StatisticheFragment.updateStatTopic(topic,"sbagliata")
 
-                    }
-                    rispostaData = true
                 }
+                rispostaData = true
             }
+        }
 
 
-            risposta4.setOnClickListener {
-                if (!rispostaData) {
-                    if (risposta4.text == rispostaCorretta) {
-                        risposta4.setBackgroundColor(Color.LTGRAY)
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            risposta4.setBackgroundColor(Color.GREEN)
-                        }, 1000)
-                        updateRisposte(risposteRef,"corretta")
+        risposta4.setOnClickListener {
+            if (!rispostaData) {
+                if (risposta4.text == rispostaCorretta) {
+                    risposta4.setBackgroundColor(Color.LTGRAY)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        risposta4.setBackgroundColor(Color.GREEN)
+                    }, 1000)
+                    updateRisposte(risposteRef, "corretta")
+                    StatisticheFragment.updateStatTopic(topic,"corretta")
 
-                    } else {
-                        risposta4.setBackgroundColor(Color.LTGRAY)
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            risposta4.setBackgroundColor(Color.RED)
-                        }, 1000)
-                        updateRisposte(risposteRef,"sbagliata")
+                } else {
+                    risposta4.setBackgroundColor(Color.LTGRAY)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        risposta4.setBackgroundColor(Color.RED)
+                    }, 1000)
+                    updateRisposte(risposteRef, "sbagliata")
+                    StatisticheFragment.updateStatTopic(topic,"sbagliata")
 
-                    }
-                    rispostaData = true
                 }
+                rispostaData = true
             }
-
+        }
 
 
     }
-        fun setParametriPartita(
-            partita: String,
-            modalita: String,
-            difficolta: String,
-            topic: String
-        ) {
-            // Imposta il valore della variabile partita come desiderato
-            this.partita = partita
-            this.modalita = modalita
-            this.difficolta = difficolta
-            this.topic = topic
-        }
 
+    fun setParametriPartita(
+        partita: String,
+        modalita: String,
+        difficolta: String,
+        topic: String
+    ) {
+        // Imposta il valore della variabile partita come desiderato
+        this.partita = partita
+        this.modalita = modalita
+        this.difficolta = difficolta
+        this.topic = topic
+    }
 
 
     fun updateRisposte(
@@ -225,13 +233,12 @@ return view
                         Log.d("contatoreRisposte", contatoreRisposte.toString())
                         risposteRef.child("risposteTotali").setValue(punti)
 
-                            if (contatoreRisposte < 10) {
-                                modArgomentoActivity.getTriviaQuestion()
-                            } else {
-                                finePartita()
+                        if (contatoreRisposte < 10) {
+                            modArgomentoActivity.getTriviaQuestion()
+                        } else {
+                            finePartita()
 
-                            }
-
+                        }
 
 
                     } else {
@@ -241,9 +248,7 @@ return view
                         Log.d("contatoreRisposte", contatoreRisposte.toString())
                         modArgomentoActivity.getTriviaQuestion()
                     }
-                }
-
-                else if (tipo == "sbagliata") {
+                } else if (tipo == "sbagliata") {
 
                     if (dataSnapshot.child("risposteSbagliate").exists()) {
                         // Il dato esiste nel database
@@ -266,8 +271,7 @@ return view
                         risposteRef.child("risposteTotali").setValue(punti)
                         if (contatoreRisposte < 10) {
                             modArgomentoActivity.getTriviaQuestion()
-                        }
-                        else {
+                        } else {
                             finePartita()
 
                         }
@@ -284,16 +288,7 @@ return view
                 }
 
 
-
                 //qua il codice per salvare sul database i dati nel nodo users per utilizzarli nella scrollview
-
-
-
-
-
-
-
-
 
 
             }
@@ -309,11 +304,12 @@ return view
     //modifica di mic
 
     fun finePartita() {
-             Log.d("finePartita","si")
+        Log.d("finePartita", "si")
         database = FirebaseDatabase.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         var giocatoriRef =
-            database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
+            database.getReference("partite").child(modalita).child(difficolta).child(partita)
+                .child("giocatori")
         var risposte1 = 0
         var risposte2 = 0
         var giocatore2esiste = false
@@ -329,12 +325,12 @@ return view
                         if (topic.hasChild("risposteTotali")) {
 
 
-                             var giocatore1 = giocatore.key.toString()
+                            var giocatore1 = giocatore.key.toString()
 
                             Log.d("giocatore1", giocatore1)
-                            Log.d("uid",uid)
+                            Log.d("uid", uid)
                             if (giocatore1 == uid) {
-                                Log.d("giocatore2esiste",giocatore2esiste.toString())
+                                Log.d("giocatore2esiste", giocatore2esiste.toString())
                                 val risposteCorrette =
                                     topic.child("risposteCorrette").getValue(Int::class.java)
                                 if (risposteCorrette != null) {
@@ -344,7 +340,7 @@ return view
                                 avversario = giocatore1
                                 nomeAvv = giocatore.child("name").value.toString()
                                 giocatore2esiste = true
-                                Log.d("giocatore2esiste",giocatore2esiste.toString())
+                                Log.d("giocatore2esiste", giocatore2esiste.toString())
                                 val risposteCorrette =
                                     topic.child("risposteCorrette").getValue(Int::class.java)
                                 if (risposteCorrette != null) {
@@ -366,37 +362,39 @@ return view
                 } else {
                     Log.d("entra in else", "si")
                     if (risposte1 > risposte2) {
+
                         giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,uid,risposte1,risposte2)
-                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,avversario,risposte1,risposte2)
+                        StatisticheFragment.StatisticheTerminate(partita, modalita, difficolta, uid, risposte1, risposte2)
+                        StatisticheFragment.StatisticheTerminate(partita, modalita, difficolta, avversario, risposte1, risposte2)
                         modArgomentoActivity.schermataVittoria(nomeAvv, risposte1, risposte2)
-                    }
-                    else if (risposte1 == risposte2) {
+
+                    } else if (risposte1 == risposte2) {
+
                         giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,uid,risposte1,risposte2)
-                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,avversario,risposte1,risposte2)
+                        StatisticheFragment.StatisticheTerminate(partita, modalita, difficolta, uid, risposte1, risposte2)
+                        StatisticheFragment.StatisticheTerminate(partita, modalita, difficolta, avversario, risposte1, risposte2)
                         modArgomentoActivity.schermataPareggio(nomeAvv, risposte1, risposte2)
-                    }
-                    else if (risposte1 < risposte2) {
+
+                    } else if (risposte1 < risposte2) {
+
                         giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,uid,risposte1,risposte2)
-                        StatisticheFragment.StatisticheTerminate(partita,modalita,difficolta,avversario,risposte1,risposte2)
+                        StatisticheFragment.StatisticheTerminate(partita, modalita, difficolta, uid, risposte1, risposte2)
+                            StatisticheFragment.StatisticheTerminate(partita, modalita, difficolta, avversario, risposte1, risposte2)
                         modArgomentoActivity.schermataSconfitta(nomeAvv, risposte1, risposte2)
+
                     }
 
                 }
 
             }
 
-
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
+
+
         })
 
 
     }
-
-
 }
-

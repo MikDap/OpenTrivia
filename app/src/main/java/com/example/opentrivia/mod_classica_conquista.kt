@@ -17,7 +17,10 @@ import com.example.opentrivia.gioco.ModClassicaActivity
 import com.example.opentrivia.gioco.SceltaMultiplaFragmentClassica
 import com.example.opentrivia.utils.ModClassicaUtils
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.util.Random
 
 
@@ -110,35 +113,60 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
         intrattenimentoButton = view.findViewById(R.id.intrattenimentobutton)
         scienzeButton = view.findViewById(R.id.scienzebutton)
 
-        storiaButton.setOnClickListener {
-            getTriviaQuestion("storia")
-            topic = "storia"
-        }
-        geografiaButton.setOnClickListener {
-            getTriviaQuestion("geografia")
-            topic = "geografia"
-        }
-        arteButton.setOnClickListener {
-            getTriviaQuestion("arte")
-            topic = "arte"
-        }
-        sportButton.setOnClickListener {
-            getTriviaQuestion("sport")
-            topic = "sport"
-        }
-        intrattenimentoButton.setOnClickListener {
-            getTriviaQuestion("culturaPop")
-            topic = "culturaPop"
+        var argomentoRef= database.getReference("partite").child("classica").child(difficolta).child(partita).child("giocatori").child(uid).child("ArgomentiConquistati")
+        argomentoRef.addValueEventListener (object : ValueEventListener {
+            override fun onDataChange (argomenti : DataSnapshot) {
+                if (!argomenti.hasChild("storia")) {
+                    storiaButton.setOnClickListener {
+                        getTriviaQuestion("storia")
+                        topic = "storia"
+                    }}
+                else{storiaButton.setBackgroundColor(Color.parseColor("#D3D3D3"))}
 
-        }
-        scienzeButton.setOnClickListener {
-            getTriviaQuestion("scienze")
-            topic = "scienze"
+                if (!argomenti.hasChild("geografia")) {
+                    geografiaButton.setOnClickListener {
+                        getTriviaQuestion("geografia")
+                        topic = "geografia"
+                    }}
+                else{geografiaButton.setBackgroundColor(Color.parseColor("#D3D3D3"))}
+                if (!argomenti.hasChild("arte")) {
+                    arteButton.setOnClickListener {
+                        getTriviaQuestion("arte")
+                        topic = "arte"
+                    }}
+                else{arteButton.setBackgroundColor(Color.parseColor("#D3D3D3"))}
 
-        }
+                if(!argomenti.hasChild("sport")){
+                    sportButton.setOnClickListener {
+                        getTriviaQuestion("sport")
+                        topic = "sport"
+                    }}
+                else{sportButton.setBackgroundColor(Color.parseColor("#D3D3D3"))}
+                if(!argomenti.hasChild("culturaPop")){
+                    intrattenimentoButton.setOnClickListener {
+                        getTriviaQuestion("culturaPop")
+                        topic = "culturaPop"
 
+                    }}
+                else{intrattenimentoButton.setBackgroundColor(Color.parseColor("#D3D3D3"))}
+                if(!argomenti.hasChild("scienze")){
+                    scienzeButton.setOnClickListener {
+                        getTriviaQuestion("scienze")
+                        topic = "scienze"
+
+
+                    }}
+                else{scienzeButton.setBackgroundColor(Color.parseColor("#D3D3D3"))}
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
         return view
     }
+
 
 
     fun getCategoria(topic: String): String {

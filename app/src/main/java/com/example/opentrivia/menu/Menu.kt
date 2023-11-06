@@ -53,7 +53,6 @@ class Menu : Fragment() {
 
                 if (partiteInCorso.hasChildren()) {
                     val partiteIterator = partiteInCorso.children.iterator()
-
                     // Avvia il processo delle partite in corso
                     processaPartiteInCorso(partiteIterator) {
                         // Questa callback verrà chiamata quando tutte le partite sono state processate

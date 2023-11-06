@@ -34,7 +34,13 @@ class StatisticheFragment {
                         // Scrivi i dati nel nuovo nodo
                         refToNewNode.setValue(dataToCopy).addOnCompleteListener { task ->
                             if (task.isSuccessful) {
+
+
                                 refToCopy.removeValue()
+
+                                if(modalita.equals("classica")){
+                                    database.getReference("users").child(uid).child("partite in corso").child(partita).removeValue()
+                                }
                                 Log.e("FirebaseCopy", "SUCCESSO")
                                 // I dati sono stati copiati con successo
                                 val refToNewNode =
@@ -48,6 +54,8 @@ class StatisticheFragment {
                                     refToNewNode.child("esito").child("io").setValue(risposte2)
                                     refToNewNode.child("esito").child("avversario").setValue(risposte1)
                                 }
+
+
                             } else {
                                 Log.e("FirebaseCopy", "Errori scrittura")
                                 // Gestisci errori di scrittura qui
@@ -61,80 +69,73 @@ class StatisticheFragment {
                 }
             })
 
-            // CONTROLLARE SE DA PROBLEMI VISTO CHE LA PARTE DI SOPRA è ASINCRONA
 
         }
 
 
-        // partiteTerminate/modalita/idPartita/
-        // esito(lo calcoliamo dopo) - io - avversario/               <- argomenti conquistati
-        // topic/
-        //  arte../risposte corr-sba-tot
-//PROBABILMENTE DOVREMO FAR ESEGUIRE IL CODICE QUANDO VIENE AVVIATO IL GIOCO E
-        // FARE QUINDI UNA SCHERMATA DI CARICAMENTO PRIMA DI PASSARE AL MENU PRINCIPALE DEL GIOCO
-        //A CAUSA DELLA COMPLESSITA COMPUTAZIONALE
-        //NELL'ONCREATE DEL FRAGMENT :
-        fun updateStatistiche() {
+
+
+
+
+        fun updateStatTopic(
+            topic: String,
+            tipo: String
+        ) {
             database = FirebaseDatabase.getInstance()
             var uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-            var partiteTerminateRef =
-                database.getReference("users").child(uid).child("partite terminate")
-            partiteTerminateRef.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(partiteTerminate: DataSnapshot) {
-                    for (modalita in partiteTerminate.children) {
-                        for (partita in modalita.children) {
-                            val uidSnapshot = partita.child(uid)
-                            for (topic in uidSnapshot.children) {
-                                var topicNome = topic.key.toString()
-                                var risposteCorrette =
-                                    topic.child("RisposteCorrette").value.toString().toInt()
-                                var risposteSbagliate =
-                                    topic.child("RisposteSbagliate").value.toString().toInt()
-                                var risposteTotali =
-                                    topic.child("RisposteTotali").value.toString().toInt()
-                                updateStatisticheTopic(
-                                    topicNome,
-                                    risposteCorrette,
-                                    risposteSbagliate,
-                                    risposteTotali
-                                )
-                            }
-                        }
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    // Gestisci l'errore, se necessario
-                }
-            })
-        }
-//      users/uid/stat/topic/
-//  /risposte corrette-sbagliate-totali  % risposte corrette
-
-        fun updateStatisticheTopic(
-            topic: String,
-            risposteCorrette: Int,
-            risposteSbagliate: Int,
-            risposteTotali: Int
-        ) {
-            var statRef = database.getReference("users").child("stat")
-            statRef.addValueEventListener(object : ValueEventListener {
+            var statRef = database.getReference("users").child(uid).child("stat")
+            statRef.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(statistiche: DataSnapshot) {
-                    var risposteCorretteDatabase =
-                        statistiche.child(topic).child("risposteCorrette").value.toString().toInt()
-                    var risposteSbagliateDatabase =
-                        statistiche.child(topic).child("risposteSbagliate").value.toString().toInt()
-                    var risposteTotaliDatabase =
-                        statistiche.child(topic).child("risposteTotali").value.toString().toInt()
-                    var risposteCorretteAggiornate = risposteCorretteDatabase + risposteCorrette
-                    var risposteSbagliateAggiornate = risposteSbagliateDatabase + risposteSbagliate
-                    var risposteTotaliAggiornate = risposteTotaliDatabase + risposteTotali
-                    //aggiorno la percentuale delle risposte corrette
-                    var risposteCorrettePercentuale =
-                        (risposteCorretteAggiornate * 100 / risposteTotaliAggiornate)
-                    //e la setto sul database
-                    statRef.child(topic).child("%risposteCorrette")
-                        .setValue(risposteCorrettePercentuale)
+
+
+                    if (statistiche.child(topic).hasChild("risposteTotali")) {
+
+                            var risposteCorretteDatabase = 0F
+
+                            if (statistiche.child(topic).hasChild("risposteCorrette")) {
+
+                                risposteCorretteDatabase = statistiche.child(topic).child("risposteCorrette").value.toString().toFloat()
+
+                            }
+
+                        var risposteCorretteAggiornate = risposteCorretteDatabase
+                        if (tipo == "corretta") {
+
+                            risposteCorretteAggiornate += 1
+
+                        }
+
+                        var risposteTotaliDatabase = statistiche.child(topic).child("risposteTotali").value.toString().toFloat()
+
+
+                        var risposteTotaliAggiornate = risposteTotaliDatabase +1
+
+                        //aggiorno la percentuale delle risposte corrette
+                        var risposteCorrettePercentuale =
+                            (risposteCorretteAggiornate * 100 / risposteTotaliAggiornate)
+
+                        //e la setto sul database
+                        statRef.child(topic).child("%risposteCorrette").setValue(risposteCorrettePercentuale)
+                        statRef.child(topic).child("risposteCorrette").setValue(risposteCorretteAggiornate)
+                        statRef.child(topic).child("risposteTotali").setValue(risposteTotaliAggiornate)
+                    }
+                    else {
+                        var risposteCorretteAggiornate = 0
+                          if (tipo == "corretta") {
+                           risposteCorretteAggiornate = 1
+                           }
+
+                        var risposteTotaliAggiornate = 1
+
+                        //aggiorno la percentuale delle risposte corrette
+                        var risposteCorrettePercentuale =
+                            (risposteCorretteAggiornate * 100 / risposteTotaliAggiornate)
+
+                        //e  setto sul database
+                        statRef.child(topic).child("%risposteCorrette").setValue(risposteCorrettePercentuale)
+                        statRef.child(topic).child("risposteCorrette").setValue(risposteCorretteAggiornate)
+                        statRef.child(topic).child("risposteTotali").setValue(risposteTotaliAggiornate)
+                    }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -142,5 +143,7 @@ class StatisticheFragment {
                 }
             })
         }
+
+
     }
 }

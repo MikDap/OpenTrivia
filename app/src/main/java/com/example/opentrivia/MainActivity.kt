@@ -27,6 +27,7 @@ import com.example.opentrivia.chat.ChatActivity
 import com.example.opentrivia.gioco.ModClassicaActivity
 import com.example.opentrivia.listaAmici.ListaAmiciActivity
 import com.example.opentrivia.listaAmici.ListaAmiciFragment
+import com.example.opentrivia.statistiche.StatisticheActivity
 
 // L'activity eredita dalla classe AppCompatActivity, che fornisce funzionalità aggiuntive rispetto all'Activity standard.
 class MainActivity : AppCompatActivity() {
@@ -97,8 +98,10 @@ class MainActivity : AppCompatActivity() {
                         // Gestisci l'evento per l'item "Profilo" (inbox)
                         return true
                     }
-                    R.id.preferiti -> {
-                        // Gestisci l'evento per l'item "Statistiche" (preferiti)
+                    R.id.statistiche -> {
+                        val intent = Intent(this@MainActivity, StatisticheActivity::class.java)
+                        startActivity(intent)
+
                        return true
                     }
                     R.id.lista_amici -> {
