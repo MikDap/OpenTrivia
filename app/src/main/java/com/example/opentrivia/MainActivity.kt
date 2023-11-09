@@ -1,5 +1,6 @@
 package com.example.opentrivia
 
+import android.app.AlertDialog
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.MenuProvider
 import com.example.opentrivia.ui.theme.OpenTriviaTheme
 import com.firebase.ui.auth.AuthUI
@@ -32,6 +34,7 @@ import com.example.opentrivia.statistiche.StatisticheActivity
 // L'activity eredita dalla classe AppCompatActivity, che fornisce funzionalità aggiuntive rispetto all'Activity standard.
 class MainActivity : AppCompatActivity() {
     private lateinit var userMethods: UserMethods
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -165,5 +168,7 @@ class MainActivity : AppCompatActivity() {
             Greeting("Android")
         }
     }
+
+
 }
 

@@ -20,6 +20,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.util.Log
 import android.graphics.PathMeasure
 import android.graphics.Typeface
+import android.widget.TextView
 import com.example.opentrivia.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -54,6 +55,8 @@ class RuotaFragment : Fragment() {
     private lateinit var rettangolo1:View
     private lateinit var rettangolo2:View
     private lateinit var rettangolo3:View
+private lateinit var user:TextView
+private lateinit var avversario:TextView
 
     private var selectedTopic: String? = null
     private var isWheelStopped: Boolean = true
@@ -103,6 +106,9 @@ class RuotaFragment : Fragment() {
         rettangolo2 = view.findViewById(R.id.rettangolo2)
         rettangolo3 = view.findViewById(R.id.rettangolo3)
 
+        user=view.findViewById(R.id.user)
+        avversario=view.findViewById(R.id.avversario)
+
         modClassicaActivity = activity as ModClassicaActivity
         val partita = modClassicaActivity.partita
         val modalita = "classica"
@@ -114,9 +120,13 @@ class RuotaFragment : Fragment() {
         val giocatoriRef= database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
 
         //nel caso un giocatore esce quando sta per passare alla schermata conquista         leggiRisposteDiFila(giocatoreRef)<<
-
-
-
+        //mic 09
+        user.text= FirebaseAuth.getInstance().currentUser?.displayName.toString()+" (me)"
+        ModClassicaUtils.ottieniNomeAvversario(giocatoriRef) { nomeAvversario ->
+            // Questo codice verrà eseguito quando la callback restituirà il nome dell'avversario
+            avversario.text = nomeAvversario
+        }
+        //fine
         ModClassicaUtils.QualiArgomentiConquistati(giocatoriRef) { argomentiMiei, argomentiAvversario ->
             if (argomentiMiei.isEmpty())Log.d("argomentiMieiVuoti","si")
             if(argomentiMiei.isNotEmpty())  {      Log.d("argomentiMiei", argomentiMiei[0]) }

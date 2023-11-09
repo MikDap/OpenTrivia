@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.example.opentrivia.api.ChiamataApi
 import com.example.opentrivia.gioco.ModClassicaActivity
@@ -58,6 +59,8 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
     private lateinit var database: FirebaseDatabase
     private lateinit var modClassicaActivity: ModClassicaActivity
     lateinit var topic: String
+    private lateinit var user:TextView
+    private lateinit var avversario:TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -81,6 +84,9 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
         scienze2 = view.findViewById(R.id.scienze2)
         culturaPop2 = view.findViewById(R.id.culturaPop2)
 
+        user=view.findViewById(R.id.user1)
+        avversario=view.findViewById(R.id.avversario1)
+
         modClassicaActivity = activity as ModClassicaActivity
         val partita = modClassicaActivity.partita
         val modalita = "classica"
@@ -94,7 +100,13 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
         val giocatoriRef =
             database.getReference("partite").child(modalita).child(difficolta).child(partita)
                 .child("giocatori")
-
+//mic 09/11
+        user.text= FirebaseAuth.getInstance().currentUser?.displayName.toString()+" (me)"
+        ModClassicaUtils.ottieniNomeAvversario(giocatoriRef) { nomeAvversario ->
+            // Questo codice verrà eseguito quando la callback restituirà il nome dell'avversario
+            avversario.text = nomeAvversario
+        }
+        //fine
         ModClassicaUtils.QualiArgomentiConquistati(giocatoriRef) { argomentiMiei, argomentiAvversario ->
             if (argomentiMiei.isEmpty()) Log.d("argomentiMieiVuoti", "si")
             if (argomentiMiei.isNotEmpty()) {

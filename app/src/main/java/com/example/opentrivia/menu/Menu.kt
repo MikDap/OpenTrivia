@@ -1,10 +1,10 @@
 package com.example.opentrivia.menu
 
+import android.app.AlertDialog
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.text.Layout
 import android.util.Log
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -34,6 +34,8 @@ class Menu : Fragment() {
     private lateinit var modClassicaActivity: ModClassicaActivity
     private lateinit var background_game_item: ConstraintLayout
     private lateinit var visualizzaCronologia: Button
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -186,4 +188,6 @@ class Menu : Fragment() {
             processaPartiteInCorso(partite, callback)
         }
     }
-        }
+
+
+}
