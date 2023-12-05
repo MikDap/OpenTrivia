@@ -1,5 +1,7 @@
 package com.example.opentrivia.gioco
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -11,6 +13,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.example.opentrivia.MainActivity
 
@@ -22,6 +26,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlin.system.exitProcess
 
 
 class SceltaMultiplaFragment : Fragment() {
@@ -52,9 +57,37 @@ class SceltaMultiplaFragment : Fragment() {
         val view =
             inflater.inflate(R.layout.mod_argomento_singolo_scelta_multipla, container, false)
 
+        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+
+        var ritiratoRef =
+            database.getReference("partite").child(modalita).child(difficolta).child(partita)
+                .child("giocatori").child(uid)
 
         modArgomentoActivity = activity as ModArgomentoActivity
 
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val alertDialog = AlertDialog.Builder(requireContext())
+                alertDialog.setTitle("Vuoi ritornare al menù?")
+                alertDialog.setMessage("ATTENZIONE: uscendo perderai la partita")
+
+                alertDialog.setPositiveButton("SI") { dialog: DialogInterface, which: Int ->
+
+                    ritiratoRef.child("ritirato").setValue("si")
+                    val intent = Intent(requireContext(), MainActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().finish()
+                }
+
+                alertDialog.setNegativeButton("NO") { dialog: DialogInterface, which: Int ->
+                    dialog.dismiss()
+                }
+
+                alertDialog.show()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
 
         domanda = view.findViewById(R.id.domanda)
         risposta1 = view.findViewById(R.id.risposta1)
@@ -87,6 +120,7 @@ class SceltaMultiplaFragment : Fragment() {
                 .child("giocatori").child(uid).child(topic)
         var partiteInCorsoRef = database.getReference("users").child(uid).child("partite in corso")
 
+             controllaRitiro()
 
         var rispostaData = false
         risposta1.setOnClickListener {
@@ -99,7 +133,7 @@ class SceltaMultiplaFragment : Fragment() {
                     }, 1000)
 
                     updateRisposte(risposteRef, "corretta")
-                    StatisticheFragment.updateStatTopic(topic,"corretta")
+                    StatisticheFragment.updateStatTopic(topic, "corretta")
 
 
                 } else {
@@ -109,7 +143,7 @@ class SceltaMultiplaFragment : Fragment() {
                     }, 1000)
 
                     updateRisposte(risposteRef, "sbagliata")
-                    StatisticheFragment.updateStatTopic(topic,"sbagliata")
+                    StatisticheFragment.updateStatTopic(topic, "sbagliata")
                 }
                 Log.d("contatoreRisposte2", contatoreRisposte.toString())
                 rispostaData = true
@@ -125,7 +159,7 @@ class SceltaMultiplaFragment : Fragment() {
                         risposta2.setBackgroundColor(Color.GREEN)
                     }, 1000)
                     updateRisposte(risposteRef, "corretta")
-                    StatisticheFragment.updateStatTopic(topic,"corretta")
+                    StatisticheFragment.updateStatTopic(topic, "corretta")
 
                 } else {
                     risposta2.setBackgroundColor(Color.LTGRAY)
@@ -133,7 +167,7 @@ class SceltaMultiplaFragment : Fragment() {
                         risposta2.setBackgroundColor(Color.RED)
                     }, 1000)
                     updateRisposte(risposteRef, "sbagliata")
-                    StatisticheFragment.updateStatTopic(topic,"sbagliata")
+                    StatisticheFragment.updateStatTopic(topic, "sbagliata")
 
                 }
                 rispostaData = true
@@ -149,7 +183,7 @@ class SceltaMultiplaFragment : Fragment() {
                         risposta3.setBackgroundColor(Color.GREEN)
                     }, 1000)
                     updateRisposte(risposteRef, "corretta")
-                    StatisticheFragment.updateStatTopic(topic,"corretta")
+                    StatisticheFragment.updateStatTopic(topic, "corretta")
 
                 } else {
                     risposta3.setBackgroundColor(Color.LTGRAY)
@@ -157,7 +191,7 @@ class SceltaMultiplaFragment : Fragment() {
                         risposta3.setBackgroundColor(Color.RED)
                     }, 1000)
                     updateRisposte(risposteRef, "sbagliata")
-                    StatisticheFragment.updateStatTopic(topic,"sbagliata")
+                    StatisticheFragment.updateStatTopic(topic, "sbagliata")
 
                 }
                 rispostaData = true
@@ -173,7 +207,7 @@ class SceltaMultiplaFragment : Fragment() {
                         risposta4.setBackgroundColor(Color.GREEN)
                     }, 1000)
                     updateRisposte(risposteRef, "corretta")
-                    StatisticheFragment.updateStatTopic(topic,"corretta")
+                    StatisticheFragment.updateStatTopic(topic, "corretta")
 
                 } else {
                     risposta4.setBackgroundColor(Color.LTGRAY)
@@ -181,7 +215,7 @@ class SceltaMultiplaFragment : Fragment() {
                         risposta4.setBackgroundColor(Color.RED)
                     }, 1000)
                     updateRisposte(risposteRef, "sbagliata")
-                    StatisticheFragment.updateStatTopic(topic,"sbagliata")
+                    StatisticheFragment.updateStatTopic(topic, "sbagliata")
 
                 }
                 rispostaData = true
@@ -315,11 +349,19 @@ class SceltaMultiplaFragment : Fragment() {
         var giocatore2esiste = false
         var avversario = ""
         var nomeAvv = ""
+        var ritirato = false
+        var avvRitirato = false
 
         giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (giocatore in dataSnapshot.children) {
 
+                    if (giocatore.hasChild("ritirato") && giocatore.key.toString() == uid) {
+                        ritirato = true
+                    }
+                    if (giocatore.hasChild("ritirato") && giocatore.key.toString() != uid) {
+                        avvRitirato = true
+                    }
                     for (topic in giocatore.children) {
 
                         if (topic.hasChild("risposteTotali")) {
@@ -355,37 +397,119 @@ class SceltaMultiplaFragment : Fragment() {
                 }
 
 
-                Log.d("giocatore2esiste alla fine", giocatore2esiste.toString())
-                if (!giocatore2esiste) {
+
+
+
+
+                if (ritirato && giocatore2esiste) {
                     giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                    modArgomentoActivity.schermataAttendi()
-                } else {
-                    Log.d("entra in else", "si")
-                    if (risposte1 > risposte2) {
-
+                    modArgomentoActivity.schermataSconfitta(nomeAvv, risposte1, risposte2)
+                } else if (ritirato) {
+                    giocatoriRef.child(uid).child("fineTurno").setValue("si")
+                    StatisticheFragment.StatisticheTerminate(
+                        partita,
+                        modalita,
+                        difficolta,
+                        uid,
+                        risposte1,
+                        risposte2
+                    )
+                    modArgomentoActivity.schermataSconfitta(nomeAvv, risposte1, risposte2)
+                }
+                else if (avvRitirato){
+                    giocatoriRef.child(uid).child("fineTurno").setValue("si")
+                    StatisticheFragment.StatisticheTerminate(
+                        partita,
+                        modalita,
+                        difficolta,
+                        uid,
+                        risposte1,
+                        risposte2
+                    )
+                    StatisticheFragment.StatisticheTerminate(
+                        partita,
+                        modalita,
+                        difficolta,
+                        avversario,
+                        risposte1,
+                        risposte2
+                    )
+                    modArgomentoActivity.schermataVittoria(nomeAvv, risposte1, risposte2)
+                }
+                else {
+                    Log.d("giocatore2esiste alla fine", giocatore2esiste.toString())
+                    if (!giocatore2esiste) {
                         giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                        StatisticheFragment.StatisticheTerminate(partita, modalita, difficolta, uid, risposte1, risposte2)
-                        StatisticheFragment.StatisticheTerminate(partita, modalita, difficolta, avversario, risposte1, risposte2)
-                        modArgomentoActivity.schermataVittoria(nomeAvv, risposte1, risposte2)
+                        modArgomentoActivity.schermataAttendi()
+                    } else {
+                        Log.d("entra in else", "si")
+                        if (risposte1 > risposte2) {
 
-                    } else if (risposte1 == risposte2) {
+                            giocatoriRef.child(uid).child("fineTurno").setValue("si")
+                            StatisticheFragment.StatisticheTerminate(
+                                partita,
+                                modalita,
+                                difficolta,
+                                uid,
+                                risposte1,
+                                risposte2
+                            )
+                            StatisticheFragment.StatisticheTerminate(
+                                partita,
+                                modalita,
+                                difficolta,
+                                avversario,
+                                risposte1,
+                                risposte2
+                            )
+                            modArgomentoActivity.schermataVittoria(nomeAvv, risposte1, risposte2)
 
-                        giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                        StatisticheFragment.StatisticheTerminate(partita, modalita, difficolta, uid, risposte1, risposte2)
-                        StatisticheFragment.StatisticheTerminate(partita, modalita, difficolta, avversario, risposte1, risposte2)
-                        modArgomentoActivity.schermataPareggio(nomeAvv, risposte1, risposte2)
+                        } else if (risposte1 == risposte2) {
 
-                    } else if (risposte1 < risposte2) {
+                            giocatoriRef.child(uid).child("fineTurno").setValue("si")
+                            StatisticheFragment.StatisticheTerminate(
+                                partita,
+                                modalita,
+                                difficolta,
+                                uid,
+                                risposte1,
+                                risposte2
+                            )
+                            StatisticheFragment.StatisticheTerminate(
+                                partita,
+                                modalita,
+                                difficolta,
+                                avversario,
+                                risposte1,
+                                risposte2
+                            )
+                            modArgomentoActivity.schermataPareggio(nomeAvv, risposte1, risposte2)
 
-                        giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                        StatisticheFragment.StatisticheTerminate(partita, modalita, difficolta, uid, risposte1, risposte2)
-                            StatisticheFragment.StatisticheTerminate(partita, modalita, difficolta, avversario, risposte1, risposte2)
-                        modArgomentoActivity.schermataSconfitta(nomeAvv, risposte1, risposte2)
+                        } else if (risposte1 < risposte2) {
+
+                            giocatoriRef.child(uid).child("fineTurno").setValue("si")
+                            StatisticheFragment.StatisticheTerminate(
+                                partita,
+                                modalita,
+                                difficolta,
+                                uid,
+                                risposte1,
+                                risposte2
+                            )
+                            StatisticheFragment.StatisticheTerminate(
+                                partita,
+                                modalita,
+                                difficolta,
+                                avversario,
+                                risposte1,
+                                risposte2
+                            )
+                            modArgomentoActivity.schermataSconfitta(nomeAvv, risposte1, risposte2)
+
+                        }
 
                     }
-
                 }
-
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -396,5 +520,32 @@ class SceltaMultiplaFragment : Fragment() {
         })
 
 
+    }
+
+
+    fun controllaRitiro() {
+        database = FirebaseDatabase.getInstance()
+        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+        var giocatoriRef =
+            database.getReference("partite").child(modalita).child(difficolta).child(partita)
+                .child("giocatori")
+        giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (giocatore in dataSnapshot.children) {
+
+                    var giocatore1 = giocatore.key.toString()
+                    if (giocatore.hasChild("ritirato")) {
+                        if (giocatore1 != uid){
+                            finePartita()
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 }

@@ -1,6 +1,7 @@
 package com.example.opentrivia.menu
 
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +13,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.Navigation
 import com.example.opentrivia.R
@@ -23,6 +26,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlin.system.exitProcess
 
 
 class Menu : Fragment() {
@@ -45,6 +49,30 @@ class Menu : Fragment() {
         startButton = view.findViewById(R.id.startButton)
         visualizzaCronologia = view.findViewById(R.id.historyTextView)
         partitaContainer = view.findViewById(R.id.linearLayout)
+
+
+
+        val callback = object : OnBackPressedCallback(true){
+            override fun handleOnBackPressed() {
+                val alertDialog = AlertDialog.Builder(requireContext())
+                alertDialog.setTitle("Uscita Applicazione")
+                alertDialog.setMessage("Vuoi uscire dall'applicazione?")
+
+                alertDialog.setPositiveButton("SI")  {dialog: DialogInterface, which: Int ->
+                    finishAffinity(requireActivity())
+                    exitProcess(0)
+                        }
+
+                alertDialog.setNegativeButton("NO")  {dialog: DialogInterface, which: Int ->
+                    dialog.dismiss()
+                }
+
+                alertDialog.show()
+            }
+        }
+
+       requireActivity().onBackPressedDispatcher.addCallback(callback)
+
         database = FirebaseDatabase.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         val nomeMio = FirebaseAuth.getInstance().currentUser?.displayName.toString()

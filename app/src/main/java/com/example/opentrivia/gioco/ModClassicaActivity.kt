@@ -62,31 +62,17 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
 
         //salviamo il topic
         this.topic = topic
+
         // Controlla se partita non è stata inizializzata
         if (partita == "") {
-            creaPartitaDatabase()
+            creaPartitaDatabase(){
+                controllaSeJolly()
+            }
         }
-
-        if (topic == "jolly") {
-            chiamaConquista()
-
-            val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-                 database = FirebaseDatabase.getInstance()
-            val giocatoreRef =
-                database.getReference("partite").child("classica").child(difficolta).child(partita)
-                    .child("giocatori").child(uid)
-            giocatoreRef.child("risposteTotCorrette").setValue(0)
-
-                }
         else {
-//chiamiamo la funzione per ottenere il numero delle categorie per il topic selezionato
-            categoria = getCategoria(topic)
-
-
-            //facciamo la chiamata api
-            chiamataApi = ChiamataApi("multiple", categoria, difficolta)
-            chiamataApi.fetchTriviaQuestion(this)
+               controllaSeJolly()
         }
+
 
     }
 
@@ -259,7 +245,7 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
     }
 
 
-    fun creaPartitaDatabase() {
+    fun creaPartitaDatabase(callback: () -> Unit) {
         // prendiamo l'istanza del database (ci serve per creare sul database la partita)
         database = FirebaseDatabase.getInstance()
         // partiteRef = database/partite/modalita/difficolta
@@ -345,6 +331,8 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
                     //   partiteRef.child(partita).child("giocatori").child(uid).child(name).child("risposteCorrette").setValue(0)
                     condizioneSoddisfatta = true
                 }
+
+                callback()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -395,6 +383,31 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
     }
 
 
+
+    fun controllaSeJolly() {
+
+
+        if (topic == "jolly") {
+            chiamaConquista()
+
+            val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+            database = FirebaseDatabase.getInstance()
+            val giocatoreRef =
+                database.getReference("partite").child("classica").child(difficolta).child(partita)
+                    .child("giocatori").child(uid)
+            giocatoreRef.child("risposteTotCorrette").setValue(0)
+
+        }
+        else {
+//chiamiamo la funzione per ottenere il numero delle categorie per il topic selezionato
+            categoria = getCategoria(topic)
+
+
+            //facciamo la chiamata api
+            chiamataApi = ChiamataApi("multiple", categoria, difficolta)
+            chiamataApi.fetchTriviaQuestion(this)
+        }
+    }
 
 
 

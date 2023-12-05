@@ -1,5 +1,6 @@
 package com.example.opentrivia
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -109,15 +110,19 @@ coloraSfondo(NomeArgomento.text.toString())
                                 modClassicaActivity.schermataVittoria(nomeAvversario,argomenti_conquistati_miei,argomenti_conquistati_avversario)
                                 StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,uid,argomenti_conquistati_miei,argomenti_conquistati_avversario)
                                 StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,idAvversario,argomenti_conquistati_miei,argomenti_conquistati_avversario)
+                                StatisticheFragment.updateStatTopic(modClassicaActivity.topicConquista,"corretta")
                             }
-                            ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+                            else {
+                                ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+                                StatisticheFragment.updateStatTopic(modClassicaActivity.topicConquista,"corretta")
+                                Handler(Looper.getMainLooper()).postDelayed({
+                                    modClassicaActivity.chiamaRuota()
+                                }, 1000)
+                            }
+
 
                         }
                     }
-                    StatisticheFragment.updateStatTopic(modClassicaActivity.topicConquista,"corretta")
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        modClassicaActivity.chiamaRuota()
-                    }, 1000)
 
                 } else {
                     risposta1.setBackgroundColor(Color.LTGRAY)
@@ -146,9 +151,8 @@ coloraSfondo(NomeArgomento.text.toString())
                         }
                     }
                     StatisticheFragment.updateStatTopic(modClassicaActivity.topicConquista,"sbagliata")
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        modClassicaActivity.chiamaRuota()
-                    }, 1000)
+                    val intent = Intent(activity, MainActivity::class.java)
+                    startActivity(intent)
                 }
                 rispostaData = true
 
@@ -173,8 +177,16 @@ coloraSfondo(NomeArgomento.text.toString())
                                 modClassicaActivity.schermataVittoria(nomeAvversario,argomenti_conquistati_miei,argomenti_conquistati_avversario)
                                 StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,uid,argomenti_conquistati_miei,argomenti_conquistati_avversario)
                                 StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,idAvversario,argomenti_conquistati_miei,argomenti_conquistati_avversario)
+                                StatisticheFragment.updateStatTopic(modClassicaActivity.topicConquista,"corretta")
                             }
-                            ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+                            else {
+                                ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+                                StatisticheFragment.updateStatTopic(modClassicaActivity.topicConquista,"corretta")
+                                Handler(Looper.getMainLooper()).postDelayed({
+                                    modClassicaActivity.chiamaRuota()
+                                }, 1000)
+                            }
+
 
                         }
                     }
@@ -209,9 +221,8 @@ coloraSfondo(NomeArgomento.text.toString())
                     }
 
                     StatisticheFragment.updateStatTopic(modClassicaActivity.topicConquista,"sbagliata")
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        modClassicaActivity.chiamaRuota()
-                    }, 1000)
+                    val intent = Intent(activity, MainActivity::class.java)
+                    startActivity(intent)
 
                 }
                 rispostaData = true
@@ -230,14 +241,23 @@ coloraSfondo(NomeArgomento.text.toString())
                     updateArgomentiConquistati(giocatoreRef){
                         //callback di updateArgomentiConquistati
                         ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) {
+
                                 nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
                             // CHIAMA VITTORIA SE ARGOMENTICONQUISTATI MIEI = 6
                             if (argomenti_conquistati_miei == 6) {
                                 modClassicaActivity.schermataVittoria(nomeAvversario,argomenti_conquistati_miei,argomenti_conquistati_avversario)
                                 StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,uid,argomenti_conquistati_miei,argomenti_conquistati_avversario)
                                 StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,idAvversario,argomenti_conquistati_miei,argomenti_conquistati_avversario)
+                                StatisticheFragment.updateStatTopic(modClassicaActivity.topicConquista,"corretta")
                             }
-                            ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+                            else {
+                                ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+                                StatisticheFragment.updateStatTopic(modClassicaActivity.topicConquista,"corretta")
+                                Handler(Looper.getMainLooper()).postDelayed({
+                                    modClassicaActivity.chiamaRuota()
+                                }, 1000)
+                            }
+
 
                         }
                     }
@@ -272,9 +292,8 @@ coloraSfondo(NomeArgomento.text.toString())
                     }
 
                     StatisticheFragment.updateStatTopic(modClassicaActivity.topicConquista,"sbagliata")
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        modClassicaActivity.chiamaRuota()
-                    }, 1000)
+                    val intent = Intent(activity, MainActivity::class.java)
+                    startActivity(intent)
 
                 }
                 rispostaData = true
@@ -300,8 +319,16 @@ coloraSfondo(NomeArgomento.text.toString())
                                 modClassicaActivity.schermataVittoria(nomeAvversario,argomenti_conquistati_miei,argomenti_conquistati_avversario)
                                 StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,uid,argomenti_conquistati_miei,argomenti_conquistati_avversario)
                                 StatisticheFragment.StatisticheTerminate(partita,"classica",difficolta,idAvversario,argomenti_conquistati_miei,argomenti_conquistati_avversario)
+                                StatisticheFragment.updateStatTopic(modClassicaActivity.topicConquista,"corretta")
                             }
-                            ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+                            else {
+                                ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
+                                StatisticheFragment.updateStatTopic(modClassicaActivity.topicConquista,"corretta")
+                                Handler(Looper.getMainLooper()).postDelayed({
+                                    modClassicaActivity.chiamaRuota()
+                                }, 1000)
+                            }
+
 
                         }
                     }
@@ -338,9 +365,8 @@ coloraSfondo(NomeArgomento.text.toString())
                     }
 
                     StatisticheFragment.updateStatTopic(modClassicaActivity.topicConquista,"sbagliata")
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        modClassicaActivity.chiamaRuota()
-                    }, 1000)
+                    val intent = Intent(activity, MainActivity::class.java)
+                    startActivity(intent)
                 }
                 rispostaData = true
             }
