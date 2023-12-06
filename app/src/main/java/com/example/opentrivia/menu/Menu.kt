@@ -18,6 +18,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.Navigation
+import com.example.opentrivia.PartitaTerminata
 import com.example.opentrivia.R
 import com.example.opentrivia.gioco.ModClassicaActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -38,6 +39,7 @@ class Menu : Fragment() {
     private lateinit var modClassicaActivity: ModClassicaActivity
     private lateinit var background_game_item: ConstraintLayout
     private lateinit var visualizzaCronologia: Button
+    private lateinit var notification: TextView
 
 
     override fun onCreateView(
@@ -48,8 +50,13 @@ class Menu : Fragment() {
        val view = inflater.inflate(R.layout.menu, container, false)
         startButton = view.findViewById(R.id.startButton)
         visualizzaCronologia = view.findViewById(R.id.historyTextView)
+        notification = view.findViewById(R.id.notificationBadge)
         partitaContainer = view.findViewById(R.id.linearLayout)
 
+
+        numeroPartiteNonViste { contatore ->
+            notification.text = contatore.toString()
+        }
 
 
         val callback = object : OnBackPressedCallback(true){
@@ -218,4 +225,33 @@ class Menu : Fragment() {
     }
 
 
+    fun numeroPartiteNonViste(callback: (contatore: Int) -> Unit){
+
+        val uid: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
+        var partiteTerminateRef = FirebaseDatabase.getInstance().getReference("users").child(uid).child("partite terminate")
+
+        var contatore = 0
+
+        partiteTerminateRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(partite: DataSnapshot) {
+
+                for (modalita in partite.children) {
+                    for (difficolta in modalita.children) {
+                        for (partita in difficolta.children) {
+
+                           if (!partita.hasChild("vista")) {
+                               contatore++
+                           }
+                        }
+                    }
+                }
+                callback(contatore)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Gestisci l'errore, se necessario
+            }
+        })
+
+    }
 }

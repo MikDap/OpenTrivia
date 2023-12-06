@@ -64,11 +64,20 @@ class CronologiaPartite : Fragment() {
                 for (modalita in partite.children) {
                     for (difficolta in modalita.children) {
                         for (partita in difficolta.children) {
+
+                            var avvEsiste = false
+                            var partitaRef = FirebaseDatabase.getInstance().getReference("users").child(uid).child("partite terminate").child(
+                                modalita.key.toString()).child(difficolta.key.toString()).child(partita.key.toString())
+
+                            partitaRef.child("vista").setValue("si")
+
                             for (giocatore in partita.child("giocatori").children) {
 
                                 var giocatore1 = giocatore.key.toString()
 
                                 if (giocatore1 != uid){
+
+                                    avvEsiste = true
 
                                     var nomeAvv = giocatore.child("name").value.toString()
                                     var scoreMio = partita.child("esito").child("io").value.toString()
@@ -76,8 +85,17 @@ class CronologiaPartite : Fragment() {
 
                                     var partitaTer = PartitaTerminata(nomeAvv,scoreMio, scoreAvv, modalita.key.toString())
                                     partiteList[position] = partitaTer
+
                                 }
 
+                            }
+                            if (!avvEsiste){
+                                var nomeAvv = "/"
+                                var scoreMio = partita.child("esito").child("io").value.toString()
+                                var scoreAvv = partita.child("esito").child("avversario").value.toString()
+
+                                var partitaTer = PartitaTerminata(nomeAvv,scoreMio, scoreAvv, modalita.key.toString())
+                                partiteList[position] = partitaTer
                             }
                             position++
                         }

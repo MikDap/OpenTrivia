@@ -57,6 +57,7 @@ class SceltaMultiplaFragment : Fragment() {
         val view =
             inflater.inflate(R.layout.mod_argomento_singolo_scelta_multipla, container, false)
 
+        database = FirebaseDatabase.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
         var ritiratoRef =
@@ -74,6 +75,7 @@ class SceltaMultiplaFragment : Fragment() {
                 alertDialog.setPositiveButton("SI") { dialog: DialogInterface, which: Int ->
 
                     ritiratoRef.child("ritirato").setValue("si")
+                    finePartita()
                     val intent = Intent(requireContext(), MainActivity::class.java)
                     startActivity(intent)
                     requireActivity().finish()
@@ -356,6 +358,10 @@ class SceltaMultiplaFragment : Fragment() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (giocatore in dataSnapshot.children) {
 
+                    if(giocatore.key.toString() != uid){
+                        giocatore2esiste = true
+                    }
+
                     if (giocatore.hasChild("ritirato") && giocatore.key.toString() == uid) {
                         ritirato = true
                     }
@@ -381,7 +387,6 @@ class SceltaMultiplaFragment : Fragment() {
                             } else {
                                 avversario = giocatore1
                                 nomeAvv = giocatore.child("name").value.toString()
-                                giocatore2esiste = true
                                 Log.d("giocatore2esiste", giocatore2esiste.toString())
                                 val risposteCorrette =
                                     topic.child("risposteCorrette").getValue(Int::class.java)
@@ -403,8 +408,9 @@ class SceltaMultiplaFragment : Fragment() {
 
                 if (ritirato && giocatore2esiste) {
                     giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                    modArgomentoActivity.schermataSconfitta(nomeAvv, risposte1, risposte2)
+                    Log.d("entra1", "si")
                 } else if (ritirato) {
+                    Log.d("entra2", "si")
                     giocatoriRef.child(uid).child("fineTurno").setValue("si")
                     StatisticheFragment.StatisticheTerminate(
                         partita,
@@ -414,7 +420,6 @@ class SceltaMultiplaFragment : Fragment() {
                         risposte1,
                         risposte2
                     )
-                    modArgomentoActivity.schermataSconfitta(nomeAvv, risposte1, risposte2)
                 }
                 else if (avvRitirato){
                     giocatoriRef.child(uid).child("fineTurno").setValue("si")
