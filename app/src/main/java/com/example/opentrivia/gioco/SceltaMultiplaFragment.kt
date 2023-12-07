@@ -89,7 +89,7 @@ class SceltaMultiplaFragment : Fragment() {
             }
         }
 
-        requireActivity().onBackPressedDispatcher.addCallback(callback)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
 
         domanda = view.findViewById(R.id.domanda)
         risposta1 = view.findViewById(R.id.risposta1)
@@ -360,6 +360,8 @@ class SceltaMultiplaFragment : Fragment() {
 
                     if(giocatore.key.toString() != uid){
                         giocatore2esiste = true
+                        avversario = giocatore.key.toString()
+                        nomeAvv = giocatore.child("name").value.toString()
                     }
 
                     if (giocatore.hasChild("ritirato") && giocatore.key.toString() == uid) {
@@ -385,8 +387,6 @@ class SceltaMultiplaFragment : Fragment() {
                                     risposte1 += risposteCorrette
                                 }
                             } else {
-                                avversario = giocatore1
-                                nomeAvv = giocatore.child("name").value.toString()
                                 Log.d("giocatore2esiste", giocatore2esiste.toString())
                                 val risposteCorrette =
                                     topic.child("risposteCorrette").getValue(Int::class.java)

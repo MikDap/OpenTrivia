@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -89,18 +91,19 @@ class ChatListaAmici : Fragment() {
                                 transaction.addToBackStack(null)
                                 transaction.commit()
                             }
-                        }
+                        } else {
 
-                        else {
-
-                             var userOtherRef = FirebaseDatabase.getInstance().getReference("users").child(userIDOther)
+                            var userOtherRef = FirebaseDatabase.getInstance().getReference("users")
+                                .child(userIDOther)
 
                             val nuovaChatRef = userRef.child("chat").push()
                             chatID = nuovaChatRef.key.toString()
 
 
-                            userOtherRef.child("chat").child(chatID).child("partecipante").child(uid).setValue(displayname)
-                           val settato= userRef.child("chat").child(chatID).child("partecipante").child(userIDOther).setValue(usernameOther)
+                            userOtherRef.child("chat").child(chatID).child("partecipante")
+                                .child(uid).setValue(displayname)
+                            val settato = userRef.child("chat").child(chatID).child("partecipante")
+                                .child(userIDOther).setValue(usernameOther)
 
                             settato.addOnSuccessListener {
 
@@ -129,7 +132,14 @@ class ChatListaAmici : Fragment() {
                     override fun onCancelled(error: DatabaseError) {
                         // Gestisci l'errore, se necessario
                     }
-                })
+                }.also { listener ->
+                        viewLifecycleOwner.lifecycle.addObserver(object : DefaultLifecycleObserver {
+                            override fun onDestroy(owner: LifecycleOwner) {
+                                super.onDestroy(owner)
+                                amiciRef.removeEventListener(listener) // Rimuovi il listener quando la vista è distrutta
+                            }
+                        })
+                    })
 
 
             }

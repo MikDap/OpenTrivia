@@ -78,7 +78,7 @@ class Menu : Fragment() {
             }
         }
 
-       requireActivity().onBackPressedDispatcher.addCallback(callback)
+       requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
 
         database = FirebaseDatabase.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()

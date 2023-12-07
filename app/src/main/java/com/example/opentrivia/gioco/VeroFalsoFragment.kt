@@ -20,9 +20,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-
 class VeroFalsoFragment : Fragment() {
-
     private lateinit var database: FirebaseDatabase
     private lateinit var domanda: TextView
     private lateinit var risposta1: Button
@@ -30,16 +28,15 @@ class VeroFalsoFragment : Fragment() {
     //private lateinit var risposta3: Button
     //private lateinit var risposta4: Button
     private lateinit var modATempoActivity: ModATempoActivity
-
     private lateinit var rispostaCorretta: String
-    private lateinit var partita: String
-    private lateinit var modalita: String
-    private lateinit var difficolta: String
-    private lateinit var topic: String
+    lateinit var partita: String
+    lateinit var modalita: String
+    lateinit var difficolta: String
+    lateinit var topic: String
     private  var contatoreRisposte = 0
-    var elapsedTimeInMillis: Long = 0
+    var timeStamp: Long = 0L
+    var finalTime: Long = 60000L
     lateinit var progressBarView: TimeProgressBarView
-
     //1. in ModATempoActivity creiamo l'istanza di questa classe col tempo settato (la prima volta a 0)
     //attraverso la funzione newInstance.
     //2. Nell'OnViewCreated passiamo il tempo preso tramite newInstance alla TimeProgressBar.
@@ -49,31 +46,11 @@ class VeroFalsoFragment : Fragment() {
     //5. Riprende dal punto 1.
 
 
-    //funzione per passare il tempo rimanente dall'activity alla nuova istanza di questo fragment
-    companion object {
-        private const val ARG_ELAPSED_TIME = "elapsed_time"
-
-        fun newInstance(elapsedTime: Long): VeroFalsoFragment {
-            val fragment = VeroFalsoFragment()
-            val args = Bundle()
-            args.putLong(ARG_ELAPSED_TIME, elapsedTime)
-            fragment.arguments = args
-            return fragment
-        }
-    }
-
-
-    //funzione per passare il tempo dall'istanza di questo fragment all'activity
-    fun passElapsedTime(elapsedTime: Long) {
-        modATempoActivity= activity as ModATempoActivity
-        modATempoActivity.elapsedTimeInMillis2 = elapsedTime
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //prende il tempo rimanente che ci siamo salvati in newInstance e lo mette nella variabile di classe
-        arguments?.let {
-            elapsedTimeInMillis = it.getLong(ARG_ELAPSED_TIME, 0)
-        }
+        modATempoActivity= activity as ModATempoActivity
+        timeStamp = modATempoActivity.timeStamp
+        finalTime = modATempoActivity.finalTime
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -82,13 +59,10 @@ class VeroFalsoFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_vero_falso, container, false)
 
-        modATempoActivity= activity as ModATempoActivity
-
         domanda = view.findViewById(R.id.domandavf)
         risposta1 = view.findViewById(R.id.vfrisposta1)
         risposta2 = view.findViewById(R.id.vfrisposta2)
         Log.d(modalita,"modalita")
-
         domanda.text = modATempoActivity.domanda
         risposta1.text = "True"
         Log.d("risposta1", risposta1.text as String)
@@ -100,21 +74,17 @@ class VeroFalsoFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //prende il tempo rimanente da newInstance e lo passa alla timeProgressBar
-        val elapsedTime = arguments?.getLong(ARG_ELAPSED_TIME, 0) ?: 0
         val timeProgressBarView = view.findViewById<TimeProgressBarView>(R.id.timeProgressBar)
-        // Ora puoi utilizzare timeProgressBarView per impostare il tempo totale e avviare la visualizzazione
+        timeProgressBarView.timeStamp = timeStamp
+        timeProgressBarView.finalTime = finalTime
         timeProgressBarView.associatedFragment = this
-        timeProgressBarView.setTotalTimeAndStart(60000) // Esempio: 120 secondi
-        timeProgressBarView.elapsedTimeInMillis = elapsedTime
+        timeProgressBarView.startTimer()
         progressBarView = timeProgressBarView
-
         database = FirebaseDatabase.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         var risposteRef = database.getReference("partite").child(modalita).child(difficolta).child(partita)
             .child("giocatori").child(uid).child(topic)
         var partiteInCorsoRef = database.getReference("users").child(uid).child("partite in corso")
-
         var rispostaData = false
         risposta1.setOnClickListener {
             if (!rispostaData) {
@@ -145,19 +115,6 @@ class VeroFalsoFragment : Fragment() {
                 rispostaData = true
             }
         }
-
-    }
-    fun setParametriPartita(
-        partita: String,
-        modalita: String,
-        difficolta: String,
-        topic:String
-    ) {
-        // Imposta il valore della variabile partita come desiderato
-        this.partita = partita
-        this.modalita = modalita
-        this.difficolta = difficolta
-        this.topic=topic
     }
 
     fun updateRisposte(
@@ -175,7 +132,6 @@ class VeroFalsoFragment : Fragment() {
                         // Il dato non esiste nel database, quindi scrivi qualcosa
                         risposteRef.child("risposteCorrette").setValue(1)
                     }
-
                     if (dataSnapshot.child("risposteTotali").exists()) {
                         // Il dato esiste nel database
                         var punti = dataSnapshot.child("risposteTotali").value.toString().toInt()
@@ -183,9 +139,7 @@ class VeroFalsoFragment : Fragment() {
                         contatoreRisposte = punti
                         Log.d("contatoreRisposte", contatoreRisposte.toString())
                         risposteRef.child("risposteTotali").setValue(punti)
-
                         modATempoActivity.getTriviaQuestion()
-
                     } else {
                         // Il dato non esiste nel database, quindi scrivi qualcosa
                         risposteRef.child("risposteTotali").setValue(1)
@@ -204,7 +158,6 @@ class VeroFalsoFragment : Fragment() {
                         // Il dato non esiste nel database, quindi scrivi qualcosa
                         risposteRef.child("risposteSbagliate").setValue(1)
                     }
-
                     if (dataSnapshot.child("risposteTotali").exists()) {
                         // Il dato esiste nel database
                         var punti = dataSnapshot.child("risposteTotali").value.toString().toInt()
@@ -224,49 +177,34 @@ class VeroFalsoFragment : Fragment() {
                         Log.d("contatoreRisposte", contatoreRisposte.toString())
                         modATempoActivity.getTriviaQuestion()
                     }
-
                 }
-
                 //qua il codice per salvare sul database i dati nel nodo users per utilizzarli nella scrollview
 
 
-
-
-
             }
-
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
         })
     }
-
-fun finePartita() {
-
-    database = FirebaseDatabase.getInstance()
-    val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-    var giocatoriRef =
-        database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
-    var risposte1 = 0
-    var risposte2 = 0
-    var giocatore2esiste = false
-    var avversario = ""
-    var nomeAvv = ""
-
+    fun finePartita() {
+        database = FirebaseDatabase.getInstance()
+        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+        var giocatoriRef =
+            database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
+        var risposte1 = 0
+        var risposte2 = 0
+        var giocatore2esiste = false
+        var avversario = ""
+        var nomeAvv = ""
         giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-
                 for (giocatore in dataSnapshot.children) {
-
                     for (topic in giocatore.children) {
-
                         if (topic.hasChild("risposteCorrette")) {
-
                             var giocatore1 = giocatore.key.toString()
-
                             if (giocatore1.equals(uid)) {
                                 Log.d("giocatore2esiste", giocatore2esiste.toString())
-
                                 val risposteCorrette =
                                     topic.child("risposteCorrette").getValue(Int::class.java)
                                 if (risposteCorrette != null) {
@@ -276,24 +214,18 @@ fun finePartita() {
                                 avversario = giocatore1
                                 nomeAvv = giocatore.child("name").value.toString()
                                 giocatore2esiste = true
-
                                 Log.d("giocatore2esiste", giocatore2esiste.toString())
-
                                 val risposteCorrette =
                                     topic.child("risposteCorrette").getValue(Int::class.java)
                                 if (risposteCorrette != null) {
                                     risposte2 += risposteCorrette
                                 }
 
-
                             }
                         }
                     }
 
-
                 }
-
-
 
 
                 Log.d("giocatore2esiste alla fine", giocatore2esiste.toString())
@@ -305,7 +237,6 @@ fun finePartita() {
                     if (risposte1 > risposte2) {
                         var fineTurno = giocatoriRef.child(uid).child("fineTurno").setValue("si")
                         fineTurno.addOnCompleteListener {
-
                             StatisticheFragment.StatisticheTerminate(
                                 partita,
                                 modalita,
@@ -327,7 +258,6 @@ fun finePartita() {
                     } else if (risposte1 == risposte2) {
                         var fineTurno = giocatoriRef.child(uid).child("fineTurno").setValue("si")
                         fineTurno.addOnCompleteListener {
-
                             StatisticheFragment.StatisticheTerminate(
                                 partita,
                                 modalita,
@@ -349,7 +279,6 @@ fun finePartita() {
                     } else if (risposte1 < risposte2) {
                         var fineTurno = giocatoriRef.child(uid).child("fineTurno").setValue("si")
                         fineTurno.addOnCompleteListener {
-
                             StatisticheFragment.StatisticheTerminate(
                                 partita,
                                 modalita,
@@ -369,14 +298,18 @@ fun finePartita() {
                             modATempoActivity.schermataSconfitta(nomeAvv, risposte1, risposte2)
                         }
                     }
-                           
+
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
         })
+    }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        progressBarView.stopTimer()
     }
 }
+ 
