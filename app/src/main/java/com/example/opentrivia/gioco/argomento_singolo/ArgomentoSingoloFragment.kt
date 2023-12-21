@@ -1,4 +1,4 @@
-package com.example.opentrivia.gioco
+package com.example.opentrivia.gioco.argomento_singolo
 
 import android.content.Context
 import android.os.Bundle

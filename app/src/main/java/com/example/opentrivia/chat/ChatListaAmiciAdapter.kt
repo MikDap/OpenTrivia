@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.opentrivia.chat.ChatListaAmici
 
@@ -20,7 +22,7 @@ class ChatListaAmiciAdapter(private val userKeyMap: Map<String, String>, private
         val userId = userKeyMap.keys.elementAt(position)
         val username = userKeyMap[userId]
         holder.amico.text = username
-        holder.amico.setOnClickListener {
+        holder.chat.setOnClickListener {
             if (username != null) {
                 clickListener.onAmicoClick(userId, username)
             }
@@ -32,20 +34,10 @@ class ChatListaAmiciAdapter(private val userKeyMap: Map<String, String>, private
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val amico: Button = itemView.findViewById(R.id.textViewFriendName)
+        val amico: TextView = itemView.findViewById(R.id.textViewFriendName)
+        val chat: ImageView = itemView.findViewById(R.id.ChatImage)
 
 
-        init {
-
-        amico.setOnClickListener{
-            val position = adapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-
-
-            }
-        }
-
-    }
     }
 
 

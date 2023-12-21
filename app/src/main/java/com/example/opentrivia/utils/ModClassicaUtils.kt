@@ -81,28 +81,6 @@ class ModClassicaUtils {
 
 
 
-//verifa se questa è la risposta corretta, restituisce true o false
-
-        fun QuestaèLaRispostaCorretta (risposta: Button, rispostaCorretta: String): Boolean {
-
-
-            if (risposta.text == rispostaCorretta) {
-                risposta.setBackgroundColor(Color.LTGRAY)
-                Handler(Looper.getMainLooper()).postDelayed({
-                    risposta.setBackgroundColor(Color.GREEN)
-                }, 500)
-                return true
-            }
-                else {
-                risposta.setBackgroundColor(Color.LTGRAY)
-                Handler(Looper.getMainLooper()).postDelayed({
-                    risposta.setBackgroundColor(Color.RED)
-                }, 500)
-                return false
-            }
-        }
-
-
 
 
 
@@ -143,19 +121,6 @@ class ModClassicaUtils {
 
             })
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -418,7 +383,7 @@ class ModClassicaUtils {
                         var giocatore1 = giocatore.key.toString()
 
 
-                            if (giocatore1!= uid) {
+                        if (giocatore1!= uid) {
                                 nomeAvversario = giocatore.child("name").value.toString()
                                 }
                         }

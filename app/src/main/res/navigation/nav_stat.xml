@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/statFragment"
-        android:name="com.example.opentrivia.StatFragment"
+        android:name="com.example.opentrivia.statistiche.StatFragment"
         android:label="fragment_stat"
         tools:layout="@layout/fragment_stat" />
 </navigation>

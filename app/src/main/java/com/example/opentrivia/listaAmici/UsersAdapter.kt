@@ -33,11 +33,9 @@ class UsersAdapter(private val userKeyMap: Map<String, String>) : RecyclerView.A
 
             if (isFriend) {
                 holder.addFriendButton.visibility = View.INVISIBLE
-                holder.addFriendChecked.visibility = View.INVISIBLE
                 holder.isFriendCheck.visibility = View.VISIBLE
             } else {
                 holder.addFriendButton.visibility = View.VISIBLE
-                holder.addFriendChecked.visibility = View.INVISIBLE
                 holder.isFriendCheck.visibility = View.INVISIBLE
             }
         }
@@ -83,7 +81,6 @@ Log.d("userId",userId.toString())
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
          val textViewFriendName: TextView = itemView.findViewById(R.id.textViewFriendName)
         val addFriendButton: ImageView = itemView.findViewById(R.id.clickableImage)
-            val addFriendChecked: ImageView = itemView.findViewById(R.id.FriendCheckImage)
         val isFriendCheck: ImageView = itemView.findViewById(R.id.CheckImage)
 
         init {
@@ -93,7 +90,7 @@ Log.d("userId",userId.toString())
                 if (position != RecyclerView.NO_POSITION) {
 
                     addFriendButton.visibility = View.INVISIBLE
-                    addFriendChecked.visibility = View.VISIBLE
+                    isFriendCheck.visibility = View.VISIBLE
 
                     val userId = userKeyMap.keys.elementAt(position)
                     val username = userKeyMap[userId]

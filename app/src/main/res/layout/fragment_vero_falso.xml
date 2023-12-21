@@ -46,7 +46,7 @@
         android:id="@+id/vfrisposta2"
         />
 
-    <com.example.opentrivia.gioco.TimeProgressBarView
+    <com.example.opentrivia.gioco.a_tempo.TimeProgressBarView
         android:id="@+id/timeProgressBar"
         android:layout_width="match_parent"
         android:layout_height="30dp"

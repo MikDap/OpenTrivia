@@ -1,38 +1,34 @@
-package com.example.opentrivia.gioco
+package com.example.opentrivia.gioco.classica
 
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.opentrivia.ConquistaSceltaMultipla
 import com.example.opentrivia.R
 import com.example.opentrivia.api.ChiamataApi
-import com.example.opentrivia.mod_classica_conquista
+import com.example.opentrivia.utils.GiocoUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import java.util.Random
-import com.example.opentrivia.utils.ModClassicaUtils
 
-class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener,ChiamataApi.TriviaQuestionCallback {
+class ModClassicaActivity : AppCompatActivity(), RuotaFragment.MyFragmentListener,ChiamataApi.TriviaQuestionCallback {
 
      var partita: String = ""
      lateinit var difficolta: String
+     lateinit var avversario: String
     private lateinit var chiamataApi: ChiamataApi
     private lateinit var database: FirebaseDatabase
     var domanda : String = ""
     var rispostaCorretta : String = ""
-    var risposta1: String = ""
-    var risposta2: String = ""
-    var risposta3: String = ""
-    var risposta4: String = ""
-    var risposte = arrayOf(risposta1, risposta2, risposta3,risposta4)
+
+    var listaRisposte = mutableListOf<String>()
     lateinit var topic: String
     lateinit var categoria: String
     private lateinit var inAttesa: String
+    private lateinit var sfidaAccettata: String
 
 
 
@@ -52,26 +48,35 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
 
         difficolta = intent.getStringExtra("difficolta") ?: ""
         partita = intent.getStringExtra("partita") ?:""
+        avversario = intent.getStringExtra("avversario").toString()
+        sfidaAccettata = intent.getStringExtra("sfidaAccettata").toString()
 
      invalidateOptionsMenu()
     }
-    //mic
-// quando viene scelto il topic sul fragment:
+
+
+// quando finisce di girare la ruota in RuotaFragment e viene scelto il topic:
     override fun onVariablePassed(topic: String) {
-        // Utilizza la variabile passata dal fragment come desiderato
 
         //salviamo il topic
         this.topic = topic
 
         // Controlla se partita non è stata inizializzata
+    if (sfidaAccettata == "false") {
+
         if (partita == "") {
             creaPartitaDatabase(){
-                controllaSeJolly()
+                getTriviaQuestions()
             }
         }
         else {
-               controllaSeJolly()
+            getTriviaQuestions()
         }
+    } else {
+        GiocoUtils.sfidaAccettata(partita, "classica", difficolta)
+        getTriviaQuestions()
+    }
+
 
 
     }
@@ -90,31 +95,22 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
         //salviamo la domanda e le risposte
         this.domanda = chiamataApi.domanda
         this.rispostaCorretta = chiamataApi.risposta_corretta
-        val risposta_corretta = chiamataApi.risposta_corretta
-        val risposta_sbagliata_1 = chiamataApi.risposta_sbagliata_1
-        val risposta_sbagliata_2 = chiamataApi.risposta_sbagliata_2
-        val risposta_sbagliata_3 = chiamataApi.risposta_sbagliata_3
 
-//vogliamo riordinarle per non far capitare la risposta esatta sempre come prima risposta
-//mutable per usare removeAt
-        val listaRisposte = mutableListOf(
-            risposta_corretta,
-            risposta_sbagliata_1,
-            risposta_sbagliata_2,
-            risposta_sbagliata_3
+        listaRisposte.clear()
+        listaRisposte.addAll(
+            listOf(
+                risposta_corretta,
+                risposta_sbagliata_1,
+                risposta_sbagliata_2,
+                risposta_sbagliata_3
+            )
         )
 
-        var i = 0
-        while (i <= 3) {
-            val randomIndex = Random().nextInt(listaRisposte.size)
+        // mescoliamo le risposte
+        listaRisposte.shuffle()
 
-
-            risposte[i] = listaRisposte[randomIndex]
-
-            listaRisposte.removeAt(randomIndex)
-            i++
-        }
-// passiamo al secondo Fragment (DA GESTIRE IL PERMESSO DI RITORNARE INDIETRO DURANTE LA SCHERMATA DELLE DOMANDE E RISPOSTE)
+        
+// passiamo al fragment SceltaMultipla,la domanda e le risposte le prende nell'onCreate
         val secondFragment = SceltaMultiplaFragmentClassica()
 
         secondFragment.partita = partita
@@ -129,93 +125,7 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
         }, 500)
     }
 
-        // in base al topic ricevuto, restituisco i numeri dedicati al topic (specificati in OpenTriviaDB)
-        fun getCategoria(topic: String): String {
-            lateinit var categoria: String
-            val categorie_culturaPop = arrayOf("9","10","11","12","13","14","15","16","29","31","32")
-            val categorie_scienze = arrayOf("17","18","19","30")
 
-            when (topic) {
-
-                "culturaPop" -> { categoria = getRandomTopic1(categorie_culturaPop) }
-
-                "sport" -> {categoria = "21"}
-
-                "storia" ->{categoria = "23"}
-
-                "geografia" -> {categoria= "22"}
-
-                "arte" -> {categoria = "25"}
-
-                "scienze" -> {categoria = getRandomTopic1(categorie_scienze)}
-
-            }
-            return categoria
-        }
-
-
-
-        //ritorna una categoria random
-        fun getRandomTopic1(topics: Array<String>): String {
-            val randomIndex = Random().nextInt(topics.size)
-            return topics[randomIndex]
-        }
-
-
-        //da commentare
-        fun getTriviaQuestion() {
-            chiamataApi = ChiamataApi("multiple",categoria,difficolta)
-            chiamataApi.fetchTriviaQuestion(this)
-            Log.d("getTriviaQuestion","siii")
-           addToUserDatabase()
-        }
-
-//salva la partita nel nodo users, per poterla poi mostrare sulla scrollview del menu principale
-    fun addToUserDatabase() {
-        lateinit var avversarioID: String
-        lateinit var avversario_nome: String
-        var risposte1 = 0
-        var risposte2= 0
-        database = FirebaseDatabase.getInstance()
-        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-        val partiteInCorsoRef = database.getReference("users").child(uid).child("partiteInCorso")
-        partiteInCorsoRef.child(partita)
-
-
-        val partitaRef = database.getReference("partite").child("classica").child(difficolta).child(partita)
-
-
-        partitaRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(partita: DataSnapshot) {
-
-                if (partita.hasChildren()) {
-                    for (giocatore in partita.children) {
-
-                        for (topic in giocatore.children) {
-
-
-                            if (topic.hasChild("risposteCorrette")) {}
-
-                            
-
-                         }
-                     }
-
-
-
-                    }
-
-            }
-
-
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
-
-
-    }
 
 
     fun chiamaRuota() {
@@ -235,7 +145,6 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
         val conquistaFragment = mod_classica_conquista()
         conquistaFragment.setDifficolta(partita, difficolta)
 
-        //       RuotaFragment.setParametriPartita(partita, "classica", difficolta,topic)
         // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, secondFragment).addToBackStack(null).commit();
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction()
@@ -246,7 +155,7 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
 
 
     fun creaPartitaDatabase(callback: () -> Unit) {
-        // prendiamo l'istanza del database (ci serve per creare sul database la partita)
+
         database = FirebaseDatabase.getInstance()
         // partiteRef = database/partite/modalita/difficolta
         val partiteRef = database.getReference("partite").child("classica").child(difficolta)
@@ -254,15 +163,15 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
 
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         val name = FirebaseAuth.getInstance().currentUser?.displayName.toString()
-        Log.d("name11",name)
+
         var condizioneSoddisfatta = false
 
-//Listener per database/partite/modalita/difficolta
+
         partiteRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(listaPartite: DataSnapshot) {
 
 
-/// Se database/partite/modalita/difficolta ha almeno una partita(con qualcuno in attesa):
+           // Se partiteRef ha almeno una partita(con qualcuno in attesa):
                 if (listaPartite.hasChildren()) {
                     for (partita1 in listaPartite.children) {
 
@@ -310,10 +219,7 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
                         .setValue(uid)
                     partiteRef.child(partita).child("giocatori").child(uid).child("name").setValue(name)
                     condizioneSoddisfatta = true
-
                 }
-
-
 
 
 
@@ -368,28 +274,13 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
 
 
 
-    fun schermataVittoria(nomeAvv: String,scoreMio: Int, scoreAvv:Int) {
-
-        val fragment = Vittoria()
-        fragment.nomeAvv = nomeAvv
-        fragment.scoreMio = scoreMio.toString()
-        fragment.scoreAvv = scoreAvv.toString()
-        fragment.mod = "classica"
-        Handler(Looper.getMainLooper()).postDelayed({
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerViewGioco, fragment).commit()
-        }, 500)
-
-    }
 
 
-
-    fun controllaSeJolly() {
+    fun getTriviaQuestions() {
 
 
         if (topic == "jolly") {
             chiamaConquista()
-
             val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
             database = FirebaseDatabase.getInstance()
             val giocatoreRef =
@@ -400,7 +291,7 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
         }
         else {
 //chiamiamo la funzione per ottenere il numero delle categorie per il topic selezionato
-            categoria = getCategoria(topic)
+            categoria = GiocoUtils.getCategoria(topic)
 
 
             //facciamo la chiamata api
@@ -408,7 +299,6 @@ class ModClassicaActivity : AppCompatActivity(),RuotaFragment.MyFragmentListener
             chiamataApi.fetchTriviaQuestion(this)
         }
     }
-
 
 
 }

@@ -44,5 +44,6 @@
     <string name="intrattenimento_80">Intrattenimento n/d</string>
     <string name="scienze_100">Scienze n/d</string>
     <string name="argomento_percentuale"> %1$s %2$s%% </string>
+    <string name="ritirato">Ritirato</string>
 
 </resources>

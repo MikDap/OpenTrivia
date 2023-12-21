@@ -4,14 +4,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/custom_border_vittoria"
+    android:layout_marginBottom="5dp"
+    android:layout_marginStart="1dp"
+    android:layout_marginEnd="1dp">
     <TextView
         android:id="@+id/textViewPartita"
         android:layout_width="0dp"
         android:layout_height="55dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
     <TextView
         android:layout_marginTop="5dp"
         android:id="@+id/NomeAvversario"
@@ -57,14 +62,24 @@
         android:id= "@+id/modalita"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/Modalita"
-        android:layout_marginStart="345dp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="aaaaaaaaaaaaaa"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="6dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:background="#74FFFFFF"
         android:padding="1dp"
         />
+    <TextView
+        android:id="@+id/ritiratoView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ritirato"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NomeAvversario" />
 </androidx.constraintlayout.widget.ConstraintLayout>
  

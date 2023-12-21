@@ -3,15 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#062E40">
 
-    <!-- Campo di ricerca -->
-    <EditText
-        android:id="@+id/editTextSearchchat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Cerca amico"
-        android:inputType="text" />
 
     <!-- RecyclerView per la lista degli amici -->
     <androidx.recyclerview.widget.RecyclerView

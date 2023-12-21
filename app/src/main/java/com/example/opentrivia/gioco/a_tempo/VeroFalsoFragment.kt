@@ -1,9 +1,6 @@
-package com.example.opentrivia.gioco
-import android.content.Intent
+package com.example.opentrivia.gioco.a_tempo
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +8,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.example.opentrivia.MainActivity
 import com.example.opentrivia.R
-import com.example.opentrivia.StatisticheFragment
+import com.example.opentrivia.utils.GiocoUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -91,11 +87,11 @@ class VeroFalsoFragment : Fragment() {
                 if (risposta1.text == rispostaCorretta) {
                     risposta1.setBackgroundColor(Color.GREEN)
                     updateRisposte(risposteRef,"corretta")
-                    StatisticheFragment.updateStatTopic(topic,"corretta")
+                    GiocoUtils.updateStatTopic(topic,"corretta")
                 } else {
                     risposta1.setBackgroundColor(Color.RED)
                     updateRisposte(risposteRef,"sbagliata")
-                    StatisticheFragment.updateStatTopic(topic,"sbagliata")
+                    GiocoUtils.updateStatTopic(topic,"sbagliata")
                 }
                 Log.d("contatoreRisposte2", contatoreRisposte.toString())
                 rispostaData = true
@@ -106,11 +102,11 @@ class VeroFalsoFragment : Fragment() {
                 if (risposta2.text == rispostaCorretta) {
                     risposta2.setBackgroundColor(Color.GREEN)
                     updateRisposte(risposteRef,"corretta")
-                    StatisticheFragment.updateStatTopic(topic,"corretta")
+                    GiocoUtils.updateStatTopic(topic,"corretta")
                 } else {
                     risposta2.setBackgroundColor(Color.RED)
                     updateRisposte(risposteRef,"sbagliata")
-                    StatisticheFragment.updateStatTopic(topic,"sbagliata")
+                    GiocoUtils.updateStatTopic(topic,"sbagliata")
                 }
                 rispostaData = true
             }
@@ -231,13 +227,13 @@ class VeroFalsoFragment : Fragment() {
                 Log.d("giocatore2esiste alla fine", giocatore2esiste.toString())
                 if (giocatore2esiste == false) {
                     giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                    modATempoActivity.schermataAttendi()
+                    GiocoUtils.schermataAttendi(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco3)
                 } else {
                     Log.d("entra in else", "si")
                     if (risposte1 > risposte2) {
                         var fineTurno = giocatoriRef.child(uid).child("fineTurno").setValue("si")
                         fineTurno.addOnCompleteListener {
-                            StatisticheFragment.StatisticheTerminate(
+                            GiocoUtils.spostaInPartiteTerminate(
                                 partita,
                                 modalita,
                                 difficolta,
@@ -245,7 +241,7 @@ class VeroFalsoFragment : Fragment() {
                                 risposte1,
                                 risposte2
                             )
-                            StatisticheFragment.StatisticheTerminate(
+                            GiocoUtils.spostaInPartiteTerminate(
                                 partita,
                                 modalita,
                                 difficolta,
@@ -253,12 +249,19 @@ class VeroFalsoFragment : Fragment() {
                                 risposte1,
                                 risposte2
                             )
-                            modATempoActivity.schermataVittoria(nomeAvv, risposte1, risposte2)
+                            GiocoUtils.schermataVittoria(
+                                requireActivity().supportFragmentManager,
+                                R.id.fragmentContainerViewGioco3,
+                                nomeAvv,
+                                risposte1,
+                                risposte2,
+                                "a tempo"
+                            )
                         }
                     } else if (risposte1 == risposte2) {
                         var fineTurno = giocatoriRef.child(uid).child("fineTurno").setValue("si")
                         fineTurno.addOnCompleteListener {
-                            StatisticheFragment.StatisticheTerminate(
+                            GiocoUtils.spostaInPartiteTerminate(
                                 partita,
                                 modalita,
                                 difficolta,
@@ -266,7 +269,7 @@ class VeroFalsoFragment : Fragment() {
                                 risposte1,
                                 risposte2
                             )
-                            StatisticheFragment.StatisticheTerminate(
+                            GiocoUtils.spostaInPartiteTerminate(
                                 partita,
                                 modalita,
                                 difficolta,
@@ -274,12 +277,19 @@ class VeroFalsoFragment : Fragment() {
                                 risposte1,
                                 risposte2
                             )
-                            modATempoActivity.schermataPareggio(nomeAvv, risposte1, risposte2)
+                            GiocoUtils.schermataPareggio(
+                                requireActivity().supportFragmentManager,
+                                R.id.fragmentContainerViewGioco3,
+                                nomeAvv,
+                                risposte1,
+                                risposte2,
+                                "a tempo"
+                            )
                         }
                     } else if (risposte1 < risposte2) {
                         var fineTurno = giocatoriRef.child(uid).child("fineTurno").setValue("si")
                         fineTurno.addOnCompleteListener {
-                            StatisticheFragment.StatisticheTerminate(
+                            GiocoUtils.spostaInPartiteTerminate(
                                 partita,
                                 modalita,
                                 difficolta,
@@ -287,7 +297,7 @@ class VeroFalsoFragment : Fragment() {
                                 risposte1,
                                 risposte2
                             )
-                            StatisticheFragment.StatisticheTerminate(
+                            GiocoUtils.spostaInPartiteTerminate(
                                 partita,
                                 modalita,
                                 difficolta,
@@ -295,7 +305,14 @@ class VeroFalsoFragment : Fragment() {
                                 risposte1,
                                 risposte2
                             )
-                            modATempoActivity.schermataSconfitta(nomeAvv, risposte1, risposte2)
+                            GiocoUtils.schermataSconfitta(
+                                requireActivity().supportFragmentManager,
+                                R.id.fragmentContainerViewGioco3,
+                                nomeAvv,
+                                risposte1,
+                                risposte2,
+                                "a tempo"
+                            )
                         }
                     }
 

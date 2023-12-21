@@ -1,4 +1,4 @@
-package com.example.opentrivia
+package com.example.opentrivia.gioco
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,7 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import com.example.opentrivia.menu.Menu
+import com.example.opentrivia.MainActivity
+import com.example.opentrivia.R
 
 class AttendiTurnoFragment : Fragment() {
     lateinit var menu: Button
@@ -31,7 +32,7 @@ class AttendiTurnoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         menu.setOnClickListener {
-          intent=Intent(activity,MainActivity::class.java)
+          intent=Intent(activity, MainActivity::class.java)
             startActivity(intent)
 
     }

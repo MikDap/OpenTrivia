@@ -29,13 +29,13 @@
             app:destination="@id/difficolta" />
     </fragment>
     <fragment
-        android:id="@+id/sceltaGiocatore"
-        android:name="com.example.opentrivia.menu.SceltaGiocatore"
+        android:id="@+id/iniziaPartita"
+        android:name="com.example.opentrivia.menu.IniziaPartita"
         android:label="fragment_scelta_giocatore"
-        tools:layout="@layout/menu_scelta_giocatore" >
+        tools:layout="@layout/menu_inizia_partita" >
         <action
-            android:id="@+id/action_sceltaGiocatore_to_difficolta"
-            app:destination="@id/difficolta" />
+            android:id="@+id/action_iniziaPartita_to_sceltaGiocatore"
+            app:destination="@id/sceltaGiocatore" />
     </fragment>
     <fragment
         android:id="@+id/menu"
@@ -48,14 +48,38 @@
         <action
             android:id="@+id/action_menu_to_cronologiaPartite"
             app:destination="@id/cronologiaPartite" />
+        <action
+            android:id="@+id/action_menu_to_sfidaFragment"
+            app:destination="@id/sfidaFragment" />
     </fragment>
     <fragment
         android:id="@+id/cronologiaPartite"
-        android:name="com.example.opentrivia.CronologiaPartite"
+        android:name="com.example.opentrivia.cronologia_partite.CronologiaPartite"
         android:label="visualizza_cronologia"
         tools:layout="@layout/visualizza_cronologia" >
         <action
             android:id="@+id/action_cronologiaPartite_to_menu"
+            app:destination="@id/menu" />
+    </fragment>
+    <fragment
+        android:id="@+id/sceltaGiocatore"
+        android:name="com.example.opentrivia.menu.SceltaGiocatore"
+        android:label="fragment_scelta_giocatore"
+        tools:layout="@layout/menu_scelta_giocatore" >
+        <action
+            android:id="@+id/action_sceltaGiocatore_to_difficolta"
+            app:destination="@id/difficolta" />
+        <action
+            android:id="@+id/action_sceltaGiocatore_to_iniziaPartita"
+            app:destination="@id/iniziaPartita" />
+    </fragment>
+    <fragment
+        android:id="@+id/sfidaFragment"
+        android:name="com.example.opentrivia.SfidaFragment"
+        android:label="menu_sfida"
+        tools:layout="@layout/menu_sfida" >
+        <action
+            android:id="@+id/action_sfidaFragment_to_menu"
             app:destination="@id/menu" />
     </fragment>
 </navigation>

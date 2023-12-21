@@ -1,4 +1,4 @@
-package com.example.opentrivia.gioco
+package com.example.opentrivia.gioco.argomento_singolo
 
 import android.app.AlertDialog
 import android.content.DialogInterface
@@ -14,22 +14,20 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.example.opentrivia.MainActivity
 
 import com.example.opentrivia.R
-import com.example.opentrivia.StatisticheFragment
+import com.example.opentrivia.utils.GiocoUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlin.system.exitProcess
 
 
-class SceltaMultiplaFragment : Fragment() {
+class SceltaMultiplaFragmentArgSingolo : Fragment() {
 
     private lateinit var database: FirebaseDatabase
     private lateinit var domanda: TextView
@@ -48,6 +46,10 @@ class SceltaMultiplaFragment : Fragment() {
     private lateinit var difficolta: String
     private lateinit var topic: String
     private var contatoreRisposte = 0
+
+    var rispostaData = false
+    private lateinit var uid:String
+    private lateinit var risposteRef: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -101,11 +103,11 @@ class SceltaMultiplaFragment : Fragment() {
 
 
         domanda.text = modArgomentoActivity.domanda
-        risposta1.text = modArgomentoActivity.risposte[0]
+        risposta1.text = modArgomentoActivity.listaRisposte[0]
         Log.d("risposta1", risposta1.text as String)
-        risposta2.text = modArgomentoActivity.risposte[1]
-        risposta3.text = modArgomentoActivity.risposte[2]
-        risposta4.text = modArgomentoActivity.risposte[3]
+        risposta2.text = modArgomentoActivity.listaRisposte[1]
+        risposta3.text = modArgomentoActivity.listaRisposte[2]
+        risposta4.text = modArgomentoActivity.listaRisposte[3]
         rispostaCorretta = modArgomentoActivity.rispostaCorretta
 
         return view
@@ -116,113 +118,30 @@ class SceltaMultiplaFragment : Fragment() {
 
 
         database = FirebaseDatabase.getInstance()
-        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-        var risposteRef =
+         uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+         risposteRef =
             database.getReference("partite").child(modalita).child(difficolta).child(partita)
                 .child("giocatori").child(uid).child(topic)
-        var partiteInCorsoRef = database.getReference("users").child(uid).child("partite in corso")
+
 
              controllaRitiro()
 
-        var rispostaData = false
         risposta1.setOnClickListener {
-            if (!rispostaData) {
-
-                if (risposta1.text == rispostaCorretta) {
-                    risposta1.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        risposta1.setBackgroundColor(Color.GREEN)
-                    }, 1000)
-
-                    updateRisposte(risposteRef, "corretta")
-                    StatisticheFragment.updateStatTopic(topic, "corretta")
-
-
-                } else {
-                    risposta1.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        risposta1.setBackgroundColor(Color.RED)
-                    }, 1000)
-
-                    updateRisposte(risposteRef, "sbagliata")
-                    StatisticheFragment.updateStatTopic(topic, "sbagliata")
-                }
-                Log.d("contatoreRisposte2", contatoreRisposte.toString())
-                rispostaData = true
-
-            }
+          controllaRisposta(risposta1)
         }
 
         risposta2.setOnClickListener {
-            if (!rispostaData) {
-                if (risposta2.text == rispostaCorretta) {
-                    risposta2.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        risposta2.setBackgroundColor(Color.GREEN)
-                    }, 1000)
-                    updateRisposte(risposteRef, "corretta")
-                    StatisticheFragment.updateStatTopic(topic, "corretta")
-
-                } else {
-                    risposta2.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        risposta2.setBackgroundColor(Color.RED)
-                    }, 1000)
-                    updateRisposte(risposteRef, "sbagliata")
-                    StatisticheFragment.updateStatTopic(topic, "sbagliata")
-
-                }
-                rispostaData = true
-            }
+            controllaRisposta(risposta2)
         }
-
 
         risposta3.setOnClickListener {
-            if (!rispostaData) {
-                if (risposta3.text == rispostaCorretta) {
-                    risposta3.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        risposta3.setBackgroundColor(Color.GREEN)
-                    }, 1000)
-                    updateRisposte(risposteRef, "corretta")
-                    StatisticheFragment.updateStatTopic(topic, "corretta")
-
-                } else {
-                    risposta3.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        risposta3.setBackgroundColor(Color.RED)
-                    }, 1000)
-                    updateRisposte(risposteRef, "sbagliata")
-                    StatisticheFragment.updateStatTopic(topic, "sbagliata")
-
-                }
-                rispostaData = true
-            }
+            controllaRisposta(risposta3)
         }
-
 
         risposta4.setOnClickListener {
-            if (!rispostaData) {
-                if (risposta4.text == rispostaCorretta) {
-                    risposta4.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        risposta4.setBackgroundColor(Color.GREEN)
-                    }, 1000)
-                    updateRisposte(risposteRef, "corretta")
-                    StatisticheFragment.updateStatTopic(topic, "corretta")
-
-                } else {
-                    risposta4.setBackgroundColor(Color.LTGRAY)
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        risposta4.setBackgroundColor(Color.RED)
-                    }, 1000)
-                    updateRisposte(risposteRef, "sbagliata")
-                    StatisticheFragment.updateStatTopic(topic, "sbagliata")
-
-                }
-                rispostaData = true
-            }
+            controllaRisposta(risposta4)
         }
+
 
 
     }
@@ -233,7 +152,6 @@ class SceltaMultiplaFragment : Fragment() {
         difficolta: String,
         topic: String
     ) {
-        // Imposta il valore della variabile partita come desiderato
         this.partita = partita
         this.modalita = modalita
         this.difficolta = difficolta
@@ -247,26 +165,21 @@ class SceltaMultiplaFragment : Fragment() {
         risposteRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                if (tipo == "corretta") {
-                    if (dataSnapshot.child("risposteCorrette").exists()) {
+                    if (dataSnapshot.child(tipo).exists()) {
                         // Il dato esiste nel database
-                        var punti = dataSnapshot.child("risposteCorrette").value.toString().toInt()
+                        var punti = dataSnapshot.child(tipo).value.toString().toInt()
                         punti++
-                        risposteRef.child("risposteCorrette").setValue(punti)
-
+                        risposteRef.child(tipo).setValue(punti)
                     } else {
-                        // Il dato non esiste nel database, quindi scrivi qualcosa
-                        risposteRef.child("risposteCorrette").setValue(1)
+                        // Il dato non esiste nel database
+                        risposteRef.child(tipo).setValue(1)
                     }
-
-
                     if (dataSnapshot.child("risposteTotali").exists()) {
                         // Il dato esiste nel database
                         var punti = dataSnapshot.child("risposteTotali").value.toString().toInt()
                         punti++
                         contatoreRisposte = punti
 
-                        Log.d("contatoreRisposte", contatoreRisposte.toString())
                         risposteRef.child("risposteTotali").setValue(punti)
 
                         if (contatoreRisposte < 10) {
@@ -275,72 +188,21 @@ class SceltaMultiplaFragment : Fragment() {
                             finePartita()
 
                         }
-
-
                     } else {
                         // Il dato non esiste nel database, quindi scrivi qualcosa
                         risposteRef.child("risposteTotali").setValue(1)
                         contatoreRisposte = 1
-                        Log.d("contatoreRisposte", contatoreRisposte.toString())
                         modArgomentoActivity.getTriviaQuestion()
                     }
-                } else if (tipo == "sbagliata") {
-
-                    if (dataSnapshot.child("risposteSbagliate").exists()) {
-                        // Il dato esiste nel database
-                        var punti = dataSnapshot.child("risposteSbagliate").value.toString().toInt()
-                        punti++
-                        risposteRef.child("risposteSbagliate").setValue(punti)
-
-                    } else {
-                        // Il dato non esiste nel database, quindi scrivi qualcosa
-                        risposteRef.child("risposteSbagliate").setValue(1)
-                    }
-
-
-                    if (dataSnapshot.child("risposteTotali").exists()) {
-                        // Il dato esiste nel database
-                        var punti = dataSnapshot.child("risposteTotali").value.toString().toInt()
-                        punti++
-                        contatoreRisposte = punti
-                        Log.d("contatoreRisposte", contatoreRisposte.toString())
-                        risposteRef.child("risposteTotali").setValue(punti)
-                        if (contatoreRisposte < 10) {
-                            modArgomentoActivity.getTriviaQuestion()
-                        } else {
-                            finePartita()
-
-                        }
-
-                    } else {
-                        // Il dato non esiste nel database, quindi scrivi qualcosa
-                        risposteRef.child("risposteTotali").setValue(1)
-                        contatoreRisposte = 1
-                        Log.d("contatoreRisposte", contatoreRisposte.toString())
-                        modArgomentoActivity.getTriviaQuestion()
-                    }
-
-
-                }
-
-
-                //qua il codice per salvare sul database i dati nel nodo users per utilizzarli nella scrollview
-
-
             }
-
-
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
         })
-
     }
 
-    //modifica di mic
 
     fun finePartita() {
-        Log.d("finePartita", "si")
         database = FirebaseDatabase.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         var giocatoriRef =
@@ -412,7 +274,7 @@ class SceltaMultiplaFragment : Fragment() {
                 } else if (ritirato) {
                     Log.d("entra2", "si")
                     giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                    StatisticheFragment.StatisticheTerminate(
+                    GiocoUtils.spostaInPartiteTerminate(
                         partita,
                         modalita,
                         difficolta,
@@ -423,7 +285,7 @@ class SceltaMultiplaFragment : Fragment() {
                 }
                 else if (avvRitirato){
                     giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                    StatisticheFragment.StatisticheTerminate(
+                    GiocoUtils.spostaInPartiteTerminate(
                         partita,
                         modalita,
                         difficolta,
@@ -431,7 +293,7 @@ class SceltaMultiplaFragment : Fragment() {
                         risposte1,
                         risposte2
                     )
-                    StatisticheFragment.StatisticheTerminate(
+                    GiocoUtils.spostaInPartiteTerminate(
                         partita,
                         modalita,
                         difficolta,
@@ -439,19 +301,26 @@ class SceltaMultiplaFragment : Fragment() {
                         risposte1,
                         risposte2
                     )
-                    modArgomentoActivity.schermataVittoria(nomeAvv, risposte1, risposte2)
+                    GiocoUtils.schermataVittoria(
+                        requireActivity().supportFragmentManager,
+                        R.id.fragmentContainerViewGioco2,
+                        nomeAvv,
+                        risposte1,
+                        risposte2,
+                        "argomento singolo"
+                    )
                 }
                 else {
                     Log.d("giocatore2esiste alla fine", giocatore2esiste.toString())
                     if (!giocatore2esiste) {
                         giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                        modArgomentoActivity.schermataAttendi()
+                        GiocoUtils.schermataAttendi(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco2)
                     } else {
                         Log.d("entra in else", "si")
                         if (risposte1 > risposte2) {
 
                             giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                            StatisticheFragment.StatisticheTerminate(
+                            GiocoUtils.spostaInPartiteTerminate(
                                 partita,
                                 modalita,
                                 difficolta,
@@ -459,7 +328,7 @@ class SceltaMultiplaFragment : Fragment() {
                                 risposte1,
                                 risposte2
                             )
-                            StatisticheFragment.StatisticheTerminate(
+                            GiocoUtils.spostaInPartiteTerminate(
                                 partita,
                                 modalita,
                                 difficolta,
@@ -467,12 +336,19 @@ class SceltaMultiplaFragment : Fragment() {
                                 risposte1,
                                 risposte2
                             )
-                            modArgomentoActivity.schermataVittoria(nomeAvv, risposte1, risposte2)
+                            GiocoUtils.schermataVittoria(
+                                requireActivity().supportFragmentManager,
+                                R.id.fragmentContainerViewGioco2,
+                                nomeAvv,
+                                risposte1,
+                                risposte2,
+                                "argomento singolo"
+                            )
 
                         } else if (risposte1 == risposte2) {
 
                             giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                            StatisticheFragment.StatisticheTerminate(
+                            GiocoUtils.spostaInPartiteTerminate(
                                 partita,
                                 modalita,
                                 difficolta,
@@ -480,7 +356,7 @@ class SceltaMultiplaFragment : Fragment() {
                                 risposte1,
                                 risposte2
                             )
-                            StatisticheFragment.StatisticheTerminate(
+                            GiocoUtils.spostaInPartiteTerminate(
                                 partita,
                                 modalita,
                                 difficolta,
@@ -488,12 +364,19 @@ class SceltaMultiplaFragment : Fragment() {
                                 risposte1,
                                 risposte2
                             )
-                            modArgomentoActivity.schermataPareggio(nomeAvv, risposte1, risposte2)
+                            GiocoUtils.schermataPareggio(
+                                requireActivity().supportFragmentManager,
+                                R.id.fragmentContainerViewGioco2,
+                                nomeAvv,
+                                risposte1,
+                                risposte2,
+                                "argomento singolo"
+                            )
 
                         } else if (risposte1 < risposte2) {
 
                             giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                            StatisticheFragment.StatisticheTerminate(
+                            GiocoUtils.spostaInPartiteTerminate(
                                 partita,
                                 modalita,
                                 difficolta,
@@ -501,7 +384,7 @@ class SceltaMultiplaFragment : Fragment() {
                                 risposte1,
                                 risposte2
                             )
-                            StatisticheFragment.StatisticheTerminate(
+                            GiocoUtils.spostaInPartiteTerminate(
                                 partita,
                                 modalita,
                                 difficolta,
@@ -509,7 +392,16 @@ class SceltaMultiplaFragment : Fragment() {
                                 risposte1,
                                 risposte2
                             )
-                            modArgomentoActivity.schermataSconfitta(nomeAvv, risposte1, risposte2)
+
+
+                            GiocoUtils.schermataSconfitta(
+                                requireActivity().supportFragmentManager,
+                                R.id.fragmentContainerViewGioco2,
+                                nomeAvv,
+                                risposte1,
+                                risposte2,
+                                "argomento singolo"
+                            )
 
                         }
 
@@ -552,5 +444,27 @@ class SceltaMultiplaFragment : Fragment() {
             }
 
         })
+    }
+
+
+
+
+    fun controllaRisposta(risposta:Button){
+        if (!rispostaData) {
+
+            if (GiocoUtils.QuestaèLaRispostaCorretta(risposta, rispostaCorretta)) {
+
+                updateRisposte(risposteRef, "risposteCorrette")
+                GiocoUtils.updateStatTopic(topic, "corretta")
+
+            } else {
+
+                updateRisposte(risposteRef, "risposteSbagliate")
+                GiocoUtils.updateStatTopic(topic, "sbagliata")
+            }
+
+            rispostaData = true
+
+        }
     }
 }

@@ -28,17 +28,17 @@
         </activity>
 
         <activity
-            android:name=".gioco.ModClassicaActivity"
+            android:name=".gioco.classica.ModClassicaActivity"
             android:label="ModClassica Activity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".gioco.ModArgomentoActivity"
+            android:name=".gioco.argomento_singolo.ModArgomentoActivity"
             android:label="ModArgomento Activity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".gioco.ModATempoActivity"
+            android:name=".gioco.a_tempo.ModATempoActivity"
             android:label="ModATempo Activity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>

@@ -1,12 +1,12 @@
-package com.example.opentrivia.gioco
+package com.example.opentrivia.gioco.a_tempo
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.opentrivia.AttendiTurnoFragment
 import com.example.opentrivia.R
 import com.example.opentrivia.api.ChiamataApi
+import com.example.opentrivia.utils.GiocoUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -149,76 +149,16 @@ class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback
                 .replace(R.id.fragmentContainerViewGioco3, VFfragment).commit()
         }, 100)
     }
-    // in base al topic ricevuto, restituisco i numeri dedicati al topic (specificati in OpenTriviaDB)
-    fun getCategoria(topic: String): String {
-        lateinit var categoria: String
-        val categorie_culturaPop = arrayOf("9","10","11","12","13","14","15","16","29","31","32")
-        val categorie_scienze = arrayOf("17","18","19","30")
-        when (topic) {
-            "culturaPop" -> { categoria = getRandomTopic(categorie_culturaPop) }
-            "sport" -> {categoria = "21"}
-            "storia" ->{categoria = "23"}
-            "geografia" -> {categoria= "22"}
-            "arte" -> {categoria = "25"}
-            "scienze" -> {categoria = getRandomTopic(categorie_scienze)}
-        }
-        return categoria
-    }
-    //ritorna una categoria random
-    fun getRandomTopic(topics: Array<String>): String {
-        val randomIndex = Random().nextInt(topics.size)
-        return topics[randomIndex]
-    }
+
+
     //da commentare
     fun getTriviaQuestion() {
-        topic=getRandomTopic(topics)
+        topic=GiocoUtils.getRandomTopic(topics)
 //chiamiamo la funzione per ottenere il numero delle categorie per il topic selezionato
-        categoria = getCategoria(topic)
+        categoria = GiocoUtils.getCategoria(topic)
         chiamataApi = ChiamataApi("boolean",categoria,difficolta)
         chiamataApi.fetchTriviaQuestion(this)
         Log.d("getTriviaQuestion","siii")
     }
 
-    //mettere funzioni per passare al fragment vittoria, sconfitta o attendi avversario
-    //verrano chiamate da TimeProgressBarView dopo il ciclo while
-    fun schermataAttendi() {
-        val fragment = AttendiTurnoFragment()
-        Handler(Looper.getMainLooper()).postDelayed({
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerViewGioco3, fragment).commit()
-        }, 500)
-    }
-    fun schermataVittoria(nomeAvv: String,scoreMio: Int, scoreAvv:Int) {
-        val fragment = Vittoria()
-        fragment.nomeAvv = nomeAvv
-        fragment.scoreMio = scoreMio.toString()
-        fragment.scoreAvv = scoreAvv.toString()
-        fragment.mod = "argomento singolo"
-        Handler(Looper.getMainLooper()).postDelayed({
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerViewGioco3, fragment).commit()
-        }, 500)
-    }
-    fun schermataPareggio(nomeAvv: String,scoreMio: Int, scoreAvv:Int) {
-        val fragment = Pareggio()
-        fragment.nomeAvv = nomeAvv
-        fragment.scoreMio = scoreMio.toString()
-        fragment.scoreAvv = scoreAvv.toString()
-        fragment.mod = "argomento singolo"
-        Handler(Looper.getMainLooper()).postDelayed({
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerViewGioco3, fragment).commit()
-        }, 500)
-    }
-    fun schermataSconfitta(nomeAvv: String,scoreMio: Int, scoreAvv:Int) {
-        val fragment = Sconfitta()
-        fragment.nomeAvv = nomeAvv
-        fragment.scoreMio = scoreMio.toString()
-        fragment.scoreAvv = scoreAvv.toString()
-        fragment.mod = "argomento singolo"
-        Handler(Looper.getMainLooper()).postDelayed({
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainerViewGioco3, fragment).commit()
-        }, 500)
-    }
 }

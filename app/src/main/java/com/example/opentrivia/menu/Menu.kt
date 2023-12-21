@@ -5,12 +5,12 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
@@ -18,9 +18,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.Navigation
-import com.example.opentrivia.PartitaTerminata
 import com.example.opentrivia.R
-import com.example.opentrivia.gioco.ModClassicaActivity
+import com.example.opentrivia.gioco.classica.ModClassicaActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -40,6 +39,7 @@ class Menu : Fragment() {
     private lateinit var background_game_item: ConstraintLayout
     private lateinit var visualizzaCronologia: Button
     private lateinit var notification: TextView
+    private lateinit var sfida: ImageView
 
 
     override fun onCreateView(
@@ -52,9 +52,13 @@ class Menu : Fragment() {
         visualizzaCronologia = view.findViewById(R.id.historyTextView)
         notification = view.findViewById(R.id.notificationBadge)
         partitaContainer = view.findViewById(R.id.linearLayout)
+        sfida = view.findViewById(R.id.sfida)
 
 
         numeroPartiteNonViste { contatore ->
+            if (contatore == 0){
+                notification.visibility = View.INVISIBLE
+            }
             notification.text = contatore.toString()
         }
 
@@ -124,7 +128,7 @@ class Menu : Fragment() {
 
         startButton.setOnClickListener { Navigation.findNavController(view).navigate(R.id.action_menu_to_modalita)}
         visualizzaCronologia.setOnClickListener{ Navigation.findNavController(view).navigate(R.id.action_menu_to_cronologiaPartite)    }
-
+        sfida.setOnClickListener { Navigation.findNavController(view).navigate(R.id.action_menu_to_sfidaFragment) }
 
         return view
     }
@@ -134,11 +138,9 @@ class Menu : Fragment() {
         modalitaRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(modalitaRef: DataSnapshot) {
 
-                Log.d("2","2")
 
                 if (modalitaRef.child(difficolta).child(partita).hasChild("Turno")) {
                      turno= modalitaRef.child(difficolta).child(partita).child("Turno").value.toString()
-                    Log.d("entranellif", "si")
                 }
 
          callback(turno);

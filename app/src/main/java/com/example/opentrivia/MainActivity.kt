@@ -1,9 +1,11 @@
 package com.example.opentrivia
 
-import android.app.AlertDialog
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
@@ -14,22 +16,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.MenuProvider
+import com.example.opentrivia.chat.ChatActivity
+import com.example.opentrivia.listaAmici.ListaAmiciActivity
+import com.example.opentrivia.statistiche.StatisticheActivity
 import com.example.opentrivia.ui.theme.OpenTriviaTheme
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.database.ktx.database
-import androidx.navigation.Navigation.findNavController
-import com.example.opentrivia.chat.ChatActivity
-import com.example.opentrivia.gioco.ModClassicaActivity
-import com.example.opentrivia.listaAmici.ListaAmiciActivity
-import com.example.opentrivia.listaAmici.ListaAmiciFragment
-import com.example.opentrivia.statistiche.StatisticheActivity
+import com.google.firebase.ktx.Firebase
+
 
 // L'activity eredita dalla classe AppCompatActivity, che fornisce funzionalità aggiuntive rispetto all'Activity standard.
 class MainActivity : AppCompatActivity() {
@@ -85,9 +84,12 @@ class MainActivity : AppCompatActivity() {
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.menu_a_tendina, menu)
+                
+
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+
                 when (menuItem.itemId) {
                     R.id.chat -> {
                         // Qui puoi gestire l'evento di click sull'item "chat"

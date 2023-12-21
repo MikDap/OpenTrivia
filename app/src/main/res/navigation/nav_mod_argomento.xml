@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/argomentoSingoloFragment"
-        android:name="com.example.opentrivia.gioco.ArgomentoSingoloFragment"
+        android:name="com.example.opentrivia.gioco.argomento_singolo.ArgomentoSingoloFragment"
         android:label="fragment_argomento_singolo"
         tools:layout="@layout/mod_argomento_singolo_scelta_argomento" >
         <action
@@ -16,6 +16,6 @@
     </fragment>
     <fragment
         android:id="@+id/sceltaMultiplaFragment2"
-        android:name="com.example.opentrivia.gioco.SceltaMultiplaFragment"
+        android:name="com.example.opentrivia.gioco.argomento_singolo.SceltaMultiplaFragmentArgSingolo"
         android:label="SceltaMultiplaFragment" />
 </navigation>

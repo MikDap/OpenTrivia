@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/ruotaFragment"
-        android:name="com.example.opentrivia.gioco.RuotaFragment"
+        android:name="com.example.opentrivia.gioco.classica.RuotaFragment"
         android:label="fragment_ruota"
         tools:layout="@layout/mod_classica_ruota" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/sceltaMultiplaFragmentClassica"
-        android:name="com.example.opentrivia.gioco.SceltaMultiplaFragmentClassica"
+        android:name="com.example.opentrivia.gioco.classica.SceltaMultiplaFragmentClassica"
         android:label="fragment_scelta_multipla_classica"
         tools:layout="@layout/mod_classica_scelta_multipla" >
         <action
@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/mod_classica_conquista"
-        android:name="com.example.opentrivia.mod_classica_conquista"
+        android:name="com.example.opentrivia.gioco.classica.mod_classica_conquista"
         android:label="fragment_mod_classica_conquista"
         tools:layout="@layout/mod_classica_conquista" >
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/conquistaSceltaMultipla"
-        android:name="com.example.opentrivia.ConquistaSceltaMultipla"
+        android:name="com.example.opentrivia.gioco.classica.ConquistaSceltaMultipla"
         android:label="mod_conquista_sceltamultipla"
         tools:layout="@layout/mod_conquista_sceltamultipla" />
 </navigation>

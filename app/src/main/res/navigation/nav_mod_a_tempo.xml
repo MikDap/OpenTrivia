@@ -6,7 +6,7 @@
     app:startDestination="@id/mod_a_tempo_pronto">
     <fragment
         android:id="@+id/vero_falso"
-        android:name="com.example.opentrivia.gioco.VeroFalsoFragment"
+        android:name="com.example.opentrivia.gioco.a_tempo.VeroFalsoFragment"
         android:label="fragment_vero_falso"
         tools:layout="@layout/fragment_vero_falso" >
         <action
@@ -31,14 +31,14 @@
     </fragment>
     <fragment
         android:id="@+id/mod_a_tempo_pronto"
-        android:name="com.example.opentrivia.gioco.ModATempoProntoFragment"
+        android:name="com.example.opentrivia.gioco.a_tempo.ModATempoProntoFragment"
         android:label="fragment_mod_a_tempo_pronto"
         tools:layout="@layout/mod_a_tempo_pronto" >
     </fragment>
     <fragment
 
         android:id="@+id/attendiTurnoFragment"
-        android:name="com.example.opentrivia.AttendiTurnoFragment"
+        android:name="com.example.opentrivia.gioco.AttendiTurnoFragment"
         android:label="fragment_attendi_turno"
         tools:layout="@layout/fragment_attendi_turno" />
 

@@ -1,13 +1,8 @@
 package com.example.opentrivia.api
 
 import android.util.Log
-import com.example.opentrivia.mod_classica_conquista
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import com.google.gson.GsonBuilder
 
 class ChiamataApi(
     val tipo: String,
@@ -29,10 +24,6 @@ var domanda: String = ""
         GlobalScope.launch {
             val result = questionsApi.getTriviaQuestion(1, categoria.toInt(), difficolta, tipo)
             if (result != null) {
-                // Checking the results
-               // val tipo = result.body()?.results?.get(0)?.type.toString()
-
-
 
 
 

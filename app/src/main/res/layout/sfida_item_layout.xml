@@ -1,0 +1,74 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:layout_gravity="center_vertical"
+    android:background="@drawable/custom_border_pareggio"
+    android:layout_marginEnd="3dp"
+    android:id="@+id/background_game_item">
+
+    <TextView
+        android:id="@+id/opponentNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nome_avversario"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:padding="5dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="0.1"
+        />
+
+
+    <TextView
+        android:id="@+id/modalita"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Argomento Singolo"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintTop_toBottomOf="@+id/opponentNameTextView"
+        app:layout_constraintBottom_toTopOf="@+id/Accetta"
+        />
+
+
+
+    <Button
+        android:id="@+id/Accetta"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:background="@drawable/game_item_background"
+        android:text="Accetta"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/modalita"
+        app:layout_constraintVertical_bias="1.0"
+        android:layout_marginBottom="7dp"/>
+    <Button
+        android:id="@+id/Rifiuta"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:background="@drawable/game_item_attesa_background"
+        android:text="Rifiuta"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/modalita"
+        app:layout_constraintVertical_bias="1.0"
+        android:layout_marginBottom="7dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

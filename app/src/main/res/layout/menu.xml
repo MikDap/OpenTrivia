@@ -7,7 +7,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".menu.Menu"
-    android:background="#062E40">
+    android:background="@drawable/landscape">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHorizontalStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHorizontalEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.72" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVerticalStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVerticalEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
@@ -18,8 +48,10 @@
         android:text="OPEN TRIVIA"
         android:textSize="50sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontalStart"
+        app:layout_constraintEnd_toEndOf="@id/guidelineVerticalEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineVerticalStart"
         app:layout_constraintTop_toTopOf="parent"/>
     <View
         android:id="@+id/orangeBar"
@@ -68,25 +100,37 @@
         android:layout_below="@id/titleTextView"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginTop="310dp"
+        android:layout_marginTop="2dp"
         android:background="@drawable/game_item_background"
         android:text="@string/gioca"
         android:textColor="#5D4037"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@id/guidelineHorizontalEnd" />
+
+    <ImageView
+        android:id="@+id/sfida"
+        android:layout_width="48dp"
+        android:layout_height="39dp"
+        android:src="@drawable/crossed_sword"
+        android:layout_below="@id/titleTextView"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="310dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/startButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="250dp"
         android:src="@drawable/image"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontalEnd"
+        app:layout_constraintEnd_toEndOf="@id/guidelineVerticalEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineVerticalStart"
+        app:layout_constraintTop_toTopOf="@id/guidelineHorizontalStart"
         app:layout_constraintVertical_bias="0.396" />
     <HorizontalScrollView
         android:id="@+id/scrollView"

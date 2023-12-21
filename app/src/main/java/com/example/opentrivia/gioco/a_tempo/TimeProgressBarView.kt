@@ -1,4 +1,4 @@
-package com.example.opentrivia.gioco
+package com.example.opentrivia.gioco.a_tempo
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color

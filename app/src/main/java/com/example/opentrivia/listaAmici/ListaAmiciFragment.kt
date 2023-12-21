@@ -27,7 +27,7 @@ class ListaAmiciFragment : Fragment() {
     private val friendsList = mutableListOf<String>()
     val adapter = FriendsAdapter(friendsList)
     private val uid: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
-    private var amiciRef = FirebaseDatabase.getInstance().getReference("users").child(uid).child("amici")
+    private val amiciRef = FirebaseDatabase.getInstance().getReference("users").child(uid).child("amici")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

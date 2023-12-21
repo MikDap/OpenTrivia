@@ -33,13 +33,11 @@ class FriendsAdapter(private val friendsList: List<String>) : RecyclerView.Adapt
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textViewFriendName: TextView = itemView.findViewById(R.id.textViewFriendName)
         val addFriendButton: ImageView = itemView.findViewById(R.id.clickableImage)
-        val addFriendChecked: ImageView = itemView.findViewById(R.id.FriendCheckImage)
         val isFriendCheck: ImageView = itemView.findViewById(R.id.CheckImage)
 
 
         init {
             addFriendButton.visibility = View.INVISIBLE
-            addFriendChecked.visibility = View.INVISIBLE
             isFriendCheck.visibility = View.INVISIBLE
 
         }

@@ -1,21 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- friend_item_layout.xml -->
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="50dp"
+    android:orientation="vertical"
+    android:layout_marginBottom="10dp"
+    android:background="#062E40">
 
-    <Button
+
+
+    <TextView
         android:id="@+id/textViewFriendName"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:text = "@string/amico"/>
+        android:background="@drawable/custom_border_pareggio"
+        android:text = "@string/amico"
+        android:padding="6dp"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
-
+    <ImageView
+        android:id="@+id/ChatImage"
+        android:layout_width="52dp"
+        android:layout_height="39dp"
+        android:src="@drawable/chat2"
+        android:contentDescription="Immagine Cliccabile"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
     <!-- Altri elementi per visualizzare altre informazioni sugli amici, se necessario -->
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,21 +1,16 @@
-package com.example.opentrivia
+package com.example.opentrivia.gioco.classica
 
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.cardview.widget.CardView
+import com.example.opentrivia.R
 import com.example.opentrivia.api.ChiamataApi
-import com.example.opentrivia.gioco.ModClassicaActivity
-import com.example.opentrivia.gioco.SceltaMultiplaFragmentClassica
 import com.example.opentrivia.utils.ModClassicaUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot

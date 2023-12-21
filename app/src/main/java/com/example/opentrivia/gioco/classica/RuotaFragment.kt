@@ -1,6 +1,7 @@
-package com.example.opentrivia.gioco
+package com.example.opentrivia.gioco.classica
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -21,6 +22,7 @@ import android.util.Log
 import android.graphics.PathMeasure
 import android.graphics.Typeface
 import android.widget.TextView
+import androidx.constraintlayout.widget.Guideline
 import com.example.opentrivia.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -37,7 +39,7 @@ class RuotaFragment : Fragment() {
     private lateinit var ruotaButton: Button
 
 
-
+    private lateinit var prova: View
     private lateinit var storia : View
     private lateinit var sport : View
     private lateinit var scienze : View
@@ -57,6 +59,9 @@ class RuotaFragment : Fragment() {
     private lateinit var rettangolo3:View
 private lateinit var user:TextView
 private lateinit var avversario:TextView
+
+private lateinit var guideline1: Guideline
+private lateinit var guideline2: Guideline
 
     private var selectedTopic: String? = null
     private var isWheelStopped: Boolean = true
@@ -105,7 +110,9 @@ private lateinit var avversario:TextView
         rettangolo1 = view.findViewById(R.id.rettangolo1)
         rettangolo2 = view.findViewById(R.id.rettangolo2)
         rettangolo3 = view.findViewById(R.id.rettangolo3)
+        guideline1 = view.findViewById(R.id.guidelineVerticalStart1)
 
+// Utilizza distanceInDp come riferimento per impostare le dimensioni delle viste nel tuo layout
         user=view.findViewById(R.id.user)
         avversario=view.findViewById(R.id.avversario)
 
@@ -162,6 +169,9 @@ private lateinit var avversario:TextView
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // ...
+
+
+
 
         wheelView.post {
             val backgroundColor = Color.parseColor("#FFC107") // Colore di sfondo desiderato
@@ -505,7 +515,5 @@ private lateinit var avversario:TextView
 
 
 
-
 }
 
- 

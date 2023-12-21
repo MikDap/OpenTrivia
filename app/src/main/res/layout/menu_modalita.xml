@@ -1,84 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#062E40">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!-- Linea guida orizzontale al 15% dell'altezza -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVerticalStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.2" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVerticalEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.8" />
 
-        <TextView
-            android:id="@+id/titleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="143dp"
-            android:layout_marginTop="52dp"
-            android:layout_marginEnd="143dp"
-            android:text="@string/modalita"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/modalita"
+        android:textSize="25sp"
+        android:autoSizeMinTextSize="10sp"
+        android:autoSizeMaxTextSize="25sp"
+        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guidelineVerticalStart"
+        app:layout_constraintEnd_toEndOf="@id/guidelineVerticalEnd"
+        app:layout_constraintBottom_toTopOf="@id/guidelineHorizontal" />
 
-        <Button
-            android:id="@+id/classicaButton"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_below="@id/titleTextView"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/game_item_background"
-            android:paddingTop="15sp"
-            android:paddingBottom="15sp"
-            android:text="@string/classica"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.186" />
+    <Button
+        android:id="@+id/classicaButton"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@drawable/game_item_background"
+        android:paddingTop="10sp"
+        android:paddingBottom="10sp"
+        android:text="@string/classica"
+        android:textSize="20sp"
+        android:autoSizeMinTextSize="10sp"
+        android:autoSizeMaxTextSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/guidelineHorizontal"
+        app:layout_constraintStart_toStartOf="@id/guidelineVerticalStart"
+        app:layout_constraintEnd_toEndOf="@id/guidelineVerticalEnd"
+        />
 
-        <Button
-            android:id="@+id/argomentoButton"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_below="@id/titleTextView"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/game_item_background"
-            android:paddingTop="15sp"
-            android:paddingBottom="15sp"
-            android:text="@string/argomento"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.324" />
+    <Button
+        android:id="@+id/argomentoButton"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/game_item_background"
+        android:paddingTop="10sp"
+        android:paddingBottom="10sp"
+        android:text="@string/argomento"
+        android:textSize="20sp"
+        android:autoSizeMinTextSize="10sp"
+        android:autoSizeMaxTextSize="20sp"
+        app:layout_constraintStart_toStartOf="@id/guidelineVerticalStart"
+        app:layout_constraintEnd_toEndOf="@id/guidelineVerticalEnd"
+        app:layout_constraintTop_toBottomOf="@id/classicaButton" />
 
-        <Button
-            android:id="@+id/tempoButton"
-            android:layout_width="200dp"
-            android:layout_height="50dp"
-            android:layout_below="@id/titleTextView"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/game_item_background"
-            android:paddingTop="15sp"
-            android:paddingBottom="15sp"
-            android:text="@string/tempo"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.461" />
+    <Button
+        android:id="@+id/tempoButton"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/game_item_background"
+        android:paddingTop="10sp"
+        android:paddingBottom="10sp"
+        android:text="@string/tempo"
+        android:textSize="20sp"
+        android:autoSizeMinTextSize="10sp"
+        android:autoSizeMaxTextSize="20sp"
+        app:layout_constraintStart_toStartOf="@id/guidelineVerticalStart"
+        app:layout_constraintEnd_toEndOf="@id/guidelineVerticalEnd"
+        app:layout_constraintTop_toBottomOf="@id/argomentoButton" />
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
