@@ -6,6 +6,7 @@ import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import androidx.fragment.app.FragmentManager
+import com.example.opentrivia.R
 import com.example.opentrivia.gioco.AttendiTurnoFragment
 import com.example.opentrivia.gioco.Pareggio
 import com.example.opentrivia.gioco.Sconfitta
@@ -13,6 +14,7 @@ import com.example.opentrivia.gioco.Vittoria
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.util.Random
@@ -277,6 +279,9 @@ class GiocoUtils {
                 .child("name").setValue(name)
             //cambia inAttesa in no
             partiteRef.child(partita).child("inAttesa").setValue("no")
+
+            //  uid/accettato: si
+            partiteRef.child(partita).child("giocatori").child(uid).child("accettato").setValue("si")
         }
 
 
@@ -299,6 +304,102 @@ class GiocoUtils {
                 return false
             }
         }
+
+
+
+        // tipo: risposteCorrette o risposteSbagliate
+        fun updateRisposte(
+            risposteRef: DatabaseReference, tipo: String
+        ) {
+            risposteRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(risposte: DataSnapshot) {
+
+                    // Se risposte/corr V sbagl.. esiste nel database aumentiamo i punti di 1
+                    if (risposte.child(tipo).exists()) {
+                        var punti = risposte.child(tipo).value.toString().toInt()
+                        punti++
+                        risposteRef.child(tipo).setValue(punti)
+                    }
+                    //sennò settiamo a 1
+                    else {
+                        risposteRef.child(tipo).setValue(1)
+                    }
+                    // Se risposte/risposte totali esiste nel database aumentiamo le risposte totali di 1
+                    if (risposte.child("risposteTotali").exists()) {
+                        var punti = risposte.child("risposteTotali").value.toString().toInt()
+                        punti++
+                        risposteRef.child("risposteTotali").setValue(punti)
+                    }
+                    //sennò le settiamo a 1
+                    else {
+                        risposteRef.child("risposteTotali").setValue(1)
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+        }
+
+
+
+
+
+        fun controllaAvversarioERispCorrette(modalita: String, difficolta: String, partita: String) {
+            database = FirebaseDatabase.getInstance()
+            val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+            var giocatoriRef =
+                database.getReference("partite").child(modalita).child(difficolta).child(partita)
+                    .child("giocatori")
+            var risposte1 = 0
+            var risposte2 = 0
+            var giocatore2esiste = false
+            var avversario = ""
+            var nomeAvv = ""
+
+            giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    for (giocatore in dataSnapshot.children) {
+
+                        if(giocatore.key.toString() != uid){
+                            giocatore2esiste = true
+                            avversario = giocatore.key.toString()
+                            nomeAvv = giocatore.child("name").value.toString()
+                        }
+
+                        // A ENTRAMBI GIOCATORI, PER OGNI TOPIC PRENDO RISPOSTE CORRETTE
+                        for (topic in giocatore.children) {
+
+                            if (topic.hasChild("risposteTotali")) {
+                                var giocatore1 = giocatore.key.toString()
+
+                                // PER ME
+                                if (giocatore1 == uid) {
+                                    val risposteCorrette =
+                                        topic.child("risposteCorrette").getValue(Int::class.java)
+                                    if (risposteCorrette != null) {
+                                        risposte1 += risposteCorrette
+                                    }
+                                }
+                                // PER AVVERSARIO
+                                else {
+                                    val risposteCorrette =
+                                        topic.child("risposteCorrette").getValue(Int::class.java)
+                                    if (risposteCorrette != null) {
+                                        risposte2 += risposteCorrette
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+        }
+
+
 
 
     }

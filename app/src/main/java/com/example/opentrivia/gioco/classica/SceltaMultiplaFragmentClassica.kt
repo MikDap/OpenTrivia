@@ -244,7 +244,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
 
             if (GiocoUtils.QuestaèLaRispostaCorretta(risposta, rispostaCorretta)) {
-                ModClassicaUtils.updateRisposte(risposteRef, "corretta")
+                GiocoUtils.updateRisposte(risposteRef, "risposteCorrette")
 
                 ModClassicaUtils.updateContatoreRisposteCorrette(giocatoriRef) { ->
                     //aggiorna ScrollView
@@ -266,7 +266,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
             }
 
             else {
-                ModClassicaUtils.updateRisposte(risposteRef, "sbagliata")
+                GiocoUtils.updateRisposte(risposteRef, "risposteSbagliate")
                 ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef){
                         nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
                     ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, difficolta, database)

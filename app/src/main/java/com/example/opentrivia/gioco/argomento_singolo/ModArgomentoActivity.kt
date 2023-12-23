@@ -42,17 +42,21 @@ class ModArgomentoActivity : AppCompatActivity(), ArgomentoSingoloFragment.MyFra
         difficolta = intent.getStringExtra("difficolta") ?: ""
         avversario = intent.getStringExtra("avversario").toString()
         avversarioNome = intent.getStringExtra("avversarioNome").toString()
-        sfidaAccettata = intent.getStringExtra("sfidaAccettata").toString()
+        sfidaAccettata = intent.getBooleanExtra("sfidaAccettata", false).toString()
         partita = intent.getStringExtra("partita") ?: ""
+        topic = intent.getStringExtra("topic") ?: ""
 
         invalidateOptionsMenu()
 
+
+        if (sfidaAccettata == "true"){
+           getTriviaQuestion()
+        }
     }
 
 
-    // quando viene scelto il topic sul SceltaMultiplaFragment:
+    // quando viene scelto il topic sul ArgomentoSingoloFragment:
     override fun onVariablePassed(topic: String) {
-        // Utilizza la variabile passata dal fragment come desiderato
 
         //salviamo il topic
         this.topic = topic
@@ -60,7 +64,10 @@ class ModArgomentoActivity : AppCompatActivity(), ArgomentoSingoloFragment.MyFra
 //chiamiamo la funzione per ottenere il numero delle categorie per il topic selezionato
         categoria = GiocoUtils.getCategoria(topic)
 
+
+
         if (sfidaAccettata == "false") {
+            // Utilizza la variabile passata dal fragment
             creaPartitaDatabase()
         } else {
             GiocoUtils.sfidaAccettata(partita, "argomento singolo", difficolta)
@@ -211,6 +218,7 @@ class ModArgomentoActivity : AppCompatActivity(), ArgomentoSingoloFragment.MyFra
             })
         } else {
 
+            Log.d("giusto","si")
             //HAI SFIDATO UN AMICO
             partita = partiteRef.push().key.toString()
             inAttesa = "no"
