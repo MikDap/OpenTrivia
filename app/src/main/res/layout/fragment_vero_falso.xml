@@ -11,10 +11,11 @@
         android:layout_height="100dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:background="@color/white"
+        android:background="@drawable/question_background"
         android:text="@string/hello_blank_fragment"
         android:textAlignment="center"
         android:textColor="@color/black"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,6 +28,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_height="50dp"
+        android:background="@drawable/button_background"
         app:layout_constraintEnd_toEndOf="@id/domandavf"
         app:layout_constraintStart_toStartOf="@id/domandavf"
         app:layout_constraintTop_toTopOf="@id/domandavf"
@@ -39,6 +41,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_height="50dp"
+        android:background="@drawable/button_background"
         app:layout_constraintEnd_toEndOf="@id/domandavf"
         app:layout_constraintStart_toStartOf="@id/domandavf"
         app:layout_constraintTop_toTopOf="@id/domandavf"
@@ -60,4 +63,3 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

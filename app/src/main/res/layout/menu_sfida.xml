@@ -13,9 +13,9 @@
     <!-- LinearLayout orizzontale per le partite in corso -->
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
     </LinearLayout>
         </ScrollView>
     <!-- LinearLayout orizzontale per le partite in corso -->
