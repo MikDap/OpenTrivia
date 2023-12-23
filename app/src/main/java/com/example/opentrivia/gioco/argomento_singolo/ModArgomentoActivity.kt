@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.opentrivia.CaricamentoFragment
 import com.example.opentrivia.R
 import com.example.opentrivia.api.ChiamataApi
 import com.example.opentrivia.utils.GiocoUtils
@@ -32,6 +33,7 @@ class ModArgomentoActivity : AppCompatActivity(), ArgomentoSingoloFragment.MyFra
     lateinit var categoria: String
     private lateinit var inAttesa: String
     private lateinit var sfidaAccettata: String
+    var contatoreRisposte = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +52,9 @@ class ModArgomentoActivity : AppCompatActivity(), ArgomentoSingoloFragment.MyFra
 
 
         if (sfidaAccettata == "true"){
+            val secondFragment = CaricamentoFragment()
+       supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerViewGioco2, secondFragment).commit()
+            categoria = GiocoUtils.getCategoria(topic)
            getTriviaQuestion()
         }
     }
