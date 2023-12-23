@@ -100,8 +100,9 @@ class SfidaFragment : Fragment() {
         val difficolta = sfida.child("difficolta").value.toString()
         val avvID = sfida.child("avversarioID").value.toString()
         val avvNome = sfida.child("avversario").value.toString()
+        var topic = "nessuno"
         if (sfida.hasChild("topic")){
-            val topic = sfida.child("topic").value.toString()
+             topic = sfida.child("topic").value.toString()
         }
 
         opponentNameTextView.text = avvNome
@@ -122,6 +123,7 @@ class SfidaFragment : Fragment() {
             intent.putExtra("avversarioNome", avvNome)
             intent.putExtra("sfidaAccettata", true)
             intent.putExtra("partita", partita)
+            intent.putExtra("topic", topic)
             startActivity(intent)
         }
 

@@ -53,6 +53,10 @@ class IniziaPartita : Fragment() {
             recyclerView.visibility = View.INVISIBLE
             selezioneAvversario.text = "Avversario: casuale"
         }
+
+
+
+
         cercaPartitaButton.setOnClickListener {
 
 
