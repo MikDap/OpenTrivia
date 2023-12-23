@@ -22,11 +22,12 @@ import com.google.firebase.database.ValueEventListener
 class SfidaFragment : Fragment() {
     private lateinit var sfidaContainer: LinearLayout
     private lateinit var database: FirebaseDatabase
-
+    private lateinit var uid: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         database = FirebaseDatabase.getInstance()
+         uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
     }
 
     override fun onCreateView(
@@ -110,6 +111,8 @@ class SfidaFragment : Fragment() {
 
         accetta.setOnClickListener{
 
+            val sfidaRef =  database.getReference("users").child(uid).child("sfide").child(partita)
+            sfidaRef.removeValue()
 
             //CONTROLLA MODALITA E AVVIA INTENT ACTIVITY MODALITA DI GIOCO CONNETTENDOTI ALLA PARTITA CON ID CORRISPONDENTE
             lateinit var intent: Intent
@@ -124,6 +127,7 @@ class SfidaFragment : Fragment() {
             intent.putExtra("sfidaAccettata", true)
             intent.putExtra("partita", partita)
             intent.putExtra("topic", topic)
+            sfidaContainer.removeView(gameView)
             startActivity(intent)
         }
 
@@ -131,6 +135,9 @@ class SfidaFragment : Fragment() {
             //CANCELLA IL NODO NEL DATABASE DELLA PARTITA
             val refToRemove =  database.getReference("partite").child(nomeModalita).child(difficolta).child(partita)
             refToRemove.removeValue()
+            val sfidaRef =  database.getReference("users").child(uid).child("sfide").child(partita)
+            sfidaRef.removeValue()
+            sfidaContainer.removeView(gameView)
         }
 
             sfidaContainer.addView(gameView)

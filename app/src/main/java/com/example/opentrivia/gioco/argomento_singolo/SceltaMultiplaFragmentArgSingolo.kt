@@ -42,7 +42,6 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
     private lateinit var modalita: String
     private lateinit var difficolta: String
     private lateinit var topic: String
-    private var contatoreRisposte = 0
 
     var rispostaData = false
     private lateinit var uid:String
@@ -318,8 +317,8 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
             }
 
             //Controlliamo le risposte totali, se 10 finisce la partita senno prossima domanda
-            contatoreRisposte++
-            if (contatoreRisposte < 10) {
+            modArgomentoActivity.contatoreRisposte++
+            if (modArgomentoActivity.contatoreRisposte < 10) {
                 modArgomentoActivity.getTriviaQuestion()
             } else {
                 finePartita()
