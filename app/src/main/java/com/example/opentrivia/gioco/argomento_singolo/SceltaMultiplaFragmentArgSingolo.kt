@@ -122,7 +122,6 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
          risposteRef = database.getReference("partite").child(modalita).child(difficolta).child(partita)
                 .child("giocatori").child(uid).child(topic)
 
-
              controllaRitiro()
 
         risposta1.setOnClickListener {
@@ -173,8 +172,8 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
         var avvRitirato = false
 
         giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (giocatore in dataSnapshot.children) {
+            override fun onDataChange(listaGiocatori: DataSnapshot) {
+                for (giocatore in listaGiocatori.children) {
 
                     if(giocatore.key.toString() != uid){
                         giocatore2esiste = true

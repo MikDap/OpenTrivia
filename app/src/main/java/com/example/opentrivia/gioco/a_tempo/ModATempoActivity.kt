@@ -30,87 +30,43 @@ class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback
     var timeStamp: Long = 0L
     var finalTime: Long = 60000L
     var fragment = "primo"
+
+    lateinit var sfidaAccettata: String
+    lateinit var avversario: String
+    lateinit var avversarioNome: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.mod_a_tempo_activity)
         difficolta = intent.getStringExtra("difficolta") ?: ""
+        avversario = intent.getStringExtra("avversario").toString()
+        avversarioNome = intent.getStringExtra("avversarioNome").toString()
+        sfidaAccettata = intent.getBooleanExtra("sfidaAccettata", false).toString()
+
+        partita = intent.getStringExtra("partita") ?: ""
+
         invalidateOptionsMenu()
     }
     fun startAtempo() {
-// prendiamo l'istanza del database (ci serve per creare sul database la partita)
-        database = FirebaseDatabase.getInstance()
-        // partiteRef = database/partite/modalita/difficolta
         val partiteRef = database.getReference("partite").child("a tempo").child(difficolta)
-        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-        val name = FirebaseAuth.getInstance().currentUser?.displayName.toString()
-        var condizioneSoddisfatta = false
-//Listener per database/partite/modalita/difficolta
-        partiteRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-/// Se database/partite/modalita/difficolta ha almeno una partita(con qualcuno in attesa):
-                if (dataSnapshot.hasChildren()) {
-                    for (sottonodo in dataSnapshot.children) {
-                        var haFinitoTurno = false
-                        var giocatorediverso = true
-                        if (sottonodo.child("giocatori").hasChild(uid)) {
-                            giocatorediverso = false
-                        }
-                        for (giocatore in sottonodo.child("giocatori").children){
-                            var fineTurno = giocatore.child("fineTurno").value.toString()
-                            if (fineTurno == "si"){
-                                haFinitoTurno = true
-                            }
-                        }
-                        //se c'è almeno una partita con un giocatore in attesa e ha finito il turno..(lo associa)
-                        if (sottonodo.child("inAttesa").value == "si" && giocatorediverso && haFinitoTurno) {
-                            //prende id della partita
-                            partita = sottonodo.key.toString()
-                            //setta database/partite/modalita/difficolta/giocatori/id
-                            partiteRef.child(partita).child("giocatori").child(uid).child("name").setValue(name)
-                            partiteRef.child(partita).child("giocatori").child(uid)
-                                .child("fineTurno").setValue("no")
-                            //cambia inAttesa in no
-                            partiteRef.child(partita).child("inAttesa").setValue("no")
-                            condizioneSoddisfatta = true
-                            break
-                        }
-                    }
-/// se database/partite/modalita/difficolta non ha partite:
-                } else {
-                    //crea id della partita ecc
-                    partita = partiteRef.push().key.toString()
-                    inAttesa = "si"
-                    partiteRef.child(partita).child("inAttesa")
-                        .setValue(inAttesa)
-                    partiteRef.child(partita).child("topic")
-                        .setValue(topic)
-                    partiteRef.child(partita).child("giocatori")
-                        .child(uid).child("name").setValue(name)
-                    partiteRef.child(partita).child("giocatori").child(uid)
-                        .child("fineTurno").setValue("no")
-                    condizioneSoddisfatta = true
-                }
 
-                // Se database/partite/modalita/difficolta ha almeno una partita ma nessuno in Attesa
-                if (!condizioneSoddisfatta) {
-                    partita = partiteRef.push().key.toString()
-                    inAttesa = "si"
-                    partiteRef.child(partita).child("inAttesa")
-                        .setValue(inAttesa)
-                    partiteRef.child(partita).child("topic")
-                        .setValue(topic)
-                    partiteRef.child(partita).child("giocatori")
-                        .child(uid).child("name").setValue(name)
-                    partiteRef.child(partita).child("giocatori").child(uid)
-                        .child("fineTurno").setValue("no")
-                    //   partiteRef.child(partita).child("giocatori").child(uid).child(name).child("risposteCorrette").setValue(0)
-                    condizioneSoddisfatta = true
+        if (avversario == "casuale") {
+            //SE POSSO ASSOCIO L'UTENTE A UNA PARTITA
+            GiocoUtils.associaPartita("a tempo", difficolta, topic) { associato, partita ->
+                if (associato) {
+                    this.partita = partita
+                }
+                //ALTRIMENTI CREO UNA PARTITA
+                else {
+                    GiocoUtils.creaPartita("a tempo", partiteRef, topic) { partita ->
+                        this.partita = partita
+                    }
                 }
             }
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
+        }
+        //HAI SFIDATO UN AMICO
+        else {
+            GiocoUtils.sfidaAmico("a tempo", difficolta, topic, avversario, avversarioNome)
+        }
         //facciamo la chiamata api
         getTriviaQuestion()
 

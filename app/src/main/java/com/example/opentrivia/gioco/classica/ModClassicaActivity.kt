@@ -9,10 +9,7 @@ import com.example.opentrivia.R
 import com.example.opentrivia.api.ChiamataApi
 import com.example.opentrivia.utils.GiocoUtils
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 class ModClassicaActivity : AppCompatActivity(), RuotaFragment.MyFragmentListener,ChiamataApi.TriviaQuestionCallback {
 
@@ -20,15 +17,15 @@ class ModClassicaActivity : AppCompatActivity(), RuotaFragment.MyFragmentListene
      lateinit var difficolta: String
      lateinit var avversario: String
     private lateinit var chiamataApi: ChiamataApi
-    private lateinit var database: FirebaseDatabase
+    private var database = FirebaseDatabase.getInstance()
     var domanda : String = ""
     var rispostaCorretta : String = ""
 
     var listaRisposte = mutableListOf<String>()
     lateinit var topic: String
     lateinit var categoria: String
-    private lateinit var inAttesa: String
     private lateinit var sfidaAccettata: String
+    private lateinit var avversarioNome: String
 
 
 
@@ -49,7 +46,8 @@ class ModClassicaActivity : AppCompatActivity(), RuotaFragment.MyFragmentListene
         difficolta = intent.getStringExtra("difficolta") ?: ""
         partita = intent.getStringExtra("partita") ?:""
         avversario = intent.getStringExtra("avversario").toString()
-        sfidaAccettata = intent.getStringExtra("sfidaAccettata").toString()
+        avversarioNome = intent.getStringExtra("avversarioNome").toString()
+        sfidaAccettata = intent.getBooleanExtra("sfidaAccettata", false).toString()
 
      invalidateOptionsMenu()
     }
@@ -63,21 +61,15 @@ class ModClassicaActivity : AppCompatActivity(), RuotaFragment.MyFragmentListene
 
         // Controlla se partita non è stata inizializzata
     if (sfidaAccettata == "false") {
-
-        if (partita == "") {
-            creaPartitaDatabase(){
-                getTriviaQuestions()
-            }
-        }
-        else {
-            getTriviaQuestions()
-        }
-    } else {
+        if (partita == "") { creaPartitaDatabase() }
+    }
+    else {
         GiocoUtils.sfidaAccettata(partita, "classica", difficolta)
-        getTriviaQuestions()
     }
 
-
+if (!jolly()) {
+    getTriviaQuestions()
+}
 
     }
 
@@ -154,98 +146,30 @@ class ModClassicaActivity : AppCompatActivity(), RuotaFragment.MyFragmentListene
     }
 
 
-    fun creaPartitaDatabase(callback: () -> Unit) {
+//SE TROVA UNA PARTITA ASSOCIA L'UTENTE SENNO CREA UNA PARTITA
+    fun creaPartitaDatabase() {
 
-        database = FirebaseDatabase.getInstance()
-        // partiteRef = database/partite/modalita/difficolta
         val partiteRef = database.getReference("partite").child("classica").child(difficolta)
 
-
-        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-        val name = FirebaseAuth.getInstance().currentUser?.displayName.toString()
-
-        var condizioneSoddisfatta = false
-
-
-        partiteRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(listaPartite: DataSnapshot) {
-
-
-           // Se partiteRef ha almeno una partita(con qualcuno in attesa):
-                if (listaPartite.hasChildren()) {
-                    for (partita1 in listaPartite.children) {
-
-
-                        var giocatorediverso = true
-                        if (partita1.child("giocatori").hasChild(uid)) {
-                            giocatorediverso = false
-                        }
-
-                        var haFinitoTurno = false
-                        val turno : String =  partita1.child("Turno").value.toString()
-                        if (turno == "-") {
-                            haFinitoTurno = true
-                        }
-
-                        //se c'è almeno una partita, con un giocatore in attesa e ha finito il turno, lo associa
-                        if (partita1.child("inAttesa").value == "si" && giocatorediverso && haFinitoTurno) {
-
-                            //prende id della partita
-                            partita = partita1.key.toString()
-                            //setta database/partite/modalita/difficolta/giocatori/id
-                            partiteRef.child(partita).child("giocatori").child(uid).child("name").setValue(name)
-                            Log.d("name",name)
-                            //cambia inAttesa in no
-                            partiteRef.child(partita).child("inAttesa").setValue("no")
-
-                            condizioneSoddisfatta = true
-
-                            break
-                        }
-                    }
-
-
-
-/// se database/partite/modalita/difficolta non ha partite:
-                } else {
-                    //crea id della partita ecc
-                    partita = partiteRef.push().key.toString()
-                    inAttesa = "si"
-                    partiteRef.child(partita).child("inAttesa")
-                        .setValue(inAttesa)
-                    partiteRef.child(partita).child("topic")
-                        .setValue(topic)
-                    partiteRef.child(partita).child("Turno")
-                        .setValue(uid)
-                    partiteRef.child(partita).child("giocatori").child(uid).child("name").setValue(name)
-                    condizioneSoddisfatta = true
-                }
-
-
-
-                // Se database/partite/modalita/difficolta ha almeno una partita ma nessuno in Attesa
-                if (!condizioneSoddisfatta) {
-                    partita = partiteRef.push().key.toString()
-                    inAttesa = "si"
-                    partiteRef.child(partita).child("inAttesa")
-                        .setValue(inAttesa)
-                    partiteRef.child(partita).child("topic")
-                        .setValue(topic)
-                    partiteRef.child(partita).child("Turno")
-                        .setValue(uid)
-                    partiteRef.child(partita).child("giocatori").child(uid).child("name").setValue(name)
-                    //   partiteRef.child(partita).child("giocatori").child(uid).child(name).child("risposteCorrette").setValue(0)
-                    condizioneSoddisfatta = true
-                }
-
-                callback()
+    if (avversario == "casuale") {
+        //SE POSSO ASSOCIO L'UTENTE A UNA PARTITA
+        GiocoUtils.associaPartita("classica", difficolta, "nessuno") { associato, partita ->
+            if (associato) {
+                this.partita = partita
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+            //ALTRIMENTI CREO UNA PARTITA
+            else {
+                GiocoUtils.creaPartita("classica", partiteRef, topic) { partita ->
+                    this.partita = partita
+                }
             }
+        }
+    }
+    //HAI SFIDATO UN AMICO
+    else {
+        GiocoUtils.sfidaAmico("classica", difficolta, topic, avversario, avversarioNome)
+    }
 
-        })
     }
 
     fun chiamaConquistaSceltaMultipla(topic:String, domanda:String, risposta1:String, risposta2:String, risposta3:String, risposta4:String, rispostaCorretta:String) {
@@ -273,12 +197,7 @@ class ModClassicaActivity : AppCompatActivity(), RuotaFragment.MyFragmentListene
     }
 
 
-
-
-
-    fun getTriviaQuestions() {
-
-
+    fun jolly(): Boolean {
         if (topic == "jolly") {
             chiamaConquista()
             val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
@@ -287,17 +206,17 @@ class ModClassicaActivity : AppCompatActivity(), RuotaFragment.MyFragmentListene
                 database.getReference("partite").child("classica").child(difficolta).child(partita)
                     .child("giocatori").child(uid)
             giocatoreRef.child("risposteTotCorrette").setValue(0)
+            return true
+        } else {
+            return false }
+    }
 
-        }
-        else {
+    fun getTriviaQuestions() {
 //chiamiamo la funzione per ottenere il numero delle categorie per il topic selezionato
             categoria = GiocoUtils.getCategoria(topic)
-
-
             //facciamo la chiamata api
             chiamataApi = ChiamataApi("multiple", categoria, difficolta)
             chiamataApi.fetchTriviaQuestion(this)
-        }
     }
 
 

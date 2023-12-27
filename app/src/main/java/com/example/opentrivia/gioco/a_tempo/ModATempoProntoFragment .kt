@@ -28,7 +28,12 @@ private lateinit var modATempoActivity: ModATempoActivity
 
 
         pronto.setOnClickListener{
-        modATempoActivity.startAtempo()
+            if (modATempoActivity.sfidaAccettata == "false") {
+                modATempoActivity.startAtempo()
+            }
+            else {
+                modATempoActivity.getTriviaQuestion()
+            }
 
     }
 
