@@ -113,13 +113,15 @@
 
     <Button
         android:id="@+id/esci"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="50dp"
         android:background="@drawable/button_background"
         android:text="Torna al menù"
         android:textAlignment="center"
         android:textSize="25sp"
-        app:layout_constraintVertical_bias="0.70"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintVertical_bias="0.65"
         app:layout_constraintEnd_toEndOf="@id/congratulazioni"
         app:layout_constraintStart_toStartOf="@id/congratulazioni"
         app:layout_constraintTop_toBottomOf="@id/congratulazioni"

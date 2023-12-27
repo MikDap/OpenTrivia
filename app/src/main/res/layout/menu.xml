@@ -29,24 +29,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.1" />
+        app:layout_constraintGuide_percent="0.05" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineVerticalEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.9" />
+        app:layout_constraintGuide_percent="0.95" />
 
     <TextView
         android:id="@+id/titleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="143dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="143dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:text="OPEN TRIVIA"
-        android:textSize="50sp"
+        android:textSize="40sp"
         android:textStyle="bold"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontalStart"
@@ -104,14 +101,14 @@
         android:background="@drawable/game_item_background"
         android:text="@string/gioca"
         android:textColor="#5D4037"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guidelineVerticalEnd"
+        app:layout_constraintStart_toEndOf="@id/sfida"
         app:layout_constraintBottom_toTopOf="@id/guidelineHorizontalEnd" />
 
     <ImageView
         android:id="@+id/sfida"
         android:layout_width="48dp"
-        android:layout_height="39dp"
+        android:layout_height="0dp"
         android:src="@drawable/crossed_sword"
         android:layout_below="@id/titleTextView"
         app:layout_constraintStart_toStartOf="@id/guidelineVerticalStart"
@@ -120,8 +117,8 @@
         />
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="250dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:src="@drawable/image"
         android:layout_marginBottom="10dp"
         app:layout_constraintHorizontal_bias="0.493"
