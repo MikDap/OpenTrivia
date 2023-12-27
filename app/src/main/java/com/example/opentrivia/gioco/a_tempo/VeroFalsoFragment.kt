@@ -1,4 +1,7 @@
 package com.example.opentrivia.gioco.a_tempo
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -7,7 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import com.example.opentrivia.MainActivity
 import com.example.opentrivia.R
 import com.example.opentrivia.utils.GiocoUtils
 import com.google.firebase.auth.FirebaseAuth
@@ -17,7 +22,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 class VeroFalsoFragment : Fragment() {
-    private lateinit var database: FirebaseDatabase
+    private var database = FirebaseDatabase.getInstance()
     private lateinit var domanda: TextView
     private lateinit var risposta1: Button
     private lateinit var risposta2: Button
@@ -33,6 +38,7 @@ class VeroFalsoFragment : Fragment() {
     var timeStamp: Long = 0L
     var finalTime: Long = 60000L
     lateinit var progressBarView: TimeProgressBarView
+    private var ritirato = false
     //1. in ModATempoActivity creiamo l'istanza di questa classe col tempo settato (la prima volta a 0)
     //attraverso la funzione newInstance.
     //2. Nell'OnViewCreated passiamo il tempo preso tramite newInstance alla TimeProgressBar.
@@ -55,6 +61,37 @@ class VeroFalsoFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_vero_falso, container, false)
 
+        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+
+        var ritiratoRef =
+            database.getReference("partite").child(modalita).child(difficolta).child(partita)
+                .child("giocatori").child(uid)
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val alertDialog = AlertDialog.Builder(requireContext())
+                alertDialog.setTitle("Vuoi ritornare al menù?")
+                alertDialog.setMessage("ATTENZIONE: uscendo perderai la partita")
+
+                alertDialog.setPositiveButton("SI") { dialog: DialogInterface, which: Int ->
+
+                    ritiratoRef.child("ritirato").setValue("si")
+                    ritirato = true
+                    finePartita()
+                    val intent = Intent(requireContext(), MainActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().finish()
+                }
+
+                alertDialog.setNegativeButton("NO") { dialog: DialogInterface, which: Int ->
+                    dialog.dismiss()
+                }
+
+                alertDialog.show()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
+
         domanda = view.findViewById(R.id.domandavf)
         risposta1 = view.findViewById(R.id.vfrisposta1)
         risposta2 = view.findViewById(R.id.vfrisposta2)
@@ -63,8 +100,6 @@ class VeroFalsoFragment : Fragment() {
         risposta1.text = "True"
         Log.d("risposta1", risposta1.text as String)
         risposta2.text = "False"
-        //  risposta3.text = modATempoActivity.risposte[2]
-        // risposta4.text = modATempoActivity.risposte[3]
         rispostaCorretta = modATempoActivity.rispostaCorretta
         return view
     }
@@ -161,11 +196,8 @@ class VeroFalsoFragment : Fragment() {
                         contatoreRisposte = punti
                         Log.d("contatoreRisposte", contatoreRisposte.toString())
                         risposteRef.child("risposteTotali").setValue(punti)
-                        //    if (contatoreRisposte < 10) {
                         modATempoActivity.getTriviaQuestion()
-                        //         }
-                        //         else {startActivity(Intent(activity, MainActivity::class.java))
-                        //           }
+
                     } else {
                         // Il dato non esiste nel database, quindi scrivi qualcosa
                         risposteRef.child("risposteTotali").setValue(1)
@@ -187,30 +219,52 @@ class VeroFalsoFragment : Fragment() {
         database = FirebaseDatabase.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         var giocatoriRef =
-            database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
+            database.getReference("partite").child(modalita).child(difficolta).child(partita)
+                .child("giocatori")
         var risposte1 = 0
         var risposte2 = 0
         var giocatore2esiste = false
         var avversario = ""
         var nomeAvv = ""
+        var ritirato = false
+        var avvRitirato = false
+
         giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (giocatore in dataSnapshot.children) {
+            override fun onDataChange(listaGiocatori: DataSnapshot) {
+                for (giocatore in listaGiocatori.children) {
+
+                    if(giocatore.key.toString() != uid){
+                        giocatore2esiste = true
+                        avversario = giocatore.key.toString()
+                        nomeAvv = giocatore.child("name").value.toString()
+                    }
+
+                    //SE MI SONO RITIRATO IO
+                    if (giocatore.hasChild("ritirato") && giocatore.key.toString() == uid) {
+                        ritirato = true
+                    }
+                    // SE SI è RITIRATO L'AVVERSARIO
+                    if (giocatore.hasChild("ritirato") && giocatore.key.toString() != uid) {
+                        avvRitirato = true
+                    }
+
+                    // A ENTRAMBI GIOCATORI, PER OGNI TOPIC PRENDO RISPOSTE CORRETTE
                     for (topic in giocatore.children) {
-                        if (topic.hasChild("risposteCorrette")) {
+
+                        if (topic.hasChild("risposteTotali")) {
+
                             var giocatore1 = giocatore.key.toString()
-                            if (giocatore1.equals(uid)) {
-                                Log.d("giocatore2esiste", giocatore2esiste.toString())
+
+                            // SE IO AGGIORNA MIE RISPOSTE
+                            if (giocatore1 == uid) {
                                 val risposteCorrette =
                                     topic.child("risposteCorrette").getValue(Int::class.java)
                                 if (risposteCorrette != null) {
                                     risposte1 += risposteCorrette
                                 }
-                            } else {
-                                avversario = giocatore1
-                                nomeAvv = giocatore.child("name").value.toString()
-                                giocatore2esiste = true
-                                Log.d("giocatore2esiste", giocatore2esiste.toString())
+                            }
+                            //SE AVVERSARIO AGGIORNA SUE RISPOSTE
+                            else {
                                 val risposteCorrette =
                                     topic.child("risposteCorrette").getValue(Int::class.java)
                                 if (risposteCorrette != null) {
@@ -221,107 +275,58 @@ class VeroFalsoFragment : Fragment() {
                         }
                     }
 
+
                 }
 
 
-                Log.d("giocatore2esiste alla fine", giocatore2esiste.toString())
-                if (giocatore2esiste == false) {
+                if (ritirato) {
                     giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                    GiocoUtils.schermataAttendi(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco3)
-                } else {
-                    Log.d("entra in else", "si")
-                    if (risposte1 > risposte2) {
-                        var fineTurno = giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                        fineTurno.addOnCompleteListener {
-                            GiocoUtils.spostaInPartiteTerminate(
-                                partita,
-                                modalita,
-                                difficolta,
-                                uid,
-                                risposte1,
-                                risposte2
-                            )
-                            GiocoUtils.spostaInPartiteTerminate(
-                                partita,
-                                modalita,
-                                difficolta,
-                                avversario,
-                                risposte1,
-                                risposte2
-                            )
-                            GiocoUtils.schermataVittoria(
-                                requireActivity().supportFragmentManager,
-                                R.id.fragmentContainerViewGioco3,
-                                nomeAvv,
-                                risposte1,
-                                risposte2,
-                                "a tempo"
-                            )
-                        }
-                    } else if (risposte1 == risposte2) {
-                        var fineTurno = giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                        fineTurno.addOnCompleteListener {
-                            GiocoUtils.spostaInPartiteTerminate(
-                                partita,
-                                modalita,
-                                difficolta,
-                                uid,
-                                risposte1,
-                                risposte2
-                            )
-                            GiocoUtils.spostaInPartiteTerminate(
-                                partita,
-                                modalita,
-                                difficolta,
-                                avversario,
-                                risposte1,
-                                risposte2
-                            )
-                            GiocoUtils.schermataPareggio(
-                                requireActivity().supportFragmentManager,
-                                R.id.fragmentContainerViewGioco3,
-                                nomeAvv,
-                                risposte1,
-                                risposte2,
-                                "a tempo"
-                            )
-                        }
-                    } else if (risposte1 < risposte2) {
-                        var fineTurno = giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                        fineTurno.addOnCompleteListener {
-                            GiocoUtils.spostaInPartiteTerminate(
-                                partita,
-                                modalita,
-                                difficolta,
-                                uid,
-                                risposte1,
-                                risposte2
-                            )
-                            GiocoUtils.spostaInPartiteTerminate(
-                                partita,
-                                modalita,
-                                difficolta,
-                                avversario,
-                                risposte1,
-                                risposte2
-                            )
-                            GiocoUtils.schermataSconfitta(
-                                requireActivity().supportFragmentManager,
-                                R.id.fragmentContainerViewGioco3,
-                                nomeAvv,
-                                risposte1,
-                                risposte2,
-                                "a tempo"
-                            )
+                    //SE ANCORA NON SI CONNETTE NESSUNO CANCELLO LA PARTITA
+                    if(!giocatore2esiste) {
+                        GiocoUtils.spostaInPartiteTerminate(partita, modalita, difficolta, uid, risposte1, risposte2)
+                    }
+                }
+                else if (avvRitirato){
+                    giocatoriRef.child(uid).child("fineTurno").setValue("si")
+
+                    GiocoUtils.spostaInPartiteTerminate(partita, modalita, difficolta, uid, risposte1, risposte2)
+                    GiocoUtils.spostaInPartiteTerminate(partita, modalita, difficolta, avversario, risposte1, risposte2)
+
+                    GiocoUtils.schermataVittoria(
+                        requireActivity().supportFragmentManager,
+                        R.id.fragmentContainerViewGioco2,
+                        nomeAvv,
+                        risposte1,
+                        risposte2,
+                        "argomento singolo"
+                    )
+                }
+                else {
+                    if (!giocatore2esiste) {
+                        giocatoriRef.child(uid).child("fineTurno").setValue("si")
+                        GiocoUtils.schermataAttendi(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco2)
+                    } else {
+                        giocatoriRef.child(uid).child("fineTurno").setValue("si")
+                        GiocoUtils.spostaInPartiteTerminate(partita, modalita, difficolta, uid, risposte1, risposte2)
+                        GiocoUtils.spostaInPartiteTerminate(partita, modalita, difficolta, avversario, risposte1, risposte2)
+
+                        when {
+                            risposte1 > risposte2 -> GiocoUtils.schermataVittoria(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco2, nomeAvv, risposte1, risposte2, "argomento singolo")
+                            risposte1 == risposte2 -> GiocoUtils.schermataPareggio(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco2, nomeAvv, risposte1, risposte2, "argomento singolo")
+                            else -> GiocoUtils.schermataSconfitta(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco2, nomeAvv, risposte1, risposte2, "argomento singolo")
                         }
                     }
-
                 }
             }
+
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
+
+
         })
+
+
     }
 
     override fun onDestroyView() {

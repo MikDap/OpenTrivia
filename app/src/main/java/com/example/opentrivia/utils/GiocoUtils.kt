@@ -22,7 +22,9 @@ import java.util.Random
 class GiocoUtils {
 
     companion object {
-        lateinit var database: FirebaseDatabase
+         var database = FirebaseDatabase.getInstance()
+        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+        val name = FirebaseAuth.getInstance().currentUser?.displayName.toString()
 
 
         fun schermataAttendi(fragmentManager: FragmentManager, containerId: Int) {
@@ -402,5 +404,143 @@ class GiocoUtils {
 
 
 
+
+        fun creaPartita(modalita: String, partiteRef: DatabaseReference, topic: String, callback: (partita: String) -> Unit){
+
+            Log.d("creaPart","si")
+            //crea id della partita ecc
+           val  partita = partiteRef.push().key.toString()
+            val inAttesa = "si"
+
+            partiteRef.child(partita).child("inAttesa")
+                .setValue(inAttesa)
+
+            partiteRef.child(partita).child("topic")
+                .setValue(topic)
+
+            if (modalita == "classica") {
+                partiteRef.child(partita).child("Turno")
+                    .setValue(uid)
+            }
+
+            partiteRef.child(partita).child("giocatori").child(uid).child("name").setValue(name)
+
+            callback(partita)
+        }
+
+
+
+        fun associaPartita(modalita: String, difficolta: String,topic: String, callback: (associato: Boolean, partita: String) -> Unit){
+
+            val partiteRef = database.getReference("partite").child(modalita).child(difficolta)
+
+            partiteRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(listaPartite: DataSnapshot) {
+
+                    var associato = false
+                    var partita = "nessuna"
+
+                    // Se partiteRef ha almeno una partita:
+                    if (listaPartite.hasChildren()) {
+                        //per ogni partita
+                        for (partita1 in listaPartite.children) {
+
+                            //controllo se c'è un giocatore diverso da me
+                            var giocatorediverso = true
+                            if (partita1.child("giocatori").hasChild(uid)) {
+                                giocatorediverso = false
+                            }
+
+                            if (modalita == "classica" || modalita == "a tempo") {
+                                //controllo se ha finito il turno
+                                var haFinitoTurno = false
+                                val turno: String = partita1.child("Turno").value.toString()
+                                if (turno == "-") {
+                                    haFinitoTurno = true
+                                }
+
+                               //se c'è almeno una partita, con un giocatore (diverso da me) in attesa e ha finito il turno, lo associa
+                               if (partita1.child("inAttesa").value == "si" && giocatorediverso && haFinitoTurno) {
+
+                                //prende id della partita
+                                partita = partita1.key.toString()
+                                //setta id
+                                partiteRef.child(partita).child("giocatori").child(uid)
+                                    .child("name").setValue(name)
+                                //cambia inAttesa in no
+
+                                partiteRef.child(partita).child("inAttesa").setValue("no")
+                                associato = true
+
+                                break
+                               }
+                            }
+                            else if (modalita == "argomento singolo"){
+
+                                if (partita1.child("inAttesa").value == "si" && partita1.hasChild("topic") && giocatorediverso) {
+                                    if (partita1.child("topic").value == topic) {
+                                        //prende id della partita
+                                        partita = partita1.key.toString()
+                                        //setta database/partite/modalita/difficolta/giocatori/id
+                                        partiteRef.child(partita).child("giocatori").child(uid)
+                                            .child("name").setValue(name)
+                                        //cambia inAttesa in no
+                                        partiteRef.child(partita).child("inAttesa").setValue("no")
+                                        associato = true
+                                        break
+                                    }
+                                }
+                            }
+
+
+                        }
+                    }
+                    callback(associato,partita)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+        }
+
+
+
+
+
+
+
+        fun sfidaAmico(modalita: String, difficolta: String,topic: String, avversario: String, avversarioNome: String){
+            //HAI SFIDATO UN AMICO
+            val partiteRef =
+                database.getReference("partite").child(modalita).child(difficolta)
+
+            val partita = partiteRef.push().key.toString()
+            val inAttesa = "no"
+            partiteRef.child(partita).child("inAttesa")
+                .setValue(inAttesa)
+            partiteRef.child(partita).child("topic")
+                .setValue(topic)
+            partiteRef.child(partita).child("giocatori")
+                .child(uid).child("name").setValue(name)
+            partiteRef.child(partita).child("sfida")
+                .child(avversario).child("name").setValue(avversarioNome)
+
+            partiteRef.child(partita).child("sfida").child(avversario).child("accettato")
+                .setValue("in attesa")
+
+
+            //NOTIFICARE AMICO
+
+            val sfideAmicoRef =
+                database.getReference("users").child(avversario).child("sfide")
+
+            sfideAmicoRef.child(partita).child("modalita").setValue("argomento singolo")
+            sfideAmicoRef.child(partita).child("difficolta").setValue(difficolta)
+            sfideAmicoRef.child(partita).child("avversarioID").setValue(uid)
+            sfideAmicoRef.child(partita).child("avversario").setValue(name)
+            sfideAmicoRef.child(partita).child("topic").setValue(topic)
+        }
     }
 }

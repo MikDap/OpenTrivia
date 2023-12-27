@@ -1,5 +1,7 @@
 package com.example.opentrivia.gioco.classica
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -10,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.example.opentrivia.MainActivity
 import com.example.opentrivia.R
@@ -24,7 +27,7 @@ import com.example.opentrivia.utils.ModClassicaUtils
 
 class SceltaMultiplaFragmentClassica : Fragment() {
 
-    private lateinit var database: FirebaseDatabase
+    private var database = FirebaseDatabase.getInstance()
     private lateinit var domanda: TextView
     private lateinit var risposta1: Button
     private lateinit var risposta2: Button
@@ -42,10 +45,12 @@ class SceltaMultiplaFragmentClassica : Fragment() {
     lateinit var difficolta: String
     lateinit var topic: String
     var rispostaData = false
-    lateinit var uid: String
+    var uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
     lateinit var risposteRef: DatabaseReference
     lateinit var giocatoriRef: DatabaseReference
-    lateinit var giocatoreRef: DatabaseReference
+    val giocatoreRef =
+    database.getReference("partite").child(modalita).child(difficolta).child(partita)
+    .child("giocatori").child(uid)
 
 
     override fun onCreateView(
@@ -73,6 +78,29 @@ class SceltaMultiplaFragmentClassica : Fragment() {
         risposta4.text = modClassicaActivity.listaRisposte[3]
         rispostaCorretta = modClassicaActivity.rispostaCorretta
 
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val alertDialog = AlertDialog.Builder(requireContext())
+                alertDialog.setTitle("Vuoi ritornare al menù?")
+                alertDialog.setMessage("ATTENZIONE: uscendo la risposta sarà considerata sbagliata")
+
+                alertDialog.setPositiveButton("SI") { dialog: DialogInterface, which: Int ->
+
+                    updateContinuaButton(giocatoreRef,"sbagliata")
+                    val intent = Intent(requireContext(), MainActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().finish()
+                }
+
+                alertDialog.setNegativeButton("NO") { dialog: DialogInterface, which: Int ->
+                    dialog.dismiss()
+                }
+
+                alertDialog.show()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
         return view
     }
 
@@ -88,9 +116,6 @@ class SceltaMultiplaFragmentClassica : Fragment() {
             database.getReference("partite").child(modalita).child(difficolta).child(partita)
                 .child("giocatori").child(uid).child(topic)
 
-         giocatoreRef =
-            database.getReference("partite").child(modalita).child(difficolta).child(partita)
-                .child("giocatori").child(uid)
 
          giocatoriRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
 
@@ -114,9 +139,6 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
 
     }
-
-
-
 
 
 
