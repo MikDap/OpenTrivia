@@ -32,8 +32,7 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
     private lateinit var risposta2: Button
     private lateinit var risposta3: Button
     private lateinit var risposta4: Button
-    private var modArgomentoActivity = activity as ModArgomentoActivity
-
+    private lateinit var modArgomentoActivity: ModArgomentoActivity
 
     private lateinit var rispostaCorretta: String
 
@@ -49,9 +48,10 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
     private var ritirato = false
     private var avvRitirato = false
 
-    var giocatoriRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
-    var ritiratoRef = giocatoriRef.child(uid)
-    var risposteRef = giocatoriRef.child(uid).child(topic)
+    lateinit var giocatoriRef: DatabaseReference
+    lateinit var ritiratoRef: DatabaseReference
+    lateinit var risposteRef: DatabaseReference
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,7 +59,10 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
         // Inflate the layout for this fragment
         val view =
             inflater.inflate(R.layout.mod_argomento_singolo_scelta_multipla, container, false)
-
+       modArgomentoActivity = activity as ModArgomentoActivity
+        giocatoriRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
+        ritiratoRef = giocatoriRef.child(uid)
+        risposteRef = giocatoriRef.child(uid).child(topic)
 
      onBackPressed()
 

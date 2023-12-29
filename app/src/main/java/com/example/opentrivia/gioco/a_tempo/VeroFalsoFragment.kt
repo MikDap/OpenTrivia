@@ -40,16 +40,20 @@ class VeroFalsoFragment : Fragment() {
     lateinit var progressBarView: TimeProgressBarView
     private var ritirato = false
     private var avvRitirato = false
+    private lateinit var giocatoriRef: DatabaseReference
+    private lateinit var ritiratoRef: DatabaseReference
+    private lateinit var risposteRef: DatabaseReference
 
     val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-    var giocatoriRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
-    var ritiratoRef = giocatoriRef.child(uid)
-    var risposteRef = giocatoriRef.child(uid).child(topic)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         modATempoActivity= activity as ModATempoActivity
         timeStamp = modATempoActivity.timeStamp
         finalTime = modATempoActivity.finalTime
+
+       giocatoriRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
+        ritiratoRef = giocatoriRef.child(uid)
+         risposteRef = giocatoriRef.child(uid).child(topic)
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

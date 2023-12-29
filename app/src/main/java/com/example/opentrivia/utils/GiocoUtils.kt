@@ -532,7 +532,7 @@ class GiocoUtils {
 
 
 
-        fun sfidaAmico(modalita: String, difficolta: String,topic: String, avversario: String, avversarioNome: String){
+        fun sfidaAmico(modalita: String, difficolta: String,topic: String, avversario: String, avversarioNome: String, callback: (partita: String) -> Unit){
             //HAI SFIDATO UN AMICO
             val partiteRef =
                 database.getReference("partite").child(modalita).child(difficolta)
@@ -562,6 +562,8 @@ class GiocoUtils {
             sfideAmicoRef.child(partita).child("avversarioID").setValue(uid)
             sfideAmicoRef.child(partita).child("avversario").setValue(name)
             sfideAmicoRef.child(partita).child("topic").setValue(topic)
+
+            callback(partita)
         }
 
 

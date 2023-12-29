@@ -167,7 +167,9 @@ if (!jolly()) {
     }
     //HAI SFIDATO UN AMICO
     else {
-        GiocoUtils.sfidaAmico("classica", difficolta, topic, avversario, avversarioNome)
+        GiocoUtils.sfidaAmico("classica", difficolta, topic, avversario, avversarioNome){partita ->
+            this.partita = partita
+        }
     }
 
     }

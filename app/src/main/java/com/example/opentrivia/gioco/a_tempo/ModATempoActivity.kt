@@ -17,7 +17,7 @@ class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback
     private lateinit var partita: String
     private lateinit var difficolta: String
     private lateinit var chiamataApi: ChiamataApi
-    private lateinit var database: FirebaseDatabase
+    private var database = FirebaseDatabase.getInstance()
     var domanda : String = ""
     var rispostaCorretta : String = ""
     var risposta1: String = ""
@@ -51,13 +51,13 @@ class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback
 
         if (avversario == "casuale") {
             //SE POSSO ASSOCIO L'UTENTE A UNA PARTITA
-            GiocoUtils.associaPartita("a tempo", difficolta, topic) { associato, partita ->
+            GiocoUtils.associaPartita("a tempo", difficolta, "-") { associato, partita ->
                 if (associato) {
                     this.partita = partita
                 }
                 //ALTRIMENTI CREO UNA PARTITA
                 else {
-                    GiocoUtils.creaPartita("a tempo", partiteRef, topic) { partita ->
+                    GiocoUtils.creaPartita("a tempo", partiteRef, "-") { partita ->
                         this.partita = partita
                     }
                 }
@@ -65,7 +65,9 @@ class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback
         }
         //HAI SFIDATO UN AMICO
         else {
-            GiocoUtils.sfidaAmico("a tempo", difficolta, topic, avversario, avversarioNome)
+            GiocoUtils.sfidaAmico("a tempo", difficolta, "-", avversario, avversarioNome){partita ->
+                this.partita = partita
+            }
         }
         //facciamo la chiamata api
         getTriviaQuestion()
