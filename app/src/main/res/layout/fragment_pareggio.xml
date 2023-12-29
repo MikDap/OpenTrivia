@@ -100,7 +100,7 @@
         android:layout_height="0dp"
         android:background="@drawable/custom_border_risultato"
         android:backgroundTint="#AEA3A7"
-        android:text="HAI PAREGGIATO"
+        android:text="PAREGGIO"
         android:textAlignment="center"
         android:gravity="center"
         android:textColor="#F2F3EC"

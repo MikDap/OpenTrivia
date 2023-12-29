@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,12 +45,10 @@ class SceltaMultiplaFragmentClassica : Fragment() {
     lateinit var topic: String
     var rispostaData = false
     var uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-    lateinit var risposteRef: DatabaseReference
-    lateinit var giocatoriRef: DatabaseReference
-    val giocatoreRef =
-    database.getReference("partite").child(modalita).child(difficolta).child(partita)
-    .child("giocatori").child(uid)
 
+    var giocatoriRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
+    val giocatoreRef = giocatoriRef.child(uid)
+    var risposteRef = giocatoreRef.child(topic)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,46 +75,12 @@ class SceltaMultiplaFragmentClassica : Fragment() {
         risposta4.text = modClassicaActivity.listaRisposte[3]
         rispostaCorretta = modClassicaActivity.rispostaCorretta
 
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                val alertDialog = AlertDialog.Builder(requireContext())
-                alertDialog.setTitle("Vuoi ritornare al menù?")
-                alertDialog.setMessage("ATTENZIONE: uscendo la risposta sarà considerata sbagliata")
-
-                alertDialog.setPositiveButton("SI") { dialog: DialogInterface, which: Int ->
-
-                    updateContinuaButton(giocatoreRef,"sbagliata")
-                    val intent = Intent(requireContext(), MainActivity::class.java)
-                    startActivity(intent)
-                    requireActivity().finish()
-                }
-
-                alertDialog.setNegativeButton("NO") { dialog: DialogInterface, which: Int ->
-                    dialog.dismiss()
-                }
-
-                alertDialog.show()
-            }
-        }
-
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
+        onBackPressed()
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        database = FirebaseDatabase.getInstance()
-
-         uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-
-         risposteRef =
-            database.getReference("partite").child(modalita).child(difficolta).child(partita)
-                .child("giocatori").child(uid).child(topic)
-
-
-         giocatoriRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
 
 
 
@@ -139,7 +102,6 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
 
     }
-
 
 
     fun updateContinuaButton(
@@ -184,15 +146,14 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
                         } else if (tipo == "sbagliata") {
 
-                            ModClassicaUtils.ottieniNomeAvversario(giocatoriRef){
-                                    nomeAvversario ->
+                            GiocoUtils.getAvversario(modalita, difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
 
-                                if (nomeAvversario == "non hai un avversario"){
+                                if (nomeAvv == "-"){
 
                                     partitaRef.child("Turno").setValue("-")
                                 }
                                 else {
-                                    partitaRef.child("Turno").setValue(nomeAvversario)
+                                    partitaRef.child("Turno").setValue(nomeAvv)
                                 }
 
                             }
@@ -227,15 +188,14 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
                     } else if (tipo == "sbagliata") {
 
-                        ModClassicaUtils.ottieniNomeAvversario(giocatoriRef){
-                            nomeAvversario ->
+                        GiocoUtils.getAvversario(modalita, difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
 
-                            if (nomeAvversario == "non hai un avversario"){
+                            if (nomeAvv == "-"){
 
                                 partitaRef.child("Turno").setValue("-")
                             }
                             else {
-                                partitaRef.child("Turno").setValue(nomeAvversario)
+                                partitaRef.child("Turno").setValue(nomeAvv)
                             }
 
                         }
@@ -268,18 +228,16 @@ class SceltaMultiplaFragmentClassica : Fragment() {
             if (GiocoUtils.QuestaèLaRispostaCorretta(risposta, rispostaCorretta)) {
                 GiocoUtils.updateRisposte(risposteRef, "risposteCorrette")
 
-                ModClassicaUtils.updateContatoreRisposteCorrette(giocatoriRef) { ->
-                    //aggiorna ScrollView
-                    ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef) { nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                        ModClassicaUtils.updateScrollView(
-                            nomeAvversario,
-                            idAvversario,
-                            argomenti_conquistati_miei,
-                            argomenti_conquistati_avversario,
-                            partita,
-                            difficolta,
-                            database
-                        )
+                ModClassicaUtils.updateContatoreRisposteCorrette(giocatoriRef) {
+
+                    GiocoUtils.getAvversario(modalita, difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
+                        ModClassicaUtils.getArgomentiConquistati(giocatoriRef){ argomentiMiei, argomentiAvversario ->
+
+                            val argomenti_conquistati_miei = argomentiMiei.size
+                            val argomenti_conquistati_avversario = argomentiAvversario.size
+
+                            ModClassicaUtils.updateScrollView(nomeAvv,avversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, difficolta, database)
+                        }
                     }
 
                     updateContinuaButton(giocatoreRef, "corretta")
@@ -289,9 +247,16 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
             else {
                 GiocoUtils.updateRisposte(risposteRef, "risposteSbagliate")
-                ModClassicaUtils.ottieniNomeAvversario_e_argomentiConquistati(giocatoriRef){
-                        nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario ->
-                    ModClassicaUtils.updateScrollView(nomeAvversario,idAvversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, difficolta, database)
+
+                GiocoUtils.getAvversario(modalita, difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
+
+                    ModClassicaUtils.getArgomentiConquistati(giocatoriRef){ argomentiMiei, argomentiAvversario ->
+
+                        val argomenti_conquistati_miei = argomentiMiei.size
+                        val argomenti_conquistati_avversario = argomentiAvversario.size
+
+                        ModClassicaUtils.updateScrollView(nomeAvv,avversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, difficolta, database)
+                    }
                 }
 
                 updateContinuaButton(giocatoreRef,"sbagliata")
@@ -302,6 +267,32 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
         }
 
+    }
+
+    fun onBackPressed(){
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val alertDialog = AlertDialog.Builder(requireContext())
+                alertDialog.setTitle("Vuoi ritornare al menù?")
+                alertDialog.setMessage("ATTENZIONE: uscendo la risposta sarà considerata sbagliata")
+
+                alertDialog.setPositiveButton("SI") { dialog: DialogInterface, which: Int ->
+
+                    updateContinuaButton(giocatoreRef,"sbagliata")
+                    val intent = Intent(requireContext(), MainActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().finish()
+                }
+
+                alertDialog.setNegativeButton("NO") { dialog: DialogInterface, which: Int ->
+                    dialog.dismiss()
+                }
+
+                alertDialog.show()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
     }
 }
 

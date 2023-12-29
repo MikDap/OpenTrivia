@@ -1,7 +1,6 @@
 package com.example.opentrivia.gioco.classica
 
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -24,6 +23,7 @@ import android.graphics.Typeface
 import android.widget.TextView
 import androidx.constraintlayout.widget.Guideline
 import com.example.opentrivia.R
+import com.example.opentrivia.utils.GiocoUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -129,12 +129,12 @@ private lateinit var guideline2: Guideline
         //nel caso un giocatore esce quando sta per passare alla schermata conquista         leggiRisposteDiFila(giocatoreRef)<<
         //mic 09
         user.text= FirebaseAuth.getInstance().currentUser?.displayName.toString()+" (me)"
-        ModClassicaUtils.ottieniNomeAvversario(giocatoriRef) { nomeAvversario ->
+        GiocoUtils.getAvversario(modalita, difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
             // Questo codice verrà eseguito quando la callback restituirà il nome dell'avversario
-            avversario.text = nomeAvversario
+            this.avversario.text = nomeAvv
         }
         //fine
-        ModClassicaUtils.QualiArgomentiConquistati(giocatoriRef) { argomentiMiei, argomentiAvversario ->
+        ModClassicaUtils.getArgomentiConquistati(giocatoriRef) { argomentiMiei, argomentiAvversario ->
             if (argomentiMiei.isEmpty())Log.d("argomentiMieiVuoti","si")
             if(argomentiMiei.isNotEmpty())  {      Log.d("argomentiMiei", argomentiMiei[0]) }
             coloraQuadratini(argomentiMiei,true)

@@ -100,7 +100,7 @@
         android:layout_height="0dp"
         android:background="@drawable/custom_border_risultato"
         android:backgroundTint="#FF0000"
-        android:text="HAI PERSO"
+        android:text="SCONFITTA"
         android:textAlignment="center"
         android:gravity="center"
         android:textColor="#F2F3EC"

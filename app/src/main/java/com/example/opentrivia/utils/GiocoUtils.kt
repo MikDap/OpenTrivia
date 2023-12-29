@@ -6,7 +6,6 @@ import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import androidx.fragment.app.FragmentManager
-import com.example.opentrivia.R
 import com.example.opentrivia.gioco.AttendiTurnoFragment
 import com.example.opentrivia.gioco.Pareggio
 import com.example.opentrivia.gioco.Sconfitta
@@ -346,8 +345,38 @@ class GiocoUtils {
 
 
 
+      fun getAvversario(modalita: String, difficolta: String, partita: String, callback: (giocatore2esiste: Boolean, avversario: String, nomeAvv: String) -> Unit){
 
-        fun controllaAvversarioERispCorrette(modalita: String, difficolta: String, partita: String) {
+          database = FirebaseDatabase.getInstance()
+          val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
+          var giocatoriRef =
+              database.getReference("partite").child(modalita).child(difficolta).child(partita)
+                  .child("giocatori")
+          var giocatore2esiste = false
+          var avversario = "-"
+          var nomeAvv = "-"
+
+          giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
+              override fun onDataChange(listaGiocatori: DataSnapshot) {
+                  for (giocatore in listaGiocatori.children) {
+
+                      if(giocatore.key.toString() != uid){
+                          giocatore2esiste = true
+                          avversario = giocatore.key.toString()
+                          nomeAvv = giocatore.child("name").value.toString()
+                      }
+                  }
+                  callback(giocatore2esiste, avversario, nomeAvv)
+              }
+              override fun onCancelled(error: DatabaseError) {
+                  TODO("Not yet implemented")
+              }
+          })
+      }
+
+
+
+        fun getRispCorrette(modalita: String, difficolta: String, partita: String, callback: (risposte1: Int, risposte2: Int) -> Unit) {
             database = FirebaseDatabase.getInstance()
             val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
             var giocatoriRef =
@@ -355,19 +384,10 @@ class GiocoUtils {
                     .child("giocatori")
             var risposte1 = 0
             var risposte2 = 0
-            var giocatore2esiste = false
-            var avversario = ""
-            var nomeAvv = ""
 
             giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     for (giocatore in dataSnapshot.children) {
-
-                        if(giocatore.key.toString() != uid){
-                            giocatore2esiste = true
-                            avversario = giocatore.key.toString()
-                            nomeAvv = giocatore.child("name").value.toString()
-                        }
 
                         // A ENTRAMBI GIOCATORI, PER OGNI TOPIC PRENDO RISPOSTE CORRETTE
                         for (topic in giocatore.children) {
@@ -394,6 +414,7 @@ class GiocoUtils {
                             }
                         }
                     }
+                    callback(risposte1, risposte2)
                 }
                 override fun onCancelled(error: DatabaseError) {
                     TODO("Not yet implemented")
@@ -542,5 +563,10 @@ class GiocoUtils {
             sfideAmicoRef.child(partita).child("avversario").setValue(name)
             sfideAmicoRef.child(partita).child("topic").setValue(topic)
         }
+
+
+
+
+
     }
 }

@@ -49,7 +49,8 @@ class ModArgomentoActivity : AppCompatActivity(), ArgomentoSingoloFragment.MyFra
 
         invalidateOptionsMenu()
 
-           //SE QUESTA ACTIVITY è STATA CHIAMATA DA SFIDAFRAGMENT
+
+           //SE QUESTA ACTIVITY è STATA CHIAMATA DA SFIDAFRAGMENT, CHIAMIAMO FRAGMENT CARICAMENTO(SENNO FA RISCEGLIERE TOPIC)
         if (sfidaAccettata == "true"){
             val caricamentoFragment = CaricamentoFragment()
        supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerViewGioco2, caricamentoFragment).commit()

@@ -11,6 +11,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import com.example.opentrivia.R
 import com.example.opentrivia.api.ChiamataApi
+import com.example.opentrivia.utils.GiocoUtils
 import com.example.opentrivia.utils.ModClassicaUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -24,8 +25,6 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
 
     private lateinit var chiamataApi: ChiamataApi
     lateinit var categoria: String
-    private lateinit var partita: String
-    private lateinit var difficolta: String
     private lateinit var storiaButton: ImageButton
     private lateinit var geografiaButton: ImageButton
     private lateinit var arteButton: ImageButton
@@ -46,17 +45,19 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
     private lateinit var culturaPop2: View
     var domanda: String = ""
     var rispostaCorretta: String = ""
-    var risposta1: String = ""
-    var risposta2: String = ""
-    var risposta3: String = ""
-    var risposta4: String = ""
-    var risposte = arrayOf(risposta1, risposta2, risposta3, risposta4)
-    private lateinit var database: FirebaseDatabase
-    private lateinit var modClassicaActivity: ModClassicaActivity
+    var listaRisposte = mutableListOf<String>()
+    private var  database = FirebaseDatabase.getInstance()
     lateinit var topic: String
     private lateinit var user:TextView
     private lateinit var avversario:TextView
+    val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
+    val modClassicaActivity = activity as ModClassicaActivity
+    var partita = modClassicaActivity.partita
+    val modalita = "classica"
+    var difficolta = modClassicaActivity.difficolta
+    val giocatoriRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
+    val giocatoreRef = giocatoriRef.child(uid)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -82,43 +83,26 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
         user=view.findViewById(R.id.user1)
         avversario=view.findViewById(R.id.avversario1)
 
-        modClassicaActivity = activity as ModClassicaActivity
-        val partita = modClassicaActivity.partita
-        val modalita = "classica"
-        val difficolta = modClassicaActivity.difficolta
 
-        database = FirebaseDatabase.getInstance()
-        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-        val giocatoreRef =
-            database.getReference("partite").child(modalita).child(difficolta).child(partita)
-                .child("giocatori").child(uid)
-        val giocatoriRef =
-            database.getReference("partite").child(modalita).child(difficolta).child(partita)
-                .child("giocatori")
-//mic 09/11
+
         user.text= FirebaseAuth.getInstance().currentUser?.displayName.toString()+" (me)"
-        ModClassicaUtils.ottieniNomeAvversario(giocatoriRef) { nomeAvversario ->
+        GiocoUtils.getAvversario(modalita, difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
             // Questo codice verrà eseguito quando la callback restituirà il nome dell'avversario
-            avversario.text = nomeAvversario
+            this.avversario.text = nomeAvv
         }
-        //fine
-        ModClassicaUtils.QualiArgomentiConquistati(giocatoriRef) { argomentiMiei, argomentiAvversario ->
-            if (argomentiMiei.isEmpty()) Log.d("argomentiMieiVuoti", "si")
-            if (argomentiMiei.isNotEmpty()) {
-                Log.d("argomentiMiei", argomentiMiei[0])
-            }
+        ModClassicaUtils.getArgomentiConquistati(giocatoriRef) { argomentiMiei, argomentiAvversario ->
             coloraQuadratini(argomentiMiei, true)
             coloraQuadratini(argomentiAvversario, false)
         }
 
-        //button
-        modClassicaActivity = activity as ModClassicaActivity
+
         storiaButton = view.findViewById(R.id.storiabutton)
         geografiaButton = view.findViewById(R.id.geografiabutton)
         arteButton = view.findViewById(R.id.artebutton)
         sportButton = view.findViewById(R.id.sportbutton)
         intrattenimentoButton = view.findViewById(R.id.intrattenimentobutton)
         scienzeButton = view.findViewById(R.id.scienzebutton)
+
 
         var argomentoRef= database.getReference("partite").child("classica").child(difficolta).child(partita).child("giocatori").child(uid).child("ArgomentiConquistati")
         argomentoRef.addValueEventListener (object : ValueEventListener {
@@ -176,50 +160,9 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
 
 
 
-    fun getCategoria(topic: String): String {
-        lateinit var categoria: String
-        val categorie_culturaPop =
-            arrayOf("9", "10", "11", "12", "13", "14", "15", "16", "29", "31", "32")
-        val categorie_scienze = arrayOf("17", "18", "19", "30")
-
-        when (topic) {
-
-            "culturaPop" -> {
-                categoria = getRandomCategoria(categorie_culturaPop)
-            }
-
-            "sport" -> {
-                categoria = "21"
-            }
-
-            "storia" -> {
-                categoria = "23"
-            }
-
-            "geografia" -> {
-                categoria = "22"
-            }
-
-            "arte" -> {
-                categoria = "25"
-            }
-
-            "scienze" -> {
-                categoria = getRandomCategoria(categorie_scienze)
-            }
-
-        }
-        return categoria
-    }
-
-    fun getRandomCategoria(topics: Array<String>): String {
-        val randomIndex = Random().nextInt(topics.size)
-        return topics[randomIndex]
-    }
-
     fun getTriviaQuestion(topic: String) {
 //chiamiamo la funzione per ottenere il numero delle categorie per il topic selezionato
-        categoria = getCategoria(topic)
+        categoria = GiocoUtils.getCategoria(topic)
         chiamataApi = ChiamataApi("multiple", categoria, difficolta)
         chiamataApi.fetchTriviaQuestion(this)
         Log.d("getTriviaQuestion", "siii")
@@ -235,47 +178,23 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
         risposta_sbagliata_3: String
     ) {
 
-        Log.d("domandaonfetched", domanda)
         //salviamo la domanda e le risposte
         this.domanda = chiamataApi.domanda
         this.rispostaCorretta = chiamataApi.risposta_corretta
-        val rispostacorretta = chiamataApi.risposta_corretta
-        val rispostasbagliata_1 = chiamataApi.risposta_sbagliata_1
-        val rispostasbagliata_2 = chiamataApi.risposta_sbagliata_2
-        val rispostasbagliata_3 = chiamataApi.risposta_sbagliata_3
 
-
-        val listaRisposte = mutableListOf(
-            rispostacorretta,
-            rispostasbagliata_1,
-            rispostasbagliata_2,
-            rispostasbagliata_3
+        listaRisposte.clear()
+        listaRisposte.addAll(
+            listOf(
+                risposta_corretta,
+                risposta_sbagliata_1,
+                risposta_sbagliata_2,
+                risposta_sbagliata_3
+            )
         )
-
-        var i = 0
-        while (i <= 3) {
-            val randomIndex = Random().nextInt(listaRisposte.size)
-
-
-            risposte[i] = listaRisposte[randomIndex]
-
-            listaRisposte.removeAt(randomIndex)
-            i++
-
-            Log.d("risposta1OnFetched", risposta1)
-        }
-
-        Log.d("risposta1OnFetched", risposta1)
-        modClassicaActivity.chiamaConquistaSceltaMultipla(
-            topic,
-            domanda,
-            risposte[0],
-            risposte[1],
-            risposte[2],
-            risposte[3],
-            rispostaCorretta
-        )
+        listaRisposte.shuffle()
     }
+
+
 
     fun setDifficolta(partita: String, difficolta: String) {
         this.partita = partita

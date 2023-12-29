@@ -26,13 +26,13 @@ import com.google.firebase.database.ValueEventListener
 
 class SceltaMultiplaFragmentArgSingolo : Fragment() {
 
-    private lateinit var database: FirebaseDatabase
+    private var database = FirebaseDatabase.getInstance()
     private lateinit var domanda: TextView
     private lateinit var risposta1: Button
     private lateinit var risposta2: Button
     private lateinit var risposta3: Button
     private lateinit var risposta4: Button
-    private lateinit var modArgomentoActivity: ModArgomentoActivity
+    private var modArgomentoActivity = activity as ModArgomentoActivity
 
 
     private lateinit var rispostaCorretta: String
@@ -44,12 +44,14 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
     private lateinit var topic: String
 
     var rispostaData = false
-    private lateinit var uid:String
-    private lateinit var risposteRef: DatabaseReference
+
+    private val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
     private var ritirato = false
     private var avvRitirato = false
 
-
+    var giocatoriRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
+    var ritiratoRef = giocatoriRef.child(uid)
+    var risposteRef = giocatoriRef.child(uid).child(topic)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,40 +60,8 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
         val view =
             inflater.inflate(R.layout.mod_argomento_singolo_scelta_multipla, container, false)
 
-        database = FirebaseDatabase.getInstance()
-        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
-        var ritiratoRef =
-            database.getReference("partite").child(modalita).child(difficolta).child(partita)
-                .child("giocatori").child(uid)
-
-        modArgomentoActivity = activity as ModArgomentoActivity
-
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                val alertDialog = AlertDialog.Builder(requireContext())
-                alertDialog.setTitle("Vuoi ritornare al menù?")
-                alertDialog.setMessage("ATTENZIONE: uscendo perderai la partita")
-
-                alertDialog.setPositiveButton("SI") { dialog: DialogInterface, which: Int ->
-
-                    ritiratoRef.child("ritirato").setValue("si")
-                    ritirato = true
-                    finePartita()
-                    val intent = Intent(requireContext(), MainActivity::class.java)
-                    startActivity(intent)
-                    requireActivity().finish()
-                }
-
-                alertDialog.setNegativeButton("NO") { dialog: DialogInterface, which: Int ->
-                    dialog.dismiss()
-                }
-
-                alertDialog.show()
-            }
-        }
-
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
+     onBackPressed()
 
         domanda = view.findViewById(R.id.domanda)
         risposta1 = view.findViewById(R.id.risposta1)
@@ -99,12 +69,9 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
         risposta3 = view.findViewById(R.id.risposta3)
         risposta4 = view.findViewById(R.id.risposta4)
 
-        Log.d(modalita, "modalita")
-
 
         domanda.text = modArgomentoActivity.domanda
         risposta1.text = modArgomentoActivity.listaRisposte[0]
-        Log.d("risposta1", risposta1.text as String)
         risposta2.text = modArgomentoActivity.listaRisposte[1]
         risposta3.text = modArgomentoActivity.listaRisposte[2]
         risposta4.text = modArgomentoActivity.listaRisposte[3]
@@ -115,12 +82,6 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        database = FirebaseDatabase.getInstance()
-         uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-         risposteRef = database.getReference("partite").child(modalita).child(difficolta).child(partita)
-                .child("giocatori").child(uid).child(topic)
 
              controllaRitiro()
 
@@ -140,9 +101,14 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
             controllaRisposta(risposta4)
         }
 
-
-
     }
+
+
+
+
+
+
+
 
     fun setParametriPartita(
         partita: String,
@@ -158,70 +124,9 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
 
 
     fun finePartita() {
-        database = FirebaseDatabase.getInstance()
-        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-        var giocatoriRef =
-            database.getReference("partite").child(modalita).child(difficolta).child(partita)
-                .child("giocatori")
-        var risposte1 = 0
-        var risposte2 = 0
-        var giocatore2esiste = false
-        var avversario = ""
-        var nomeAvv = ""
-        var ritirato = false
-        var avvRitirato = false
 
-        giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(listaGiocatori: DataSnapshot) {
-                for (giocatore in listaGiocatori.children) {
-
-                    if(giocatore.key.toString() != uid){
-                        giocatore2esiste = true
-                        avversario = giocatore.key.toString()
-                        nomeAvv = giocatore.child("name").value.toString()
-                    }
-
-                    //SE MI SONO RITIRATO IO
-                    if (giocatore.hasChild("ritirato") && giocatore.key.toString() == uid) {
-                        ritirato = true
-                    }
-                    // SE SI è RITIRATO L'AVVERSARIO
-                    if (giocatore.hasChild("ritirato") && giocatore.key.toString() != uid) {
-                        avvRitirato = true
-                    }
-
-
-                    // A ENTRAMBI GIOCATORI, PER OGNI TOPIC PRENDO RISPOSTE CORRETTE
-                    for (topic in giocatore.children) {
-
-                        if (topic.hasChild("risposteTotali")) {
-
-                            var giocatore1 = giocatore.key.toString()
-
-                            // SE IO AGGIORNA MIE RISPOSTE
-                            if (giocatore1 == uid) {
-                                val risposteCorrette =
-                                    topic.child("risposteCorrette").getValue(Int::class.java)
-                                if (risposteCorrette != null) {
-                                    risposte1 += risposteCorrette
-                                }
-                            }
-                            //SE AVVERSARIO AGGIORNA SUE RISPOSTE
-                            else {
-                                val risposteCorrette =
-                                    topic.child("risposteCorrette").getValue(Int::class.java)
-                                if (risposteCorrette != null) {
-                                    risposte2 += risposteCorrette
-                                }
-
-                            }
-                        }
-                    }
-
-
-                }
-
-
+        GiocoUtils.getAvversario(modalita, difficolta, partita){giocatore2esiste, avversario, nomeAvv ->
+            GiocoUtils.getRispCorrette(modalita, difficolta, partita){risposte1, risposte2 ->
                 if (ritirato) {
                     giocatoriRef.child(uid).child("fineTurno").setValue("si")
                     //SE ANCORA NON SI CONNETTE NESSUNO CANCELLO LA PARTITA
@@ -235,15 +140,8 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
                     GiocoUtils.spostaInPartiteTerminate(partita, modalita, difficolta, uid, risposte1, risposte2)
                     GiocoUtils.spostaInPartiteTerminate(partita, modalita, difficolta, avversario, risposte1, risposte2)
 
-                    GiocoUtils.schermataVittoria(
-                        requireActivity().supportFragmentManager,
-                        R.id.fragmentContainerViewGioco2,
-                        nomeAvv,
-                        risposte1,
-                        risposte2,
-                        "argomento singolo"
-                    )
-                }
+                    GiocoUtils.schermataVittoria(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco2, nomeAvv, risposte1, risposte2, "argomento singolo")
+                           }
                 else {
                     if (!giocatore2esiste) {
                         giocatoriRef.child(uid).child("fineTurno").setValue("si")
@@ -261,23 +159,10 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
                     }
                 }
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-
-        })
-
-
+        }
     }
 
     fun controllaRitiro() {
-        database = FirebaseDatabase.getInstance()
-        val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-        var giocatoriRef =
-            database.getReference("partite").child(modalita).child(difficolta).child(partita)
-                .child("giocatori")
         giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (giocatore in dataSnapshot.children) {
@@ -325,5 +210,33 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
             rispostaData = true
 
         }
+    }
+
+    fun onBackPressed(){
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val alertDialog = AlertDialog.Builder(requireContext())
+                alertDialog.setTitle("Vuoi ritornare al menù?")
+                alertDialog.setMessage("ATTENZIONE: uscendo perderai la partita")
+
+                alertDialog.setPositiveButton("SI") { dialog: DialogInterface, which: Int ->
+
+                    ritiratoRef.child("ritirato").setValue("si")
+                    ritirato = true
+                    finePartita()
+                    val intent = Intent(requireContext(), MainActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().finish()
+                }
+
+                alertDialog.setNegativeButton("NO") { dialog: DialogInterface, which: Int ->
+                    dialog.dismiss()
+                }
+
+                alertDialog.show()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
     }
 }
