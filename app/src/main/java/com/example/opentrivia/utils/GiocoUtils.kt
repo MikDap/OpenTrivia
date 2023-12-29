@@ -468,17 +468,36 @@ class GiocoUtils {
 
                             //controllo se c'è un giocatore diverso da me
                             var giocatorediverso = true
-                            if (partita1.child("giocatori").hasChild(uid)) {
-                                giocatorediverso = false
+                            var idAvversario = "-"
+
+                            for(giocatore in partita1.child("giocatori").children){
+
+                                if (giocatore.key.toString() == uid){
+                                    giocatorediverso = false
+                                }
+                                else{
+                                    idAvversario = giocatore.key.toString()
+                                }
                             }
+
 
                             if (modalita == "classica" || modalita == "a tempo") {
                                 //controllo se ha finito il turno
                                 var haFinitoTurno = false
-                                val turno: String = partita1.child("Turno").value.toString()
-                                if (turno == "-") {
-                                    haFinitoTurno = true
+
+                                if (modalita == "classica") {
+                                    val turno: String = partita1.child("Turno").value.toString()
+                                    if (turno == "-") {
+                                        haFinitoTurno = true
+                                    }
                                 }
+                                else{
+
+                                    if (giocatorediverso && partita1.child("giocatori").child(idAvversario).hasChild("fineTurno")){
+                                        haFinitoTurno = true
+                                    }
+                                }
+
 
                                //se c'è almeno una partita, con un giocatore (diverso da me) in attesa e ha finito il turno, lo associa
                                if (partita1.child("inAttesa").value == "si" && giocatorediverso && haFinitoTurno) {
@@ -497,8 +516,14 @@ class GiocoUtils {
                                }
                             }
                             else if (modalita == "argomento singolo"){
+                                //controllo se ha finito il turno
+                                var haFinitoTurno = false
 
-                                if (partita1.child("inAttesa").value == "si" && partita1.hasChild("topic") && giocatorediverso) {
+                                if (giocatorediverso && partita1.child("giocatori").child(idAvversario).hasChild("fineTurno")){
+                                    haFinitoTurno = true
+                                }
+
+                                if (partita1.child("inAttesa").value == "si" && partita1.hasChild("topic") && giocatorediverso && haFinitoTurno) {
                                     if (partita1.child("topic").value == topic) {
                                         //prende id della partita
                                         partita = partita1.key.toString()
@@ -512,6 +537,7 @@ class GiocoUtils {
                                     }
                                 }
                             }
+
 
 
                         }
@@ -557,7 +583,7 @@ class GiocoUtils {
             val sfideAmicoRef =
                 database.getReference("users").child(avversario).child("sfide")
 
-            sfideAmicoRef.child(partita).child("modalita").setValue("argomento singolo")
+            sfideAmicoRef.child(partita).child("modalita").setValue(modalita)
             sfideAmicoRef.child(partita).child("difficolta").setValue(difficolta)
             sfideAmicoRef.child(partita).child("avversarioID").setValue(uid)
             sfideAmicoRef.child(partita).child("avversario").setValue(name)
@@ -565,8 +591,6 @@ class GiocoUtils {
 
             callback(partita)
         }
-
-
 
 
 

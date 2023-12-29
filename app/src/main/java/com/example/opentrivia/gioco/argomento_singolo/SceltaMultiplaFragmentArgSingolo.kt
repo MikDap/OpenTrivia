@@ -128,6 +128,11 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
 
     fun finePartita() {
 
+        if(modArgomentoActivity.avversario != "casuale" && modArgomentoActivity.sfidaAccettata == "false"){
+            val sfidaRef = database.getReference("users").child(modArgomentoActivity.avversario).child("sfide").child(partita)
+            sfidaRef.child("fineTurno").setValue("si")
+        }
+
         GiocoUtils.getAvversario(modalita, difficolta, partita){giocatore2esiste, avversario, nomeAvv ->
             GiocoUtils.getRispCorrette(modalita, difficolta, partita){risposte1, risposte2 ->
                 if (ritirato) {
