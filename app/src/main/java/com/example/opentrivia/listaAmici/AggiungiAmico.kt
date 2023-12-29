@@ -11,6 +11,7 @@ import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.opentrivia.R
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -60,7 +61,7 @@ class AggiungiAmico : Fragment() {
         }
     }
     private fun searchFriend(friendName: String) {
-        Log.d("amico1", friendName)
+      val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         val usersRef = database.getReference("users")
         userKeyMap.clear()
         usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -69,7 +70,7 @@ class AggiungiAmico : Fragment() {
                         val userId = userSnapshot.key  // ID utente
                         val username = userSnapshot.child("username").getValue(String::class.java)
 
-                        if (userId != null && username != null && username.contains(friendName, ignoreCase = true)) {
+                        if (userId != uid && userId != null && username != null && username.contains(friendName, ignoreCase = true)) {
                             userKeyMap[userId] = username
                         }
                         Log.d("amico", friendName)
