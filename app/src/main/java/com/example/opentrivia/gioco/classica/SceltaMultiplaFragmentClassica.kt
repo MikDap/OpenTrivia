@@ -46,9 +46,9 @@ class SceltaMultiplaFragmentClassica : Fragment() {
     var rispostaData = false
     var uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
-    var giocatoriRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
-    val giocatoreRef = giocatoriRef.child(uid)
-    var risposteRef = giocatoreRef.child(topic)
+    lateinit var giocatoriRef: DatabaseReference
+    lateinit var giocatoreRef: DatabaseReference
+    lateinit var risposteRef: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,6 +57,9 @@ class SceltaMultiplaFragmentClassica : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.mod_classica_scelta_multipla, container, false)
 
+        giocatoriRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
+        giocatoreRef = giocatoriRef.child(uid)
+        risposteRef = giocatoreRef.child(topic)
 
         modClassicaActivity = activity as ModClassicaActivity
 

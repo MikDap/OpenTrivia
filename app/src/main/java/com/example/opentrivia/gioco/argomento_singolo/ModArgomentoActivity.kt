@@ -24,7 +24,7 @@ class ModArgomentoActivity : AppCompatActivity(), ArgomentoSingoloFragment.MyFra
     private lateinit var sfidaAccettata: String
 
     private lateinit var chiamataApi: ChiamataApi
-    private lateinit var database: FirebaseDatabase
+    private var database = FirebaseDatabase.getInstance()
 
     var domanda: String = ""
     var rispostaCorretta: String = ""
@@ -147,7 +147,9 @@ class ModArgomentoActivity : AppCompatActivity(), ArgomentoSingoloFragment.MyFra
         }
         //HAI SFIDATO UN AMICO
         else {
-            GiocoUtils.sfidaAmico("argomento singolo", difficolta, topic, avversario, avversarioNome)
+            GiocoUtils.sfidaAmico("argomento singolo", difficolta, topic, avversario, avversarioNome){partita ->
+                this.partita = partita
+            }
         }
 
     }

@@ -16,6 +16,7 @@ import com.example.opentrivia.utils.ModClassicaUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.util.Random
@@ -52,18 +53,25 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
     private lateinit var avversario:TextView
     val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
 
-    val modClassicaActivity = activity as ModClassicaActivity
-    var partita = modClassicaActivity.partita
-    val modalita = "classica"
-    var difficolta = modClassicaActivity.difficolta
-    val giocatoriRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
-    val giocatoreRef = giocatoriRef.child(uid)
+    private lateinit var modClassicaActivity: ModClassicaActivity
+    private lateinit var partita: String
+    private lateinit var modalita: String
+    private lateinit var difficolta: String
+    private lateinit var giocatoriRef: DatabaseReference
+    private lateinit var giocatoreRef: DatabaseReference
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.mod_classica_conquista, container, false)
+
+        modClassicaActivity = activity as ModClassicaActivity
+        partita = modClassicaActivity.partita
+        modalita = "classica"
+        difficolta = modClassicaActivity.difficolta
+        giocatoriRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
+        giocatoreRef = giocatoriRef.child(uid)
 
         //quadratini
         storia = view.findViewById(R.id.storia)
