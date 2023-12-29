@@ -150,7 +150,7 @@ coloraSfondo(NomeArgomento.text.toString())
 
                     // CHIAMA VITTORIA SE ARGOMENTICONQUISTATI MIEI = 6
                     if (argomenti_conquistati_miei == 6) {
-                        GiocoUtils.schermataVittoria(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco2, nomeAvv, argomenti_conquistati_miei, argomenti_conquistati_avversario, "classica")
+                        GiocoUtils.schermataVittoria(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco, nomeAvv, argomenti_conquistati_miei, argomenti_conquistati_avversario, "classica")
                         GiocoUtils.spostaInPartiteTerminate(partita,"classica",difficolta,uid,argomenti_conquistati_miei,argomenti_conquistati_avversario)
                         GiocoUtils.spostaInPartiteTerminate(partita,"classica",difficolta,avversario,argomenti_conquistati_miei,argomenti_conquistati_avversario)
                         GiocoUtils.updateStatTopic(modClassicaActivity.topicConquista,"corretta")

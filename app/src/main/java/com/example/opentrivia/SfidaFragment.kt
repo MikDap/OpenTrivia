@@ -12,6 +12,7 @@ import android.widget.TextView
 import com.example.opentrivia.gioco.a_tempo.ModATempoActivity
 import com.example.opentrivia.gioco.argomento_singolo.ModArgomentoActivity
 import com.example.opentrivia.gioco.classica.ModClassicaActivity
+import com.example.opentrivia.utils.GiocoUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -110,8 +111,8 @@ class SfidaFragment : Fragment() {
         modalita.text = nomeModalita
 
         accetta.setOnClickListener{
-
             val sfidaRef =  database.getReference("users").child(uid).child("sfide").child(partita)
+
             sfidaRef.removeValue()
 
             //CONTROLLA MODALITA E AVVIA INTENT ACTIVITY MODALITA DI GIOCO CONNETTENDOTI ALLA PARTITA CON ID CORRISPONDENTE
@@ -140,7 +141,16 @@ class SfidaFragment : Fragment() {
             sfidaContainer.removeView(gameView)
         }
 
+        if (nomeModalita == "a tempo" || nomeModalita == "argomento singolo") {
+            if (sfida.child("fineTurno").value.toString() == "si") {
+                sfidaContainer.addView(gameView)
+            }
+        }
+        else {
             sfidaContainer.addView(gameView)
+        }
+
+
 
     }
 }

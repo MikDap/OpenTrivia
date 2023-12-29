@@ -21,7 +21,7 @@ class ModArgomentoActivity : AppCompatActivity(), ArgomentoSingoloFragment.MyFra
     lateinit var avversarioNome: String
     lateinit var topic: String
     lateinit var categoria: String
-    private lateinit var sfidaAccettata: String
+    lateinit var sfidaAccettata: String
 
     private lateinit var chiamataApi: ChiamataApi
     private var database = FirebaseDatabase.getInstance()

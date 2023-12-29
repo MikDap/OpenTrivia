@@ -126,6 +126,11 @@ class VeroFalsoFragment : Fragment() {
         var avversario = ""
         var nomeAvv = ""
 
+        if(modATempoActivity.avversario != "casuale" && modATempoActivity.sfidaAccettata == "false"){
+            val sfidaRef = database.getReference("users").child(modATempoActivity.avversario).child("sfide").child(partita)
+            sfidaRef.child("fineTurno").setValue("si")
+        }
+
         giocatoriRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(listaGiocatori: DataSnapshot) {
                 for (giocatore in listaGiocatori.children) {
@@ -183,7 +188,7 @@ class VeroFalsoFragment : Fragment() {
 
                     GiocoUtils.schermataVittoria(
                         requireActivity().supportFragmentManager,
-                        R.id.fragmentContainerViewGioco2,
+                        R.id.fragmentContainerViewGioco3,
                         nomeAvv,
                         risposte1,
                         risposte2,
@@ -193,16 +198,16 @@ class VeroFalsoFragment : Fragment() {
                 else {
                     if (!giocatore2esiste) {
                         giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                        GiocoUtils.schermataAttendi(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco2)
+                        GiocoUtils.schermataAttendi(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco3)
                     } else {
                         giocatoriRef.child(uid).child("fineTurno").setValue("si")
                         GiocoUtils.spostaInPartiteTerminate(partita, modalita, difficolta, uid, risposte1, risposte2)
                         GiocoUtils.spostaInPartiteTerminate(partita, modalita, difficolta, avversario, risposte1, risposte2)
 
                         when {
-                            risposte1 > risposte2 -> GiocoUtils.schermataVittoria(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco2, nomeAvv, risposte1, risposte2, "argomento singolo")
-                            risposte1 == risposte2 -> GiocoUtils.schermataPareggio(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco2, nomeAvv, risposte1, risposte2, "argomento singolo")
-                            else -> GiocoUtils.schermataSconfitta(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco2, nomeAvv, risposte1, risposte2, "argomento singolo")
+                            risposte1 > risposte2 -> GiocoUtils.schermataVittoria(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco3, nomeAvv, risposte1, risposte2, "argomento singolo")
+                            risposte1 == risposte2 -> GiocoUtils.schermataPareggio(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco3, nomeAvv, risposte1, risposte2, "argomento singolo")
+                            else -> GiocoUtils.schermataSconfitta(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco3, nomeAvv, risposte1, risposte2, "argomento singolo")
                         }
                     }
                 }
