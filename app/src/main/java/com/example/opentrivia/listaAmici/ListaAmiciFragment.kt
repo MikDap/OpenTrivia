@@ -29,9 +29,6 @@ class ListaAmiciFragment : Fragment() {
     private val uid: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
     private val amiciRef = FirebaseDatabase.getInstance().getReference("users").child(uid).child("amici")
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,15 +38,6 @@ class ListaAmiciFragment : Fragment() {
         val view = inflater.inflate(R.layout.lista_amici, container, false)
         addFriendButton = view.findViewById(R.id.buttonAddFriend)
         recyclerView = view.findViewById(R.id.recyclerViewFriends)
-
-        //      val layoutManager = LinearLayoutManager(this)
-        //       recyclerView.layoutManager = layoutManager
-
-        //      val friendsList: List<String> = // Inserisci la tua lista di amici qui
-
-        //     val adapter = FriendsAdapter(friendsList)
-        //     recyclerView.adapter = adapter
-
 
         addFriendButton.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_listaAmiciFragment2_to_aggiungiAmico2)}

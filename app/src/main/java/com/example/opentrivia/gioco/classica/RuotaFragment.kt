@@ -1,6 +1,7 @@
 package com.example.opentrivia.gioco.classica
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -20,7 +21,11 @@ import android.graphics.drawable.BitmapDrawable
 import android.util.Log
 import android.graphics.PathMeasure
 import android.graphics.Typeface
+import android.icu.number.IntegerWidth
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Guideline
 import com.example.opentrivia.R
 import com.example.opentrivia.utils.GiocoUtils
@@ -37,7 +42,7 @@ class RuotaFragment : Fragment() {
 
     private lateinit var wheelView: View
     private lateinit var ruotaButton: Button
-
+    private lateinit var imageView3: ImageView
 
     private lateinit var prova: View
     private lateinit var storia : View
@@ -69,6 +74,8 @@ private lateinit var guideline2: Guideline
 
     private lateinit var database: FirebaseDatabase
     private lateinit var modClassicaActivity: ModClassicaActivity
+    private var diameter = 0
+    var viewAdattata= false
 
     //da 0 perchè la ruota parte da 0 gradi
     private var currentAngle: Float = 0f
@@ -93,6 +100,7 @@ private lateinit var guideline2: Guideline
         val view = inflater.inflate(R.layout.mod_classica_ruota, container, false)
         wheelView = view.findViewById(R.id.wheelView)
         ruotaButton = view.findViewById(R.id.ruotaButton)
+        imageView3 = view.findViewById(R.id.imageView3)
 
         storia = view.findViewById(R.id.storia)
         sport = view.findViewById(R.id.sport)
@@ -111,6 +119,11 @@ private lateinit var guideline2: Guideline
         rettangolo2 = view.findViewById(R.id.rettangolo2)
         rettangolo3 = view.findViewById(R.id.rettangolo3)
         guideline1 = view.findViewById(R.id.guidelineVerticalStart1)
+
+
+
+        adattaSchermo()
+
 
 // Utilizza distanceInDp come riferimento per impostare le dimensioni delle viste nel tuo layout
         user=view.findViewById(R.id.user)
@@ -174,6 +187,7 @@ private lateinit var guideline2: Guideline
 
 
         wheelView.post {
+            diameter = wheelView.width
             val backgroundColor = Color.parseColor("#FFC107") // Colore di sfondo desiderato
             drawWheelOverlay(backgroundColor)
 
@@ -256,7 +270,6 @@ private lateinit var guideline2: Guideline
 
     private fun drawWheelOverlay(backgroundColor: Int) {
 
-        val diameter = wheelView.width
 
         // ci serve una Bitmap per creare il cerchio
         val overlayBitmap = Bitmap.createBitmap(diameter, diameter, Bitmap.Config.ARGB_8888)
@@ -285,10 +298,17 @@ private lateinit var guideline2: Guideline
 
         //ci serve per le scritte
         val textPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-        textPaint.textSize = 60f
+        if (!viewAdattata) {
+            textPaint.textSize = 60f
+        }
+        else {
+            textPaint.textSize = 20f
+        }
         textPaint.color = Color.BLACK
         val boldTypeface = Typeface.defaultFromStyle(Typeface.BOLD)
         textPaint.setTypeface(boldTypeface)
+
+
 
 
         //per ogni materia, la scrivo in una certa posizione e una certa angolazione nel cerchio
@@ -388,39 +408,6 @@ private lateinit var guideline2: Guideline
     }
 
 
-    fun leggiRisposteDiFila(
-        giocatoreRef: DatabaseReference
-    ) {
-        giocatoreRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(giocatore: DataSnapshot) {
-
-
-                if (giocatore.hasChild("risposteDiFila")) {
-
-                    var risposte_di_fila =
-                        giocatore.child("risposteDiFila").value.toString().toInt()
-
-                    if (risposte_di_fila == 3) {
-
-                        // chiama schermata conquista argomento
-                        giocatoreRef.child("risposteDiFila").setValue(0)
-
-                        modClassicaActivity.chiamaConquista()
-                    }
-
-                }
-
-
-            }
-
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        })
-    }
-
 
 
     // METTERE SE ARGOMENTIMIEI O ARGOMENTIAVVERS
@@ -512,7 +499,48 @@ private lateinit var guideline2: Guideline
 
 
 
+fun adattaSchermo() {
+    val squareSize = resources.getDimensionPixelSize(R.dimen.square)
+    val widthPixel = Resources.getSystem().displayMetrics.widthPixels
+    val density = Resources.getSystem().displayMetrics.density
 
+    val widthDp = (widthPixel/density).toInt()
+
+    if (widthDp <= 320){
+
+        viewAdattata = true
+        val layoutParams1 = wheelView.layoutParams as ConstraintLayout.LayoutParams
+        diameter =  resources.getDimensionPixelSize(R.dimen.wheel_diameter)
+        layoutParams1.width= diameter
+        layoutParams1.height= diameter
+        wheelView.layoutParams= layoutParams1
+
+        val layoutParams2 = imageView3.layoutParams as ConstraintLayout.LayoutParams
+        val width =  resources.getDimensionPixelSize(R.dimen.imageView3width)
+        val height =  resources.getDimensionPixelSize(R.dimen.imageView3height)
+        layoutParams2.height= height
+        layoutParams2.width= width
+
+
+
+        val layoutParams = geografia.layoutParams as LinearLayout.LayoutParams
+        layoutParams.width = squareSize
+        layoutParams.height = squareSize
+        geografia.layoutParams = layoutParams
+        storia.layoutParams = layoutParams
+        scienze.layoutParams = layoutParams
+        arte.layoutParams = layoutParams
+        culturaPop.layoutParams = layoutParams
+        sport.layoutParams = layoutParams
+
+        geografia2.layoutParams = layoutParams
+        storia2.layoutParams = layoutParams
+        scienze2.layoutParams = layoutParams
+        arte2.layoutParams = layoutParams
+        culturaPop2.layoutParams = layoutParams
+        sport2.layoutParams = layoutParams
+    }
+}
 
 
 }

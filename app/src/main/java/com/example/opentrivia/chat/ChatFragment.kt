@@ -1,6 +1,9 @@
 package com.example.opentrivia.chat
 
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +31,7 @@ class ChatFragment : Fragment() {
     private lateinit var database: FirebaseDatabase
     private lateinit var nome : TextView
     private lateinit var editText: EditText
-    private lateinit var recyclerView: RecyclerView
+    lateinit var recyclerView: RecyclerView
     private lateinit var nomeAvversario: TextView
     private lateinit var send: Button
     private var userIdOther: String = ""
@@ -37,6 +40,7 @@ class ChatFragment : Fragment() {
     private var uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
     private var displayname = FirebaseAuth.getInstance().currentUser?.displayName.toString()
     private var chatRef = FirebaseDatabase.getInstance().getReference("chat")
+    lateinit var adapter: ChatAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,7 +80,7 @@ class ChatFragment : Fragment() {
 
         val layoutManager = LinearLayoutManager(requireContext())
         recyclerView.layoutManager = layoutManager
-        val adapter = ChatAdapter(chatID,userIdOther, usernameOther)
+        adapter = ChatAdapter(chatID,userIdOther, usernameOther, this)
         adapter.chatID = chatID
         recyclerView.adapter = adapter
 
@@ -115,4 +119,12 @@ class ChatFragment : Fragment() {
             callback()
         }
     }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        adapter.removeListener()
+    }
+
 }

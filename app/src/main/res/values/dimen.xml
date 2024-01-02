@@ -6,14 +6,14 @@
     <dimen name="margin_top">70dp</dimen>
     <dimen name="margin_top2">20dp</dimen>
     <!-- game_item_layout -->
-    <dimen name="game_item">100dp</dimen>
+    <dimen name="game_item">90dp</dimen>
     <dimen name="text_size_nome">10sp</dimen>
     <dimen name="text_size_punteggio">15sp</dimen>
     <dimen name="text_size_trattino">17sp</dimen>
-    <dimen name="button_gioca_inattesa_width">80dp</dimen>
-    <dimen name="button_gioca_inattesa_height">35dp</dimen>
+    <dimen name="button_gioca_inattesa_width">70dp</dimen>
+    <dimen name="button_gioca_inattesa_height">33dp</dimen>
 
-    <!-- mod_classica_ruota -->
+    <!-- mod_classica_ruota, mod_classica_conquista -->
     <dimen name="square">12dp</dimen>
     <dimen name="wheel_diameter">200dp</dimen>
     <dimen name="button_margin_bottom">20dp</dimen>

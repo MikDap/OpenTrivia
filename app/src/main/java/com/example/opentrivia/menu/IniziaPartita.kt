@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.opentrivia.R
@@ -76,11 +78,16 @@ class IniziaPartita : Fragment() {
             }
 
             if (selezione == "amico") {
-                intent.putExtra("difficolta", difficolta)
-                intent.putExtra("avversario", avversarioID)
-                intent.putExtra("sfidaAccettata",false)
-                intent.putExtra("avversarioNome", avversarioNome)
-                startActivity(intent)
+                if (!::avversarioID.isInitialized) {
+                    Toast.makeText(requireContext(), "Seleziona un avversario!", Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    intent.putExtra("difficolta", difficolta)
+                    intent.putExtra("avversario", avversarioID)
+                    intent.putExtra("sfidaAccettata", false)
+                    intent.putExtra("avversarioNome", avversarioNome)
+                    startActivity(intent)
+                }
             }
 
 
@@ -122,4 +129,6 @@ fun nomeAvversario(nome:String){
             }
         })
     }
+
+
 }

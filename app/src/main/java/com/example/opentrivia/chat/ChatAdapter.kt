@@ -15,17 +15,21 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import java.util.Calendar
 
-class ChatAdapter(chatID: String, userId: String, username: String) : RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
+class ChatAdapter(chatID: String, userId: String, username: String, chatFragment: ChatFragment) : RecyclerView.Adapter<ChatAdapter.ViewHolder>() {
 
     private val VIEW_TYPE_MY_MESSAGE = 1
     private val VIEW_TYPE_OTHER_MESSAGE = 2
     private var uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
     private var chatRef = FirebaseDatabase.getInstance().getReference("chat")
     private val userMessages = mutableMapOf<Int, Triple<String, String, Long>>()
+    private lateinit var chatRefListener: ValueEventListener
 
     lateinit var chatID: String
     init {
-        leggiMessaggiDatabase()
+        this.chatID = chatID
+        leggiMessaggiDatabase(){ ->
+            chatFragment.recyclerView.smoothScrollToPosition(chatFragment.adapter.itemCount - 1)
+        }
 
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -103,11 +107,11 @@ class ChatAdapter(chatID: String, userId: String, username: String) : RecyclerVi
 
 
 
-    fun leggiMessaggiDatabase(){
+    fun leggiMessaggiDatabase(callback: () -> Unit){
 
-        chatRef.addValueEventListener(object : ValueEventListener {
+        chatRefListener = chatRef.child(chatID).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(listachat: DataSnapshot) {
-                val messaggichat = listachat.child(chatID).child("messaggi")
+                val messaggichat = listachat.child("messaggi")
                 var position = 0
 
                 for (messaggio in messaggichat.children) {
@@ -127,6 +131,8 @@ class ChatAdapter(chatID: String, userId: String, username: String) : RecyclerVi
 
                 // Notifica l'adattatore che i dati sono stati modificati
                 notifyDataSetChanged()
+
+                callback()
 
             }
 
@@ -156,6 +162,11 @@ class ChatAdapter(chatID: String, userId: String, username: String) : RecyclerVi
             12 -> "Dicembre"
             else -> "Mese non valido"
         }
+    }
+
+
+    fun removeListener(){
+        chatRef.child(chatID).removeEventListener(chatRefListener)
     }
 }
 

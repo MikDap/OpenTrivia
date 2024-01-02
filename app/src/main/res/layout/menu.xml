@@ -62,38 +62,37 @@
     <!-- ScrollView orizzontale per le partite in corso -->
     <Button
         android:id="@+id/historyTextView"
-        android:layout_width="100sp"
-        android:layout_height="23sp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="5dp"
+        android:layout_width="80sp"
+        android:layout_height="28sp"
         android:text="Visualizza Cronologia"
         android:background="@drawable/contour_background2"
         android:textColor="#FFFFFF"
-        android:textSize="7sp"
+        android:textSize="8sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@id/startButton"
-        app:layout_constraintTop_toBottomOf="@id/startButton" />
+        app:layout_constraintTop_toTopOf="@id/startButton"
+        app:layout_constraintBottom_toBottomOf="@+id/startButton"
+        />
     <TextView
         android:id="@+id/notificationBadge"
         android:layout_width="14dp"
         android:layout_height="14dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginTop="4dp"
         android:background="@drawable/orange_circle_background"
         android:gravity="center"
         android:text="1"
         android:textSize="10dp"
         android:textColor="#FFFFFF"
-        app:layout_constraintTop_toTopOf="@id/orangeBar"
-        app:layout_constraintEnd_toEndOf="@id/orangeBar" />
+        app:layout_constraintTop_toTopOf="@id/historyTextView"
+        app:layout_constraintEnd_toEndOf="@id/historyTextView" />
 
     <!-- Il resto del tuo layout rimane invariato -->
 
     <Button
         android:id="@+id/startButton"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
         android:layout_below="@id/titleTextView"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
@@ -102,7 +101,7 @@
         android:text="@string/gioca"
         android:textColor="#5D4037"
         app:layout_constraintEnd_toEndOf="@id/guidelineVerticalEnd"
-        app:layout_constraintStart_toEndOf="@id/sfida"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/guidelineHorizontalEnd" />
 
     <ImageView
