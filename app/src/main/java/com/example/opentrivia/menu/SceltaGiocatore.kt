@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.navigation.Navigation
 import com.example.opentrivia.R
 
@@ -68,14 +69,20 @@ class SceltaGiocatore : Fragment() {
             bundle.putString("modalita", modalita)
             bundle.putString("difficolta", difficolta)
 
-            if (selezione == "casuale"){
-                bundle.putString("selezione", "casuale")
-            }
-            if (selezione == "amico"){
-                bundle.putString("selezione", "amico")
+            when (selezione) {
+                "casuale" -> {
+                    bundle.putString("selezione", "casuale")
+                    Navigation.findNavController(view).navigate(R.id.action_sceltaGiocatore_to_iniziaPartita, bundle)
+                }
+                "amico" -> {
+                    bundle.putString("selezione", "amico")
+                    Navigation.findNavController(view).navigate(R.id.action_sceltaGiocatore_to_iniziaPartita, bundle)
+                }
+                else -> {
+                    Toast.makeText(requireContext(), "Seleziona un avversario!", Toast.LENGTH_SHORT).show()
+                }
             }
 
-            Navigation.findNavController(view).navigate(R.id.action_sceltaGiocatore_to_iniziaPartita, bundle)
         }
 
     }

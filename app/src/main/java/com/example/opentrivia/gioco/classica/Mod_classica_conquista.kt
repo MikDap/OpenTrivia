@@ -1,5 +1,5 @@
 package com.example.opentrivia.gioco.classica
-
+import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.opentrivia.R
 import com.example.opentrivia.api.ChiamataApi
 import com.example.opentrivia.utils.GiocoUtils
@@ -21,9 +23,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.util.Random
 
-
 class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
-
     private lateinit var chiamataApi: ChiamataApi
     lateinit var categoria: String
     private lateinit var storiaButton: ImageButton
@@ -52,7 +52,6 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
     private lateinit var user:TextView
     private lateinit var avversario:TextView
     val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-
     private lateinit var modClassicaActivity: ModClassicaActivity
     private lateinit var partita: String
     private lateinit var modalita: String
@@ -65,14 +64,12 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.mod_classica_conquista, container, false)
-
         modClassicaActivity = activity as ModClassicaActivity
         partita = modClassicaActivity.partita
         modalita = "classica"
         difficolta = modClassicaActivity.difficolta
         giocatoriRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
         giocatoreRef = giocatoriRef.child(uid)
-
         //quadratini
         storia = view.findViewById(R.id.storia)
         sport = view.findViewById(R.id.sport)
@@ -80,18 +77,15 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
         arte = view.findViewById(R.id.arte)
         scienze = view.findViewById(R.id.scienze)
         culturaPop = view.findViewById(R.id.culturaPop)
-
         storia2 = view.findViewById(R.id.storia2)
         sport2 = view.findViewById(R.id.sport2)
         geografia2 = view.findViewById(R.id.geografia2)
         arte2 = view.findViewById(R.id.arte2)
         scienze2 = view.findViewById(R.id.scienze2)
         culturaPop2 = view.findViewById(R.id.culturaPop2)
-
+        adattaSchermo()
         user=view.findViewById(R.id.user1)
         avversario=view.findViewById(R.id.avversario1)
-
-
 
         user.text= FirebaseAuth.getInstance().currentUser?.displayName.toString()+" (me)"
         GiocoUtils.getAvversario(modalita, difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
@@ -103,14 +97,12 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
             coloraQuadratini(argomentiAvversario, false)
         }
 
-
         storiaButton = view.findViewById(R.id.storiabutton)
         geografiaButton = view.findViewById(R.id.geografiabutton)
         arteButton = view.findViewById(R.id.artebutton)
         sportButton = view.findViewById(R.id.sportbutton)
         intrattenimentoButton = view.findViewById(R.id.intrattenimentobutton)
         scienzeButton = view.findViewById(R.id.scienzebutton)
-
 
         var argomentoRef= database.getReference("partite").child("classica").child(difficolta).child(partita).child("giocatori").child(uid).child("ArgomentiConquistati")
         argomentoRef.addValueEventListener (object : ValueEventListener {
@@ -121,7 +113,6 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
                         topic = "storia"
                     }}
                 else{storiaButton.setBackgroundColor(Color.parseColor("#D3D3D3"))}
-
                 if (!argomenti.hasChild("geografia")) {
                     geografiaButton.setOnClickListener {
                         getTriviaQuestion("geografia")
@@ -134,7 +125,6 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
                         topic = "arte"
                     }}
                 else{arteButton.setBackgroundColor(Color.parseColor("#D3D3D3"))}
-
                 if(!argomenti.hasChild("sport")){
                     sportButton.setOnClickListener {
                         getTriviaQuestion("sport")
@@ -145,7 +135,6 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
                     intrattenimentoButton.setOnClickListener {
                         getTriviaQuestion("culturaPop")
                         topic = "culturaPop"
-
                     }}
                 else{intrattenimentoButton.setBackgroundColor(Color.parseColor("#D3D3D3"))}
                 if(!argomenti.hasChild("scienze")){
@@ -153,12 +142,9 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
                         getTriviaQuestion("scienze")
                         topic = "scienze"
 
-
                     }}
                 else{scienzeButton.setBackgroundColor(Color.parseColor("#D3D3D3"))}
-
             }
-
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
@@ -166,17 +152,13 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
         return view
     }
 
-
-
     fun getTriviaQuestion(topic: String) {
 //chiamiamo la funzione per ottenere il numero delle categorie per il topic selezionato
         categoria = GiocoUtils.getCategoria(topic)
         chiamataApi = ChiamataApi("multiple", categoria, difficolta)
         chiamataApi.fetchTriviaQuestion(this)
         Log.d("getTriviaQuestion", "siii")
-
     }
-
     override fun onTriviaQuestionFetched(
         tipo: String,
         domanda: String,
@@ -185,11 +167,9 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
         risposta_sbagliata_2: String,
         risposta_sbagliata_3: String
     ) {
-
         //salviamo la domanda e le risposte
         this.domanda = chiamataApi.domanda
         this.rispostaCorretta = chiamataApi.risposta_corretta
-
         listaRisposte.clear()
         listaRisposte.addAll(
             listOf(
@@ -200,83 +180,86 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
             )
         )
         listaRisposte.shuffle()
+        modClassicaActivity.chiamaConquistaSceltaMultipla(topic,domanda,listaRisposte[0],listaRisposte[1],listaRisposte[2],listaRisposte[3], risposta_corretta)
     }
-
-
 
     fun setDifficolta(partita: String, difficolta: String) {
         this.partita = partita
         this.difficolta = difficolta
     }
 
-
     fun coloraQuadratini(Argomenti: ArrayList<String>, miei: Boolean) {
-
         for (argomento in Argomenti) {
-
             if (miei) {
                 when (argomento) {
-
                     "storia" -> {
                         storia.setBackgroundColor(Color.parseColor("#FFBB2F"))
                     }
-
                     "sport" -> {
                         sport.setBackgroundColor(Color.parseColor("#FFEB3B"))
                     }
-
                     "geografia" -> {
                         geografia.setBackgroundColor(Color.parseColor("#0000FF"))
                     }
-
                     "arte" -> {
                         arte.setBackgroundColor(Color.parseColor("#FF0006"))
                     }
-
                     "scienze" -> {
                         scienze.setBackgroundColor(Color.parseColor("#4CAF50"))
                     }
-
                     "culturaPop" -> {
                         culturaPop.setBackgroundColor(Color.parseColor("#FF00FF"))
                     }
 
-
                 }
-
             } else {
                 when (argomento) {
-
                     "storia" -> {
                         storia2.setBackgroundColor(Color.parseColor("#FFBB2F"))
                     }
-
                     "sport" -> {
                         sport2.setBackgroundColor(Color.parseColor("#FFEB3B"))
                     }
-
                     "geografia" -> {
                         geografia2.setBackgroundColor(Color.parseColor("#0000FF"))
                     }
-
                     "arte" -> {
                         arte2.setBackgroundColor(Color.parseColor("#FF0006"))
                     }
-
                     "scienze" -> {
                         scienze2.setBackgroundColor(Color.parseColor("#4CAF50"))
                     }
-
                     "culturaPop" -> {
                         culturaPop2.setBackgroundColor(Color.parseColor("#FF00FF"))
                     }
 
-
                 }
-
             }
         }
 
+    }
+    fun adattaSchermo() {
+        val squareSize = resources.getDimensionPixelSize(R.dimen.square)
+        val widthPixel = Resources.getSystem().displayMetrics.widthPixels
+        val density = Resources.getSystem().displayMetrics.density
+        val widthDp = (widthPixel/density).toInt()
+        if (widthDp <= 320){
 
+            val layoutParams = geografia.layoutParams as LinearLayout.LayoutParams
+            layoutParams.width = squareSize
+            layoutParams.height = squareSize
+            geografia.layoutParams = layoutParams
+            storia.layoutParams = layoutParams
+            scienze.layoutParams = layoutParams
+            arte.layoutParams = layoutParams
+            culturaPop.layoutParams = layoutParams
+            sport.layoutParams = layoutParams
+            geografia2.layoutParams = layoutParams
+            storia2.layoutParams = layoutParams
+            scienze2.layoutParams = layoutParams
+            arte2.layoutParams = layoutParams
+            culturaPop2.layoutParams = layoutParams
+            sport2.layoutParams = layoutParams
+        }
     }
 }

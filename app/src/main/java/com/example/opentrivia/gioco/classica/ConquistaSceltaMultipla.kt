@@ -1,5 +1,7 @@
 package com.example.opentrivia.gioco.classica
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -11,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.opentrivia.MainActivity
 import com.example.opentrivia.R
@@ -25,8 +28,8 @@ import com.example.opentrivia.utils.ModClassicaUtils
 
 class ConquistaSceltaMultipla : Fragment() {
 
-    private lateinit var database: FirebaseDatabase
-    private lateinit var uid: String
+    var database = FirebaseDatabase.getInstance()
+    var uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
     private lateinit var giocatoreRef: DatabaseReference
     private lateinit var giocatoriRef: DatabaseReference
     private lateinit var partita: String
@@ -41,17 +44,6 @@ class ConquistaSceltaMultipla : Fragment() {
     private lateinit var modClassicaActivity: ModClassicaActivity
     private lateinit var layout: ConstraintLayout
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        database = FirebaseDatabase.getInstance()
-         uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-         giocatoreRef =
-            database.getReference("partite").child("classica").child(difficolta).child(partita).child("giocatori").child(uid)
-         giocatoriRef = database.getReference("partite").child("classica").child(difficolta).child(partita)
-            .child("giocatori")
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -81,8 +73,11 @@ class ConquistaSceltaMultipla : Fragment() {
         partita = modClassicaActivity.partita
         difficolta = modClassicaActivity.difficolta
 
-coloraSfondo(NomeArgomento.text.toString())
+        giocatoreRef = database.getReference("partite").child("classica").child(difficolta).child(partita).child("giocatori").child(uid)
+        giocatoriRef = database.getReference("partite").child("classica").child(difficolta).child(partita).child("giocatori")
 
+coloraSfondo(NomeArgomento.text.toString())
+onBackPressed()
     return view
     }
 
@@ -176,7 +171,7 @@ coloraSfondo(NomeArgomento.text.toString())
                 risposta.setBackgroundColor(Color.RED)
             }, 500)
 
-            GiocoUtils.getAvversario("classica", difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
+  /*          GiocoUtils.getAvversario("classica", difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
 
                 ModClassicaUtils.getArgomentiConquistati(giocatoriRef){ argomentiMiei, argomentiAvversario ->
 
@@ -186,7 +181,7 @@ coloraSfondo(NomeArgomento.text.toString())
                     ModClassicaUtils.updateScrollView(nomeAvv,avversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, difficolta, database)
                 }
             }
-
+*/
             GiocoUtils.getAvversario("classica", difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
 
                 val partitaRef =
@@ -236,7 +231,6 @@ coloraSfondo(NomeArgomento.text.toString())
 
 
 
-
 fun coloraSfondo (topic: String) {
 
     when (topic) {
@@ -249,8 +243,45 @@ fun coloraSfondo (topic: String) {
 
 
     }
-
-
 }
 
+
+
+    fun onBackPressed(){
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val alertDialog = AlertDialog.Builder(requireContext())
+                alertDialog.setTitle("Vuoi ritornare al menù?")
+                alertDialog.setMessage("ATTENZIONE: uscendo la risposta sarà considerata sbagliata")
+
+                alertDialog.setPositiveButton("SI") { dialog: DialogInterface, which: Int ->
+
+                    GiocoUtils.getAvversario("classica", difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
+
+                        val partitaRef = database.getReference("partite").child("classica").child(difficolta).child(partita)
+                        if (nomeAvv == "-") {
+                            partitaRef.child("Turno").setValue("-")
+                        } else {
+                            partitaRef.child("Turno").setValue(nomeAvv)
+                        }
+
+                    }
+
+                    GiocoUtils.updateStatTopic(modClassicaActivity.topicConquista,"sbagliata")
+                    val intent = Intent(activity, MainActivity::class.java)
+                    startActivity(intent)
+
+                    requireActivity().finish()
+                }
+
+                alertDialog.setNegativeButton("NO") { dialog: DialogInterface, which: Int ->
+                    dialog.dismiss()
+                }
+
+                alertDialog.show()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
+    }
 }

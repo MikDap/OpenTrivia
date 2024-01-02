@@ -34,6 +34,9 @@ class ChatListaAmici : Fragment() {
     private var chatRef = FirebaseDatabase.getInstance().getReference("chat")
     private lateinit var userIDOther: String
     private lateinit var usernameOther: String
+    private lateinit var userRefListener: ValueEventListener
+    private lateinit var amiciRefListener: ValueEventListener
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -67,7 +70,7 @@ class ChatListaAmici : Fragment() {
                 usernameOther = username
 
 
-                userRef.addValueEventListener(object : ValueEventListener {
+               userRefListener = userRef.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(user: DataSnapshot) {
 
                         if (user.hasChild("chat")) {
@@ -149,7 +152,7 @@ class ChatListaAmici : Fragment() {
 
 
         // Aggiungi un ValueEventListener per ottenere i dati degli amici da Firebase
-        amiciRef.addValueEventListener(object : ValueEventListener {
+       amiciRefListener = amiciRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 userKeyMap.clear() // Svuota la lista prima di popolarla con i nuovi dati
                 for (amicoSnapshot in snapshot.children) {
@@ -208,7 +211,6 @@ Log.d("entraSetParte","si")
             return
         }
 
-
         val chat = listaChatIterator.next()
 
             if (chat.child("partecipante").hasChild(userId)){
@@ -218,7 +220,13 @@ Log.d("entraSetParte","si")
         else {
                 controllaChat(listaChatIterator, userId,chatTrovata, callback)
         }
+    }
 
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        userRef.removeEventListener(userRefListener)
+        amiciRef.removeEventListener(amiciRefListener)
     }
 }

@@ -3,6 +3,7 @@ package com.example.opentrivia.menu
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -41,40 +42,40 @@ class Menu : Fragment() {
     private lateinit var notification: TextView
     private lateinit var sfida: ImageView
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-       val view = inflater.inflate(R.layout.menu, container, false)
+        val view = inflater.inflate(R.layout.menu, container, false)
         startButton = view.findViewById(R.id.startButton)
         visualizzaCronologia = view.findViewById(R.id.historyTextView)
         notification = view.findViewById(R.id.notificationBadge)
         partitaContainer = view.findViewById(R.id.linearLayout)
         sfida = view.findViewById(R.id.sfida)
 
+        adattaSchermo()
 
         numeroPartiteNonViste { contatore ->
-            if (contatore == 0){
+            if (contatore == 0) {
                 notification.visibility = View.INVISIBLE
             }
             notification.text = contatore.toString()
         }
 
 
-        val callback = object : OnBackPressedCallback(true){
+        val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val alertDialog = AlertDialog.Builder(requireContext())
                 alertDialog.setTitle("Uscita Applicazione")
                 alertDialog.setMessage("Vuoi uscire dall'applicazione?")
 
-                alertDialog.setPositiveButton("SI")  {dialog: DialogInterface, which: Int ->
+                alertDialog.setPositiveButton("SI") { dialog: DialogInterface, which: Int ->
                     finishAffinity(requireActivity())
                     exitProcess(0)
-                        }
+                }
 
-                alertDialog.setNegativeButton("NO")  {dialog: DialogInterface, which: Int ->
+                alertDialog.setNegativeButton("NO") { dialog: DialogInterface, which: Int ->
                     dialog.dismiss()
                 }
 
@@ -82,13 +83,13 @@ class Menu : Fragment() {
             }
         }
 
-       requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,callback)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
         database = FirebaseDatabase.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         val nomeMio = FirebaseAuth.getInstance().currentUser?.displayName.toString()
         val partiteInCorsoRef = database.getReference("users").child(uid).child("partite in corso")
-        val modalitaRef= database.getReference("partite").child("classica")
+        val modalitaRef = database.getReference("partite").child("classica")
         partiteInCorsoRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(partiteInCorso: DataSnapshot) {
 
@@ -103,17 +104,7 @@ class Menu : Fragment() {
                 }
 
 
-
-
-
-
             }
-
-
-
-
-
-
 
 
             override fun onCancelled(error: DatabaseError) {
@@ -126,35 +117,45 @@ class Menu : Fragment() {
 
 
 
-        startButton.setOnClickListener { Navigation.findNavController(view).navigate(R.id.action_menu_to_modalita)}
-        visualizzaCronologia.setOnClickListener{ Navigation.findNavController(view).navigate(R.id.action_menu_to_cronologiaPartite)    }
-        sfida.setOnClickListener { Navigation.findNavController(view).navigate(R.id.action_menu_to_sfidaFragment) }
+        startButton.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_menu_to_modalita)
+        }
+        visualizzaCronologia.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_menu_to_cronologiaPartite)
+        }
+        sfida.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_menu_to_sfidaFragment)
+        }
 
         return view
     }
-    fun leggiTurno (partita : String, difficolta: String, modalitaRef: DatabaseReference,callback:(turno:String)-> Unit)
-    {
-        var turno =""
+
+    fun leggiTurno(
+        partita: String,
+        difficolta: String,
+        modalitaRef: DatabaseReference,
+        callback: (turno: String) -> Unit
+    ) {
+        var turno = ""
         modalitaRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(modalitaRef: DataSnapshot) {
 
 
                 if (modalitaRef.child(difficolta).child(partita).hasChild("Turno")) {
-                     turno= modalitaRef.child(difficolta).child(partita).child("Turno").value.toString()
+                    turno =
+                        modalitaRef.child(difficolta).child(partita).child("Turno").value.toString()
                 }
 
-         callback(turno);
+                callback(turno);
             }
 
 
             override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
-                    }
-
-                })
+                TODO("Not yet implemented")
             }
 
-
+        })
+    }
 
 
     fun processaPartiteInCorso(partite: Iterator<DataSnapshot>, callback: () -> Unit) {
@@ -164,23 +165,34 @@ class Menu : Fragment() {
             return
         }
         val nomeMio = FirebaseAuth.getInstance().currentUser?.displayName.toString()
-        val modalitaRef= database.getReference("partite").child("classica")
-
+        val modalitaRef = database.getReference("partite").child("classica")
 
 
         val partita = partite.next()
 
 
         val inflater = LayoutInflater.from(requireContext())
-        Log.d("1","1")
+        Log.d("1", "1")
         var partita1 = partita.key.toString()
         val gameView = inflater.inflate(R.layout.game_item_layout, partitaContainer, false)
-        giocaincorso=gameView.findViewById(R.id.giocaincorso)
-        background_game_item=gameView.findViewById(R.id.background_game_item)
+        giocaincorso = gameView.findViewById(R.id.giocaincorso)
+        background_game_item = gameView.findViewById(R.id.background_game_item)
         val opponentNameTextView = gameView.findViewById<TextView>(R.id.opponentNameTextView)
         val scoremeTextView = gameView.findViewById<TextView>(R.id.scoreme)
         val scoreavversarioTextView = gameView.findViewById<TextView>(R.id.scoreavversario)
         inattesa = gameView.findViewById(R.id.inattesa)
+        val dashTextView = gameView.findViewById<TextView>(R.id.dashTextView)
+
+        val heightPixel = Resources.getSystem().displayMetrics.heightPixels
+        val density = Resources.getSystem().displayMetrics.density
+
+        val heightDp = (heightPixel / density).toInt()
+        if (heightDp <= 480){
+            adattaScrollView(background_game_item,opponentNameTextView, scoremeTextView, scoreavversarioTextView, dashTextView, giocaincorso, inattesa)
+
+        }
+
+
 
 
         var avversario = partita.child("Avversario").value.toString()
@@ -190,35 +202,31 @@ class Menu : Fragment() {
         scoremeTextView.text = punteggioMio
         opponentNameTextView.text = avversario
         scoreavversarioTextView.text = punteggioAvversario
-        var difficolta=partita.child("difficolta").value.toString()
+        var difficolta = partita.child("difficolta").value.toString()
 
-        leggiTurno(partita1,difficolta,modalitaRef){
-                turno ->
-            Log.d("3","3")
-            if(turno == nomeMio ) {
-                giocaincorso.visibility= View.VISIBLE
-                inattesa.visibility= View.INVISIBLE
+        leggiTurno(partita1, difficolta, modalitaRef) { turno ->
+            Log.d("3", "3")
+            if (turno == nomeMio) {
+                giocaincorso.visibility = View.VISIBLE
+                inattesa.visibility = View.INVISIBLE
 
-                giocaincorso.setOnClickListener{
+                giocaincorso.setOnClickListener {
                     var intent = Intent(activity, ModClassicaActivity::class.java)
-                    intent.putExtra("partita",partita1)
-                    intent.putExtra("difficolta",difficolta)
+                    intent.putExtra("partita", partita1)
+                    intent.putExtra("difficolta", difficolta)
                     startActivity(intent)
                 }
 
-            }
-            else {
-                giocaincorso.visibility=View.INVISIBLE
-                inattesa.visibility=View.VISIBLE
-                val drawableId=R.drawable.game_item_attesa2_background
-                val drawable=ResourcesCompat.getDrawable(resources,drawableId,null)
-                background_game_item.background=drawable
+            } else {
+                giocaincorso.visibility = View.INVISIBLE
+                inattesa.visibility = View.VISIBLE
+                val drawableId = R.drawable.game_item_attesa2_background
+                val drawable = ResourcesCompat.getDrawable(resources, drawableId, null)
+                background_game_item.background = drawable
 
 
             }
             partitaContainer.addView(gameView)
-
-
 
 
             // Richiama la funzione ricorsivamente per processare il prossimo elemento
@@ -227,10 +235,11 @@ class Menu : Fragment() {
     }
 
 
-    fun numeroPartiteNonViste(callback: (contatore: Int) -> Unit){
+    fun numeroPartiteNonViste(callback: (contatore: Int) -> Unit) {
 
         val uid: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
-        var partiteTerminateRef = FirebaseDatabase.getInstance().getReference("users").child(uid).child("partite terminate")
+        var partiteTerminateRef = FirebaseDatabase.getInstance().getReference("users").child(uid)
+            .child("partite terminate")
 
         var contatore = 0
 
@@ -241,9 +250,9 @@ class Menu : Fragment() {
                     for (difficolta in modalita.children) {
                         for (partita in difficolta.children) {
 
-                           if (!partita.hasChild("vista")) {
-                               contatore++
-                           }
+                            if (!partita.hasChild("vista")) {
+                                contatore++
+                            }
                         }
                     }
                 }
@@ -255,5 +264,62 @@ class Menu : Fragment() {
             }
         })
 
+    }
+
+
+    fun adattaSchermo() {
+        val startbuttonwidth = resources.getDimensionPixelSize(R.dimen.startbuttonwidth)
+        val startbuttonheight = resources.getDimensionPixelSize(R.dimen.startbuttonheight)
+        val crossed_sword = resources.getDimensionPixelSize(R.dimen.crossed_sword)
+
+        val widthPixel = Resources.getSystem().displayMetrics.widthPixels
+        val density = Resources.getSystem().displayMetrics.density
+
+        val widthDp = (widthPixel / density).toInt()
+
+        if (widthDp <= 320) {
+
+            val layoutParams = startButton.layoutParams as ConstraintLayout.LayoutParams
+            layoutParams.width = startbuttonwidth
+            layoutParams.height = startbuttonheight
+            startButton.layoutParams = layoutParams
+
+            val layoutParams1 = sfida.layoutParams as ConstraintLayout.LayoutParams
+            layoutParams1.width = crossed_sword
+            sfida.layoutParams = layoutParams1
+        }
+    }
+
+
+    fun adattaScrollView(background_game_item: ConstraintLayout,opponentNameTextView: TextView, scoremeTextView: TextView, scoreavversarioTextView: TextView, dashTextView: TextView, giocaincorso: TextView, inattesa: TextView){
+
+        val game_item = resources.getDimensionPixelSize(R.dimen.game_item)
+        val text_size_nome = resources.getDimensionPixelSize(R.dimen.text_size_nome)
+        val text_size_punteggio = resources.getDimensionPixelSize(R.dimen.text_size_punteggio)
+        val text_size_trattino = resources.getDimensionPixelSize(R.dimen.text_size_trattino)
+        val button_gioca_inattesa_height = resources.getDimensionPixelSize(R.dimen.button_gioca_inattesa_height)
+        val button_gioca_inattesa_width = resources.getDimensionPixelSize(R.dimen.button_gioca_inattesa_width)
+
+
+        val layoutParams = background_game_item.layoutParams
+
+        layoutParams.width= game_item
+        layoutParams.height= game_item
+        background_game_item.layoutParams= layoutParams
+
+        opponentNameTextView.textSize = text_size_nome.toFloat()
+
+        scoremeTextView.textSize = text_size_punteggio.toFloat()
+        scoreavversarioTextView.textSize = text_size_punteggio.toFloat()
+
+        dashTextView.textSize = text_size_trattino.toFloat()
+
+        val layoutParams1 = giocaincorso.layoutParams as ConstraintLayout.LayoutParams
+        layoutParams1.width = button_gioca_inattesa_width
+        layoutParams1.height = button_gioca_inattesa_height
+        giocaincorso.layoutParams = layoutParams1
+        inattesa.layoutParams = layoutParams1
+        giocaincorso.textSize = text_size_nome.toFloat()
+        inattesa.textSize = text_size_nome.toFloat()
     }
 }
