@@ -36,6 +36,8 @@ class ChatListaAmici : Fragment() {
     private lateinit var usernameOther: String
     private lateinit var userRefListener: ValueEventListener
     private lateinit var amiciRefListener: ValueEventListener
+    private var userRefListenerInitialized = false
+    private var amiciRefListenerInitialized = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,10 +105,8 @@ class ChatListaAmici : Fragment() {
                             chatID = nuovaChatRef.key.toString()
 
 
-                            userOtherRef.child("chat").child(chatID).child("partecipante")
-                                .child(uid).setValue(displayname)
-                            val settato = userRef.child("chat").child(chatID).child("partecipante")
-                                .child(userIDOther).setValue(usernameOther)
+                            userOtherRef.child("chat").child(chatID).child("partecipante").child(uid).setValue(displayname)
+                            val settato = userRef.child("chat").child(chatID).child("partecipante").child(userIDOther).setValue(usernameOther)
 
                             settato.addOnSuccessListener {
 
@@ -135,16 +135,9 @@ class ChatListaAmici : Fragment() {
                     override fun onCancelled(error: DatabaseError) {
                         // Gestisci l'errore, se necessario
                     }
-                }.also { listener ->
-                        viewLifecycleOwner.lifecycle.addObserver(object : DefaultLifecycleObserver {
-                            override fun onDestroy(owner: LifecycleOwner) {
-                                super.onDestroy(owner)
-                                amiciRef.removeEventListener(listener) // Rimuovi il listener quando la vista è distrutta
-                            }
-                        })
-                    })
-
-
+                })
+                userRefListenerInitialized = true
+                amiciRefListenerInitialized = true
             }
         })
 
@@ -225,8 +218,11 @@ Log.d("entraSetParte","si")
 
     override fun onDestroyView() {
         super.onDestroyView()
-
-        userRef.removeEventListener(userRefListener)
-        amiciRef.removeEventListener(amiciRefListener)
+        if (userRefListenerInitialized) {
+            userRef.removeEventListener(userRefListener)
+        }
+        if (amiciRefListenerInitialized) {
+            amiciRef.removeEventListener(amiciRefListener)
+        }
     }
 }

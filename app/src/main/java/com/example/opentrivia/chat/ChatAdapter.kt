@@ -23,12 +23,15 @@ class ChatAdapter(chatID: String, userId: String, username: String, chatFragment
     private var chatRef = FirebaseDatabase.getInstance().getReference("chat")
     private val userMessages = mutableMapOf<Int, Triple<String, String, Long>>()
     private lateinit var chatRefListener: ValueEventListener
+    var controlloData = "0"
 
     lateinit var chatID: String
     init {
         this.chatID = chatID
         leggiMessaggiDatabase(){ ->
-            chatFragment.recyclerView.smoothScrollToPosition(chatFragment.adapter.itemCount - 1)
+            if (chatFragment.adapter.itemCount > 1) {
+                chatFragment.recyclerView.smoothScrollToPosition(chatFragment.adapter.itemCount - 1)
+            }
         }
 
     }
@@ -72,10 +75,15 @@ class ChatAdapter(chatID: String, userId: String, username: String, chatFragment
 
         val data = nomeMese + " " + giorno
 
-        holder.data.text= data
+        if (data != controlloData) {
+            holder.data.text = data
+        } else {
+            holder.data.text = ""
+        }
         holder.orario.text= orario
         holder.messaggio.text = testo
 
+        controlloData = data
     }
 
 
