@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.opentrivia.R
 import com.example.opentrivia.api.ChiamataApi
+import com.example.opentrivia.utils.DatabaseUtils
 import com.example.opentrivia.utils.GiocoUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -64,7 +65,7 @@ class ModClassicaActivity : AppCompatActivity(), RuotaFragment.MyFragmentListene
         if (partita == "") { creaPartitaDatabase() }
     }
     else {
-        GiocoUtils.sfidaAccettata(partita, "classica", difficolta)
+        DatabaseUtils.sfidaAccettata(partita, "classica", difficolta)
     }
 
 if (!jolly()) {
@@ -153,13 +154,13 @@ if (!jolly()) {
 
     if (avversario == "casuale") {
         //SE POSSO ASSOCIO L'UTENTE A UNA PARTITA
-        GiocoUtils.associaPartita("classica", difficolta, "nessuno") { associato, partita ->
+        DatabaseUtils.associaPartita("classica", difficolta, "nessuno") { associato, partita ->
             if (associato) {
                 this.partita = partita
             }
             //ALTRIMENTI CREO UNA PARTITA
             else {
-                GiocoUtils.creaPartita("classica", partiteRef, topic) { partita ->
+                DatabaseUtils.creaPartita("classica", partiteRef, topic) { partita ->
                     this.partita = partita
                 }
             }
@@ -167,7 +168,7 @@ if (!jolly()) {
     }
     //HAI SFIDATO UN AMICO
     else {
-        GiocoUtils.sfidaAmico("classica", difficolta, topic, avversario, avversarioNome){partita ->
+        DatabaseUtils.sfidaAmico("classica", difficolta, topic, avversario, avversarioNome){ partita ->
             this.partita = partita
         }
     }

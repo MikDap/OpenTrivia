@@ -10,9 +10,9 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.opentrivia.R
 import com.example.opentrivia.api.ChiamataApi
+import com.example.opentrivia.utils.DatabaseUtils
 import com.example.opentrivia.utils.GiocoUtils
 import com.example.opentrivia.utils.ModClassicaUtils
 import com.google.firebase.auth.FirebaseAuth
@@ -21,7 +21,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import java.util.Random
 
 class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
     private lateinit var chiamataApi: ChiamataApi
@@ -88,7 +87,7 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
         avversario=view.findViewById(R.id.avversario1)
 
         user.text= FirebaseAuth.getInstance().currentUser?.displayName.toString()+" (me)"
-        GiocoUtils.getAvversario(modalita, difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
+        DatabaseUtils.getAvversario(modalita, difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
             // Questo codice verrà eseguito quando la callback restituirà il nome dell'avversario
             this.avversario.text = nomeAvv
         }

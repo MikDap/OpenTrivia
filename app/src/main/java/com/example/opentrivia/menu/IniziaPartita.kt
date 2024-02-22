@@ -33,7 +33,8 @@ class IniziaPartita : Fragment() {
    lateinit var avversarioID: String
    lateinit var avversarioNome: String
     private val uid: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
-    private val amiciRef = FirebaseDatabase.getInstance().getReference("users").child(uid).child("amici")
+    private val database = FirebaseDatabase.getInstance()
+    private val amiciRef = database.getReference("users").child(uid).child("amici")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

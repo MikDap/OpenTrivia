@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.opentrivia.CaricamentoFragment
 import com.example.opentrivia.R
 import com.example.opentrivia.api.ChiamataApi
+import com.example.opentrivia.utils.DatabaseUtils
 import com.example.opentrivia.utils.GiocoUtils
 import com.google.firebase.database.FirebaseDatabase
 
@@ -133,13 +134,13 @@ class ModArgomentoActivity : AppCompatActivity(), ArgomentoSingoloFragment.MyFra
 
         if (avversario == "casuale") {
             //SE POSSO ASSOCIO L'UTENTE A UNA PARTITA
-            GiocoUtils.associaPartita("argomento singolo", difficolta, topic) { associato, partita ->
+            DatabaseUtils.associaPartita("argomento singolo", difficolta, topic) { associato, partita ->
                 if (associato) {
                     this.partita = partita
                 }
                 //ALTRIMENTI CREO UNA PARTITA
                 else {
-                    GiocoUtils.creaPartita("argomento singolo", partiteRef, topic) { partita ->
+                    DatabaseUtils.creaPartita("argomento singolo", partiteRef, topic) { partita ->
                         this.partita = partita
                     }
                 }
@@ -147,7 +148,7 @@ class ModArgomentoActivity : AppCompatActivity(), ArgomentoSingoloFragment.MyFra
         }
         //HAI SFIDATO UN AMICO
         else {
-            GiocoUtils.sfidaAmico("argomento singolo", difficolta, topic, avversario, avversarioNome){partita ->
+            DatabaseUtils.sfidaAmico("argomento singolo", difficolta, topic, avversario, avversarioNome){ partita ->
                 this.partita = partita
             }
         }

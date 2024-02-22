@@ -17,6 +17,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.opentrivia.MainActivity
 import com.example.opentrivia.R
+import com.example.opentrivia.utils.DatabaseUtils
 import com.example.opentrivia.utils.GiocoUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -136,7 +137,7 @@ onBackPressed()
 
             updateArgomentiConquistati(giocatoreRef){
                 //callback di updateArgomentiConquistati
-                GiocoUtils.getAvversario("classica", difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
+                DatabaseUtils.getAvversario("classica", difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
 
                     ModClassicaUtils.getArgomentiConquistati(giocatoriRef){ argomentiMiei, argomentiAvversario ->
 
@@ -146,13 +147,13 @@ onBackPressed()
                     // CHIAMA VITTORIA SE ARGOMENTICONQUISTATI MIEI = 6
                     if (argomenti_conquistati_miei == 6) {
                         GiocoUtils.schermataVittoria(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco, nomeAvv, argomenti_conquistati_miei, argomenti_conquistati_avversario, "classica")
-                        GiocoUtils.spostaInPartiteTerminate(partita,"classica",difficolta,uid,argomenti_conquistati_miei,argomenti_conquistati_avversario)
-                        GiocoUtils.spostaInPartiteTerminate(partita,"classica",difficolta,avversario,argomenti_conquistati_miei,argomenti_conquistati_avversario)
-                        GiocoUtils.updateStatTopic(modClassicaActivity.topicConquista,"corretta")
+                        DatabaseUtils.spostaInPartiteTerminate(partita,"classica",difficolta,uid,argomenti_conquistati_miei,argomenti_conquistati_avversario)
+                        DatabaseUtils.spostaInPartiteTerminate(partita,"classica",difficolta,avversario,argomenti_conquistati_miei,argomenti_conquistati_avversario)
+                        DatabaseUtils.updateStatTopic(modClassicaActivity.topicConquista,"corretta")
                     }
                     else {
                         ModClassicaUtils.updateScrollView(nomeAvv,avversario,argomenti_conquistati_miei, argomenti_conquistati_avversario, partita, difficolta, database)
-                        GiocoUtils.updateStatTopic(modClassicaActivity.topicConquista,"corretta")
+                        DatabaseUtils.updateStatTopic(modClassicaActivity.topicConquista,"corretta")
                         Handler(Looper.getMainLooper()).postDelayed({
                             modClassicaActivity.chiamaRuota()
                         }, 1000)
@@ -161,7 +162,7 @@ onBackPressed()
                   }
                 }
             }
-            GiocoUtils.updateStatTopic(modClassicaActivity.topicConquista,"corretta")
+            DatabaseUtils.updateStatTopic(modClassicaActivity.topicConquista,"corretta")
             Handler(Looper.getMainLooper()).postDelayed({
                 modClassicaActivity.chiamaRuota()
             }, 1000)
@@ -182,7 +183,7 @@ onBackPressed()
                 }
             }
 */
-            GiocoUtils.getAvversario("classica", difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
+            DatabaseUtils.getAvversario("classica", difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
 
                 val partitaRef =
                     database.getReference("partite").child("classica").child(difficolta)
@@ -195,7 +196,7 @@ onBackPressed()
                 }
             }
 
-            GiocoUtils.updateStatTopic(modClassicaActivity.topicConquista,"sbagliata")
+            DatabaseUtils.updateStatTopic(modClassicaActivity.topicConquista,"sbagliata")
             val intent = Intent(activity, MainActivity::class.java)
             startActivity(intent)
 
@@ -256,7 +257,7 @@ fun coloraSfondo (topic: String) {
 
                 alertDialog.setPositiveButton("SI") { dialog: DialogInterface, which: Int ->
 
-                    GiocoUtils.getAvversario("classica", difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
+                    DatabaseUtils.getAvversario("classica", difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
 
                         val partitaRef = database.getReference("partite").child("classica").child(difficolta).child(partita)
                         if (nomeAvv == "-") {
@@ -267,7 +268,7 @@ fun coloraSfondo (topic: String) {
 
                     }
 
-                    GiocoUtils.updateStatTopic(modClassicaActivity.topicConquista,"sbagliata")
+                    DatabaseUtils.updateStatTopic(modClassicaActivity.topicConquista,"sbagliata")
                     val intent = Intent(activity, MainActivity::class.java)
                     startActivity(intent)
 

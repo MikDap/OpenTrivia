@@ -4,7 +4,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.example.opentrivia.MainActivity
 import com.example.opentrivia.R
+import com.example.opentrivia.utils.DatabaseUtils
 import com.example.opentrivia.utils.GiocoUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -90,12 +90,12 @@ class VeroFalsoFragment : Fragment() {
             if (!rispostaData) {
                 if (risposta1.text == rispostaCorretta) {
                     risposta1.setBackgroundColor(Color.GREEN)
-                    GiocoUtils.updateRisposte(risposteRef,"risposteCorrette")
-                    GiocoUtils.updateStatTopic(topic,"corretta")
+                    DatabaseUtils.updateRisposte(risposteRef,"risposteCorrette")
+                    DatabaseUtils.updateStatTopic(topic,"corretta")
                 } else {
                     risposta1.setBackgroundColor(Color.RED)
-                    GiocoUtils.updateRisposte(risposteRef,"risposteSbagliate")
-                    GiocoUtils.updateStatTopic(topic,"sbagliata")
+                    DatabaseUtils.updateRisposte(risposteRef,"risposteSbagliate")
+                    DatabaseUtils.updateStatTopic(topic,"sbagliata")
                 }
                 rispostaData = true
                 modATempoActivity.getTriviaQuestion()
@@ -105,12 +105,12 @@ class VeroFalsoFragment : Fragment() {
             if (!rispostaData) {
                 if (risposta2.text == rispostaCorretta) {
                     risposta2.setBackgroundColor(Color.GREEN)
-                    GiocoUtils.updateRisposte(risposteRef,"risposteCorrette")
-                    GiocoUtils.updateStatTopic(topic,"corretta")
+                    DatabaseUtils.updateRisposte(risposteRef,"risposteCorrette")
+                    DatabaseUtils.updateStatTopic(topic,"corretta")
                 } else {
                     risposta2.setBackgroundColor(Color.RED)
-                    GiocoUtils.updateRisposte(risposteRef,"risposteSbagliate")
-                    GiocoUtils.updateStatTopic(topic,"sbagliata")
+                    DatabaseUtils.updateRisposte(risposteRef,"risposteSbagliate")
+                    DatabaseUtils.updateStatTopic(topic,"sbagliata")
                 }
                 rispostaData = true
                 modATempoActivity.getTriviaQuestion()
@@ -177,14 +177,14 @@ class VeroFalsoFragment : Fragment() {
                     giocatoriRef.child(uid).child("fineTurno").setValue("si")
                     //SE ANCORA NON SI CONNETTE NESSUNO CANCELLO LA PARTITA
                     if(!giocatore2esiste) {
-                        GiocoUtils.spostaInPartiteTerminate(partita, modalita, difficolta, uid, risposte1, risposte2)
+                        DatabaseUtils.spostaInPartiteTerminate(partita, modalita, difficolta, uid, risposte1, risposte2)
                     }
                 }
                 else if (avvRitirato){
                     giocatoriRef.child(uid).child("fineTurno").setValue("si")
 
-                    GiocoUtils.spostaInPartiteTerminate(partita, modalita, difficolta, uid, risposte1, risposte2)
-                    GiocoUtils.spostaInPartiteTerminate(partita, modalita, difficolta, avversario, risposte1, risposte2)
+                    DatabaseUtils.spostaInPartiteTerminate(partita, modalita, difficolta, uid, risposte1, risposte2)
+                    DatabaseUtils.spostaInPartiteTerminate(partita, modalita, difficolta, avversario, risposte1, risposte2)
 
                     GiocoUtils.schermataVittoria(
                         requireActivity().supportFragmentManager,
@@ -201,8 +201,8 @@ class VeroFalsoFragment : Fragment() {
                         GiocoUtils.schermataAttendi(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco3)
                     } else {
                         giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                        GiocoUtils.spostaInPartiteTerminate(partita, modalita, difficolta, uid, risposte1, risposte2)
-                        GiocoUtils.spostaInPartiteTerminate(partita, modalita, difficolta, avversario, risposte1, risposte2)
+                        DatabaseUtils.spostaInPartiteTerminate(partita, modalita, difficolta, uid, risposte1, risposte2)
+                        DatabaseUtils.spostaInPartiteTerminate(partita, modalita, difficolta, avversario, risposte1, risposte2)
 
                         when {
                             risposte1 > risposte2 -> GiocoUtils.schermataVittoria(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco3, nomeAvv, risposte1, risposte2, "argomento singolo")

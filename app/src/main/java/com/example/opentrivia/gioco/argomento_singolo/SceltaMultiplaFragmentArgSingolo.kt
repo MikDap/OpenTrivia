@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +14,7 @@ import androidx.fragment.app.Fragment
 import com.example.opentrivia.MainActivity
 
 import com.example.opentrivia.R
+import com.example.opentrivia.utils.DatabaseUtils
 import com.example.opentrivia.utils.GiocoUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -133,20 +133,20 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
             sfidaRef.child("fineTurno").setValue("si")
         }
 
-        GiocoUtils.getAvversario(modalita, difficolta, partita){giocatore2esiste, avversario, nomeAvv ->
-            GiocoUtils.getRispCorrette(modalita, difficolta, partita){risposte1, risposte2 ->
+        DatabaseUtils.getAvversario(modalita, difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
+            DatabaseUtils.getRispCorrette(modalita, difficolta, partita){ risposte1, risposte2 ->
                 if (ritirato) {
                     giocatoriRef.child(uid).child("fineTurno").setValue("si")
                     //SE ANCORA NON SI CONNETTE NESSUNO CANCELLO LA PARTITA
                     if(!giocatore2esiste) {
-                        GiocoUtils.spostaInPartiteTerminate(partita, modalita, difficolta, uid, risposte1, risposte2)
+                        DatabaseUtils.spostaInPartiteTerminate(partita, modalita, difficolta, uid, risposte1, risposte2)
                     }
                 }
                 else if (avvRitirato){
                     giocatoriRef.child(uid).child("fineTurno").setValue("si")
 
-                    GiocoUtils.spostaInPartiteTerminate(partita, modalita, difficolta, uid, risposte1, risposte2)
-                    GiocoUtils.spostaInPartiteTerminate(partita, modalita, difficolta, avversario, risposte1, risposte2)
+                    DatabaseUtils.spostaInPartiteTerminate(partita, modalita, difficolta, uid, risposte1, risposte2)
+                    DatabaseUtils.spostaInPartiteTerminate(partita, modalita, difficolta, avversario, risposte1, risposte2)
 
                     GiocoUtils.schermataVittoria(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco2, nomeAvv, risposte1, risposte2, "argomento singolo")
                            }
@@ -156,8 +156,8 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
                         GiocoUtils.schermataAttendi(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco2)
                     } else {
                         giocatoriRef.child(uid).child("fineTurno").setValue("si")
-                        GiocoUtils.spostaInPartiteTerminate(partita, modalita, difficolta, uid, risposte1, risposte2)
-                        GiocoUtils.spostaInPartiteTerminate(partita, modalita, difficolta, avversario, risposte1, risposte2)
+                        DatabaseUtils.spostaInPartiteTerminate(partita, modalita, difficolta, uid, risposte1, risposte2)
+                        DatabaseUtils.spostaInPartiteTerminate(partita, modalita, difficolta, avversario, risposte1, risposte2)
 
                         when {
                             risposte1 > risposte2 -> GiocoUtils.schermataVittoria(requireActivity().supportFragmentManager, R.id.fragmentContainerViewGioco2, nomeAvv, risposte1, risposte2, "argomento singolo")
@@ -197,15 +197,15 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
     fun controllaRisposta(risposta:Button){
         if (!rispostaData) {
 
-            if (GiocoUtils.QuestaèLaRispostaCorretta(risposta, rispostaCorretta)) {
+            if (DatabaseUtils.QuestaèLaRispostaCorretta(risposta, rispostaCorretta)) {
 
-                GiocoUtils.updateRisposte(risposteRef, "risposteCorrette")
-                GiocoUtils.updateStatTopic(topic, "corretta")
+                DatabaseUtils.updateRisposte(risposteRef, "risposteCorrette")
+                DatabaseUtils.updateStatTopic(topic, "corretta")
 
             } else {
 
-                GiocoUtils.updateRisposte(risposteRef, "risposteSbagliate")
-                GiocoUtils.updateStatTopic(topic, "sbagliata")
+                DatabaseUtils.updateRisposte(risposteRef, "risposteSbagliate")
+                DatabaseUtils.updateStatTopic(topic, "sbagliata")
             }
 
             //Controlliamo le risposte totali, se 10 finisce la partita senno prossima domanda

@@ -12,7 +12,6 @@ import android.widget.TextView
 import com.example.opentrivia.gioco.a_tempo.ModATempoActivity
 import com.example.opentrivia.gioco.argomento_singolo.ModArgomentoActivity
 import com.example.opentrivia.gioco.classica.ModClassicaActivity
-import com.example.opentrivia.utils.GiocoUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

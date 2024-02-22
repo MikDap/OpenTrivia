@@ -15,7 +15,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.example.opentrivia.MainActivity
 import com.example.opentrivia.R
-import com.example.opentrivia.utils.GiocoUtils
+import com.example.opentrivia.utils.DatabaseUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -149,7 +149,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
                         } else if (tipo == "sbagliata") {
 
-                            GiocoUtils.getAvversario(modalita, difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
+                            DatabaseUtils.getAvversario(modalita, difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
 
                                 if (nomeAvv == "-"){
 
@@ -191,7 +191,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
                     } else if (tipo == "sbagliata") {
 
-                        GiocoUtils.getAvversario(modalita, difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
+                        DatabaseUtils.getAvversario(modalita, difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
 
                             if (nomeAvv == "-"){
 
@@ -228,12 +228,12 @@ class SceltaMultiplaFragmentClassica : Fragment() {
         if (!rispostaData) {
 
 
-            if (GiocoUtils.QuestaèLaRispostaCorretta(risposta, rispostaCorretta)) {
-                GiocoUtils.updateRisposte(risposteRef, "risposteCorrette")
+            if (DatabaseUtils.QuestaèLaRispostaCorretta(risposta, rispostaCorretta)) {
+                DatabaseUtils.updateRisposte(risposteRef, "risposteCorrette")
 
                 ModClassicaUtils.updateContatoreRisposteCorrette(giocatoriRef) {
 
-                    GiocoUtils.getAvversario(modalita, difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
+                    DatabaseUtils.getAvversario(modalita, difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
                         ModClassicaUtils.getArgomentiConquistati(giocatoriRef){ argomentiMiei, argomentiAvversario ->
 
                             val argomenti_conquistati_miei = argomentiMiei.size
@@ -244,14 +244,14 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                     }
 
                     updateContinuaButton(giocatoreRef, "corretta")
-                    GiocoUtils.updateStatTopic(topic,"corretta")
+                    DatabaseUtils.updateStatTopic(topic,"corretta")
                 }
             }
 
             else {
-                GiocoUtils.updateRisposte(risposteRef, "risposteSbagliate")
+                DatabaseUtils.updateRisposte(risposteRef, "risposteSbagliate")
 
-                GiocoUtils.getAvversario(modalita, difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
+                DatabaseUtils.getAvversario(modalita, difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
 
                     ModClassicaUtils.getArgomentiConquistati(giocatoriRef){ argomentiMiei, argomentiAvversario ->
 
@@ -263,7 +263,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                 }
 
                 updateContinuaButton(giocatoreRef,"sbagliata")
-                GiocoUtils.updateStatTopic(topic,"sbagliata")
+                DatabaseUtils.updateStatTopic(topic,"sbagliata")
             }
 
             rispostaData = true

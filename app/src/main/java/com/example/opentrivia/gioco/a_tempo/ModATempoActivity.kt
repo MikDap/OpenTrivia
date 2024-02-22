@@ -6,13 +6,10 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.opentrivia.R
 import com.example.opentrivia.api.ChiamataApi
+import com.example.opentrivia.utils.DatabaseUtils
 import com.example.opentrivia.utils.GiocoUtils
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import java.util.Random
+
 class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback {
     private lateinit var partita: String
     private lateinit var difficolta: String
@@ -51,13 +48,13 @@ class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback
 
         if (avversario == "casuale") {
             //SE POSSO ASSOCIO L'UTENTE A UNA PARTITA
-            GiocoUtils.associaPartita("a tempo", difficolta, "-") { associato, partita ->
+            DatabaseUtils.associaPartita("a tempo", difficolta, "-") { associato, partita ->
                 if (associato) {
                     this.partita = partita
                 }
                 //ALTRIMENTI CREO UNA PARTITA
                 else {
-                    GiocoUtils.creaPartita("a tempo", partiteRef, "-") { partita ->
+                    DatabaseUtils.creaPartita("a tempo", partiteRef, "-") { partita ->
                         this.partita = partita
                     }
                 }
@@ -65,7 +62,7 @@ class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback
         }
         //HAI SFIDATO UN AMICO
         else {
-            GiocoUtils.sfidaAmico("a tempo", difficolta, "-", avversario, avversarioNome){partita ->
+            DatabaseUtils.sfidaAmico("a tempo", difficolta, "-", avversario, avversarioNome){ partita ->
                 this.partita = partita
             }
         }

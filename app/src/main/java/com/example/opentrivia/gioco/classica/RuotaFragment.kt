@@ -21,20 +21,15 @@ import android.graphics.drawable.BitmapDrawable
 import android.util.Log
 import android.graphics.PathMeasure
 import android.graphics.Typeface
-import android.icu.number.IntegerWidth
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Guideline
 import com.example.opentrivia.R
-import com.example.opentrivia.utils.GiocoUtils
+import com.example.opentrivia.utils.DatabaseUtils
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import kotlin.collections.ArrayList
 import com.example.opentrivia.utils.ModClassicaUtils
 
@@ -142,7 +137,7 @@ private lateinit var guideline2: Guideline
         //nel caso un giocatore esce quando sta per passare alla schermata conquista         leggiRisposteDiFila(giocatoreRef)<<
         //mic 09
         user.text= FirebaseAuth.getInstance().currentUser?.displayName.toString()+" (me)"
-        GiocoUtils.getAvversario(modalita, difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
+        DatabaseUtils.getAvversario(modalita, difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
             // Questo codice verrà eseguito quando la callback restituirà il nome dell'avversario
             this.avversario.text = nomeAvv
         }
@@ -182,7 +177,6 @@ private lateinit var guideline2: Guideline
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // ...
-
 
 
 
@@ -502,9 +496,9 @@ private lateinit var guideline2: Guideline
 fun adattaSchermo() {
     val squareSize = resources.getDimensionPixelSize(R.dimen.square)
     val widthPixel = Resources.getSystem().displayMetrics.widthPixels
-    val density = Resources.getSystem().displayMetrics.density
+    val density = Resources.getSystem().displayMetrics.xdpi
 
-    val widthDp = (widthPixel/density).toInt()
+    val widthDp = (widthPixel * 160/density).toInt()
 
     if (widthDp <= 320){
 
