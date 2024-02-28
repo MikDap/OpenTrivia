@@ -68,7 +68,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
                 <View
-                    android:id="@+id/sport"
+                    android:id="@+id/sport_con"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_centerInParent="true"
@@ -87,7 +87,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
                 <View
-                    android:id="@+id/storia"
+                    android:id="@+id/storia_con"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
@@ -104,7 +104,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
                 <View
-                    android:id="@+id/scienze"
+                    android:id="@+id/scienze_con"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
@@ -121,7 +121,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
                 <View
-                    android:id="@+id/arte"
+                    android:id="@+id/arte_con"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
@@ -138,7 +138,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
                 <View
-                    android:id="@+id/geografia"
+                    android:id="@+id/geografia_con"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
@@ -155,7 +155,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
                 <View
-                    android:id="@+id/culturaPop"
+                    android:id="@+id/culturaPop_con"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
@@ -180,7 +180,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
                 <View
-                    android:id="@+id/sport2"
+                    android:id="@+id/sport2_con"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
@@ -197,7 +197,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
                 <View
-                    android:id="@+id/storia2"
+                    android:id="@+id/storia2_con"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
@@ -214,7 +214,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
                 <View
-                    android:id="@+id/scienze2"
+                    android:id="@+id/scienze2_con"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
@@ -231,7 +231,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
                 <View
-                    android:id="@+id/arte2"
+                    android:id="@+id/arte2_con"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
@@ -248,7 +248,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
                 <View
-                    android:id="@+id/geografia2"
+                    android:id="@+id/geografia2_con"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
@@ -265,7 +265,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
                 <View
-                    android:id="@+id/culturaPop2"
+                    android:id="@+id/culturaPop2_con"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"

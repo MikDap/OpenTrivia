@@ -38,7 +38,7 @@
         app:layout_constraintGuide_percent="0.95"/>
 
     <TextView
-        android:id="@+id/domanda"
+        android:id="@+id/domanda_arg"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:textAlignment="center"
@@ -54,7 +54,7 @@
 
 
     <Button
-        android:id="@+id/risposta1"
+        android:id="@+id/risposta1_arg"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:background="@drawable/button_background"
@@ -65,34 +65,34 @@
 
 
     <Button
-        android:id="@+id/risposta2"
+        android:id="@+id/risposta2_arg"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/button_background"
         app:layout_constraintEnd_toEndOf="@id/guidelineVerticalEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineVerticalStart"
-        app:layout_constraintTop_toBottomOf="@id/risposta1"
+        app:layout_constraintTop_toBottomOf="@id/risposta1_arg"
         />
     <Button
-        android:id="@+id/risposta3"
+        android:id="@+id/risposta3_arg"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/button_background"
         app:layout_constraintEnd_toEndOf="@id/guidelineVerticalEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineVerticalStart"
-        app:layout_constraintTop_toBottomOf="@id/risposta2"
+        app:layout_constraintTop_toBottomOf="@id/risposta2_arg"
         />
     <Button
-        android:id="@+id/risposta4"
+        android:id="@+id/risposta4_arg"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/button_background"
         app:layout_constraintEnd_toEndOf="@id/guidelineVerticalEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineVerticalStart"
-        app:layout_constraintTop_toBottomOf="@id/risposta3"
+        app:layout_constraintTop_toBottomOf="@id/risposta3_arg"
         />
 
 

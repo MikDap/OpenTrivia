@@ -70,18 +70,18 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
         giocatoriRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
         giocatoreRef = giocatoriRef.child(uid)
         //quadratini
-        storia = view.findViewById(R.id.storia)
-        sport = view.findViewById(R.id.sport)
-        geografia = view.findViewById(R.id.geografia)
-        arte = view.findViewById(R.id.arte)
-        scienze = view.findViewById(R.id.scienze)
-        culturaPop = view.findViewById(R.id.culturaPop)
-        storia2 = view.findViewById(R.id.storia2)
-        sport2 = view.findViewById(R.id.sport2)
-        geografia2 = view.findViewById(R.id.geografia2)
-        arte2 = view.findViewById(R.id.arte2)
-        scienze2 = view.findViewById(R.id.scienze2)
-        culturaPop2 = view.findViewById(R.id.culturaPop2)
+        storia = view.findViewById(R.id.storia_con)
+        sport = view.findViewById(R.id.sport_con)
+        geografia = view.findViewById(R.id.geografia_con)
+        arte = view.findViewById(R.id.arte_con)
+        scienze = view.findViewById(R.id.scienze_con)
+        culturaPop = view.findViewById(R.id.culturaPop_con)
+        storia2 = view.findViewById(R.id.storia2_con)
+        sport2 = view.findViewById(R.id.sport2_con)
+        geografia2 = view.findViewById(R.id.geografia2_con)
+        arte2 = view.findViewById(R.id.arte2_con)
+        scienze2 = view.findViewById(R.id.scienze2_con)
+        culturaPop2 = view.findViewById(R.id.culturaPop2_con)
         adattaSchermo()
         user=view.findViewById(R.id.user1)
         avversario=view.findViewById(R.id.avversario1)
@@ -240,9 +240,10 @@ class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
     fun adattaSchermo() {
         val squareSize = resources.getDimensionPixelSize(R.dimen.square)
         val widthPixel = Resources.getSystem().displayMetrics.widthPixels
-        val density = Resources.getSystem().displayMetrics.density
-        val widthDp = (widthPixel/density).toInt()
-        if (widthDp <= 320){
+        val density = Resources.getSystem().displayMetrics.xdpi
+
+        val widthDp = (widthPixel * 160/density).toInt()
+        if (widthDp <= 400){
 
             val layoutParams = geografia.layoutParams as LinearLayout.LayoutParams
             layoutParams.width = squareSize

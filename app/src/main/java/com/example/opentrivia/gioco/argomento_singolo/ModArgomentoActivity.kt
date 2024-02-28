@@ -64,13 +64,14 @@ class ModArgomentoActivity : AppCompatActivity(), ArgomentoSingoloFragment.MyFra
     // QUANDO SCEGLIAMO TOPIC SU ARGOMENTOSINGOLO FRAGMENT (SOSTITUITO DA CARICAMENTOFRAGMENT SE HAI ACCETTATO SFIDA)
     override fun onVariablePassed(topic: String) {
 
+        Log.d("onVariablePassed","si")
         //salviamo il topic
         this.topic = topic
 
 //chiamiamo la funzione per ottenere il numero delle categorie per il topic selezionato
         categoria = GiocoUtils.getCategoria(topic)
 
-            creaPartitaDatabase()
+        creaPartitaDatabase()
 
         //facciamo la chiamata api
         chiamataApi = ChiamataApi("multiple", categoria, difficolta)
@@ -105,6 +106,7 @@ class ModArgomentoActivity : AppCompatActivity(), ArgomentoSingoloFragment.MyFra
 
         listaRisposte.shuffle()
 
+        Log.d("ontriviaqQuestion","si")
 // PASSIAMO AL PROSSIMO FRAGMENT SCELTAMULTIPLA
         val sceltaMultiplaFragmentArgSingolo = SceltaMultiplaFragmentArgSingolo()
         sceltaMultiplaFragmentArgSingolo.setParametriPartita(partita, "argomento singolo", difficolta, topic)

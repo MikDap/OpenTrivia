@@ -14,8 +14,8 @@
 />
     <TextView
         android:id="@+id/textargomento"
-        android:layout_width="266dp"
-        android:layout_height="45dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="ARGOMENTO SINGOLO"
         android:textSize="25sp"
         android:textStyle="italic|bold"
@@ -25,7 +25,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <Button
-        android:id="@+id/intrattenimento_button"
+        android:id="@+id/intrattenimento_arg"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/custom_border_pareggio"
@@ -44,7 +44,7 @@
         />
 
     <Button
-        android:id="@+id/sport"
+        android:id="@+id/sport_arg"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/custom_border_pareggio"
@@ -53,8 +53,8 @@
         android:textStyle="italic|bold"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        app:layout_constraintBottom_toBottomOf="@id/intrattenimento_button"
-        app:layout_constraintTop_toTopOf="@id/intrattenimento_button"
+        app:layout_constraintBottom_toBottomOf="@id/intrattenimento_arg"
+        app:layout_constraintTop_toTopOf="@id/intrattenimento_arg"
         app:layout_constraintStart_toStartOf="@id/guidelineVertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -62,59 +62,59 @@
         />
 
     <Button
-        android:id="@+id/geografia"
+        android:id="@+id/geografia_arg"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="GEOGRAFIA"
         android:textStyle="italic|bold"
         android:background="@drawable/custom_border_pareggio"
         android:backgroundTint="#0000FF"
-        app:layout_constraintTop_toBottomOf="@id/intrattenimento_button"
+        app:layout_constraintTop_toBottomOf="@id/intrattenimento_arg"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/intrattenimento_button"
-        app:layout_constraintStart_toStartOf="@id/intrattenimento_button"
+        app:layout_constraintEnd_toEndOf="@id/intrattenimento_arg"
+        app:layout_constraintStart_toStartOf="@id/intrattenimento_arg"
         app:layout_constraintVertical_bias="0.2"/>
 
     <Button
-        android:id="@+id/storia"
+        android:id="@+id/storia_arg"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="STORIA"
         android:textStyle="italic|bold"
         android:backgroundTint="#FFBB2F"
         android:background="@drawable/custom_border_pareggio"
-        app:layout_constraintBottom_toBottomOf="@id/geografia"
-        app:layout_constraintTop_toTopOf="@id/geografia"
-        app:layout_constraintEnd_toEndOf="@id/sport"
-        app:layout_constraintStart_toStartOf="@id/sport"
+        app:layout_constraintBottom_toBottomOf="@id/geografia_arg"
+        app:layout_constraintTop_toTopOf="@id/geografia_arg"
+        app:layout_constraintEnd_toEndOf="@id/sport_arg"
+        app:layout_constraintStart_toStartOf="@id/sport_arg"
         />
 
     <Button
-        android:id="@+id/arte"
+        android:id="@+id/arte_arg"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="ARTE"
         android:textStyle="italic|bold"
         android:backgroundTint="#FF00"
         android:background="@drawable/custom_border_pareggio"
-        app:layout_constraintTop_toBottomOf="@id/geografia"
-        app:layout_constraintEnd_toEndOf="@id/geografia"
-        app:layout_constraintStart_toStartOf="@id/geografia"
+        app:layout_constraintTop_toBottomOf="@id/geografia_arg"
+        app:layout_constraintEnd_toEndOf="@id/geografia_arg"
+        app:layout_constraintStart_toStartOf="@id/geografia_arg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.3"
          />
 
     <Button
-        android:id="@+id/scienze"
+        android:id="@+id/scienze_arg"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="SCIENZE"
         android:textStyle="italic|bold"
         android:backgroundTint="#4CAF50"
         android:background="@drawable/custom_border_pareggio"
-        app:layout_constraintTop_toTopOf="@id/arte"
-        app:layout_constraintEnd_toEndOf="@id/storia"
-        app:layout_constraintStart_toStartOf="@id/storia"
-        app:layout_constraintBottom_toBottomOf="@id/arte"/>
+        app:layout_constraintTop_toTopOf="@id/arte_arg"
+        app:layout_constraintEnd_toEndOf="@id/storia_arg"
+        app:layout_constraintStart_toStartOf="@id/storia_arg"
+        app:layout_constraintBottom_toBottomOf="@id/arte_arg"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

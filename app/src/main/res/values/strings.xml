@@ -14,7 +14,7 @@
     <string name="casuale">Avversario casuale</string>
     <string name="classica">CLASSICA</string>
     <string name="argomento">ARGOMENTO SINGOLO</string>
-    <string name="tempo">TEMPO REALE</string>
+    <string name="tempo">A TEMPO</string>
     <string name="avversario">Cerca un avversario</string>
     <string name="start">Inizia partita</string>
     <string name="facebook_application_id" translatable="false">1379219505984377</string>

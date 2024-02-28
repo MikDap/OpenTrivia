@@ -273,11 +273,12 @@ class Menu : Fragment() {
         val crossed_sword = resources.getDimensionPixelSize(R.dimen.crossed_sword)
 
         val widthPixel = Resources.getSystem().displayMetrics.widthPixels
-        val density = Resources.getSystem().displayMetrics.density
+        val density = Resources.getSystem().displayMetrics.xdpi
 
-        val widthDp = (widthPixel / density).toInt()
+        val widthDp = (widthPixel * 160/density).toInt()
 
-        if (widthDp <= 320) {
+
+        if (widthDp <= 400) {
 
             val layoutParams = startButton.layoutParams as ConstraintLayout.LayoutParams
             layoutParams.width = startbuttonwidth

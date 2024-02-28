@@ -25,7 +25,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0" />
     <TextView
-        android:id="@+id/storia"
+        android:id="@+id/storia_arg"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginTop="200dp"
@@ -59,7 +59,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0" />
     <TextView
-        android:id="@+id/geografia"
+        android:id="@+id/geografia_arg"
         android:layout_marginTop="30dp"
         android:layout_width="0dp"
         android:layout_height="40dp"
@@ -92,7 +92,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0" />
     <TextView
-        android:id="@+id/arte"
+        android:id="@+id/arte_arg"
         android:layout_marginTop="30dp"
         android:layout_width="0dp"
         android:layout_height="40dp"
@@ -131,7 +131,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0" />
     <TextView
-        android:id="@+id/sport"
+        android:id="@+id/sport_arg"
         android:layout_marginTop="30dp"
         android:layout_width="0dp"
         android:layout_height="50dp"
@@ -207,7 +207,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0" />
     <TextView
-        android:id="@+id/scienze"
+        android:id="@+id/scienze_arg"
         android:layout_marginTop="30dp"
         android:layout_width="0dp"
         android:layout_height="40dp"

@@ -45,12 +45,12 @@ class StatFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_stat, container, false)
 
-        storia = view.findViewById(R.id.storia)
-        geografia = view.findViewById(R.id.geografia)
-        arte = view.findViewById(R.id.arte)
-        sport = view.findViewById(R.id.sport)
+        storia = view.findViewById(R.id.storia_arg)
+        geografia = view.findViewById(R.id.geografia_arg)
+        arte = view.findViewById(R.id.arte_arg)
+        sport = view.findViewById(R.id.sport_arg)
         intrattenimento = view.findViewById(R.id.intrattenimento)
-        scienze = view.findViewById(R.id.scienze)
+        scienze = view.findViewById(R.id.scienze_arg)
 
         storiaPerc = view.findViewById(R.id.percentualeStoria)
         geografiaPerc = view.findViewById(R.id.percentualeGeografia)

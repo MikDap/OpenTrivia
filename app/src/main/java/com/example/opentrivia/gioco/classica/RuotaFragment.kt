@@ -296,7 +296,7 @@ private lateinit var guideline2: Guideline
             textPaint.textSize = 60f
         }
         else {
-            textPaint.textSize = 20f
+            textPaint.textSize = 40f
         }
         textPaint.color = Color.BLACK
         val boldTypeface = Typeface.defaultFromStyle(Typeface.BOLD)
@@ -500,7 +500,7 @@ fun adattaSchermo() {
 
     val widthDp = (widthPixel * 160/density).toInt()
 
-    if (widthDp <= 320){
+    if (widthDp <= 400){
 
         viewAdattata = true
         val layoutParams1 = wheelView.layoutParams as ConstraintLayout.LayoutParams

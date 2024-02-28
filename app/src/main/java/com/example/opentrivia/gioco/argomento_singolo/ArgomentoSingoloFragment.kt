@@ -2,6 +2,7 @@ package com.example.opentrivia.gioco.argomento_singolo
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,12 +31,12 @@ class ArgomentoSingoloFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.mod_argomento_singolo_scelta_argomento, container, false)
 
-        culturaPop = view.findViewById(R.id.intrattenimento_button)
-        sport = view.findViewById(R.id.sport)
-        storia = view.findViewById(R.id.storia)
-        geografia = view.findViewById(R.id.geografia)
-        arte = view.findViewById(R.id.arte)
-        scienze = view.findViewById(R.id.scienze)
+        culturaPop = view.findViewById(R.id.intrattenimento_arg)
+        sport = view.findViewById(R.id.sport_arg)
+        storia = view.findViewById(R.id.storia_arg)
+        geografia = view.findViewById(R.id.geografia_arg)
+        arte = view.findViewById(R.id.arte_arg)
+        scienze = view.findViewById(R.id.scienze_arg)
 
         culturaPop.setOnClickListener{
             topic = "culturaPop"
@@ -46,6 +47,7 @@ class ArgomentoSingoloFragment : Fragment() {
         sport.setOnClickListener{
             topic = "sport"
             passVariableToActivity(topic)
+            Log.d("sportclick","si")
 
         }
 

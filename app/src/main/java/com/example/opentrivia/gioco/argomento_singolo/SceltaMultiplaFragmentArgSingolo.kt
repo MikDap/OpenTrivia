@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,11 +67,11 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
 
      onBackPressed()
 
-        domanda = view.findViewById(R.id.domanda)
-        risposta1 = view.findViewById(R.id.risposta1)
-        risposta2 = view.findViewById(R.id.risposta2)
-        risposta3 = view.findViewById(R.id.risposta3)
-        risposta4 = view.findViewById(R.id.risposta4)
+        domanda = view.findViewById(R.id.domanda_arg)
+        risposta1 = view.findViewById(R.id.risposta1_arg)
+        risposta2 = view.findViewById(R.id.risposta2_arg)
+        risposta3 = view.findViewById(R.id.risposta3_arg)
+        risposta4 = view.findViewById(R.id.risposta4_arg)
 
 
         domanda.text = modArgomentoActivity.domanda
@@ -90,6 +91,7 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
 
         risposta1.setOnClickListener {
           controllaRisposta(risposta1)
+            Log.d("clickrisposta1","si")
         }
 
         risposta2.setOnClickListener {
