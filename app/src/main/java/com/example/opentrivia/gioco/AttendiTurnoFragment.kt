@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import com.example.opentrivia.MainActivity
+import com.example.opentrivia.MenuActivity
 import com.example.opentrivia.R
 
 class AttendiTurnoFragment : Fragment() {
@@ -32,7 +32,7 @@ class AttendiTurnoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         menu.setOnClickListener {
-          intent=Intent(activity, MainActivity::class.java)
+          intent=Intent(activity, MenuActivity::class.java)
             startActivity(intent)
 
     }

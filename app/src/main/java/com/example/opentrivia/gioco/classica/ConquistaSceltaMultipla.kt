@@ -15,7 +15,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.opentrivia.MainActivity
+import com.example.opentrivia.MenuActivity
 import com.example.opentrivia.R
 import com.example.opentrivia.utils.DatabaseUtils
 import com.example.opentrivia.utils.GiocoUtils
@@ -197,7 +197,7 @@ onBackPressed()
             }
 
             DatabaseUtils.updateStatTopic(modClassicaActivity.topicConquista,"sbagliata")
-            val intent = Intent(activity, MainActivity::class.java)
+            val intent = Intent(activity, MenuActivity::class.java)
             startActivity(intent)
 
         }
@@ -269,7 +269,7 @@ fun coloraSfondo (topic: String) {
                     }
 
                     DatabaseUtils.updateStatTopic(modClassicaActivity.topicConquista,"sbagliata")
-                    val intent = Intent(activity, MainActivity::class.java)
+                    val intent = Intent(activity, MenuActivity::class.java)
                     startActivity(intent)
 
                     requireActivity().finish()

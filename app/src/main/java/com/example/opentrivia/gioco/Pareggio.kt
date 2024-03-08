@@ -1,19 +1,15 @@
 package com.example.opentrivia.gioco
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import com.example.opentrivia.MainActivity
+import com.example.opentrivia.MenuActivity
 import com.example.opentrivia.R
-import com.example.opentrivia.menu.Menu
 
 
 class Pareggio : Fragment() {
@@ -56,7 +52,7 @@ class Pareggio : Fragment() {
         scoreTextView3.text = scoreAvv
         modalita.text = mod
         menu.setOnClickListener {
-            intent= Intent(activity, MainActivity::class.java)
+            intent= Intent(activity, MenuActivity::class.java)
             startActivity(intent)
 
         }

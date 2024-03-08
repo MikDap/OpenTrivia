@@ -2,8 +2,6 @@ package com.example.opentrivia
 import android.app.Activity
 import android.app.Instrumentation.ActivityMonitor
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import androidx.fragment.app.testing.launchFragmentInContainer
@@ -19,16 +17,12 @@ import junit.framework.TestCase.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith
 import androidx.test.core.app.ActivityScenario
-import androidx.test.espresso.action.ViewActions.replaceText
-import junit.framework.TestCase.assertEquals
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
-import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.withText
 
 
@@ -68,7 +62,7 @@ class IniziaPartita2Test {
         val scenario = ActivityScenario.launch(ModArgomentoActivity::class.java)
 
         var activity1: ModArgomentoActivity? = null
-        val activityMonitor: ActivityMonitor = getInstrumentation().addMonitor(MainActivity::class.java.name, null, false)
+        val activityMonitor: ActivityMonitor = getInstrumentation().addMonitor(MenuActivity::class.java.name, null, false)
 
         // Crea un CountDownLatch con un contatore di 1
         val latch = CountDownLatch(1)

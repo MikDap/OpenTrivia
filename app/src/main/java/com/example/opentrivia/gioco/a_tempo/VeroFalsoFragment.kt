@@ -11,7 +11,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import com.example.opentrivia.MainActivity
+import com.example.opentrivia.MenuActivity
 import com.example.opentrivia.R
 import com.example.opentrivia.utils.DatabaseUtils
 import com.example.opentrivia.utils.GiocoUtils
@@ -235,7 +235,7 @@ class VeroFalsoFragment : Fragment() {
                     ritiratoRef.child("ritirato").setValue("si")
                     ritirato = true
                     finePartita()
-                    val intent = Intent(requireContext(), MainActivity::class.java)
+                    val intent = Intent(requireContext(), MenuActivity::class.java)
                     startActivity(intent)
                     requireActivity().finish()
                 }

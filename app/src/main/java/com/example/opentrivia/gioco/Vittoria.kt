@@ -8,9 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import com.example.opentrivia.MainActivity
+import com.example.opentrivia.MenuActivity
 import com.example.opentrivia.R
-import com.example.opentrivia.menu.Menu
 
 
 class Vittoria : Fragment() {
@@ -60,7 +59,7 @@ class Vittoria : Fragment() {
         scoreTextView3.text = scoreAvv
         modalita.text = mod
         menu.setOnClickListener {
-                intent= Intent(activity, MainActivity::class.java)
+                intent= Intent(activity, MenuActivity::class.java)
                 startActivity(intent)
 
             }

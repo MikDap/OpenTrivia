@@ -13,7 +13,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import com.example.opentrivia.MainActivity
+import com.example.opentrivia.MenuActivity
 import com.example.opentrivia.R
 import com.example.opentrivia.utils.DatabaseUtils
 import com.google.firebase.auth.FirebaseAuth
@@ -166,7 +166,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
 
                             continua.setOnClickListener {
                                 // Torna al menu
-                                val intent = Intent(requireContext(), MainActivity::class.java)
+                                val intent = Intent(requireContext(), MenuActivity::class.java)
                                 startActivity(intent)
                                 requireActivity().finish()
 
@@ -208,7 +208,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                         }, 1500)
                         continua.setOnClickListener {
                             // Torna al menu
-                            val intent = Intent(requireContext(), MainActivity::class.java)
+                            val intent = Intent(requireContext(), MenuActivity::class.java)
                             startActivity(intent)
                             requireActivity().finish()
                         }
@@ -282,7 +282,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
                 alertDialog.setPositiveButton("SI") { dialog: DialogInterface, which: Int ->
 
                     updateContinuaButton(giocatoreRef,"sbagliata")
-                    val intent = Intent(requireContext(), MainActivity::class.java)
+                    val intent = Intent(requireContext(), MenuActivity::class.java)
                     startActivity(intent)
                     requireActivity().finish()
                 }

@@ -3,7 +3,6 @@ package com.example.opentrivia
 import android.os.Bundle
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ActivityScenario.launch
@@ -11,29 +10,24 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import com.example.opentrivia.MainActivity
-import com.example.opentrivia.R
 import com.example.opentrivia.gioco.a_tempo.ModATempoActivity
 import com.example.opentrivia.gioco.argomento_singolo.ModArgomentoActivity
 import com.example.opentrivia.gioco.classica.ModClassicaActivity
 import com.example.opentrivia.menu.IniziaPartita
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import androidx.test.espresso.intent.Intents
-import org.junit.After
 
 @RunWith(AndroidJUnit4::class)
 class IniziaPartitaTest {
-    private lateinit var scenario: ActivityScenario<MainActivity>
+    private lateinit var scenario: ActivityScenario<MenuActivity>
     private lateinit var modalita: String
     private lateinit var difficolta: String
     private lateinit var selezione: String
 
     @Before
     fun setUp() {
-        scenario = launch(MainActivity::class.java)
+        scenario = launch(MenuActivity::class.java)
       scenario.moveToState(Lifecycle.State.RESUMED)
         scenario.onActivity { activity ->
             val fragment = IniziaPartita()

@@ -28,6 +28,18 @@
         </activity>
 
         <activity
+            android:name=".MenuActivity"
+            android:exported="true"
+            android:label="Menu Activity"
+            android:theme="@style/Theme.AppCompat">
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true"
+            android:label="Login Activity"
+            android:theme="@style/Theme.AppCompat">
+        </activity>
+        <activity
             android:name=".gioco.classica.ModClassicaActivity"
             android:label="ModClassica Activity"
             android:theme="@style/AppTheme.NoActionBar">

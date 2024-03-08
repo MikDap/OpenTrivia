@@ -268,7 +268,6 @@ class Menu : Fragment() {
 
 
     fun adattaSchermo() {
-        val startbuttonwidth = resources.getDimensionPixelSize(R.dimen.startbuttonwidth)
         val startbuttonheight = resources.getDimensionPixelSize(R.dimen.startbuttonheight)
         val crossed_sword = resources.getDimensionPixelSize(R.dimen.crossed_sword)
 
@@ -281,7 +280,6 @@ class Menu : Fragment() {
         if (widthDp <= 400) {
 
             val layoutParams = startButton.layoutParams as ConstraintLayout.LayoutParams
-            layoutParams.width = startbuttonwidth
             layoutParams.height = startbuttonheight
             startButton.layoutParams = layoutParams
 

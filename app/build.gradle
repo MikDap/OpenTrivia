@@ -96,6 +96,7 @@ android {
         // Optional -- Mockito framework
         testImplementation "org.mockito:mockito-core:4.0.0"
         def fragment_version = "1.6.2"
+        implementation("androidx.core:core-splashscreen:1.0.1")
 
         debugImplementation "androidx.fragment:fragment-testing:$fragment_version"
     }
