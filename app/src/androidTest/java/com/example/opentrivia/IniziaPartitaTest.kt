@@ -14,6 +14,7 @@ import com.example.opentrivia.gioco.a_tempo.ModATempoActivity
 import com.example.opentrivia.gioco.argomento_singolo.ModArgomentoActivity
 import com.example.opentrivia.gioco.classica.ModClassicaActivity
 import com.example.opentrivia.menu.IniziaPartita
+import com.example.opentrivia.menu.MenuActivity
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

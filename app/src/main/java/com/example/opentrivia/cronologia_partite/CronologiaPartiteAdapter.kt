@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.opentrivia.R
 import com.google.firebase.database.FirebaseDatabase
 
-class CronologiaPartiteAdapter(private val partiteList: MutableMap<Int, PartitaTerminata>, private val cronologiaPartite: CronologiaPartite) : RecyclerView.Adapter<CronologiaPartiteAdapter.ViewHolder>() {
+class CronologiaPartiteAdapter(private val partiteList: MutableMap<Int, PartitaTerminata>, private val cronologiaPartiteFragment: CronologiaPartiteFragment) : RecyclerView.Adapter<CronologiaPartiteAdapter.ViewHolder>() {
     private lateinit var database: FirebaseDatabase
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -63,7 +63,7 @@ class CronologiaPartiteAdapter(private val partiteList: MutableMap<Int, PartitaT
             holder.scoreTextView2.visibility = View.INVISIBLE
             holder.scoreTextView3.visibility = View.INVISIBLE
 
-            cronologiaPartite.setDrawable(holder, "sconfitta")
+            cronologiaPartiteFragment.setDrawable(holder, "sconfitta")
 
         }
         else if (avvRitirato){
@@ -71,22 +71,22 @@ class CronologiaPartiteAdapter(private val partiteList: MutableMap<Int, PartitaT
             holder.scoreTextView1.visibility = View.INVISIBLE
             holder.scoreTextView2.visibility = View.INVISIBLE
             holder.scoreTextView3.visibility = View.INVISIBLE
-            cronologiaPartite.setDrawable(holder, "vittoria")
+            cronologiaPartiteFragment.setDrawable(holder, "vittoria")
         }
 
         else {
 
             if (punteggioMio > punteggioAvv) {
 
-                cronologiaPartite.setDrawable(holder, "vittoria")
+                cronologiaPartiteFragment.setDrawable(holder, "vittoria")
             }
             if (punteggioMio < punteggioAvv) {
 
-                cronologiaPartite.setDrawable(holder, "sconfitta")
+                cronologiaPartiteFragment.setDrawable(holder, "sconfitta")
             }
             if (punteggioMio == punteggioAvv) {
 
-                cronologiaPartite.setDrawable(holder, "pareggio")
+                cronologiaPartiteFragment.setDrawable(holder, "pareggio")
             }
         }
     }

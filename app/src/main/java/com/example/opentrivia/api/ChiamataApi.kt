@@ -3,6 +3,7 @@ package com.example.opentrivia.api
 import android.util.Log
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import androidx.core.text.HtmlCompat
 
 class ChiamataApi(
     val tipo: String,
@@ -28,17 +29,11 @@ var domanda: String = ""
 
 
                 if (tipo.equals("multiple")) {
-                    domanda = result.body()?.results?.get(0)?.question.toString()
-                    Log.d("api,domanda",domanda)
-                    risposta_corretta =
-                        result.body()?.results?.get(0)?.correct_answer.toString()
-                    Log.d("api,rispost_corr",risposta_corretta)
-                    risposta_sbagliata_1 =
-                        result.body()?.results?.get(0)?.incorrect_answers?.get(0).toString()
-                    risposta_sbagliata_2 =
-                        result.body()?.results?.get(0)?.incorrect_answers?.get(1).toString()
-                    risposta_sbagliata_3 =
-                        result.body()?.results?.get(0)?.incorrect_answers?.get(2).toString()
+                    domanda = decodificaHtml(result.body()?.results?.get(0)?.question.toString())
+                    risposta_corretta = decodificaHtml(result.body()?.results?.get(0)?.correct_answer.toString())
+                    risposta_sbagliata_1 = decodificaHtml(result.body()?.results?.get(0)?.incorrect_answers?.get(0).toString())
+                    risposta_sbagliata_2 = decodificaHtml(result.body()?.results?.get(0)?.incorrect_answers?.get(1).toString())
+                    risposta_sbagliata_3 = decodificaHtml(result.body()?.results?.get(0)?.incorrect_answers?.get(2).toString())
                     callback.onTriviaQuestionFetched(tipo,domanda, risposta_corretta, risposta_sbagliata_1, risposta_sbagliata_2, risposta_sbagliata_3)
 
                 }
@@ -65,6 +60,11 @@ var domanda: String = ""
     }
 
 
+
+    fun decodificaHtml(frasedaDecodificare: String): String {
+        val fraseDecodificata = HtmlCompat.fromHtml(frasedaDecodificare, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
+        return fraseDecodificata
+    }
     interface TriviaQuestionCallback {
         fun onTriviaQuestionFetched(tipo:String,domanda: String, risposta_corretta: String, risposta_sbagliata_1: String, risposta_sbagliata_2: String, risposta_sbagliata_3: String)
     }

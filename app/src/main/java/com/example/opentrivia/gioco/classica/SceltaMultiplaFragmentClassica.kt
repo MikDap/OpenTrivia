@@ -13,9 +13,10 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import com.example.opentrivia.MenuActivity
+import com.example.opentrivia.menu.MenuActivity
 import com.example.opentrivia.R
 import com.example.opentrivia.utils.DatabaseUtils
+import com.example.opentrivia.utils.GiocoUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -86,21 +87,26 @@ class SceltaMultiplaFragmentClassica : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+        val listaRisposte = listOf(risposta1, risposta2, risposta3, risposta4)
 
         risposta1.setOnClickListener {
           controllaRisposta(risposta1)
+            GiocoUtils.evidenziaRispostaCorretta(listaRisposte, rispostaCorretta)
         }
 
         risposta2.setOnClickListener {
            controllaRisposta(risposta2)
+            GiocoUtils.evidenziaRispostaCorretta(listaRisposte, rispostaCorretta)
         }
 
         risposta3.setOnClickListener {
          controllaRisposta(risposta3)
+            GiocoUtils.evidenziaRispostaCorretta(listaRisposte, rispostaCorretta)
         }
 
         risposta4.setOnClickListener {
           controllaRisposta(risposta4)
+            GiocoUtils.evidenziaRispostaCorretta(listaRisposte, rispostaCorretta)
         }
 
 
@@ -228,7 +234,7 @@ class SceltaMultiplaFragmentClassica : Fragment() {
         if (!rispostaData) {
 
 
-            if (DatabaseUtils.QuestaèLaRispostaCorretta(risposta, rispostaCorretta)) {
+            if (GiocoUtils.QuestaèLaRispostaCorretta(risposta, rispostaCorretta)) {
                 DatabaseUtils.updateRisposte(risposteRef, "risposteCorrette")
 
                 ModClassicaUtils.updateContatoreRisposteCorrette(giocatoriRef) {

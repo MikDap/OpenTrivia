@@ -1,22 +1,12 @@
 package com.example.opentrivia.utils
 
-import android.graphics.Color
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import android.widget.Button
-import androidx.fragment.app.FragmentManager
-import com.example.opentrivia.gioco.AttendiTurnoFragment
-import com.example.opentrivia.gioco.Pareggio
-import com.example.opentrivia.gioco.Sconfitta
-import com.example.opentrivia.gioco.Vittoria
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import java.util.Random
 
 class DatabaseUtils {
 
@@ -191,25 +181,6 @@ class DatabaseUtils {
         }
 
 
-        //verifa se questa è la risposta corretta, restituisce true o false
-
-        fun QuestaèLaRispostaCorretta(risposta: Button, rispostaCorretta: String): Boolean {
-
-
-            if (risposta.text == rispostaCorretta) {
-                risposta.setBackgroundColor(Color.LTGRAY)
-                Handler(Looper.getMainLooper()).postDelayed({
-                    risposta.setBackgroundColor(Color.GREEN)
-                }, 500)
-                return true
-            } else {
-                risposta.setBackgroundColor(Color.LTGRAY)
-                Handler(Looper.getMainLooper()).postDelayed({
-                    risposta.setBackgroundColor(Color.RED)
-                }, 500)
-                return false
-            }
-        }
 
 
 

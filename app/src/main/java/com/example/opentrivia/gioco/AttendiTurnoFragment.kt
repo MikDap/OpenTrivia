@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import com.example.opentrivia.MenuActivity
+import com.example.opentrivia.menu.MenuActivity
 import com.example.opentrivia.R
 
 class AttendiTurnoFragment : Fragment() {

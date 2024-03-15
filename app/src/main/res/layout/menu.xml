@@ -45,6 +45,17 @@
         app:layout_constraintEnd_toEndOf="@id/guidelineVerticalEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineVerticalStart"
         app:layout_constraintTop_toTopOf="parent"/>
+    <ImageView
+        android:id="@+id/gifImageView"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:scaleType="fitCenter"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontalStart"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toStartOf="@id/guidelineVerticalStart"
+        />
+
     <View
         android:id="@+id/orangeBar"
         android:layout_width="0dp"

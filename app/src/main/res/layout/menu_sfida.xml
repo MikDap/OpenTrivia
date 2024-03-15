@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#062E40"
-    tools:context=".SfidaFragment">
+    tools:context=".menu.SfidaFragment">
 
     <ScrollView
         android:id="@+id/scrollView"

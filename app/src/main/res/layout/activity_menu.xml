@@ -6,7 +6,7 @@
     android:id="@+id/textHello"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MenuActivity">
+        tools:context=".menu.MenuActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView2"

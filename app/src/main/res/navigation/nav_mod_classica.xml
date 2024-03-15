@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/conquistaSceltaMultipla"
-        android:name="com.example.opentrivia.gioco.classica.ConquistaSceltaMultipla"
+        android:name="com.example.opentrivia.gioco.classica.ConquistaSceltaMultiplaFragment"
         android:label="mod_conquista_sceltamultipla"
         tools:layout="@layout/mod_conquista_sceltamultipla" />
 </navigation>

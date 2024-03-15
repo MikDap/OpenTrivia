@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/chatListaAmici"
-        android:name="com.example.opentrivia.chat.ChatListaAmici"
+        android:name="com.example.opentrivia.chat.ChatListaAmiciFragment"
         android:label="fragment_chat_lista_amici"
         tools:layout="@layout/fragment_chat_lista_amici" >
         <action

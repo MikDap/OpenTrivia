@@ -28,6 +28,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlin.system.exitProcess
+import com.bumptech.glide.Glide
 
 
 class Menu : Fragment() {
@@ -41,6 +42,7 @@ class Menu : Fragment() {
     private lateinit var visualizzaCronologia: Button
     private lateinit var notification: TextView
     private lateinit var sfida: ImageView
+    private lateinit var gifImageView: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +55,7 @@ class Menu : Fragment() {
         notification = view.findViewById(R.id.notificationBadge)
         partitaContainer = view.findViewById(R.id.linearLayout)
         sfida = view.findViewById(R.id.sfida)
+        gifImageView = view.findViewById(R.id.gifImageView)
 
         adattaSchermo()
 
@@ -130,6 +133,36 @@ class Menu : Fragment() {
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        // Carica la GIF utilizzando Glide dopo 7 secondi
+        Glide.with(this)
+            .asGif()
+            .load(R.drawable.giphy)
+            .into(gifImageView)
+
+
+        val activity = requireActivity() as MenuActivity
+
+
+        if (activity.setteSecondi == true){
+            gifImageView.visibility = View.VISIBLE
+        }
+        activity.registerListener(object : MenuActivity.VariableChangeListener {
+            override fun onVariableChanged(newValue: Any) {
+                // Implementazione dell'azione quando la variabile cambia
+                if (newValue == true){
+                    gifImageView.visibility = View.VISIBLE
+                }
+                if (newValue == false){
+                    gifImageView.visibility = View.INVISIBLE
+                }
+
+            }
+        })
+    }
     fun leggiTurno(
         partita: String,
         difficolta: String,

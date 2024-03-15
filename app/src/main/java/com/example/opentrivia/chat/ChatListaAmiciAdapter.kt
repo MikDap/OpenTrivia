@@ -4,13 +4,11 @@ import com.example.opentrivia.R
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.opentrivia.chat.ChatListaAmici
 
-class ChatListaAmiciAdapter(private val userKeyMap: Map<String, String>, private val clickListener: ChatListaAmici.OnAmicoClickListener) : RecyclerView.Adapter<ChatListaAmiciAdapter.ViewHolder>() {
+class ChatListaAmiciAdapter(private val userKeyMap: Map<String, String>, private val clickListener: ChatListaAmiciFragment.OnAmicoClickListener) : RecyclerView.Adapter<ChatListaAmiciAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

@@ -4,7 +4,8 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import com.example.opentrivia.MenuActivity
+import com.example.opentrivia.menu.MenuActivity
 
 import com.example.opentrivia.R
 import com.example.opentrivia.utils.DatabaseUtils
@@ -23,6 +24,11 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
 
 
 class SceltaMultiplaFragmentArgSingolo : Fragment() {
@@ -52,6 +58,7 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
     lateinit var giocatoriRef: DatabaseReference
     lateinit var ritiratoRef: DatabaseReference
     lateinit var risposteRef: DatabaseReference
+    var tempoPerApiTrascorso = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -81,6 +88,10 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
         risposta4.text = modArgomentoActivity.listaRisposte[3]
         rispostaCorretta = modArgomentoActivity.rispostaCorretta
 
+        Handler(Looper.getMainLooper()).postDelayed({
+            tempoPerApiTrascorso = true
+        }, 5000)
+
         return view
     }
 
@@ -89,21 +100,26 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
 
              controllaRitiro()
 
+        val listaRisposte = listOf(risposta1, risposta2, risposta3, risposta4)
+
         risposta1.setOnClickListener {
           controllaRisposta(risposta1)
-            Log.d("clickrisposta1","si")
+            GiocoUtils.evidenziaRispostaCorretta(listaRisposte, rispostaCorretta)
         }
 
         risposta2.setOnClickListener {
             controllaRisposta(risposta2)
+            GiocoUtils.evidenziaRispostaCorretta(listaRisposte, rispostaCorretta)
         }
 
         risposta3.setOnClickListener {
             controllaRisposta(risposta3)
+            GiocoUtils.evidenziaRispostaCorretta(listaRisposte, rispostaCorretta)
         }
 
         risposta4.setOnClickListener {
             controllaRisposta(risposta4)
+            GiocoUtils.evidenziaRispostaCorretta(listaRisposte, rispostaCorretta)
         }
 
     }
@@ -196,29 +212,29 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
 
 
 
-    fun controllaRisposta(risposta:Button){
+    fun controllaRisposta(risposta: Button) {
         if (!rispostaData) {
+            lifecycleScope.launch {
+                if (GiocoUtils.QuestaèLaRispostaCorretta(risposta, rispostaCorretta)) {
+                    DatabaseUtils.updateRisposte(risposteRef, "risposteCorrette")
+                    DatabaseUtils.updateStatTopic(topic, "corretta")
+                } else {
+                    DatabaseUtils.updateRisposte(risposteRef, "risposteSbagliate")
+                    DatabaseUtils.updateStatTopic(topic, "sbagliata")
+                }
 
-            if (DatabaseUtils.QuestaèLaRispostaCorretta(risposta, rispostaCorretta)) {
-
-                DatabaseUtils.updateRisposte(risposteRef, "risposteCorrette")
-                DatabaseUtils.updateStatTopic(topic, "corretta")
-
-            } else {
-
-                DatabaseUtils.updateRisposte(risposteRef, "risposteSbagliate")
-                DatabaseUtils.updateStatTopic(topic, "sbagliata")
+                //Controlliamo le risposte totali, se 10 finisce la partita senno prossima domanda
+                modArgomentoActivity.contatoreRisposte++
+                if (modArgomentoActivity.contatoreRisposte < 10) {
+                    while (!tempoPerApiTrascorso) {
+                        delay(1000) // Aspetta un secondo prima di controllare nuovamente
+                    }
+                    modArgomentoActivity.getTriviaQuestion()
+                } else {
+                    finePartita()
+                }
+                rispostaData = true
             }
-
-            //Controlliamo le risposte totali, se 10 finisce la partita senno prossima domanda
-            modArgomentoActivity.contatoreRisposte++
-            if (modArgomentoActivity.contatoreRisposte < 10) {
-                modArgomentoActivity.getTriviaQuestion()
-            } else {
-                finePartita()
-            }
-            rispostaData = true
-
         }
     }
 

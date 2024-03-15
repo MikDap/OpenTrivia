@@ -134,9 +134,8 @@ private lateinit var guideline2: Guideline
         val giocatoreRef= database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori").child(uid)
         val giocatoriRef= database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
 
-        //nel caso un giocatore esce quando sta per passare alla schermata conquista         leggiRisposteDiFila(giocatoreRef)<<
-        //mic 09
-        user.text= FirebaseAuth.getInstance().currentUser?.displayName.toString()+" (me)"
+
+        user.text= FirebaseAuth.getInstance().currentUser?.displayName.toString()
         DatabaseUtils.getAvversario(modalita, difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
             // Questo codice verrà eseguito quando la callback restituirà il nome dell'avversario
             this.avversario.text = nomeAvv
@@ -163,13 +162,6 @@ private lateinit var guideline2: Guideline
 
 
         }
-
-
-
-
-
-
-
 
         return view
     }
@@ -500,6 +492,9 @@ fun adattaSchermo() {
 
     val widthDp = (widthPixel * 160/density).toInt()
 
+    Log.d("widthPixel",widthPixel.toString())
+
+    Log.d("widthdp", widthDp.toString())
     if (widthDp <= 400){
 
         viewAdattata = true

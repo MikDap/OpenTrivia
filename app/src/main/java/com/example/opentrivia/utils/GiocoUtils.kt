@@ -1,12 +1,14 @@
 package com.example.opentrivia.utils
 
+import android.graphics.Color
 import android.os.Handler
 import android.os.Looper
+import android.widget.Button
 import androidx.fragment.app.FragmentManager
 import com.example.opentrivia.gioco.AttendiTurnoFragment
-import com.example.opentrivia.gioco.Pareggio
-import com.example.opentrivia.gioco.Sconfitta
-import com.example.opentrivia.gioco.Vittoria
+import com.example.opentrivia.gioco.PareggioFragment
+import com.example.opentrivia.gioco.SconfittaFragment
+import com.example.opentrivia.gioco.VittoriaFragment
 import java.util.Random
 
 class GiocoUtils {
@@ -28,7 +30,7 @@ class GiocoUtils {
             scoreAvv: Int,
             mod: String
         ) {
-            val fragment = Vittoria().apply {
+            val fragment = VittoriaFragment().apply {
                 this.nomeAvv = nomeAvv
                 this.scoreMio = scoreMio.toString()
                 this.scoreAvv = scoreAvv.toString()
@@ -49,7 +51,7 @@ class GiocoUtils {
             scoreAvv: Int,
             mod: String
         ) {
-            val fragment = Pareggio().apply {
+            val fragment = PareggioFragment().apply {
                 this.nomeAvv = nomeAvv
                 this.scoreMio = scoreMio.toString()
                 this.scoreAvv = scoreAvv.toString()
@@ -70,7 +72,7 @@ class GiocoUtils {
             scoreAvv: Int,
             mod: String
         ) {
-            val fragment = Sconfitta().apply {
+            val fragment = SconfittaFragment().apply {
                 this.nomeAvv = nomeAvv
                 this.scoreMio = scoreMio.toString()
                 this.scoreAvv = scoreAvv.toString()
@@ -106,6 +108,38 @@ class GiocoUtils {
         fun getRandomTopic(topics: Array<String>): String {
             val randomIndex = Random().nextInt(topics.size)
             return topics[randomIndex]
+        }
+
+
+        //verifa se questa è la risposta corretta, restituisce true o false
+        fun QuestaèLaRispostaCorretta(risposta: Button, rispostaCorretta: String): Boolean {
+
+
+            if (risposta.text == rispostaCorretta) {
+                risposta.setBackgroundColor(Color.LTGRAY)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    risposta.setBackgroundColor(Color.GREEN)
+                }, 500)
+                return true
+            } else {
+                risposta.setBackgroundColor(Color.LTGRAY)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    risposta.setBackgroundColor(Color.RED)
+                }, 500)
+                return false
+            }
+        }
+
+        fun evidenziaRispostaCorretta(listaRisposte: List<Button>, rispostaCorretta: String) {
+
+
+            listaRisposte.forEachIndexed { index, risposta ->
+                if (risposta.text == rispostaCorretta) {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        risposta.setBackgroundColor(Color.GREEN)
+                    }, 500)
+                }
+            }
         }
     }
 }

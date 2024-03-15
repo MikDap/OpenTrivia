@@ -188,7 +188,7 @@ if (!jolly()) {
         Log.d("risposta1Conquista", risposta1Conquista)
 
         // passiamo al secondo Fragment (DA GESTIRE IL PERMESSO DI RITORNARE INDIETRO DURANTE LA SCHERMATA DELLE DOMANDE E RISPOSTE)
-        val secondFragment = ConquistaSceltaMultipla()
+        val secondFragment = ConquistaSceltaMultiplaFragment()
 
         Log.d("domandaconqSceltaMultipla", domanda)
         // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, secondFragment).addToBackStack(null).commit();

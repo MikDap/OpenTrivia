@@ -54,7 +54,7 @@
     </fragment>
     <fragment
         android:id="@+id/cronologiaPartite"
-        android:name="com.example.opentrivia.cronologia_partite.CronologiaPartite"
+        android:name="com.example.opentrivia.cronologia_partite.CronologiaPartiteFragment"
         android:label="visualizza_cronologia"
         tools:layout="@layout/visualizza_cronologia" >
         <action
@@ -75,7 +75,7 @@
     </fragment>
     <fragment
         android:id="@+id/sfidaFragment"
-        android:name="com.example.opentrivia.SfidaFragment"
+        android:name="com.example.opentrivia.menu.SfidaFragment"
         android:label="menu_sfida"
         tools:layout="@layout/menu_sfida" >
         <action

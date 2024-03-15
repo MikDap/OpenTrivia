@@ -1,62 +1,82 @@
 package com.example.opentrivia
 
-import android.graphics.drawable.AnimatedVectorDrawable
+import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.ImageView
+import android.view.animation.OvershootInterpolator
 import androidx.activity.ComponentActivity
+import androidx.activity.viewModels
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.animation.doOnEnd
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.example.opentrivia.login.LoginActivity
+import com.example.opentrivia.login.UserMethods
+import com.example.opentrivia.menu.MenuActivity
 import com.example.opentrivia.ui.theme.OpenTriviaTheme
 
 
 class MainActivity : ComponentActivity()  {
 
     private lateinit var userMethods: UserMethods
-    private lateinit var image: ImageView
-    private lateinit var animation: AnimatedVectorDrawable
-
+    private val viewModel by viewModels<ViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen().apply {
+            setKeepOnScreenCondition{
+                !viewModel.isReady.value
+            }
+            setOnExitAnimationListener { screen ->
+                val zoomX = ObjectAnimator.ofFloat(
+                    screen.iconView,
+                    View.SCALE_X,
+                    0.6f,
+                    0.0f
+                )
+                zoomX.interpolator = OvershootInterpolator()
+                zoomX.duration = 500L
+                zoomX.doOnEnd { screen.remove() }
+
+                val zoomY = ObjectAnimator.ofFloat(
+                    screen.iconView,
+                    View.SCALE_Y,
+                    0.6f,
+                    0.0f
+                )
+                zoomY.interpolator = OvershootInterpolator()
+                zoomY.duration = 500L
+                zoomY.doOnEnd { screen.remove() }
+
+                zoomX.start()
+                zoomY.start()
+
+                userMethods = UserMethods()
+
+                //MENU
+                if (userMethods.checkUtenteisLoggato()) {
+                    val intent = Intent(this@MainActivity, MenuActivity::class.java)
+                    startActivity(intent)
+                    finish()
+
+
+
+                }
+                //LOGIN
+                else {
+                    val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
         setContentView(R.layout.activity_main)
 
-        image = findViewById<View>(R.id.avd) as ImageView
-    //    val progressBar = findViewById<ProgressBar>(R.id.progressBar)
 
-    //    progressBar.visibility = ProgressBar.VISIBLE
-
-        userMethods = UserMethods()
-
-/*
-        //MENU
-        if (userMethods.checkUtenteisLoggato()) {
-            val intent = Intent(this@MainActivity, MenuActivity::class.java)
-            startActivity(intent)
-            finish()
-
-
-
-        }
-        //LOGIN
-        else {
-            val intent = Intent(this@MainActivity, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
- */
     }
-    override fun onStart() {
-        super.onStart()
-        val d = image.drawable
-        if (d is AnimatedVectorDrawable) {
-            Log.d("testanim", "onCreate: instancefound$d")
-            animation = d
-            animation.start()
-        }
-    }
+
 
     @Composable
     fun Greeting(name: String, modifier: Modifier = Modifier) {
