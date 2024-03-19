@@ -57,8 +57,6 @@ class UsersAdapter(private val userKeyMap: Map<String, String>) : RecyclerView.A
 
                 for (userSnapshot in snapshot.children) {
                     val userId = userSnapshot.key  // ID utente
-Log.d("userId",userId.toString())
-                    Log.d("friendUserId",friendUserId)
                     if (userId == friendUserId) {
                      isFriend = true
                         break

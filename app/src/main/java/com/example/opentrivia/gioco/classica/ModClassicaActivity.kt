@@ -12,7 +12,7 @@ import com.example.opentrivia.utils.GiocoUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
-class ModClassicaActivity : AppCompatActivity(), RuotaFragment.MyFragmentListener,ChiamataApi.TriviaQuestionCallback {
+class ModClassicaActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback {
 
      var partita: String = ""
      lateinit var difficolta: String
@@ -55,7 +55,7 @@ class ModClassicaActivity : AppCompatActivity(), RuotaFragment.MyFragmentListene
 
 
 // quando finisce di girare la ruota in RuotaFragment e viene scelto il topic:
-    override fun onVariablePassed(topic: String) {
+    fun passTopicToActivity(topic: String) {
 
         //salviamo il topic
         this.topic = topic

@@ -2,7 +2,6 @@ package com.example.opentrivia.gioco.argomento_singolo
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +18,6 @@ class ArgomentoSingoloFragment : Fragment() {
     private lateinit var geografia: Button
     private lateinit var arte: Button
     private lateinit var scienze: Button
-    private var listener: MyFragmentListener? = null
 
     lateinit var topic: String
 
@@ -37,68 +35,61 @@ class ArgomentoSingoloFragment : Fragment() {
         geografia = view.findViewById(R.id.geografia_arg)
         arte = view.findViewById(R.id.arte_arg)
         scienze = view.findViewById(R.id.scienze_arg)
+        val activity = requireActivity() as ModArgomentoActivity
+        var argScelto = false
 
         culturaPop.setOnClickListener{
-            topic = "culturaPop"
-            passVariableToActivity(topic)
+            if (!argScelto) {
+                topic = "culturaPop"
+                activity.topicScelto(topic)
+                argScelto = true
+            }
         }
 
 
         sport.setOnClickListener{
-            topic = "sport"
-            passVariableToActivity(topic)
-            Log.d("sportclick","si")
+            if (!argScelto) {
+                topic = "sport"
+                activity.topicScelto(topic)
+                argScelto = true
+            }
 
         }
 
         storia.setOnClickListener{
-            topic = "storia"
-            passVariableToActivity(topic)
+            if (!argScelto) {
+                topic = "storia"
+                activity.topicScelto(topic)
+                argScelto = true
+            }
 
         }
 
         geografia.setOnClickListener{
-            topic = "geografia"
-            passVariableToActivity(topic)
+            if (!argScelto) {
+                topic = "geografia"
+                activity.topicScelto(topic)
+                argScelto = true
+            }
         }
         scienze.setOnClickListener{
-            topic = "scienze"
-            passVariableToActivity(topic)
+            if (!argScelto) {
+                topic = "scienze"
+                activity.topicScelto(topic)
+                argScelto = true
+            }
         }
 
         arte.setOnClickListener{
-            topic = "arte"
-            passVariableToActivity(topic)
+            if (!argScelto) {
+                topic = "arte"
+                activity.topicScelto(topic)
+                argScelto = true
+            }
         }
 
         return view
     }
-
-    //crea un listener (funge da contratto tra il Fragment e la Activity)
-    interface MyFragmentListener {
-        //implementato in ModArgomentoActivity
-        fun onVariablePassed(variable: String) {
-        }
-    }
-//estrae l'Activity ospitante utilizzando requireActivity() e controlla che
-// l'Activity implementi l'interfaccia MyFragmentListener.
-// Quindi, chiama il metodo onVariablePassed
-    fun passVariableToActivity(variable: String) {
-        val activity = requireActivity() as MyFragmentListener
-        activity.onVariablePassed(variable)
-    }
-
-//viene chiamato quando il Fragment viene associato all'Activity ospitante DA VEDERE SE LEVANDOLO, FUNZIONA
-   override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is MyFragmentListener) {
-            listener = context
-        } else {
-            throw RuntimeException("$context must implement MyFragmentListener")
-        }
-    }
-
-
 
 
 }

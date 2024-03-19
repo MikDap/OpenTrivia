@@ -83,6 +83,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_weight="1"
+                    android:tag="sport"
                     android:layout_centerInParent="true"
                     android:background="@drawable/contour_background"
                     android:backgroundTint="#FFEB3B"
@@ -98,6 +99,7 @@
                 <View
                     android:id="@+id/storia"
                     android:layout_width="20dp"
+                    android:tag="storia"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
                     android:backgroundTint="#FFBB2F" />
@@ -112,6 +114,7 @@
                 android:orientation="vertical">
                 <View
                     android:id="@+id/scienze"
+                    android:tag="scienze"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
@@ -127,6 +130,7 @@
                 android:orientation="vertical">
                 <View
                     android:id="@+id/arte"
+                    android:tag="arte"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
@@ -142,6 +146,7 @@
                 android:orientation="vertical">
                 <View
                     android:id="@+id/geografia"
+                    android:tag="geografia"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
@@ -158,6 +163,7 @@
                 android:orientation="vertical">
                 <View
                     android:id="@+id/culturaPop"
+                    android:tag="culturaPop"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
@@ -184,6 +190,7 @@
                     android:id="@+id/sport2"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
+                    android:tag="sport"
                     android:background="@drawable/contour_background"
                     android:backgroundTint="#FFEB3B" />
 
@@ -197,6 +204,7 @@
                 android:orientation="vertical">
                 <View
                     android:id="@+id/storia2"
+                    android:tag="storia"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
@@ -213,6 +221,7 @@
                 android:orientation="vertical">
                 <View
                     android:id="@+id/scienze2"
+                    android:tag="scienze"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
@@ -228,6 +237,7 @@
                 android:orientation="vertical">
                 <View
                     android:id="@+id/arte2"
+                    android:tag="arte"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
@@ -243,6 +253,7 @@
                 android:orientation="vertical">
                 <View
                     android:id="@+id/geografia2"
+                    android:tag="geografia"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
@@ -259,6 +270,7 @@
                 android:orientation="vertical">
                 <View
                     android:id="@+id/culturaPop2"
+                    android:tag="culturaPop"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"

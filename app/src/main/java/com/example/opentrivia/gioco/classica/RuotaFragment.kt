@@ -1,6 +1,5 @@
 package com.example.opentrivia.gioco.classica
 
-import android.content.Context
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -18,14 +17,12 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.drawable.BitmapDrawable
-import android.util.Log
 import android.graphics.PathMeasure
 import android.graphics.Typeface
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.Guideline
 import com.example.opentrivia.R
 import com.example.opentrivia.utils.DatabaseUtils
 import com.google.firebase.auth.FirebaseAuth
@@ -38,30 +35,15 @@ class RuotaFragment : Fragment() {
     private lateinit var wheelView: View
     private lateinit var ruotaButton: Button
     private lateinit var imageView3: ImageView
-
-    private lateinit var prova: View
-    private lateinit var storia : View
-    private lateinit var sport : View
-    private lateinit var scienze : View
-    private lateinit var geografia : View
-    private lateinit var arte : View
-    private lateinit var culturaPop : View
-
-    private lateinit var storia2 : View
-    private lateinit var sport2 : View
-    private lateinit var scienze2 : View
-    private lateinit var geografia2 : View
-    private lateinit var arte2 : View
-    private lateinit var culturaPop2 : View
+    private lateinit var viewsArgMiei: Array<View>
+    private lateinit var viewsArgAvv: Array<View>
 
     private lateinit var rettangolo1:View
     private lateinit var rettangolo2:View
     private lateinit var rettangolo3:View
-private lateinit var user:TextView
-private lateinit var avversario:TextView
+    private lateinit var user:TextView
+    private lateinit var avversario:TextView
 
-private lateinit var guideline1: Guideline
-private lateinit var guideline2: Guideline
 
     private var selectedTopic: String? = null
     private var isWheelStopped: Boolean = true
@@ -70,7 +52,7 @@ private lateinit var guideline2: Guideline
     private lateinit var database: FirebaseDatabase
     private lateinit var modClassicaActivity: ModClassicaActivity
     private var diameter = 0
-    var viewAdattata= false
+    private var viewAdattata= false
 
     //da 0 perchè la ruota parte da 0 gradi
     private var currentAngle: Float = 0f
@@ -86,8 +68,7 @@ private lateinit var guideline2: Guideline
         Color.parseColor("#BBBBBB")
     )
 
-    //michele
-    private var listener: MyFragmentListener? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -97,66 +78,73 @@ private lateinit var guideline2: Guideline
         ruotaButton = view.findViewById(R.id.ruotaButton)
         imageView3 = view.findViewById(R.id.imageView3)
 
-        storia = view.findViewById(R.id.storia)
-        sport = view.findViewById(R.id.sport)
-        geografia = view.findViewById(R.id.geografia)
-        arte = view.findViewById(R.id.arte)
-        scienze = view.findViewById(R.id.scienze)
-        culturaPop = view.findViewById(R.id.culturaPop)
+        viewsArgMiei = arrayOf(
+            view.findViewById(R.id.storia),
+            view.findViewById(R.id.sport),
+            view.findViewById(R.id.scienze),
+            view.findViewById(R.id.arte),
+            view.findViewById(R.id.geografia),
+            view.findViewById(R.id.culturaPop)
+        )
 
-        storia2 = view.findViewById(R.id.storia2)
-        sport2 = view.findViewById(R.id.sport2)
-        geografia2 = view.findViewById(R.id.geografia2)
-        arte2 = view.findViewById(R.id.arte2)
-        scienze2 = view.findViewById(R.id.scienze2)
-        culturaPop2 = view.findViewById(R.id.culturaPop2)
+        viewsArgAvv = arrayOf(
+            view.findViewById(R.id.storia2),
+            view.findViewById(R.id.sport2),
+            view.findViewById(R.id.scienze2),
+            view.findViewById(R.id.arte2),
+            view.findViewById(R.id.geografia2),
+            view.findViewById(R.id.culturaPop2)
+        )
+
         rettangolo1 = view.findViewById(R.id.rettangolo1)
         rettangolo2 = view.findViewById(R.id.rettangolo2)
         rettangolo3 = view.findViewById(R.id.rettangolo3)
-        guideline1 = view.findViewById(R.id.guidelineVerticalStart1)
-
+        user=view.findViewById(R.id.user)
+        avversario=view.findViewById(R.id.avversario)
 
 
         adattaSchermo()
 
 
-// Utilizza distanceInDp come riferimento per impostare le dimensioni delle viste nel tuo layout
-        user=view.findViewById(R.id.user)
-        avversario=view.findViewById(R.id.avversario)
 
+//PRENDIAMO DATI DELLA PARTITA DALL ACTIVITY
         modClassicaActivity = activity as ModClassicaActivity
         val partita = modClassicaActivity.partita
         val modalita = "classica"
         val difficolta = modClassicaActivity.difficolta
 
+        //PRENDIAMO I RIFERIMENTI DELLA PARTITA SUL DATABASE
         database = FirebaseDatabase.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         val giocatoreRef= database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori").child(uid)
         val giocatoriRef= database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
 
 
+        //SCRIVIAMO NOME UTENTE E NOME AVVERSARIO
         user.text= FirebaseAuth.getInstance().currentUser?.displayName.toString()
-        DatabaseUtils.getAvversario(modalita, difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
-            // Questo codice verrà eseguito quando la callback restituirà il nome dell'avversario
+        DatabaseUtils.getAvversario(modalita, difficolta, partita){ _, _, nomeAvv ->
             this.avversario.text = nomeAvv
         }
-        //fine
+
+
+        //PRENDIAMO DAL DATABASE GLI ARGOMENTI CONQUISTATI PER POI COLORARLI
         ModClassicaUtils.getArgomentiConquistati(giocatoriRef) { argomentiMiei, argomentiAvversario ->
-            if (argomentiMiei.isEmpty())Log.d("argomentiMieiVuoti","si")
-            if(argomentiMiei.isNotEmpty())  {      Log.d("argomentiMiei", argomentiMiei[0]) }
             coloraQuadratini(argomentiMiei,true)
             coloraQuadratini(argomentiAvversario, false)
         }
 
+        // LEGGIAMO LE RISPOSTE CORRETTE DI FILA PER COLORARE I 3 RETTANGOLI IN BASSO
         ModClassicaUtils.leggiRisposteCorrette(giocatoreRef) {statoRiposte ->
-
             coloraStatoRisposte(statoRiposte)
         }
+
+
+        //LISTENER BOTTONE PER GIRARE LA RUOTA
         ruotaButton.setOnClickListener {
             if (isWheelStopped) {
-                // richiama la funzione per ottenere un argomento in modo random
+                // SCEGLIAMO UN ARGOMENTO IN MODO RANDOM
                 val randomTopic = getRandomTopic()
-                // richiama la funzione per girare la ruota passandoci l'argomento che è uscito
+                // GIRIAMO LA RUOTA IN BASE ALL ARGOMENTO USCITO
                 rotateWheel(randomTopic)
             }
 
@@ -168,15 +156,13 @@ private lateinit var guideline2: Guideline
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // ...
 
 
-
+       // PRENDIAMO DIAMETRO E CHIAMAMO FUNZIONE PER DISEGNARE RUOTA
+       // Senza il metodo wheelView.post, potrebbe succedere che il width del wheelView non sia ancora stato determinato
         wheelView.post {
             diameter = wheelView.width
-            val backgroundColor = Color.parseColor("#FFC107") // Colore di sfondo desiderato
-            drawWheelOverlay(backgroundColor)
-
+            drawWheelOverlay()
         }
     }
 
@@ -191,12 +177,13 @@ private lateinit var guideline2: Guideline
     //funzione che fa ruotare la ruota
     private fun rotateWheel(topic: String) {
 
+        //angolo iniziale
         val fromAngle = currentAngle
-        Log.d("from", fromAngle.toString())
 
+        //10 giri più l'angolo del topic
         val toAngle = 3600f + calculateTargetAngle(topic)
-        Log.d("to", toAngle.toString())
-        Log.d("calculate", calculateTargetAngle(topic).toString())
+
+        //istanziamo l'animazione della rotazione
         val rotateAnimation = RotateAnimation(
             fromAngle, toAngle,
             //0,5 perchè il cerchio deve ruotare rispetto al suo centro
@@ -206,36 +193,42 @@ private lateinit var guideline2: Guideline
 
         rotateAnimation.duration = 3000
 
+        //se la trasformazione dovuta alla rotazione deve persistere dopo l'animazione
         rotateAnimation.fillAfter = true
 
+        //costruttore listener dell'animazione
         rotateAnimation.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation?) {
                 isWheelStopped = false
             }
 
             override fun onAnimationEnd(animation: Animation?) {
+                //perchè deve ruotare solo una volta se si preme il tasto più volte
                 isWheelStopped = true
                 // perchè in toAngle abbiamo 3600 + angolo corrente
+                //esempio: 3680/360= 10, resto 80 gradi
                 currentAngle = toAngle % 360f
-                Log.d("currentAngle", currentAngle.toString())
 
 
                 selectedTopic = topic
                 showToast("Selected topic: $topic")
 
-                passVariableToActivity(topic)
+                //notifichiamo l'activity con il topic selezionato
+                val activity = requireActivity() as ModClassicaActivity
+                activity.passTopicToActivity(topic)
             }
 
             override fun onAnimationRepeat(animation: Animation?) {
             }
         })
-// fa iniziare l'animazione
+
+        //facciamo partire l'animazione
         wheelView.startAnimation(rotateAnimation)
     }
 
 
     private fun calculateTargetAngle(topic: String): Float {
-        var angle = 0f
+        val angle: Float
         val topicCount = topics.size
 
         // sezione angolare per ogni topic
@@ -244,46 +237,44 @@ private lateinit var guideline2: Guideline
         val index = topics.indexOf(topic)
 
         // calcolo la posizione dell'inizio della sezione angolare
+        //1° topic 0 gradi(index=0), 2° 51,4 gradi..
         val startAngle = index * angoloSezione
 
-        //1° topic 0 gradi, 2° 51,4 gradi (startAngle)
-        // ma valore positivo sposta in verso orario, quindi 360 - startAngle
+        //es: argomento a 90 gradi (a destra del cerchio)
+        //se ruoto di 90, l'animazione lo fa in senso orario,
+        //quindi in alto mi trovo l'argomento a sinistra del cerchio.
+        //voglio invece che ruota di 270 gradi.
         angle = 360f - startAngle
 
         return angle
     }
 
 
-    private fun drawWheelOverlay(backgroundColor: Int) {
+    private fun drawWheelOverlay() {
 
 
-        // ci serve una Bitmap per creare il cerchio
+        //Ci serve una Bitmap nella quale disegneremo il cerchio e la setteremo come sfondo della wheelview.
+        //Una Bitmap è una rappresentazione digitale di un'immagine in cui ogni pixel dell'immagine
+        //è rappresentato da un valore numerico.
+        //In pratica, una bitmap è una griglia di pixel
         val overlayBitmap = Bitmap.createBitmap(diameter, diameter, Bitmap.Config.ARGB_8888)
-//server per disegnare
+
+
+        //rappresenta la superficie su cui verranno disegnati gli elementi grafici (sezioni per ogni topic)
         val canvas = Canvas(overlayBitmap)
 
-        val centerX = diameter / 2f
-        val centerY = diameter / 2f
-
-
-        val topicCount = topics.size
-
-        // angolazione da dedicare per ogni topic
-        val angoloSezione = 360f / topicCount
+        //PER AVERE COORDINATE DEL CENTRO DEL CERCHIO DA DISEGNARE
+        val center = diameter / 2f
 
         //creo un Percorso
         val path = Path()
         // creo un cerchio
-        path.addCircle(centerX, centerY, diameter / 2f, Path.Direction.CW)
+        path.addCircle(center, center, diameter / 2f, Path.Direction.CW)
 
-        val backgroundPaint = Paint()
-        backgroundPaint.color = backgroundColor
 
-//disegno il cerchio con il percorso specificato e il colore specificato
-        canvas.drawPath(path, backgroundPaint)
-
-        //ci serve per le scritte
+        //per le scritte
         val textPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+        //ADATTIAMO DIOMENSIONE SCRITTA SE LA RUOTA è STATA ADATTATA DA ADATTASCHERMO()
         if (!viewAdattata) {
             textPaint.textSize = 60f
         }
@@ -292,74 +283,71 @@ private lateinit var guideline2: Guideline
         }
         textPaint.color = Color.BLACK
         val boldTypeface = Typeface.defaultFromStyle(Typeface.BOLD)
-        textPaint.setTypeface(boldTypeface)
+        textPaint.typeface = boldTypeface
 
 
+        //to float per le operazioni  più avanti
+        val numeroTopic = topics.size.toFloat()
+
+        // angolo del cerchio da dedicare per ogni topic
+        val angoloSezione = 360f / numeroTopic
+
+
+        //mi calcolo il perimetro del cerchio
+        val pathMeasure = PathMeasure(path, false)
+        val perimetro = pathMeasure.length
+
+        //lunghezza del perimetro del cerchio da dedicare per ogni topic
+        val arco = perimetro/numeroTopic
 
 
         //per ogni materia, la scrivo in una certa posizione e una certa angolazione nel cerchio
         for (i in topics.indices) {
             //inizio della sezione angolare
-            val startAngle = i * angoloSezione
-            //fine sezione angolare
-            val endAngle = (i + 1) * angoloSezione
+            val inizioAngoloSezione = i * angoloSezione
 
             val text = topics[i]
-            Log.d("materia", text)
 
+            //ci serve per centrare la scritta nella sua sezione
             val textWidth = textPaint.measureText(text)
-//centro della sezione angolare relativa all'argomento
-            val textAngle = (startAngle + endAngle) / 2f
 
-            Log.d("textAngle", textAngle.toString())
 
-// creo un altro oggetto canvas passandogli la stessa Bitmap, perchè se usassi quella fuori dal ciclo
-// quando uso il metodo rotate per argomenti successivi al primo mi va a ruotare di nuovo gli argomenti
-            //precedenti a quello del ciclo in corso, i quali erano nell'angolazione giusta
-            val canvas2 = Canvas(overlayBitmap)
-            // 0.. 51,4.. 102,8.....308,6 senso orario
-            canvas2.rotate(startAngle, centerX, centerY)
-
-//scelgo l'indice del colore dello spicchio
-            val colorIndex = i % colors.size
+            //scelgo il colore della sezione
             val backgroundPaint = Paint()
-            backgroundPaint.color = colors[colorIndex]
+            backgroundPaint.color = colors[i]
 
-            // Disegna lo spicchio
-            // (startAngle + 270f perchè nel drawTextOnPath viene modificata
-            // di 270 gradi la posizione della scritta nell'hOffset,
-            // - (angoloSezione/2f) per centrare la sezione)
+            // Disegna la sezione
             canvas.drawArc(
                 0f,
                 0f,
                 diameter.toFloat(),
                 diameter.toFloat(),
-                startAngle + 270f - (angoloSezione / 2f),
+                inizioAngoloSezione,
                 angoloSezione,
                 true,
                 backgroundPaint
             )
 
-
-//mi calcolo il perimetro del cerchio
-            val pathMeasure = PathMeasure(path, false)
-            val pathLength = pathMeasure.length
-
+            //SE JOLLY VOGLIO IL TESTO IN GIALLO (è l'ultimo quindi non ci serve rimettere il colore a nero)
             if (text == "jolly") {
                 textPaint.color = Color.YELLOW
             }
-            //dovuto scrivere cosi perchè hOffset non può uscire fuori dalla lunghezza del percorso ( deve essere tra 0 e perimetro del cerchio)
-            canvas2.drawTextOnPath(
+
+            //HOFFSET PER DIRE A CHE LUNGHEZZA DEL PERIMETRO SCRIVERE (0 SAREBBE A DESTRA DEL CERCHIO)
+            //VOFFSET PER DIRE A CHE DISTANZA DAL PERIMETRO SCRIVERE
+            canvas.drawTextOnPath(
                 text,
                 path,
-                (3 * pathLength) / 4f - textWidth / 2f,
+                (i.toFloat()/numeroTopic) * perimetro + arco/ 2f - textWidth / 2f,
                 60f,
                 textPaint
             )
-            Log.d("textwidth", textWidth.toString())
         }
 
+        //setto la bitmap come sfondo di wheelview
         wheelView.background = BitmapDrawable(resources, overlayBitmap)
+        //270 perchè voglio il primo argomento in alto, -angolosezione/2 perchè lo voglio centrato
+        wheelView.rotation = 270f - angoloSezione/2f
     }
 
     private fun showToast(message: String) {
@@ -367,134 +355,38 @@ private lateinit var guideline2: Guideline
     }
 
 
-    //Michele da 245 a 268
-    //crea un listener (funge da contratto tra il Fragment e la Activity)
-    interface MyFragmentListener {
-        //implementato in ModClassicaActivity
-        fun onVariablePassed(variable: String) {
+
+
+    private fun coloraQuadratini(argomenti: ArrayList<String>, miei: Boolean) {
+
+        //se sono i miei creo la lista con le mie view, altrimenti con quelle dell'avversario
+        val quadratini = if (miei) viewsArgMiei
+        else viewsArgAvv
+
+        for (argomento in argomenti){
+            //storia e storia2 hanno stesso tag e cosi via,
+            //quindi se in Argomenti c'è "storia",indexOfFirst() e first() mi ritorna
+            //la view storia o storia2 in base alla lista quadratini.
+            val indice = quadratini.indexOfFirst { it.tag == argomento }
+            quadratini.first{ it.tag == argomento }.setBackgroundColor(colors[indice])
         }
     }
 
-    //estrae l'Activity ospitante utilizzando requireActivity() e controlla che
-// l'Activity implementi l'interfaccia MyFragmentListener.
-// Quindi, chiama il metodo onVariablePassed
-    fun passVariableToActivity(variable: String) {
-        val activity = requireActivity() as MyFragmentListener
-        activity.onVariablePassed(variable)
-    }
-
-    //viene chiamato quando il Fragment viene associato all'Activity ospitante DA VEDERE SE LEVANDOLO, FUNZIONA
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is MyFragmentListener) {
-            listener = context
-        } else {
-            throw RuntimeException("$context must implement MyFragmentListener")
-        }
+    private fun coloraStatoRisposte (stato: Int){
+        if (stato >= 1)rettangolo1.setBackgroundColor(Color.parseColor("#FFEB3B"))
+        if (stato >= 2)rettangolo2.setBackgroundColor(Color.parseColor("#FFEB3B"))
+        if (stato >= 3)rettangolo3.setBackgroundColor(Color.parseColor("#FFEB3B"))
     }
 
 
 
-
-    // METTERE SE ARGOMENTIMIEI O ARGOMENTIAVVERS
-    fun coloraQuadratini(Argomenti: ArrayList<String>, miei: Boolean) {
-
-        for (argomento in Argomenti) {
-
-            if (miei) {
-                when (argomento) {
-
-                    "storia" -> {
-                        storia.setBackgroundColor(Color.parseColor("#FFBB2F"))
-                    }
-
-                    "sport" -> {
-                        sport.setBackgroundColor(Color.parseColor("#FFEB3B"))
-                    }
-
-                    "geografia" -> {
-                        geografia.setBackgroundColor(Color.parseColor("#0000FF"))
-                    }
-
-                    "arte" -> {
-                        arte.setBackgroundColor(Color.parseColor("#FF0000"))
-                    }
-
-                    "scienze" -> {
-                        scienze.setBackgroundColor(Color.parseColor("#4CAF50"))
-                    }
-
-                    "culturaPop" -> {
-                        culturaPop.setBackgroundColor(Color.parseColor("#FF00FF"))
-                    }
-
-
-                }
-
-            }
-
-            else {
-                when (argomento) {
-
-                    "storia" -> {
-                        storia2.setBackgroundColor(Color.parseColor("#FFBB2F"))
-                    }
-
-                    "sport" -> {
-                        sport2.setBackgroundColor(Color.parseColor("#FFEB3B"))
-                    }
-
-                    "geografia" -> {
-                        geografia2.setBackgroundColor(Color.parseColor("#0000FF"))
-                    }
-
-                    "arte" -> {
-                        arte2.setBackgroundColor(Color.parseColor("#FF0000"))
-                    }
-
-                    "scienze" -> {
-                        scienze2.setBackgroundColor(Color.parseColor("#4CAF50"))
-                    }
-
-                    "culturaPop" -> {
-                        culturaPop2.setBackgroundColor(Color.parseColor("#FF00FF"))
-                    }
-
-
-                }
-
-            }
-        }
-
-
-    }
-
-    fun coloraStatoRisposte (stato: Int){
-        when(stato) {
-            1 ->rettangolo1.setBackgroundColor(Color.parseColor("#FFEB3B"))
-
-            2->{rettangolo1.setBackgroundColor(Color.parseColor("#FFEB3B"))
-                rettangolo2.setBackgroundColor(Color.parseColor("#FFEB3B"))}
-
-            3->{rettangolo1.setBackgroundColor(Color.parseColor("#FFEB3B"))
-                rettangolo2.setBackgroundColor(Color.parseColor("#FFEB3B"))
-                rettangolo3.setBackgroundColor(Color.parseColor("#FFEB3B")) }
-
-        }
-    }
-
-
-
-fun adattaSchermo() {
+private fun adattaSchermo() {
     val squareSize = resources.getDimensionPixelSize(R.dimen.square)
     val widthPixel = Resources.getSystem().displayMetrics.widthPixels
     val density = Resources.getSystem().displayMetrics.xdpi
 
     val widthDp = (widthPixel * 160/density).toInt()
 
-    Log.d("widthPixel",widthPixel.toString())
-
-    Log.d("widthdp", widthDp.toString())
     if (widthDp <= 400){
 
         viewAdattata = true
@@ -512,22 +404,12 @@ fun adattaSchermo() {
 
 
 
-        val layoutParams = geografia.layoutParams as LinearLayout.LayoutParams
+        val layoutParams = viewsArgMiei[0].layoutParams as LinearLayout.LayoutParams
         layoutParams.width = squareSize
         layoutParams.height = squareSize
-        geografia.layoutParams = layoutParams
-        storia.layoutParams = layoutParams
-        scienze.layoutParams = layoutParams
-        arte.layoutParams = layoutParams
-        culturaPop.layoutParams = layoutParams
-        sport.layoutParams = layoutParams
-
-        geografia2.layoutParams = layoutParams
-        storia2.layoutParams = layoutParams
-        scienze2.layoutParams = layoutParams
-        arte2.layoutParams = layoutParams
-        culturaPop2.layoutParams = layoutParams
-        sport2.layoutParams = layoutParams
+        for (view in viewsArgMiei + viewsArgAvv) {
+            view.layoutParams = layoutParams
+        }
     }
 }
 

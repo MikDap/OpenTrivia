@@ -13,8 +13,7 @@ import com.example.opentrivia.utils.GiocoUtils
 import com.google.firebase.database.FirebaseDatabase
 
 
-class ModArgomentoActivity : AppCompatActivity(), ArgomentoSingoloFragment.MyFragmentListener,
-    ChiamataApi.TriviaQuestionCallback {
+class ModArgomentoActivity : AppCompatActivity(), ChiamataApi.TriviaQuestionCallback {
 
     private lateinit var partita: String
     private lateinit var difficolta: String
@@ -62,7 +61,7 @@ class ModArgomentoActivity : AppCompatActivity(), ArgomentoSingoloFragment.MyFra
 
 
     // QUANDO SCEGLIAMO TOPIC SU ARGOMENTOSINGOLO FRAGMENT (SOSTITUITO DA CARICAMENTOFRAGMENT SE HAI ACCETTATO SFIDA)
-    override fun onVariablePassed(topic: String) {
+    fun topicScelto(topic: String) {
 
         Log.d("onVariablePassed","si")
         //salviamo il topic
