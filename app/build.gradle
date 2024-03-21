@@ -23,7 +23,9 @@ android {
     }
 
 
-
+    testOptions {
+        animationsDisabled = true
+    }
 
         buildTypes {
             release {

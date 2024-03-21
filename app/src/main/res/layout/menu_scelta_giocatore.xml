@@ -84,7 +84,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_marginTop="20dp"
-            android:background="@drawable/game_item_background"
+            android:background="@drawable/button_item_background"
             android:paddingTop="15sp"
             android:paddingBottom="15sp"
             android:text="Continua"
