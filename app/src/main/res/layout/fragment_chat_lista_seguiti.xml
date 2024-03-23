@@ -4,8 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#062E40">
+    android:background="#062E40"
+    android:gravity="center_horizontal">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chat"
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:padding="16dp"/>
 
     <!-- RecyclerView per la lista degli amici -->
     <androidx.recyclerview.widget.RecyclerView

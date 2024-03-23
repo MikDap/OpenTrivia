@@ -6,6 +6,22 @@
     android:orientation="vertical"
     android:background="#062E40">
 
+    <!-- LinearLayout per centrare la TextView "Chat" -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Segui utenti"
+            android:textSize="24sp"
+            android:textColor="#FFFFFF"
+            android:padding="16dp"/>
+
+    </LinearLayout>
     <EditText
         android:id="@+id/editTextFriendName"
         android:layout_width="match_parent"
@@ -27,4 +43,3 @@
         android:layout_weight="1" />
 
 </LinearLayout>
- 

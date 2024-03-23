@@ -8,8 +8,8 @@
             android:title="Statistiche" />
 
         <item
-            android:id="@+id/lista_amici"
-            android:title="Lista Amici" />
+            android:id="@+id/lista_seguiti"
+            android:title="Lista Seguiti" />
 
         <item
             android:id="@+id/logout"

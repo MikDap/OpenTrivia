@@ -15,7 +15,7 @@ class ModATempoProntoFragment : Fragment() {
 
     private lateinit var pronto: Button
     //private lateinit var timeProgressBar: TimeProgressBarView
-private lateinit var modATempoActivity: ModATempoActivity
+    private lateinit var modATempoActivity: ModATempoActivity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +35,7 @@ private lateinit var modATempoActivity: ModATempoActivity
                 modATempoActivity.getTriviaQuestion()
             }
 
-    }
+        }
 
 
 
@@ -45,7 +45,7 @@ private lateinit var modATempoActivity: ModATempoActivity
 
 
 
-    }
+}
 
 
 

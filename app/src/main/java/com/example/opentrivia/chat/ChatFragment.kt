@@ -1,9 +1,6 @@
 package com.example.opentrivia.chat
 
-import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,14 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.example.opentrivia.R
-import com.example.opentrivia.listaAmici.ChatAdapter
-import com.example.opentrivia.listaAmici.UsersAdapter
+import com.example.opentrivia.listaSeguiti.ChatAdapter
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import java.util.UUID
 
 
 class ChatFragment : Fragment() {

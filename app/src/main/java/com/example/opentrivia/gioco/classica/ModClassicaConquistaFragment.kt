@@ -22,7 +22,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class mod_classica_conquista : Fragment(), ChiamataApi.TriviaQuestionCallback {
+class ModClassicaConquistaFragment : Fragment(), ChiamataApi.TriviaQuestionCallback {
     private lateinit var chiamataApi: ChiamataApi
     lateinit var categoria: String
     private lateinit var storiaButton: ImageButton

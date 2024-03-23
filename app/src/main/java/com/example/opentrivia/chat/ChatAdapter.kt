@@ -1,4 +1,4 @@
-package com.example.opentrivia.listaAmici
+package com.example.opentrivia.listaSeguiti
 
 import android.util.Log
 import com.example.opentrivia.R

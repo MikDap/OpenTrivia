@@ -135,7 +135,7 @@ if (!jolly()) {
 
 
     fun chiamaConquista() {
-        val conquistaFragment = mod_classica_conquista()
+        val conquistaFragment = ModClassicaConquistaFragment()
         conquistaFragment.setDifficolta(partita, difficolta)
 
         // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, secondFragment).addToBackStack(null).commit();

@@ -58,11 +58,13 @@ class IniziaPartita : Fragment() {
         }
 
 
+        val activity = requireActivity() as MenuActivity
 
 
         cercaPartitaButton.setOnClickListener {
 
 
+            activity.stopMusic()
                     lateinit var intent: Intent
                     when (modalita) {
                         "classica" -> {intent = Intent(activity, ModClassicaActivity::class.java)}

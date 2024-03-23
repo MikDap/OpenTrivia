@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/mod_classica_conquista"
-        android:name="com.example.opentrivia.gioco.classica.mod_classica_conquista"
+        android:name="com.example.opentrivia.gioco.classica.ModClassicaConquistaFragment"
         android:label="fragment_mod_classica_conquista"
         tools:layout="@layout/mod_classica_conquista" >
         <action

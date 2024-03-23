@@ -10,7 +10,7 @@ import androidx.core.view.MenuProvider
 import com.example.opentrivia.MainActivity
 import com.example.opentrivia.R
 import com.example.opentrivia.chat.ChatActivity
-import com.example.opentrivia.listaAmici.ListaAmiciActivity
+import com.example.opentrivia.listaSeguiti.ListaSeguitiActivity
 import com.example.opentrivia.statistiche.StatisticheActivity
 import com.google.firebase.auth.FirebaseAuth
 import android.media.MediaPlayer
@@ -27,7 +27,7 @@ class MenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
 
-
+        mediaPlayer = MediaPlayer.create(this, R.raw.menusong)
 
         addMenuProvider(object : MenuProvider {
             override fun onPrepareMenu(menu: Menu) {
@@ -57,8 +57,8 @@ class MenuActivity : AppCompatActivity() {
 
                        return true
                     }
-                    R.id.lista_amici -> {
-                        val intent = Intent(this@MenuActivity, ListaAmiciActivity::class.java)
+                    R.id.lista_seguiti -> {
+                        val intent = Intent(this@MenuActivity, ListaSeguitiActivity::class.java)
                         startActivity(intent)
                     return true
                     }
@@ -76,21 +76,23 @@ class MenuActivity : AppCompatActivity() {
 
     }
 
-    override fun onStop() {
+   /* override fun onStop() {
         super.onStop()
-        // Rilascia il MediaPlayer quando l'attività viene distrutta
+        // Rilascia il MediaPlayer quando l'attività viene stoppata
 
         mediaPlayer.stop()
         mediaPlayer.release()
     }
-
+*/
+    fun stopMusic(){
+       mediaPlayer.stop()
+       mediaPlayer.release()
+    }
     override fun onResume() {
         super.onResume()
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.menusong)
         // Avvia la riproduzione solo se il MediaPlayer non è già in riproduzione
         if (!mediaPlayer.isPlaying) {
-            mediaPlayer = MediaPlayer.create(this, R.raw.menusong)
             setteSecondi = false
             notifyListeners(setteSecondi)
 

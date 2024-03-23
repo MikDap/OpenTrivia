@@ -43,7 +43,7 @@ class ChatListaAmiciFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_chat_lista_amici, container, false)
+        val view = inflater.inflate(R.layout.fragment_chat_lista_seguiti, container, false)
 
         recyclerView = view.findViewById(R.id.recyclerViewFriends)
 

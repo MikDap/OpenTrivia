@@ -30,7 +30,7 @@
         <activity
             android:name=".menu.MenuActivity"
             android:exported="true"
-            android:label="Menu Activity"
+            android:label="OpenTrivia"
             android:theme="@style/Theme.AppCompat">
         </activity>
         <activity
@@ -55,7 +55,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".listaAmici.ListaAmiciActivity"
+            android:name=".listaSeguiti.ListaSeguitiActivity"
             android:label="ListaAmici Activity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>

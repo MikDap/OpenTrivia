@@ -7,18 +7,18 @@
 
     <fragment
         android:id="@+id/listaAmiciFragment2"
-        android:name="com.example.opentrivia.listaAmici.ListaAmiciFragment"
+        android:name="com.example.opentrivia.listaSeguiti.ListaSeguitiFragment"
         android:label="lista_amici"
-        tools:layout="@layout/lista_amici" >
+        tools:layout="@layout/lista_seguiti_fragment" >
         <action
             android:id="@+id/action_listaAmiciFragment2_to_aggiungiAmico2"
             app:destination="@id/aggiungiAmico2" />
     </fragment>
     <fragment
         android:id="@+id/aggiungiAmico2"
-        android:name="com.example.opentrivia.listaAmici.AggiungiAmico"
+        android:name="com.example.opentrivia.listaSeguiti.SeguiUtenteFragment"
         android:label="lista_amici_aggiungi_amico"
-        tools:layout="@layout/lista_amici_aggiungi_amico" >
+        tools:layout="@layout/lista_seguiti_segui_utente" >
         <action
             android:id="@+id/action_aggiungiAmico2_to_listaAmiciFragment2"
             app:destination="@id/listaAmiciFragment2" />

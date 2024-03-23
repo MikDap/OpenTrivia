@@ -7,8 +7,12 @@ import org.junit.Assert.*
 class GiocoUtilsTest {
 
 
+    //L'obiettivo di questo test è verificare che la funzione getCategoria(topic), ritorna un
+    //numero corrispondente al topic passato alla funzione, i numeri sono presi dal server API
+    // per cercare le domande relative al topic.
     @Test
     fun getCategoriaTest() {
+
         // Test per la categoria "culturaPop"
         val categorieCulturaPop = arrayOf("9","10","11","12","13","14","15","16","29","31","32")
         assertTrue("culturaPop",categorieCulturaPop.contains(GiocoUtils.getCategoria("culturaPop")))
@@ -31,6 +35,8 @@ class GiocoUtilsTest {
 
     }
 
+    //L'obiettivo di questo test è verificare che getCategoria(topic)
+    //lanci un eccezione nel caso l'argomento passato non è un topic
     @Test
     fun getCategoriaTest2(){
 

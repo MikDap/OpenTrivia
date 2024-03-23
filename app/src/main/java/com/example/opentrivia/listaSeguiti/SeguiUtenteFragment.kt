@@ -1,4 +1,4 @@
-package com.example.opentrivia.listaAmici
+package com.example.opentrivia.listaSeguiti
 
 import android.os.Bundle
 import android.util.Log
@@ -18,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 
-class AggiungiAmico : Fragment() {
+class SeguiUtenteFragment : Fragment() {
 
     private lateinit var database: FirebaseDatabase
     private lateinit var editText: EditText
@@ -27,14 +27,14 @@ class AggiungiAmico : Fragment() {
 
     private val userKeyMap = mutableMapOf<String, String>()  // Chiave: ID utente, Valore: Nome amico
 
-    val adapter = UsersAdapter(userKeyMap)
+    val adapter = SeguiUtenteAdapter(userKeyMap)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.lista_amici_aggiungi_amico, container, false)
+        val view = inflater.inflate(R.layout.lista_seguiti_segui_utente, container, false)
 
         editText = view.findViewById(R.id.editTextFriendName)
         buttonSearchFriend = view.findViewById(R.id.buttonSearchFriend)
@@ -57,10 +57,10 @@ class AggiungiAmico : Fragment() {
         buttonSearchFriend.setOnClickListener {
             val friendNameToSearch = editText.text.toString().trim()
             Log.d("amico0", friendNameToSearch)
-            searchFriend(friendNameToSearch)
+            cercaUtenti(friendNameToSearch)
         }
     }
-    private fun searchFriend(friendName: String) {
+    private fun cercaUtenti(friendName: String) {
       val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
         val usersRef = database.getReference("users")
         userKeyMap.clear()

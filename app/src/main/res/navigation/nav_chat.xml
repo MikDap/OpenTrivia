@@ -9,7 +9,7 @@
         android:id="@+id/chatListaAmici"
         android:name="com.example.opentrivia.chat.ChatListaAmiciFragment"
         android:label="fragment_chat_lista_amici"
-        tools:layout="@layout/fragment_chat_lista_amici" >
+        tools:layout="@layout/fragment_chat_lista_seguiti" >
         <action
             android:id="@+id/action_chatListaAmici_to_chatFragment"
             app:destination="@id/chatFragment" />
