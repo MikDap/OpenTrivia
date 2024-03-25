@@ -3,6 +3,8 @@ package com.example.opentrivia
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.animation.OvershootInterpolator
 import androidx.activity.ComponentActivity
@@ -17,6 +19,7 @@ import com.example.opentrivia.login.LoginActivity
 import com.example.opentrivia.login.UserMethods
 import com.example.opentrivia.menu.MenuActivity
 import com.example.opentrivia.ui.theme.OpenTriviaTheme
+import kotlinx.coroutines.delay
 
 
 class MainActivity : ComponentActivity()  {
@@ -55,21 +58,24 @@ class MainActivity : ComponentActivity()  {
 
                 userMethods = UserMethods()
 
-                //MENU
-                if (userMethods.checkUtenteisLoggato()) {
-                    val intent = Intent(this@MainActivity, MenuActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    //MENU
+                    if (userMethods.checkUtenteisLoggato()) {
+                        val intent = Intent(this@MainActivity, MenuActivity::class.java)
+                        startActivity(intent)
+                        finish()
 
 
 
-                }
-                //LOGIN
-                else {
-                    val intent = Intent(this@MainActivity, LoginActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
+                    }
+                    //LOGIN
+                    else {
+                        val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                }, 500)
+
             }
         }
         setContentView(R.layout.activity_main)

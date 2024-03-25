@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".gioco.classica.RuotaFragment"
     android:background="#062E40">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -16,185 +17,177 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.90" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineVerticalStart1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.035" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineVerticalEnd1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.45" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineVerticalStart2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.55" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineVerticalEnd2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.95" />
+
         <TextView
             android:id="@+id/user"
-            android:text="USERS"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            app:layout_constraintStart_toStartOf="@id/guidelineVerticalStart1"
+            android:text="USERS"
             app:layout_constraintEnd_toEndOf="@id/guidelineVerticalEnd1"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="@id/guidelineVerticalStart1"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/avversario"
-            android:text="AVVERSARIO"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            app:layout_constraintStart_toStartOf="@id/guidelineVerticalStart2"
+            android:text="AVVERSARIO"
             app:layout_constraintEnd_toEndOf="@id/guidelineVerticalEnd2"
-            app:layout_constraintTop_toTopOf="parent"
-            />
-        <!-- Aggiungi i sette rettangoli colorati -->
-        <LinearLayout
-            android:id="@+id/rectangleContainer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@id/guidelineVerticalEnd1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintStart_toStartOf="@id/guidelineVerticalStart2"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="5dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-                <View
-                    android:id="@+id/sport"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_weight="1"
-                    android:tag="sport"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/contour_background"
-                    android:backgroundTint="#FFEB3B"
-                    android:elevation="4dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:gravity="center"
-                android:orientation="vertical">
-                <View
-                    android:id="@+id/storia"
-                    android:layout_width="20dp"
-                    android:tag="storia"
-                    android:layout_height="20dp"
-                    android:background="@drawable/contour_background"
-                    android:backgroundTint="#FFBB2F" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineVerticalEnd1"
+            app:layout_constraintStart_toStartOf="@id/guidelineVerticalStart1"
+            app:layout_constraintTop_toBottomOf="@+id/user">
+            <View
+                android:id="@+id/dimlayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:backgroundTint="#FFEB3B"
+                android:elevation="4dp"
+                app:layout_constraintHeight_percent="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.05" />
+            <!-- Rettangolo Sport -->
+            <View
+                android:id="@+id/sport"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/contour_background"
+                android:backgroundTint="#FFEB3B"
+                android:elevation="4dp"
+                app:layout_constraintHeight_percent="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.12" />
+            <!-- Rettangolo Sport -->
+            <View
+                android:id="@+id/spazio"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:backgroundTint="#FFEB3B"
+                android:elevation="4dp"
+                app:layout_constraintHeight_percent="1"
+                app:layout_constraintStart_toEndOf="@id/sport"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.05" />
+            <!-- Rettangolo Storia -->
+            <View
+                android:id="@+id/storia"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/contour_background"
+                android:backgroundTint="#FFBB2F"
+                app:layout_constraintHeight_percent="1"
+                app:layout_constraintStart_toEndOf="@id/spazio"
+                app:layout_constraintWidth_percent="0.12"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:gravity="center"
-                android:orientation="vertical">
-                <View
-                    android:id="@+id/scienze"
-                    android:tag="scienze"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/contour_background"
-                    android:backgroundTint="#4CAF50" />
+            <!-- Rettangolo Scienze -->
+            <View
+                android:id="@+id/scienze"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/contour_background"
+                android:backgroundTint="#4CAF50"
+                app:layout_constraintStart_toEndOf="@id/storia"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:gravity="center"
-                android:orientation="vertical">
-                <View
-                    android:id="@+id/arte"
-                    android:tag="arte"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/contour_background"
-                    android:backgroundTint="#FF0006" />
+            <!-- Rettangolo Arte -->
+            <View
+                android:id="@+id/arte"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/contour_background"
+                android:backgroundTint="#FF0006"
+                app:layout_constraintStart_toEndOf="@id/scienze"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:gravity="center"
-                android:orientation="vertical">
-                <View
-                    android:id="@+id/geografia"
-                    android:tag="geografia"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/contour_background"
-                    android:backgroundTint="#0000FF" />
+            <!-- Rettangolo Geografia -->
+            <View
+                android:id="@+id/geografia"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/contour_background"
+                android:backgroundTint="#0000FF"
+                app:layout_constraintStart_toEndOf="@id/arte"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            </LinearLayout>
+            <!-- Rettangolo Cultura Pop -->
+            <View
+                android:id="@+id/culturaPop"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/contour_background"
+                android:backgroundTint="#FF00FF"
+                app:layout_constraintStart_toEndOf="@id/geografia"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="0dp"
-                android:gravity="center"
-                android:orientation="vertical">
-                <View
-                    android:id="@+id/culturaPop"
-                    android:tag="culturaPop"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/contour_background"
-                    android:backgroundTint="#FF00FF" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </LinearLayout>
-        </LinearLayout>
         <LinearLayout
             android:id="@+id/rectangleContainer2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@id/guidelineVerticalStart2"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guidelineVerticalStart2"
             app:layout_constraintTop_toTopOf="parent">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
                 android:gravity="center"
                 android:orientation="vertical">
+
                 <View
                     android:id="@+id/sport2"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:tag="sport"
                     android:background="@drawable/contour_background"
-                    android:backgroundTint="#FFEB3B" />
+                    android:backgroundTint="#FFEB3B"
+                    android:tag="sport" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -202,16 +195,18 @@
                 android:layout_marginEnd="5dp"
                 android:gravity="center"
                 android:orientation="vertical">
+
                 <View
                     android:id="@+id/storia2"
-                    android:tag="storia"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
-                    android:backgroundTint="#FFBB2F" />
+                    android:backgroundTint="#FFBB2F"
+                    android:tag="storia" />
 
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -219,15 +214,17 @@
                 android:layout_marginEnd="5dp"
                 android:gravity="center"
                 android:orientation="vertical">
+
                 <View
                     android:id="@+id/scienze2"
-                    android:tag="scienze"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
-                    android:backgroundTint="#4CAF50" />
+                    android:backgroundTint="#4CAF50"
+                    android:tag="scienze" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -235,15 +232,17 @@
                 android:layout_marginEnd="5dp"
                 android:gravity="center"
                 android:orientation="vertical">
+
                 <View
                     android:id="@+id/arte2"
-                    android:tag="arte"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
-                    android:backgroundTint="#FF0006" />
+                    android:backgroundTint="#FF0006"
+                    android:tag="arte" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -251,13 +250,14 @@
                 android:layout_marginEnd="5dp"
                 android:gravity="center"
                 android:orientation="vertical">
+
                 <View
                     android:id="@+id/geografia2"
-                    android:tag="geografia"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
-                    android:backgroundTint="#0000FF" />
+                    android:backgroundTint="#0000FF"
+                    android:tag="geografia" />
 
             </LinearLayout>
 
@@ -265,42 +265,45 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:layout_marginEnd="0dp"
+                android:layout_marginEnd="5dp"
                 android:gravity="center"
                 android:orientation="vertical">
+
                 <View
                     android:id="@+id/culturaPop2"
-                    android:tag="culturaPop"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:background="@drawable/contour_background"
-                    android:backgroundTint="#FF00FF" />
+                    android:backgroundTint="#FF00FF"
+                    android:tag="culturaPop" />
 
             </LinearLayout>
         </LinearLayout>
+
         <View
             android:id="@+id/wheelView"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:background="@drawable/wheel_background"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_bias="0.4"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.4" />
+
         <Button
             android:id="@+id/ruotaButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_background"
             android:text="@string/inizia"
-            app:layout_constraintVertical_bias="0.7"
-            app:layout_constraintTop_toBottomOf="@+id/wheelView"
             app:layout_constraintBottom_toTopOf="@id/horizontalbar"
-            app:layout_constraintStart_toStartOf="@id/wheelView"
             app:layout_constraintEnd_toEndOf="@id/wheelView"
-            />
+            app:layout_constraintStart_toStartOf="@id/wheelView"
+            app:layout_constraintTop_toBottomOf="@+id/wheelView"
+            app:layout_constraintVertical_bias="0.7" />
+
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="93dp"
@@ -316,25 +319,28 @@
             android:id="@+id/horizontalbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="center"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="@id/guidelineHorizontal1">
+
             <View
-                android:id = "@+id/rettangolo1"
+                android:id="@+id/rettangolo1"
                 android:layout_width="60dp"
                 android:layout_height="15dp"
+                android:layout_marginEnd="5dp"
                 android:background="@drawable/contour_background"
-                android:backgroundTint="#FFEB3B"
-                android:layout_marginEnd="5dp" />
+                android:backgroundTint="#FFEB3B" />
+
             <View
-                android:id = "@+id/rettangolo2"
+                android:id="@+id/rettangolo2"
                 android:layout_width="60dp"
                 android:layout_height="15dp"
+                android:layout_marginEnd="5dp"
                 android:background="@drawable/contour_background"
-                android:backgroundTint="#FFEB3B"
-                android:layout_marginEnd="5dp" />
+                android:backgroundTint="#FFEB3B" />
+
             <View
-                android:id = "@+id/rettangolo3"
+                android:id="@+id/rettangolo3"
                 android:layout_width="60dp"
                 android:layout_height="15dp"
                 android:background="@drawable/contour_background"
