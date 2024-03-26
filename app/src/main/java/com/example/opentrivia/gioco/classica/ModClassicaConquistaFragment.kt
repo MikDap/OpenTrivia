@@ -82,7 +82,6 @@ class ModClassicaConquistaFragment : Fragment(), ChiamataApi.TriviaQuestionCallb
         arte2 = view.findViewById(R.id.arte2_con)
         scienze2 = view.findViewById(R.id.scienze2_con)
         culturaPop2 = view.findViewById(R.id.culturaPop2_con)
-        adattaSchermo()
         user=view.findViewById(R.id.user1)
         avversario=view.findViewById(R.id.avversario1)
 
@@ -237,29 +236,5 @@ class ModClassicaConquistaFragment : Fragment(), ChiamataApi.TriviaQuestionCallb
         }
 
     }
-    fun adattaSchermo() {
-        val squareSize = resources.getDimensionPixelSize(R.dimen.square)
-        val widthPixel = Resources.getSystem().displayMetrics.widthPixels
-        val density = Resources.getSystem().displayMetrics.xdpi
 
-        val widthDp = (widthPixel * 160/density).toInt()
-        if (widthDp <= 400){
-
-            val layoutParams = geografia.layoutParams as LinearLayout.LayoutParams
-            layoutParams.width = squareSize
-            layoutParams.height = squareSize
-            geografia.layoutParams = layoutParams
-            storia.layoutParams = layoutParams
-            scienze.layoutParams = layoutParams
-            arte.layoutParams = layoutParams
-            culturaPop.layoutParams = layoutParams
-            sport.layoutParams = layoutParams
-            geografia2.layoutParams = layoutParams
-            storia2.layoutParams = layoutParams
-            scienze2.layoutParams = layoutParams
-            arte2.layoutParams = layoutParams
-            culturaPop2.layoutParams = layoutParams
-            sport2.layoutParams = layoutParams
-        }
-    }
 }

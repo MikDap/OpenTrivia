@@ -403,13 +403,6 @@ private fun adattaSchermo() {
         layoutParams2.width= width
 
 
-
-        val layoutParams = viewsArgMiei[0].layoutParams as LinearLayout.LayoutParams
-        layoutParams.width = squareSize
-        layoutParams.height = squareSize
-        for (view in viewsArgMiei + viewsArgAvv) {
-            view.layoutParams = layoutParams
-        }
     }
 }
 

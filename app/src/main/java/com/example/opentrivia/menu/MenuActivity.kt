@@ -27,7 +27,6 @@ class MenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.menusong)
 
         addMenuProvider(object : MenuProvider {
             override fun onPrepareMenu(menu: Menu) {
@@ -76,21 +75,18 @@ class MenuActivity : AppCompatActivity() {
 
     }
 
-   /* override fun onStop() {
+   override fun onStop() {
         super.onStop()
         // Rilascia il MediaPlayer quando l'attività viene stoppata
 
         mediaPlayer.stop()
         mediaPlayer.release()
     }
-*/
-    fun stopMusic(){
-       mediaPlayer.stop()
-       mediaPlayer.release()
-    }
+
     override fun onResume() {
         super.onResume()
 
+        mediaPlayer = MediaPlayer.create(this, R.raw.menusong)
         // Avvia la riproduzione solo se il MediaPlayer non è già in riproduzione
         if (!mediaPlayer.isPlaying) {
             setteSecondi = false
@@ -118,6 +114,7 @@ class MenuActivity : AppCompatActivity() {
             }, 7000)
         }
     }
+
 
     interface VariableChangeListener {
         fun onVariableChanged(newValue: Any)

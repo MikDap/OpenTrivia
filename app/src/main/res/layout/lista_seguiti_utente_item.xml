@@ -14,7 +14,7 @@
         android:text = "aaaa"
         android:background="@drawable/custom_border_pareggio"
         android:padding="6dp"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:layout_centerVertical="true"
         android:gravity="center_vertical"
         android:textStyle="bold"
