@@ -33,10 +33,6 @@ class StatFragment : Fragment() {
     private lateinit var scienzePerc: Guideline
     private lateinit var database: FirebaseDatabase
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

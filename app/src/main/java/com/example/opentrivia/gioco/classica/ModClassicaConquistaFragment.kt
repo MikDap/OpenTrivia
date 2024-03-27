@@ -87,7 +87,6 @@ class ModClassicaConquistaFragment : Fragment(), ChiamataApi.TriviaQuestionCallb
 
         user.text= FirebaseAuth.getInstance().currentUser?.displayName.toString()+" (me)"
         DatabaseUtils.getAvversario(modalita, difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
-            // Questo codice verrà eseguito quando la callback restituirà il nome dell'avversario
             this.avversario.text = nomeAvv
         }
         ModClassicaUtils.getArgomentiConquistati(giocatoriRef) { argomentiMiei, argomentiAvversario ->

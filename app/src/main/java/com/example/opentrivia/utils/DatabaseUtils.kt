@@ -1,6 +1,5 @@
 package com.example.opentrivia.utils
 
-import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -50,7 +49,6 @@ class DatabaseUtils {
                                     database.getReference("users").child(uid)
                                         .child("partite in corso").child(partita).removeValue()
                                 }
-                                Log.e("FirebaseCopy", "SUCCESSO")
 
                                 // I dati sono stati copiati con successo
                                 val refToNewNode =
@@ -69,7 +67,7 @@ class DatabaseUtils {
 
 
                             } else {
-                                Log.e("FirebaseCopy", "Errori scrittura")
+                                //errore
                             }
                         }
                     }
@@ -163,7 +161,6 @@ class DatabaseUtils {
 
         fun sfidaAccettata(partita: String, modalita: String, difficolta: String) {
             database = FirebaseDatabase.getInstance()
-            // partiteRef = database/partite/modalita/difficolta
             val partiteRef =
                 database.getReference("partite").child(modalita).child(difficolta)
 
@@ -304,7 +301,6 @@ class DatabaseUtils {
 
         fun creaPartita(modalita: String, partiteRef: DatabaseReference, topic: String, callback: (partita: String) -> Unit){
 
-            Log.d("creaPart","si")
             //crea id della partita ecc
            val  partita = partiteRef.push().key.toString()
             val inAttesa = "si"

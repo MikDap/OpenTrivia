@@ -93,7 +93,7 @@ class LoginActivity : AppCompatActivity() {
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-                    // Gestione degli errori, se necessario
+                    // gestione errori
                 }
             })
 

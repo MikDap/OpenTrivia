@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,7 +45,6 @@ class IniziaPartita : Fragment() {
             this.selezione = selezione
         }
 
-             // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.menu_inizia_partita, container, false)
         cercaPartitaButton = view.findViewById(R.id.cercaPartitaButton)
         recyclerView = view.findViewById(R.id.recyclerViewFriends)
@@ -112,7 +110,6 @@ fun nomeAvversario(nome:String){
         recyclerView.adapter = adapter
 
 
-        // Aggiungi un ValueEventListener per ottenere i dati degli amici da Firebase
         amiciRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 friendsList.clear() // Svuota la lista prima di popolarla con i nuovi dati
@@ -127,7 +124,7 @@ fun nomeAvversario(nome:String){
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Gestisci l'errore, se necessario
+                // gestione errore
             }
         })
     }

@@ -25,9 +25,6 @@ class PareggioFragment : Fragment() {
     lateinit var menu: Button
     lateinit var intent: Intent
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

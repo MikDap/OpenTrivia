@@ -55,7 +55,6 @@ class SceltaMultiplaFragmentClassica : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.mod_classica_scelta_multipla, container, false)
 
         giocatoriRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
@@ -119,19 +118,15 @@ class SceltaMultiplaFragmentClassica : Fragment() {
         giocatoreRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(giocatore: DataSnapshot) {
 
-                val giocatoriRef = database.getReference("partite").child(modalita).child(difficolta).child(partita).child("giocatori")
                 val partitaRef = database.getReference("partite").child(modalita).child(difficolta).child(partita)
-                //chiamo conquista
                 if (giocatore.hasChild("risposteTotCorrette")) {
 
                     var risposte_corrette =
                         giocatore.child("risposteTotCorrette").value.toString().toInt()
 
-
                     if (risposte_corrette == 3) {
 
                         giocatoreRef.child("risposteTotCorrette").setValue(0)
-
 
                         Handler(Looper.getMainLooper()).postDelayed({
                             continua.visibility = View.VISIBLE

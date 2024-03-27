@@ -20,7 +20,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.PathMeasure
 import android.graphics.Typeface
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.opentrivia.R
@@ -381,7 +380,6 @@ class RuotaFragment : Fragment() {
 
 
 private fun adattaSchermo() {
-    val squareSize = resources.getDimensionPixelSize(R.dimen.square)
     val widthPixel = Resources.getSystem().displayMetrics.widthPixels
     val density = Resources.getSystem().displayMetrics.xdpi
 

@@ -25,12 +25,6 @@ class VittoriaFragment : Fragment() {
     lateinit var menu: Button
     lateinit var intent:Intent
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

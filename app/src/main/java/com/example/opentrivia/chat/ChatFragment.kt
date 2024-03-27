@@ -99,8 +99,6 @@ class ChatFragment : Fragment() {
 
 
 
-
-
     fun scriviMessaggioDatabase(chatID: String, messageID: String, messaggio: String, timestamp: Long, callback:() -> Unit) {
         // Utilizza messageID come chiave per il messaggio nel database
         chatRef.child(chatID).child("messaggi").child(messageID).child("testo").setValue(messaggio)

@@ -55,7 +55,7 @@ class ListaSeguitiFragment : Fragment() {
         recyclerView.adapter = adapter
 
 
-            // Aggiungi un ValueEventListener per ottenere i dati degli amici da Firebase
+
             seguitiRef.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     seguitiLista.clear() // Svuota la lista prima di popolarla con i nuovi dati
@@ -74,7 +74,7 @@ class ListaSeguitiFragment : Fragment() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    // Gestisci l'errore, se necessario
+                    // gestione errore
                 }
             })
     }

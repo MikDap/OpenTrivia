@@ -176,17 +176,7 @@ onBackPressed()
                 risposta.setBackgroundColor(Color.RED)
             }, 500)
 
-  /*          GiocoUtils.getAvversario("classica", difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
 
-                ModClassicaUtils.getArgomentiConquistati(giocatoriRef){ argomentiMiei, argomentiAvversario ->
-
-                    val argomenti_conquistati_miei = argomentiMiei.size
-                    val argomenti_conquistati_avversario = argomentiAvversario.size
-
-                    ModClassicaUtils.updateScrollView(nomeAvv,avversario, argomenti_conquistati_miei, argomenti_conquistati_avversario,partita, difficolta, database)
-                }
-            }
-*/
             DatabaseUtils.getAvversario("classica", difficolta, partita){ giocatore2esiste, avversario, nomeAvv ->
 
                 val partitaRef =

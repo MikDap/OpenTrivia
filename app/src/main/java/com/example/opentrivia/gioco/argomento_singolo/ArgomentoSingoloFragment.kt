@@ -1,6 +1,5 @@
 package com.example.opentrivia.gioco.argomento_singolo
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,7 +25,7 @@ class ArgomentoSingoloFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         val view = inflater.inflate(R.layout.mod_argomento_singolo_scelta_argomento, container, false)
 
         culturaPop = view.findViewById(R.id.intrattenimento_arg)

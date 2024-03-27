@@ -19,7 +19,6 @@ import com.example.opentrivia.login.LoginActivity
 import com.example.opentrivia.login.UserMethods
 import com.example.opentrivia.menu.MenuActivity
 import com.example.opentrivia.ui.theme.OpenTriviaTheme
-import kotlinx.coroutines.delay
 
 
 class MainActivity : ComponentActivity()  {

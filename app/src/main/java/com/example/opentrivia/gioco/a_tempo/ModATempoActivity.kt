@@ -2,7 +2,6 @@ package com.example.opentrivia.gioco.a_tempo
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.opentrivia.R
 import com.example.opentrivia.api.ChiamataApi
@@ -106,14 +105,13 @@ class ModATempoActivity : AppCompatActivity(),ChiamataApi.TriviaQuestionCallback
     }
 
 
-    //da commentare
+
     fun getTriviaQuestion() {
         topic=GiocoUtils.getRandomTopic(topics)
-//chiamiamo la funzione per ottenere il numero delle categorie per il topic selezionato
+          //chiamiamo la funzione per ottenere il numero delle categorie per il topic selezionato
         categoria = GiocoUtils.getCategoria(topic)
         chiamataApi = ChiamataApi("boolean",categoria,difficolta)
         chiamataApi.fetchTriviaQuestion(this)
-        Log.d("getTriviaQuestion","siii")
     }
 
 }

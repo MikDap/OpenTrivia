@@ -3,7 +3,6 @@ package com.example.opentrivia.gioco.argomento_singolo
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.opentrivia.CaricamentoFragment
 import com.example.opentrivia.R
@@ -63,7 +62,6 @@ class ModArgomentoActivity : AppCompatActivity(), ChiamataApi.TriviaQuestionCall
     // QUANDO SCEGLIAMO TOPIC SU ARGOMENTOSINGOLO FRAGMENT (SOSTITUITO DA CARICAMENTOFRAGMENT SE HAI ACCETTATO SFIDA)
     fun topicScelto(topic: String) {
 
-        Log.d("onVariablePassed","si")
         //salviamo il topic
         this.topic = topic
 
@@ -105,7 +103,6 @@ class ModArgomentoActivity : AppCompatActivity(), ChiamataApi.TriviaQuestionCall
 
         listaRisposte.shuffle()
 
-        Log.d("ontriviaqQuestion","si")
 // PASSIAMO AL PROSSIMO FRAGMENT SCELTAMULTIPLA
         val sceltaMultiplaFragmentArgSingolo = SceltaMultiplaFragmentArgSingolo()
         sceltaMultiplaFragmentArgSingolo.setParametriPartita(partita, "argomento singolo", difficolta, topic)
@@ -122,8 +119,6 @@ class ModArgomentoActivity : AppCompatActivity(), ChiamataApi.TriviaQuestionCall
     fun getTriviaQuestion() {
         chiamataApi = ChiamataApi("multiple", categoria, difficolta)
         chiamataApi.fetchTriviaQuestion(this)
-        Log.d("getTriviaQuestion", "si")
-
     }
 
 

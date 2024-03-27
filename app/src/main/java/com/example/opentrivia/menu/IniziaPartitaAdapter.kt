@@ -7,11 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 
 class IniziaPartitaAdapter(private val friendsList: Map<String, String>, private val iniziaPartitaFragment: IniziaPartita) : RecyclerView.Adapter<IniziaPartitaAdapter.ViewHolder>() {
 
@@ -41,7 +36,6 @@ class IniziaPartitaAdapter(private val friendsList: Map<String, String>, private
         init {
             check.visibility = View.INVISIBLE
 
-            // Aggiungi il click listener a border
             border.setOnClickListener {
 
                 iniziaPartitaFragment.nomeAvversario(textViewFriendName.text.toString())

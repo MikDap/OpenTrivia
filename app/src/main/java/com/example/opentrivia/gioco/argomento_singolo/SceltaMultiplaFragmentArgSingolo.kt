@@ -64,7 +64,7 @@ class SceltaMultiplaFragmentArgSingolo : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
         val view =
             inflater.inflate(R.layout.mod_argomento_singolo_scelta_multipla, container, false)
        modArgomentoActivity = activity as ModArgomentoActivity

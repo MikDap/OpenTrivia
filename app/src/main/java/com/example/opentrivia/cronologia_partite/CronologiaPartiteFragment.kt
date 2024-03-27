@@ -20,7 +20,6 @@ class CronologiaPartiteFragment : Fragment() {
 
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var partitaTerminata: PartitaTerminata
 
     // posizione, triple(nomeAvv, scoreio,scoreavv)
     val partiteList = mutableMapOf<Int, PartitaTerminata>()
@@ -28,10 +27,6 @@ class CronologiaPartiteFragment : Fragment() {
  private val uid: String = FirebaseAuth.getInstance().currentUser?.uid.toString()
  private var partiteTerminateRef = FirebaseDatabase.getInstance().getReference("users").child(uid).child("partite terminate")
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +51,6 @@ class CronologiaPartiteFragment : Fragment() {
 
         recyclerView.adapter = adapter
 
-        // Aggiungi un ValueEventListener per ottenere le partite terminate da Firebase
         partiteTerminateRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(partite: DataSnapshot) {
                 partiteList.clear() // Svuota la lista prima di popolarla con i nuovi dati
@@ -113,7 +107,7 @@ class CronologiaPartiteFragment : Fragment() {
                 }
 
             override fun onCancelled(error: DatabaseError) {
-                // Gestisci l'errore, se necessario
+                // gestione errore
             }
         })
     }

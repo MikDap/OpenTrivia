@@ -30,7 +30,6 @@ class MenuActivity : AppCompatActivity() {
 
         addMenuProvider(object : MenuProvider {
             override fun onPrepareMenu(menu: Menu) {
-                // Handle for example visibility of menu items
             }
 
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -43,9 +42,6 @@ class MenuActivity : AppCompatActivity() {
 
                 when (menuItem.itemId) {
                     R.id.chat -> {
-                        // Qui puoi gestire l'evento di click sull'item "chat"
-                        // Ad esempio, puoi navigare verso un altro fragment o eseguire altre azioni
-                        // sostituisci "ChatFragment" con il nome del fragment desiderato
                         val intent = Intent(this@MenuActivity, ChatActivity::class.java)
                         startActivity(intent)
                         return true
@@ -120,11 +116,6 @@ class MenuActivity : AppCompatActivity() {
         fun onVariableChanged(newValue: Any)
     }
 
-    var myVariable: Any = ""
-        set(value) {
-            field = value
-            notifyListeners(value)
-        }
 
     private fun notifyListeners(newValue: Any) {
         listeners.forEach { it.onVariableChanged(newValue) }
@@ -134,9 +125,6 @@ class MenuActivity : AppCompatActivity() {
         listeners.add(listener)
     }
 
-    fun unregisterListener(listener: VariableChangeListener) {
-        listeners.remove(listener)
-    }
 }
 
 

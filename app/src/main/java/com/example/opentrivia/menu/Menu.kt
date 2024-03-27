@@ -37,7 +37,6 @@ class Menu : Fragment() {
     private lateinit var database: FirebaseDatabase
     private lateinit var giocaincorso: Button
     private lateinit var inattesa: Button
-    private lateinit var modClassicaActivity: ModClassicaActivity
     private lateinit var background_game_item: ConstraintLayout
     private lateinit var visualizzaCronologia: Button
     private lateinit var notification: TextView
@@ -90,20 +89,15 @@ class Menu : Fragment() {
 
         database = FirebaseDatabase.getInstance()
         val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()
-        val nomeMio = FirebaseAuth.getInstance().currentUser?.displayName.toString()
         val partiteInCorsoRef = database.getReference("users").child(uid).child("partite in corso")
-        val modalitaRef = database.getReference("partite").child("classica")
+
         partiteInCorsoRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(partiteInCorso: DataSnapshot) {
 
                 if (partiteInCorso.hasChildren()) {
                     val partiteIterator = partiteInCorso.children.iterator()
-                    // Avvia il processo delle partite in corso
                     processaPartiteInCorso(partiteIterator) {
-                        // Questa callback verrà chiamata quando tutte le partite sono state processate
-                        // Puoi fare qui qualsiasi cosa vuoi fare dopo aver completato il ciclo
                     }
-
                 }
 
 
@@ -137,7 +131,7 @@ class Menu : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        // Carica la GIF utilizzando Glide dopo 7 secondi
+        // Carica la GIF
         Glide.with(this)
             .asGif()
             .load(R.drawable.giphy)
@@ -293,7 +287,7 @@ class Menu : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Gestisci l'errore, se necessario
+                // gestione errore
             }
         })
 

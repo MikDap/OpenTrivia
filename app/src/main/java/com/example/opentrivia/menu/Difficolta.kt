@@ -21,7 +21,6 @@ private lateinit var difficileButton: Button
         // salviamo il bundle nella variabile modalita
         val modalita = arguments?.getString("modalita")
 
-        // Inflate the layout for this fragment
        val view = inflater.inflate(R.layout.menu_difficolta, container, false)
 
 
@@ -35,7 +34,6 @@ private lateinit var difficileButton: Button
         }
 
 
-        // collegamento difficolta-chiamata Api
 
         medioButton = view.findViewById(R.id.medioButton)
         medioButton.setOnClickListener {

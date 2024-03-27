@@ -33,6 +33,7 @@ class AttendiTurnoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         menu.setOnClickListener {
           intent=Intent(activity, MenuActivity::class.java)
+
             startActivity(intent)
 
     }

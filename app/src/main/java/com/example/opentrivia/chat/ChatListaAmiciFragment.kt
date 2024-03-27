@@ -1,7 +1,6 @@
 package com.example.opentrivia.chat
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -47,7 +46,6 @@ class ChatListaAmiciFragment : Fragment() {
 
         recyclerView = view.findViewById(R.id.recyclerViewFriends)
 
-        //INSERIRE CHE QUANDO SCHIACCIO AMICO MI APRE CHATFRAGMENT
         return view
     }
 
@@ -105,9 +103,6 @@ class ChatListaAmiciFragment : Fragment() {
 
                             settato.addOnSuccessListener {
 
-                                // Ottieni la chiave univoca generata da Firebase
-
-                                Log.d("chatidELSE", chatID)
 
                                 setPartecipanti()
 
@@ -172,7 +167,6 @@ class ChatListaAmiciFragment : Fragment() {
 
 
     fun setPartecipanti(){
-Log.d("entraSetParte","si")
                 chatRef.child(chatID).child("partecipanti").child(uid).setValue(displayname)
                 chatRef.child(chatID).child("partecipanti").child(userIDOther).setValue(usernameOther)
 

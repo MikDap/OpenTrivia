@@ -35,7 +35,6 @@ class SfidaFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
        val view = inflater.inflate(R.layout.menu_sfida, container, false)
 
         sfidaContainer = view.findViewById(R.id.linearLayout)
@@ -78,17 +77,12 @@ class SfidaFragment : Fragment() {
             callback()
             return
         }
-        val nomeMio = FirebaseAuth.getInstance().currentUser?.displayName.toString()
-        val modalitaRef= database.getReference("partite").child("classica")
-
-
 
         val sfida = sfide.next()
 
 
         val inflater = LayoutInflater.from(requireContext())
 
-        var sfida1 = sfida.key.toString()
         val gameView = inflater.inflate(R.layout.sfida_item_layout, sfidaContainer, false)
 
         val opponentNameTextView = gameView.findViewById<TextView>(R.id.opponentNameTextView)

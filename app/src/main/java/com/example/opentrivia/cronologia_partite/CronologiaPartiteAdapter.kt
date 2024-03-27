@@ -6,10 +6,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.opentrivia.R
-import com.google.firebase.database.FirebaseDatabase
 
 class CronologiaPartiteAdapter(private val partiteList: MutableMap<Int, PartitaTerminata>, private val cronologiaPartiteFragment: CronologiaPartiteFragment) : RecyclerView.Adapter<CronologiaPartiteAdapter.ViewHolder>() {
-    private lateinit var database: FirebaseDatabase
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.visualizza_cronologia_item, parent, false)

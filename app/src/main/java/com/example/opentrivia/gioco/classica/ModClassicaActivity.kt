@@ -3,7 +3,6 @@ package com.example.opentrivia.gioco.classica
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.opentrivia.R
 import com.example.opentrivia.api.ChiamataApi
@@ -124,8 +123,6 @@ if (!jolly()) {
     fun chiamaRuota() {
         val RuotaFragment = RuotaFragment()
 
- //       RuotaFragment.setParametriPartita(partita, "classica", difficolta,topic)
-        // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, secondFragment).addToBackStack(null).commit();
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainerViewGioco, RuotaFragment).commit()
@@ -138,7 +135,6 @@ if (!jolly()) {
         val conquistaFragment = ModClassicaConquistaFragment()
         conquistaFragment.setDifficolta(partita, difficolta)
 
-        // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, secondFragment).addToBackStack(null).commit();
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainerViewGioco, conquistaFragment).commit()
@@ -185,12 +181,9 @@ if (!jolly()) {
         rispostaCorrettaConquista = rispostaCorretta
         topicConquista = topic
 
-        Log.d("risposta1Conquista", risposta1Conquista)
-
         // passiamo al secondo Fragment (DA GESTIRE IL PERMESSO DI RITORNARE INDIETRO DURANTE LA SCHERMATA DELLE DOMANDE E RISPOSTE)
         val secondFragment = ConquistaSceltaMultiplaFragment()
 
-        Log.d("domandaconqSceltaMultipla", domanda)
         // getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, secondFragment).addToBackStack(null).commit();
         Handler(Looper.getMainLooper()).postDelayed({
             supportFragmentManager.beginTransaction()

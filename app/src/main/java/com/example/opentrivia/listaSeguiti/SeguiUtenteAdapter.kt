@@ -28,7 +28,6 @@ class SeguiUtenteAdapter(private val userKeyMap: Map<String, String>) : Recycler
         holder.textViewFriendName.text = username
 
         checkIfUserIsFriend(userId) { isFriend ->
-            // Qui puoi utilizzare il valore di isFriend
 
             if (isFriend) {
                 holder.seguiButton.visibility = View.INVISIBLE
@@ -43,8 +42,7 @@ class SeguiUtenteAdapter(private val userKeyMap: Map<String, String>) : Recycler
 
 
     private fun checkIfUserIsFriend(friendUserId: String, callback: (Boolean) -> Unit) {
-        // Esegui la tua logica per verificare se l'utente è amico
-        // accedere al percorso appropriato nel database e fare la verifica
+        // logica per verificare se l'utente è amico
 
         database = FirebaseDatabase.getInstance()
         var isFriend = false
@@ -91,7 +89,6 @@ class SeguiUtenteAdapter(private val userKeyMap: Map<String, String>) : Recycler
 
                     val userId = userKeyMap.keys.elementAt(position)
                     val username = userKeyMap[userId]
-                    // Esegui un'azione quando l'utente fa clic sull'ImageView
 
                     database = FirebaseDatabase.getInstance()
                     val uid = FirebaseAuth.getInstance().currentUser?.uid.toString()

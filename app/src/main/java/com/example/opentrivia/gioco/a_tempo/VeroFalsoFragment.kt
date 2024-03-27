@@ -26,15 +26,12 @@ class VeroFalsoFragment : Fragment() {
     private lateinit var domanda: TextView
     private lateinit var risposta1: Button
     private lateinit var risposta2: Button
-    //private lateinit var risposta3: Button
-    //private lateinit var risposta4: Button
     private lateinit var modATempoActivity: ModATempoActivity
     private lateinit var rispostaCorretta: String
     lateinit var partita: String
     lateinit var modalita: String
     lateinit var difficolta: String
     lateinit var topic: String
-    private  var contatoreRisposte = 0
     var timeStamp: Long = 0L
     var finalTime: Long = 60000L
     lateinit var progressBarView: TimeProgressBarView
@@ -59,7 +56,6 @@ class VeroFalsoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_vero_falso, container, false)
 
         onBackPressed()

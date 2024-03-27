@@ -1,6 +1,5 @@
 package com.example.opentrivia.listaSeguiti
 
-import android.util.Log
 import com.example.opentrivia.R
 import android.view.LayoutInflater
 import android.view.View
@@ -53,8 +52,7 @@ class ChatAdapter(chatID: String, userId: String, username: String, chatFragment
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-     //   val message = messageList[position]
-      //  holder.textViewMessage.text = message
+
         val messaggio = userMessages.keys.elementAt(position)
         val testo = userMessages[position]?.first
         val mittente = userMessages[position]?.second
@@ -89,12 +87,12 @@ class ChatAdapter(chatID: String, userId: String, username: String, chatFragment
 
 
    override fun getItemViewType(position: Int): Int {
-        // Restituisci il tipo di vista in base all utente
-        // se il messaggio è dell'utente corrente, restituisci VIEW_TYPE_MY_MESSAGE,
-        // altrimenti restituisci VIEW_TYPE_OTHER_MESSAGE
+        // Restituisce il tipo di vista in base all utente
+        // se il messaggio è dell'utente corrente, restituisce VIEW_TYPE_MY_MESSAGE,
+        // altrimenti restituisce VIEW_TYPE_OTHER_MESSAGE
 
        val messaggio = userMessages[position]
-       val mittenteID = messaggio?.second // Ottieni l'ID del mittente dal Triple
+       val mittenteID = messaggio?.second // Ottieniamo l'ID del mittente dal Triple
 
        return if (mittenteID == uid) {
            VIEW_TYPE_MY_MESSAGE // Se il mittente è l'utente corrente
@@ -127,10 +125,7 @@ class ChatAdapter(chatID: String, userId: String, username: String, chatFragment
                     val testo = messaggio.child("testo").value.toString()
                     val mittente = messaggio.child("mittente").value.toString()
                     val timestamp= messaggio.child("timestamp").value
-                    Log.d("timestamp", timestamp.toString())
 
-                    Log.d("testo",testo)
-                    Log.d("mittente",mittente)
                     userMessages[position] = Triple(testo, mittente, timestamp) as Triple<String, String, Long>
                     position++
 

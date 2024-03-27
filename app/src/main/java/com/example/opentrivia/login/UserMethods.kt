@@ -1,6 +1,5 @@
 package com.example.opentrivia.login
 
-import com.example.opentrivia.login.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference

@@ -33,7 +33,6 @@ class SeguiUtenteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.lista_seguiti_segui_utente, container, false)
 
         editText = view.findViewById(R.id.editTextFriendName)
@@ -79,7 +78,7 @@ class SeguiUtenteFragment : Fragment() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    // Gestisci l'errore (opzionale)
+                    // gestione errore
                 }
             })
     }

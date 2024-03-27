@@ -111,7 +111,7 @@ class GiocoUtils {
         }
 
 
-        //verifa se questa è la risposta corretta, restituisce true o false
+        //verifica se questa è la risposta corretta, restituisce true o false
         fun QuestaèLaRispostaCorretta(risposta: Button, rispostaCorretta: String): Boolean {
 
 

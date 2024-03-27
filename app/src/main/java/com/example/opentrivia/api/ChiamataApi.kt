@@ -1,6 +1,5 @@
 package com.example.opentrivia.api
 
-import android.util.Log
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import androidx.core.text.HtmlCompat
@@ -21,7 +20,7 @@ var domanda: String = ""
     fun fetchTriviaQuestion(callback: TriviaQuestionCallback) {
         this.callback = callback
         val questionsApi = RetrofitHelper.getInstance().create(ApiOpenTriviaInterface::class.java)
-        // launching a new coroutine
+
         GlobalScope.launch {
             val result = questionsApi.getTriviaQuestion(1, categoria.toInt(), difficolta, tipo)
             if (result != null) {
@@ -56,7 +55,6 @@ var domanda: String = ""
                 }
             }
         }
-        Log.d("fetch","si")
     }
 
 

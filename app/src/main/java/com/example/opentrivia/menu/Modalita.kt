@@ -18,7 +18,6 @@ private lateinit var classicaButton: Button
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
        val view = inflater.inflate(R.layout.menu_modalita, container, false)
         classicaButton = view.findViewById(R.id.classicaButton)
         classicaButton.setOnClickListener {
@@ -26,7 +25,7 @@ private lateinit var classicaButton: Button
             val bundle = Bundle()
             val modalita = "classica"
             bundle.putString("modalita", modalita)
-//navighiamo alla schermata della difficoltà, passando il bundle
+            //navighiamo alla schermata della difficoltà, passando il bundle
             Navigation.findNavController(view).navigate(R.id.action_modalita_to_difficolta, bundle)
         }
 

@@ -11,12 +11,6 @@ class ListaSeguitiActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.lista_seguiti_activity)
 
-
-
-
-
-
-
     }
 
 

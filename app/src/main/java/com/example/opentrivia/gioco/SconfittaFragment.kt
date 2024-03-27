@@ -24,10 +24,7 @@ class SconfittaFragment : Fragment() {
     lateinit var mod: String
     lateinit var menu: Button
     lateinit var intent:Intent
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
